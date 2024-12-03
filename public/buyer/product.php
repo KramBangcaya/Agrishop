@@ -352,8 +352,13 @@ if($success_message1 != '') {
 							<div class="p-price">
                                 <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
                                 <span>
-
                                         <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
+                                </span>
+                            </div>
+                            <div class="p-price">
+                                <span style="font-size:14px;">Stock</span><br>
+                                <span>
+                                        <?php echo $p_qty; ?>
                                 </span>
                             </div>
                             <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
@@ -445,6 +450,7 @@ if($success_message1 != '') {
                                 <h4>
                                     <?php echo LANG_VALUE_1; ?><?php echo htmlspecialchars($row['price']); ?>
                                 </h4>
+                                <p><?php echo $row['first_name']?> <?php echo $row['first_name']?></p>
                                 <p><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo LANG_VALUE_154; ?></a></p>
                             </div>
                         </div>
