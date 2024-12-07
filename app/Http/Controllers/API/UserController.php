@@ -10,11 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-<<<<<<< HEAD
-use Illuminate\Support\Facades\DB;
-=======
 use Illuminate\Support\Facades\Mail;
->>>>>>> 9b98c33df89a82d97d8d56f7172b4739e8634645
 
 class UserController extends Controller
 {

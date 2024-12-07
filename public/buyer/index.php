@@ -79,11 +79,7 @@
                 <div class="product-carousel">
                     <?php
                     // Fetch product data from the API
-<<<<<<< HEAD
-                    $apiUrl = 'http://192.168.1.101:8080/products/all';
-=======
                     $apiUrl = 'http://192.168.1.9:8080/products/all';
->>>>>>> 9b98c33df89a82d97d8d56f7172b4739e8634645
                     $json = @file_get_contents($apiUrl); // Suppress warnings with @
 
                     $products = json_decode($json, true)['data']; // Decode the JSON response to PHP array
@@ -116,16 +112,6 @@
                                         ?>
                                     </div>
                                     <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['first_name']; ?> <?php echo $product['last_name']; ?></a></h3>
-<<<<<<< HEAD
-                                    <?php if($product['Quantity'] == 0): ?>
-                                        <div class="out-of-stock">
-                                            <div class="inner">
-                                                Out Of Stock
-                                            </div>
-                                        </div>
-=======
-
->>>>>>> 9b98c33df89a82d97d8d56f7172b4739e8634645
                                         <?php if($product['Quantity'] == 0): ?>
                                             <div class="out-of-stock">
                                                 <div class="inner">

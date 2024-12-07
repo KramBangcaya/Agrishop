@@ -72,7 +72,7 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        $qrcode = request()->file('qrcode');
+        $qrcode = request()->file('qr_code');
         $qrcodes = [];
         $photos = request()->file('photos');
         $paths = [];

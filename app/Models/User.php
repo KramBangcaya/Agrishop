@@ -41,7 +41,7 @@ class User extends Authenticatable
         'user_photo',
         'latitude',
         'longitude',
-        'qrcode'
+        'qrcode',
     ];
 
     /**
@@ -87,6 +87,7 @@ class User extends Authenticatable
     // }
     public function jsPermissions()
     {
+        // Get all roles (returning a collection)
         return json_encode([
             'roles' => $this->getRoleNames(),
             'permissions' => $this->getAllPermissions()->pluck('name'),
@@ -98,7 +99,4 @@ class User extends Authenticatable
         return $this->hasMany(Deliquency::class, 'committed_by');
     }
 
-    public function roles(){
-        return $this->belongsTo(Role::class, 'id');
-    }
 }
