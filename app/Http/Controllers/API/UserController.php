@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ApprovalConfirmation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -114,6 +116,11 @@ class UserController extends Controller
             $user->update([
                 'approved_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
+            // dd($user);
+
+            // $ipAddress = $request->server('SERVER_ADDR', 'localhost');
+            // dd($ipAddress);
+            Mail::to($user->email)->send(new ApprovalConfirmation($user));
         } else {
             // dd($request->txtdesapproval);
             $user = User::findOrFail($id);
