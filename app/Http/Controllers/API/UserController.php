@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -99,6 +100,28 @@ class UserController extends Controller
         return response(['message' => 'success'], 200);
     }
 
+        public function authenticate(Request $request)
+        {
+            // dd($request->email);
+            $email = $request->email;
+            // $user = User::find($email);
+
+
+            $user = User::where('email', $email)->first();
+
+            if (!$user) {
+                return response()->json(['error' => 'User not found'], 404);
+            }
+
+            $results = DB::table('users')
+            ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->where('users.id', $user->id)
+            ->get();
+
+        return response()->json([
+            'user' => $results,
+        ], 200);
+        }
     /**
      * Display the specified resource.
      *

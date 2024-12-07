@@ -96,4 +96,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Deliquency::class, 'committed_by');
     }
+
+    public function roles(){
+        return $this->belongsTo(Role::class, 'id');
+    }
 }

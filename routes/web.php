@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\MobileController;
@@ -37,6 +38,10 @@ Route::prefix('categories')->group(function () {
 });
 Route::prefix('login')->group(function () {
     Route::get('/submit', [MobileController::class, 'authenticate']);
+});
+
+Route::prefix('login')->group(function () {
+    Route::get('/submit', [UserController::class, 'authenticate']);
 });
 Route::prefix('register')->group(function () {
     Route::get('/submit', [MobileController::class, 'Registration']);
