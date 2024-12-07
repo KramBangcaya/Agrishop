@@ -32,11 +32,13 @@ if(isset($_POST['form1'])) {
     foreach($_POST['quantity'] as $val) {
         $i++;
         $arr2[$i] = $val;
+
     }
     $i=0;
     foreach($_POST['product_name'] as $val) {
         $i++;
         $arr3[$i] = $val;
+
     }
 
     $allow_update = 1;
@@ -92,8 +94,6 @@ if(isset($_POST['form1'])) {
                             <th><?php echo '#' ?></th>
                             <th><?php echo LANG_VALUE_8; ?></th>
                             <th><?php echo LANG_VALUE_47; ?></th>
-                            <th><?php echo LANG_VALUE_157; ?></th>
-                            <th><?php echo LANG_VALUE_158; ?></th>
                             <th><?php echo LANG_VALUE_159; ?></th>
                             <th><?php echo LANG_VALUE_55; ?></th>
                             <th class="text-right"><?php echo LANG_VALUE_82; ?></th>
@@ -116,19 +116,7 @@ if(isset($_POST['form1'])) {
                             $arr_cart_size_id[$i] = $value;
                         }
 
-                        $i=0;
-                        foreach($_SESSION['cart_size_name'] as $key => $value)
-                        {
-                            $i++;
-                            $arr_cart_size_name[$i] = $value;
-                        }
 
-                        $i=0;
-                        foreach($_SESSION['cart_color_id'] as $key => $value)
-                        {
-                            $i++;
-                            $arr_cart_color_id[$i] = $value;
-                        }
 
                         $i=0;
                         foreach($_SESSION['cart_color_name'] as $key => $value)
@@ -175,8 +163,6 @@ if(isset($_POST['form1'])) {
                                 <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>" alt="">
                             </td>
                             <td><?php echo $arr_cart_p_name[$i]; ?></td>
-                            <td><?php echo $arr_cart_size_name[$i]; ?></td>
-                            <td><?php echo $arr_cart_color_name[$i]; ?></td>
                             <td><?php echo LANG_VALUE_1; ?><?php echo $arr_cart_p_current_price[$i]; ?></td>
                             <td>
                                 <input type="hidden" name="product_id[]" value="<?php echo $arr_cart_p_id[$i]; ?>">
@@ -191,12 +177,12 @@ if(isset($_POST['form1'])) {
                                 <?php echo LANG_VALUE_1; ?><?php echo $row_total_price; ?>
                             </td>
                             <td class="text-center">
-                                <a  onclick="return confirmDelete();" href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>&size=<?php echo $arr_cart_size_id[$i]; ?>&color=<?php echo $arr_cart_color_id[$i]; ?>" class="trash"><i class="fa fa-trash" style="color:red;"></i></a>
+                                <a  onclick="return confirmDelete();" href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>" class="trash"><i class="fa fa-trash" style="color:red;"></i></a>
                             </td>
                         </tr>
                         <?php endfor; ?>
                         <tr>
-                            <th colspan="7" class="total-text">Total</th>
+                            <th colspan="5" class="total-text">Total</th>
                             <th class="total-amount"><?php echo LANG_VALUE_1; ?><?php echo $table_total_price; ?></th>
                             <th></th>
                         </tr>

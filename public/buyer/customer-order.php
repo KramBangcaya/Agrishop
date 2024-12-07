@@ -6,16 +6,35 @@ if(!isset($_SESSION['customer'])) {
     header('location: '.BASE_URL.'logout.php');
     exit;
 } else {
-    // If customer is logged in, but admin make him inactive, then force logout this user.
-    $statement = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=? AND cust_status=?");
-    $statement->execute(array($_SESSION['customer']['cust_id'],0));
-    $total = $statement->rowCount();
-    if($total) {
+    // Get the email from the session
+    $cust_email = $_SESSION['customer']['email'];
+
+    // API URL with the email as a parameter
+    $api_url = "http://192.168.1.9:8080/login/submit?email=" . urlencode($cust_email);
+
+    // Initialize cURL session
+    $ch = curl_init($api_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Disable SSL verification if needed
+    $api_response = curl_exec($ch);
+    curl_close($ch);
+
+    // Decode the API response
+    $response_data = json_decode($api_response, true);
+
+    if ($response_data && isset($response_data['user'][0])) {
+        // Get the user's data from the API response
+        $user = $response_data['user'][0]; // Assuming 'status' field exists in the API response
+
+
+    } else {
+        // If no data is returned from the API, force logout or show an error
         header('location: '.BASE_URL.'logout.php');
         exit;
     }
 }
 ?>
+
 
 <div class="page">
     <div class="container">
@@ -54,54 +73,54 @@ if(!isset($_SESSION['customer'])) {
             $targetpage = BASE_URL.'customer-order.php';
             $limit = 10;
             $page = @$_GET['page'];
-            if($page) 
+            if($page)
                 $start = ($page - 1) * $limit;
             else
                 $start = 0;
-            
-            
+
+
             $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE customer_email=? ORDER BY id DESC LIMIT $start, $limit");
             $statement->execute(array($_SESSION['customer']['cust_email']));
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-           
-            
+
+
             if ($page == 0) $page = 1;
             $prev = $page - 1;
             $next = $page + 1;
             $lastpage = ceil($total_pages/$limit);
-            $lpm1 = $lastpage - 1;   
+            $lpm1 = $lastpage - 1;
             $pagination = "";
             if($lastpage > 1)
-            {   
+            {
                 $pagination .= "<div class=\"pagination\">";
-                if ($page > 1) 
+                if ($page > 1)
                     $pagination.= "<a href=\"$targetpage?page=$prev\">&#171; previous</a>";
                 else
-                    $pagination.= "<span class=\"disabled\">&#171; previous</span>";    
+                    $pagination.= "<span class=\"disabled\">&#171; previous</span>";
                 if ($lastpage < 7 + ($adjacents * 2))
-                {   
+                {
                     for ($counter = 1; $counter <= $lastpage; $counter++)
                     {
                         if ($counter == $page)
                             $pagination.= "<span class=\"current\">$counter</span>";
                         else
-                            $pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";                 
+                            $pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";
                     }
                 }
                 elseif($lastpage > 5 + ($adjacents * 2))
                 {
-                    if($page < 1 + ($adjacents * 2))        
+                    if($page < 1 + ($adjacents * 2))
                     {
                         for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++)
                         {
                             if ($counter == $page)
                                 $pagination.= "<span class=\"current\">$counter</span>";
                             else
-                                $pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";                 
+                                $pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";
                         }
                         $pagination.= "...";
                         $pagination.= "<a href=\"$targetpage?page=$lpm1\">$lpm1</a>";
-                        $pagination.= "<a href=\"$targetpage?page=$lastpage\">$lastpage</a>";       
+                        $pagination.= "<a href=\"$targetpage?page=$lastpage\">$lastpage</a>";
                     }
                     elseif($lastpage - ($adjacents * 2) > $page && $page > ($adjacents * 2))
                     {
@@ -113,11 +132,11 @@ if(!isset($_SESSION['customer'])) {
                             if ($counter == $page)
                                 $pagination.= "<span class=\"current\">$counter</span>";
                             else
-                                $pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";                 
+                                $pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";
                         }
                         $pagination.= "...";
                         $pagination.= "<a href=\"$targetpage?page=$lpm1\">$lpm1</a>";
-                        $pagination.= "<a href=\"$targetpage?page=$lastpage\">$lastpage</a>";       
+                        $pagination.= "<a href=\"$targetpage?page=$lastpage\">$lastpage</a>";
                     }
                     else
                     {
@@ -129,16 +148,16 @@ if(!isset($_SESSION['customer'])) {
                             if ($counter == $page)
                                 $pagination.= "<span class=\"current\">$counter</span>";
                             else
-                                $pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";                 
+                                $pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";
                         }
                     }
                 }
-                if ($page < $counter - 1) 
+                if ($page < $counter - 1)
                     $pagination.= "<a href=\"$targetpage?page=$next\">next &#187;</a>";
                 else
                     $pagination.= "<span class=\"disabled\">next &#187;</span>";
-                $pagination.= "</div>\n";       
-            } 
+                $pagination.= "</div>\n";
+            }
             /* ===================== Pagination Code Ends ================== */
             ?>
 
@@ -173,14 +192,14 @@ if(!isset($_SESSION['customer'])) {
                                         <td><?php echo $row['payment_id']; ?></td>
                                     </tr>
                                     <?php
-                                } 
-                                ?>                               
-                                
+                                }
+                                ?>
+
                             </tbody>
                         </table>
                         <div class="pagination" style="overflow: hidden;">
-                        <?php 
-                            echo $pagination; 
+                        <?php
+                            echo $pagination;
                         ?>
                     </div>
                 </div>

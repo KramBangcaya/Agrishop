@@ -260,13 +260,14 @@ foreach ($result as $row) {
 
 					<?php
 					if(isset($_SESSION['customer'])) {
+                        // var_dump($_SESSION);
 						?>
-						<li><i class="fa fa-user"></i> <?php echo LANG_VALUE_13; ?> <?php echo $_SESSION['customer']['cust_name']; ?></li>
+						<li><i class="fa fa-user"></i> <?php echo LANG_VALUE_13; ?> <?php echo $_SESSION['customer']['name']; ?></li>
 						<li><a href="dashboard.php"><i class="fa fa-home"></i> <?php echo LANG_VALUE_89; ?></a></li>
 						<?php
 					} else {
 						?>
-						<li><a href="../resources/views/auth/login.blade.php"><i class="fa fa-sign-in"></i> <?php echo LANG_VALUE_9; ?></a></li>
+						<li><a href="login.php"><i class="fa fa-sign-in"></i> <?php echo LANG_VALUE_9; ?></a></li>
 						<li><a href="../resources/views/auth/register.blade.php"><i class="fa fa-user-plus"></i> <?php echo LANG_VALUE_15; ?></a></li>
 						<?php
 					}

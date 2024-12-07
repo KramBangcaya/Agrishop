@@ -57,6 +57,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
+        // dd($request->all());
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
@@ -77,6 +79,14 @@ class UserController extends Controller
             }
         }
 
+        $qrcode = [];
+        if ($request->hasFile('qrcode')) {
+            foreach ($request->file('qrcode') as $qrcodes) {
+                $path = $qrcodes->store('qrcode', 'public');
+                $qrcode[] = $path;
+            }
+        }
+
         // dd($photoPaths);
         $user = User::create([
             'name' => $request->name,
@@ -89,6 +99,7 @@ class UserController extends Controller
             'contact_number' => $request->contact_number,
             'telephone_number' => $request->telephone_number,
             'photos' => json_encode($photoPaths),
+            'qrcode' => json_encode($qrcode),
         ]);
 
         if (isset($request->roles['name'])) {
@@ -152,13 +163,9 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-<<<<<<< HEAD
-        dd($request->id);
-=======
 
         // dd($request->all());
 
->>>>>>> 6c2ff7cd5b9363eceb49ba4888f32643521e8d0e
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
@@ -169,16 +176,10 @@ class UserController extends Controller
             'contact_number' => 'required|string|digits:11',
             'telephone_number' => 'nullable|string|digits:7',
             'user_photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // validate each uploaded file
-<<<<<<< HEAD
-        ]);
-
-        dd($request->hasFile('user_photo'));
-=======
             // 'user_photo.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
         ]);
 
         // dd($request->hasFile('photos'));
->>>>>>> 6c2ff7cd5b9363eceb49ba4888f32643521e8d0e
         $photoPaths = [];
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
@@ -186,7 +187,7 @@ class UserController extends Controller
                 $photoPaths[] = $path;
             }
         }
-        dd(json_encode($photoPaths));
+        // dd(json_encode($photoPaths));
 
         $user = User::findOrFail($request->id);
         $user->update([

@@ -46,3 +46,11 @@ Route::get('/student', [App\Http\Controllers\HomeController::class, 'index'])->n
 // Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->where('any', '.*');
 // Route::view('/{any}','dashboard')->where('any','^(?!js/).*');
 Route::get('{path}', [App\Http\Controllers\HomeController::class, 'index'])->where('any', '^(?!js/).*')->where('path', '([A-z\d\-/_.]+)?');
+Route::get('/get-server-ip', function() {
+    $hostname = gethostname();
+    $ip = gethostbyname($hostname); // Get the IP address of the server by hostname
+
+    return response()->json([
+        'ip' => $ip
+    ]);
+});
