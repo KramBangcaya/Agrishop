@@ -3,7 +3,7 @@
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
 $statement->execute();
-$result = $statement->fetchAll(PDO::FETCH_ASSOC);                            
+$result = $statement->fetchAll(PDO::FETCH_ASSOC);
 foreach ($result as $row) {
     $banner_checkout = $row['banner_checkout'];
 }
@@ -27,10 +27,10 @@ if(!isset($_SESSION['cart_p_id'])) {
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                
+
                 <?php if(!isset($_SESSION['customer'])): ?>
                     <p>
-                        <a href="login.php" class="btn btn-md btn-danger"><?php echo LANG_VALUE_160; ?></a>
+                        <a href="../resources/views/auth/login.blade.php" class="btn btn-md btn-danger"><?php echo LANG_VALUE_160; ?></a>
                     </p>
                 <?php else: ?>
 
@@ -51,63 +51,63 @@ if(!isset($_SESSION['cart_p_id'])) {
                         $table_total_price = 0;
 
                         $i=0;
-                        foreach($_SESSION['cart_p_id'] as $key => $value) 
+                        foreach($_SESSION['cart_p_id'] as $key => $value)
                         {
                             $i++;
                             $arr_cart_p_id[$i] = $value;
                         }
 
                         $i=0;
-                        foreach($_SESSION['cart_size_id'] as $key => $value) 
+                        foreach($_SESSION['cart_size_id'] as $key => $value)
                         {
                             $i++;
                             $arr_cart_size_id[$i] = $value;
                         }
 
                         $i=0;
-                        foreach($_SESSION['cart_size_name'] as $key => $value) 
+                        foreach($_SESSION['cart_size_name'] as $key => $value)
                         {
                             $i++;
                             $arr_cart_size_name[$i] = $value;
                         }
 
                         $i=0;
-                        foreach($_SESSION['cart_color_id'] as $key => $value) 
+                        foreach($_SESSION['cart_color_id'] as $key => $value)
                         {
                             $i++;
                             $arr_cart_color_id[$i] = $value;
                         }
 
                         $i=0;
-                        foreach($_SESSION['cart_color_name'] as $key => $value) 
+                        foreach($_SESSION['cart_color_name'] as $key => $value)
                         {
                             $i++;
                             $arr_cart_color_name[$i] = $value;
                         }
 
                         $i=0;
-                        foreach($_SESSION['cart_p_qty'] as $key => $value) 
+                        foreach($_SESSION['cart_p_qty'] as $key => $value)
                         {
                             $i++;
                             $arr_cart_p_qty[$i] = $value;
                         }
 
                         $i=0;
-                        foreach($_SESSION['cart_p_current_price'] as $key => $value) 
+                        foreach($_SESSION['cart_p_current_price'] as $key => $value)
                         {
                             $i++;
                             $arr_cart_p_current_price[$i] = $value;
                         }
 
                         $i=0;
-                        foreach($_SESSION['cart_p_name'] as $key => $value) 
+                        foreach($_SESSION['cart_p_name'] as $key => $value)
                         {
                             $i++;
                             $arr_cart_p_name[$i] = $value;
                         }
 
                         $i=0;
-                        foreach($_SESSION['cart_p_featured_photo'] as $key => $value) 
+                        foreach($_SESSION['cart_p_featured_photo'] as $key => $value)
                         {
                             $i++;
                             $arr_cart_p_featured_photo[$i] = $value;
@@ -132,7 +132,7 @@ if(!isset($_SESSION['cart_p_id'])) {
                                 <?php echo LANG_VALUE_1; ?><?php echo $row_total_price; ?>
                             </td>
                         </tr>
-                        <?php endfor; ?>           
+                        <?php endfor; ?>
                         <tr>
                             <th colspan="7" class="total-text"><?php echo LANG_VALUE_81; ?></th>
                             <th class="total-amount"><?php echo LANG_VALUE_1; ?><?php echo $table_total_price; ?></th>
@@ -153,7 +153,7 @@ if(!isset($_SESSION['cart_p_id'])) {
                             foreach ($result as $row) {
                                 $shipping_cost = $row['amount'];
                             }
-                        }                        
+                        }
                         ?>
                         <tr>
                             <td colspan="7" class="total-text"><?php echo LANG_VALUE_84; ?></td>
@@ -168,10 +168,10 @@ if(!isset($_SESSION['cart_p_id'])) {
                                 <?php echo LANG_VALUE_1; ?><?php echo $final_total; ?>
                             </th>
                         </tr>
-                    </table> 
+                    </table>
                 </div>
 
-                
+
 
                 <div class="billing-address">
                     <div class="row">
@@ -220,7 +220,7 @@ if(!isset($_SESSION['cart_p_id'])) {
                                 <tr>
                                     <td><?php echo LANG_VALUE_109; ?></td>
                                     <td><?php echo $_SESSION['customer']['cust_b_zip']; ?></td>
-                                </tr>                                
+                                </tr>
                             </table>
                         </div>
                         <div class="col-md-6">
@@ -268,13 +268,13 @@ if(!isset($_SESSION['cart_p_id'])) {
                                 <tr>
                                     <td><?php echo LANG_VALUE_109; ?></td>
                                     <td><?php echo $_SESSION['customer']['cust_s_zip']; ?></td>
-                                </tr> 
+                                </tr>
                             </table>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
 
-                
+
 
                 <div class="cart-buttons">
                     <ul>
@@ -285,7 +285,7 @@ if(!isset($_SESSION['cart_p_id'])) {
 				<div class="clear"></div>
                 <h3 class="special"><?php echo LANG_VALUE_33; ?></h3>
                 <div class="row">
-                    
+
                     	<?php
 		                $checkout_access = 1;
 		                if(
@@ -317,7 +317,7 @@ if(!isset($_SESSION['cart_p_id'])) {
 	                    	</div>
 	                	<?php else: ?>
 		                	<div class="col-md-4">
-		                		
+
 	                            <div class="row">
 
 	                                <div class="col-md-12 form-group">
@@ -365,15 +365,15 @@ if(!isset($_SESSION['cart_p_id'])) {
                                             <input type="submit" class="btn btn-primary" value="<?php echo LANG_VALUE_46; ?>" name="form3">
                                         </div>
                                     </form>
-	                                
+
 	                            </div>
-		                            
-		                        
+
+
 		                    </div>
 		                <?php endif; ?>
-                        
+
                 </div>
-                
+
 
                 <?php endif; ?>
 
