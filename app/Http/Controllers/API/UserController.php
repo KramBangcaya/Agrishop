@@ -10,11 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-<<<<<<< HEAD
+
 use Illuminate\Support\Facades\DB;
-=======
+
 use Illuminate\Support\Facades\Mail;
->>>>>>> 9b98c33df89a82d97d8d56f7172b4739e8634645
 
 class UserController extends Controller
 {
@@ -120,7 +119,15 @@ class UserController extends Controller
 
             $results = DB::table('users')
             ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id' )
             ->where('users.id', $user->id)
+            ->select('users.id as user_id',
+                    'users.name',
+                    'users.lastname',
+                    'users.email',
+                    'users.password',
+                    'model_has_roles.role_id as role_id',
+                    'roles.name as role_name')
             ->get();
 
         return response()->json([
@@ -178,13 +185,10 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-<<<<<<< HEAD
-        dd($request->id);
-=======
+        // dd($request->id);
 
         // dd($request->all());
 
->>>>>>> 6c2ff7cd5b9363eceb49ba4888f32643521e8d0e
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
@@ -195,16 +199,15 @@ class UserController extends Controller
             'contact_number' => 'required|string|digits:11',
             'telephone_number' => 'nullable|string|digits:7',
             'user_photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // validate each uploaded file
-<<<<<<< HEAD
+
         ]);
 
-        dd($request->hasFile('user_photo'));
-=======
+        // dd($request->hasFile('user_photo'));
+
             // 'user_photo.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
-        ]);
+
 
         // dd($request->hasFile('photos'));
->>>>>>> 6c2ff7cd5b9363eceb49ba4888f32643521e8d0e
         $photoPaths = [];
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {

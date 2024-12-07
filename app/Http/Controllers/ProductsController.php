@@ -146,11 +146,6 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
-<<<<<<< HEAD
-        // dd($request->all());
-=======
-
->>>>>>> 6c2ff7cd5b9363eceb49ba4888f32643521e8d0e
         $userID = auth()->user()->id;
         // dd($request->all());
         // dd($request->measurement_id);
