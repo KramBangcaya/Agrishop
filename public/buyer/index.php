@@ -9,7 +9,7 @@
 
 
     <!-- Wrapper For Slides -->
-    <div class="carousel-inner" role="listbox">
+    <div class="carousel-inner"  role="listbox">
 
         <?php
         $i=0;
@@ -19,9 +19,10 @@
         foreach ($result as $row) {
             ?>
 
+
             <div class="item <?php
             if($i==0) {echo 'active';} ?>" style="background-image:url(assets/uploads/agribackground.jpg">
-                <div class="bs-slider-overlay"></div>
+                <div class="bs-slider-overlay"> </div>
 
                 <div class="container">
                     <div class="row">
@@ -52,6 +53,9 @@
 
             </div>
 
+
+
+
             <?php
             $i++;
         }
@@ -67,10 +71,6 @@
             <div class="col-md-12">
                 <div class="headline">
                     <h2>List of Products</h2>
-<<<<<<< HEAD
-=======
-
->>>>>>> b196eea0dabd0b73f76af63777ab320230a5dfeb
                 </div>
             </div>
         </div>
@@ -79,7 +79,11 @@
                 <div class="product-carousel">
                     <?php
                     // Fetch product data from the API
+<<<<<<< HEAD
                     $apiUrl = 'http://192.168.1.101:8080/products/all';
+=======
+                    $apiUrl = 'http://192.168.1.9:8080/products/all';
+>>>>>>> 9b98c33df89a82d97d8d56f7172b4739e8634645
                     $json = @file_get_contents($apiUrl); // Suppress warnings with @
 
                     $products = json_decode($json, true)['data']; // Decode the JSON response to PHP array
@@ -92,7 +96,8 @@
                             ?>
                             <div class="item">
                                 <div class="thumb">
-                                    <div class="photo" style="background-image:url(http://192.168.1.101:8080/storage/<?php echo $product['photos'][0]; ?>);"></div>
+                                    <div class="photo" style="background-image:url(http://192.168.1.9:8080/storage/<?php echo $product['photos'][0]; ?>);"></div>
+
                                     <div class="overlay"></div>
                                 </div>
                                 <div class="text">
@@ -111,12 +116,16 @@
                                         ?>
                                     </div>
                                     <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['first_name']; ?> <?php echo $product['last_name']; ?></a></h3>
+<<<<<<< HEAD
                                     <?php if($product['Quantity'] == 0): ?>
                                         <div class="out-of-stock">
                                             <div class="inner">
                                                 Out Of Stock
                                             </div>
                                         </div>
+=======
+
+>>>>>>> 9b98c33df89a82d97d8d56f7172b4739e8634645
                                         <?php if($product['Quantity'] == 0): ?>
                                             <div class="out-of-stock">
                                                 <div class="inner">
@@ -131,10 +140,11 @@
                                 <?php
                                 $i++;
                             }
+
                         } else {
                             echo '<p>No popular products found.</p>';
                         }
-                    }
+
                     ?>
                 </div>
             </div>

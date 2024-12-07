@@ -6,7 +6,9 @@ if(!isset($_REQUEST['id'])) {
     exit;
 } else {
 
-    $api_url = "http://192.168.1.9:8080/products/all";
+    $product_id = $_REQUEST['id'];
+
+    $api_url = "http://192.168.1.9:8080/products/product/" . $product_id;
 
     // Use cURL to fetch data from API
     $ch = curl_init();
@@ -15,89 +17,33 @@ if(!isset($_REQUEST['id'])) {
     $response = curl_exec($ch);
     curl_close($ch);
 
-    // Check if the response is not empty or false
+    // var_dump($response);
+
     if (!$response) {
         echo "Error fetching data from API.";
         exit;
     }
+     // Decode the JSON response
+     $result = json_decode($response, true);
 
-<<<<<<< HEAD
-        // Decode the JSON response
-        $data = json_decode($response, true);
+     // Check if decoding was successful and "data" key exists
+     if (!$result || !isset($result['data'])) {
+         echo "Invalid product data.";
+         exit;
+     }
 
-        // Check if the data contains the product ID
-        $productFound = false;
-        $product = null;
-
-        // Iterate through products to find the product by ID
-        foreach ($data as $row) {
-            if ($row['id'] == $_REQUEST['id']) {
-                $product = $row;
-                $productFound = true;
-                break;
-            }
-        }
-
-        // If product not found, redirect to index page
-        if (!$productFound) {
-            header('location: index.php');
-            exit;
-        }
-
-        // Get product details
-    $p_name = $product['Product_Name'];
-    $p_current_price = $product['price'];
-    $p_qty = $product['Quantity'];
-    $photo1 = $product['photos'];
-    $photo2 = $product['photos1'];
-    $photo3 = $product['photos2'];
-    $p_description = $product['Description'];
+     // Extract product details from the "data" key
+     $product = $result['data'];
 
 
-
-
-    // Check the id is valid or not
-    // $statement = $pdo->prepare("SELECT * FROM products WHERE id=?");
-    // $statement->execute(array($_REQUEST['id']));
-    // $total = $statement->rowCount();
-    // $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-    // if( $total == 0 ) {
-    //     header('location: index.php');
-    //     exit;
-    // }
-=======
-foreach($result as $row) {
-    $p_name = $row['Product_Name'];
-    $p_current_price = $row['price'];
-    $p_qty = $row['Quantity'];
-    $p_featured_photo = $row['photos'];
-    $photo2 = $row['photos1'];
-    $photo3 = $row['photos2'];
-    $p_description = $row['Description'];
-    // $p_total_view = $row['p_total_view'];
-    // $p_is_featured = $row['p_is_featured'];
-    // $p_is_active = $row['p_is_active'];
-    // $ecat_id = $row['ecat_id'];
->>>>>>> b196eea0dabd0b73f76af63777ab320230a5dfeb
-}
-
-// foreach($result as $row) {
-//     $p_name = $row['Product_Name'];
-//     $p_current_price = $row['price'];
-//     $p_qty = $row['Quantity'];
-//     $photo1 = $row['photos'];
-//     $photo2 = $row['photos1'];
-//     $photo3 = $row['photos2'];
-//     $p_description = $row['Description'];
-//     // $p_total_view = $row['p_total_view'];
-//     // $p_is_featured = $row['p_is_featured'];
-//     // $p_is_active = $row['p_is_active'];
-//     // $ecat_id = $row['ecat_id'];
-// }
-
-
-
-
+     $p_name = $product['Product_Name'] ?? 'N/A';
+     $p_current_price = $product['price'] ?? 'N/A';
+     $p_qty = $product['Quantity'] ?? 'N/A';
+     $p_featured_photo = $product['photos'][0] ?? 'N/A';
+     $photo2 = $product['photos1'][0] ?? 'N/A';
+     $photo3 = $product['photos2'][0] ?? 'N/A';
+     $p_description = $product['Description'] ?? 'N/A';
+ }
 
 if(isset($_POST['form_add_to_cart'])) {
 
@@ -280,7 +226,7 @@ if($success_message1 != '') {
 			<div class="col-md-12">
                 <div class="breadcrumb mb_30">
                     <ul>
-                        <li><a href="<?php echo BASE_URL; ?>">Home</a></li>
+                        <li><a href="index.php">Home</a></li>
                         <li>></li>
                         <li><?php echo $p_name; ?></li>
                     </ul>
@@ -291,28 +237,60 @@ if($success_message1 != '') {
 						<div class="col-md-5">
 							<ul class="prod-slider">
 
-                            <li style="background-image: url(http://192.168.1.101:8080/storage/<?php echo str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>);">
+                            <li style="background-image: url(http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>);">
                                 <a class="popup" href="http://192.168.1.101:8080/storage/<?php echo str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>"></a>
                             </li>
 
 							</ul>
 							<div id="prod-pager">
-								<?php
-                                $i=1;
-                                $statement = $pdo->prepare("SELECT * FROM products WHERE id=?");
-                                $statement->execute(array($_REQUEST['id']));
-                                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                foreach ($result as $row) {
-                                    ?>
-                                    <a data-slide-index="<?php echo $i; ?>" href=""><div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>"></div></a>
-                                    <a data-slide-index="<?php echo $i; ?>" href=""><div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($photo2, '[]"')); ?>"></div></a>
-                                    <a data-slide-index="<?php echo $i; ?>" href=""><div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($photo3, '[]"')); ?>"></div></a>
-                                    <?php
+                                <?php
+                                $product_id = $_REQUEST['id'];
+                                $api_url = "http://192.168.1.9:8080/products/product/" . $product_id;
+
+                                // Fetch product details from API
+                                $ch = curl_init();
+                                curl_setopt($ch, CURLOPT_URL, $api_url);
+                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                                $response = curl_exec($ch);
+                                curl_close($ch);
+
+                                // Decode the JSON response
+                                $product = json_decode($response, true);
+
+                                // Check if the response is valid
+                                if (!isset($product['data'])) {
+                                    echo "Error fetching product details.";
+                                    exit;
+                                }
+
+                                // Extract product data
+                                $product_data = $product['data'];
+
+                                // Parse images
+                                $featured_photo = $product_data['photos'][0] ?? null;
+                                $photo2 = $product_data['photos1'][0] ?? null;
+                                $photo3 = $product_data['photos2'][0] ?? null;
+
+                                $i = 1;
+
+                                // Display images
+                                if ($featured_photo) {
+                                    echo '<a data-slide-index="' . $i . '" href=""><div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($featured_photo) . ');"></div></a>';
+                                    $i++;
+                                }
+                                if ($photo2) {
+                                    echo '<a data-slide-index="' . $i . '" href=""><div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($photo2) . ');"></div></a>';
+                                    $i++;
+                                }
+                                if ($photo3) {
+                                    echo '<a data-slide-index="' . $i . '" href=""><div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($photo3) . ');"></div></a>';
                                     $i++;
                                 }
                                 ?>
-							</div>
+                            </div>
 						</div>
+
+
 						<div class="col-md-7">
 							<div class="p-title"><h2><?php echo $p_name; ?></h2></div>
 							<div class="p-review">
@@ -374,8 +352,13 @@ if($success_message1 != '') {
 							<div class="p-price">
                                 <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
                                 <span>
-
-                                        <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>s
+                                        <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
+                                </span>
+                            </div>
+                            <div class="p-price">
+                                <span style="font-size:14px;">Stock</span><br>
+                                <span>
+                                        <?php echo $p_qty; ?>
                                 </span>
                             </div>
                             <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
@@ -392,9 +375,6 @@ if($success_message1 != '') {
 
 						</div>
 					</div>
-
-
-
 				</div>
 
 			</div>
@@ -418,34 +398,59 @@ if($success_message1 != '') {
                 <div class="product-carousel">
 
                     <?php
-                    $statement = $pdo->prepare("SELECT * FROM products WHERE id!=?");
-                    $statement->execute(array($_REQUEST['id']));
-                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($result as $row) {
+                    $current_product_id = $_REQUEST['id'];
+
+                    // API URL to fetch products
+                    $api_url = "http://192.168.1.9:8080/products/all";
+
+                    // Use cURL to fetch data from API
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $api_url);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($ch);
+                    curl_close($ch);
+
+                    // Check if the response is not empty or false
+                    if (!$response) {
+                        echo "Error fetching products.";
+                        exit;
+                    }
+
+                    // Decode the JSON response
+                    $products = json_decode($response, true);
+
+                    if (!isset($products['data']) || empty($products['data'])) {
+                        echo "No products available.";
+                        exit;
+                    }
+
+                    // Loop through products and exclude the current product
+                    foreach ($products['data'] as $row) {
+                        if ($row['id'] == $current_product_id) {
+                            continue; // Skip the current product
+                        }
                         ?>
                         <div class="item">
                             <div class="thumb">
 
-                            <?php
-// Decode the JSON and extract the first photo URL
-                                            $photos = json_decode($row['photos'], true);
-
-                                            if (!empty($photos[0])) {
-                                                $photoUrl = str_replace('\/', '/', $photos[0]);
-                                                echo '<div class="photo" style="background-image:url(http://192.168.1.101:8080/storage/' . $photoUrl . ');"></div>';
-                                            } else {
-                                                echo '<div class="photo" style="background-color: gray;">No photo available</div>';
-                                            }
-                                            ?>
-                            <!-- <div class="photo" style="background-image:url(http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($row['photos'][0])); ?>);"></div> -->
+                                <?php
+                                // Decode the photos array and display the first photo
+                                $photos = $row['photos'];
+                                if (!empty($photos) && isset($photos[0])) {
+                                    $photoUrl = str_replace('\/', '/', $photos[0]);
+                                    echo '<div class="photo" style="background-image:url(http://192.168.1.9:8080/storage/' . $photoUrl . ');"></div>';
+                                } else {
+                                    echo '<div class="photo" style="background-color: gray;">No photo available</div>';
+                                }
+                                ?>
                                 <div class="overlay"></div>
                             </div>
                             <div class="text">
-                                <h3><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo $row['Product_Name']; ?></a></h3>
+                                <h3><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['Product_Name']); ?></a></h3>
                                 <h4>
-                                    <?php echo LANG_VALUE_1; ?><?php echo $row['price']; ?>
-
+                                    <?php echo LANG_VALUE_1; ?><?php echo htmlspecialchars($row['price']); ?>
                                 </h4>
+                                <p><?php echo $row['first_name']?> <?php echo $row['first_name']?></p>
                                 <p><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo LANG_VALUE_154; ?></a></p>
                             </div>
                         </div>
@@ -457,5 +462,6 @@ if($success_message1 != '') {
         </div>
     </div>
 </div>
+
 
 <?php require_once('footer.php'); ?>

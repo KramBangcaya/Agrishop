@@ -9,7 +9,6 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Users</a></li>
-                            <!-- <li class="breadcrumb-item active">Starter Page</li> -->
                         </ol>
                     </div>
                 </div>
@@ -35,8 +34,6 @@
                                             <option value="25">25</option>
                                             <option value="30">30</option>
                                         </select>
-                                        <button class="btn btn-success btn-sm ml-auto" @click="openAddModal"
-                                            v-if="can('create user')"><i class="fas fa-user-plus"></i> Add</button>
                                     </div>
                                 </div>
                                 <div class="card-tools">
@@ -67,16 +64,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                        <tr v-for="(data, index) in         option_users.data        " :key="index">
+                                        <tr v-for="(data, index) in option_users.data" :key="index">
                                             <td>{{ data.id }}</td>
-                                            <td><img v-if="data.photos && data.photos.length"
-                                                    :src="'/storage/'+formatPhotoPath(data.photos)" alt="Product Photo"
-                                                    style="max-width: 200px; max-height: 200px;"></td>
-                                            <!-- <td>{{ data }}</td> -->
-                                            <td>{{ data.name + " " + data.lastname}}</td>
+                                            <td>
+                                                <img
+                                                    v-if="data.photos && data.photos.length"
+                                                    :src="'/storage/'+formatPhotoPath(data.photos)"
+                                                    alt="Product Photo"
+                                                    style="max-width: 200px; max-height: 200px; cursor: pointer;"
+                                                    @click="openImageModal('/storage/' + formatPhotoPath(data.photos))"
+                                                />
+                                            </td>
+                                            <td>{{ data.name + " " + data.lastname }}</td>
                                             <td>{{ data.email }}</td>
-
                                             <td>{{ data.contact_number }}</td>
                                             <td v-if="data.roles.length > 0">
                                                 <span v-for="role in data.roles" :key="role.id">
@@ -84,32 +84,19 @@
                                                 </span>
                                             </td>
                                             <td v-else-if="data.reason_of_disapproval != null">
-                                                <span class="badge badge-danger">
-                                                    This user is denied
-                                                </span>
+                                                <span class="badge badge-danger">This user is denied</span>
                                             </td>
                                             <td v-else>
-                                                <span class="badge badge-danger">
-                                                    No User Type for Evaluation and
-                                                    Approval
-                                                </span>
+                                                <span class="badge badge-danger">No User Type for Evaluation and Approval</span>
                                             </td>
                                             <td v-if="data.reason_of_disapproval != null && data.approved_at == NULL">
-                                                <span class="badge badge-danger">
-                                                    This user is denied
-                                                </span>
+                                                <span class="badge badge-danger">This user is denied</span>
                                             </td>
                                             <td v-else-if="data.approved_at == NULL">
-                                                <span class="badge badge-danger">
-                                                    Not Validated
-                                                </span>
+                                                <span class="badge badge-danger">Not Validated</span>
                                             </td>
-                                            <td v-else>
-                                                {{ data.approved_at }}
-                                            </td>
-
+                                            <td v-else>{{ data.approved_at }}</td>
                                             <td class="text-right">
-
                                                 <button
                                                     v-if="data.approved_at === null && data.reason_of_disapproval === null"
                                                     type="button" class="btn btn-success btn-sm"
@@ -146,6 +133,7 @@
                         </div>
                         <!-- /.card -->
                     </div>
+
                     <!-- declare the add modal -->
                     <add-modal @getData="getData"></add-modal>
                     <!-- declare the edit modal -->
@@ -155,8 +143,19 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal for zoomed image -->
+        <div v-if="showImageModal" class="modal-overlay" @click="closeImageModal">
+            <div class="modal-content">
+                <img :src="zoomedImage" alt="Zoomed Image" />
+            </div>
+        </div>
     </div>
 </template>
+
+
+
+
 <script>
 import addModal from "./AddUser.vue";
 import EditModal from "./EditUser.vue";
@@ -181,9 +180,18 @@ export default {
                 id: '',
             }),
             error: '',
+            showImageModal: false,
+            zoomedImage: '',
         }
     },
     methods: {
+        openImageModal(imageSrc) {
+            this.zoomedImage = imageSrc;
+            this.showImageModal = true;
+        },
+        closeImageModal() {
+            this.showImageModal = false;
+        },
         formatPhotoPath(photoPath) {
             if (photoPath) {
                 return photoPath.replace(/^\["(.+)"\]$/, '$1');
@@ -298,3 +306,32 @@ export default {
     },
 }
 </script>
+
+<style>
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+</style>

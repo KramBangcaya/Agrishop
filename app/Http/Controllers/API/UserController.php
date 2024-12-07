@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ApprovalConfirmation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\DB;
+=======
+use Illuminate\Support\Facades\Mail;
+>>>>>>> 9b98c33df89a82d97d8d56f7172b4739e8634645
 
 class UserController extends Controller
 {
@@ -137,6 +142,11 @@ class UserController extends Controller
             $user->update([
                 'approved_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
+            // dd($user);
+
+            // $ipAddress = $request->server('SERVER_ADDR', 'localhost');
+            // dd($ipAddress);
+            Mail::to($user->email)->send(new ApprovalConfirmation($user));
         } else {
             // dd($request->txtdesapproval);
             $user = User::findOrFail($id);
@@ -168,9 +178,13 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+<<<<<<< HEAD
+        dd($request->id);
+=======
 
         // dd($request->all());
 
+>>>>>>> 6c2ff7cd5b9363eceb49ba4888f32643521e8d0e
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
@@ -181,10 +195,16 @@ class UserController extends Controller
             'contact_number' => 'required|string|digits:11',
             'telephone_number' => 'nullable|string|digits:7',
             'user_photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // validate each uploaded file
+<<<<<<< HEAD
+        ]);
+
+        dd($request->hasFile('user_photo'));
+=======
             // 'user_photo.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
         ]);
 
         // dd($request->hasFile('photos'));
+>>>>>>> 6c2ff7cd5b9363eceb49ba4888f32643521e8d0e
         $photoPaths = [];
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
@@ -192,7 +212,7 @@ class UserController extends Controller
                 $photoPaths[] = $path;
             }
         }
-        // dd(json_encode($photoPaths));
+        dd(json_encode($photoPaths));
 
         $user = User::findOrFail($request->id);
         $user->update([
