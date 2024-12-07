@@ -166,11 +166,26 @@
                             </div>
 
                             <div class="row mb-3">
+                                <label class="col-md-4 col-form-label text-md-end">Upload QR Code</label>
+                                <div class="col-md-6">
+                                    <input id="qr_code" type="file"
+                                        class="form-control @error('qr_code') is-invalid @enderror" name="qr_code[]"
+                                        value="{{ old('qr_code') }}" autocomplete="qr_code" autofocus>
+                                    @error('qr_code')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <label class="col-md-4 col-form-label text-md-end"></label>
 
                                 <div class="col-md-6">
-                                    <span class="text-danger">If You are a Buyer provide your valid Id</span><br>
-                                    <span class="text-danger">If You are a Seller provide your Business Permit</span>
+                                    <span class="text-danger">If You are a Buyer provide your Valid ID</span><br>
+                                    <span class="text-danger">If You are a Seller provide your Business Permit</span><br>
+                                    <span class="text-danger">If You are a Seller provide your QR Code</span>
                                 </div>
                             </div>
 

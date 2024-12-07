@@ -3,7 +3,7 @@
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
 $statement->execute();
-$result = $statement->fetchAll(PDO::FETCH_ASSOC);                            
+$result = $statement->fetchAll(PDO::FETCH_ASSOC);
 foreach ($result as $row) {
     $banner_login = $row['banner_login'];
 }
@@ -11,38 +11,47 @@ foreach ($result as $row) {
 <!-- login form -->
 <?php
 if(isset($_POST['form1'])) {
-        
+
     if(empty($_POST['cust_email']) || empty($_POST['cust_password'])) {
         $error_message = LANG_VALUE_132.'<br>';
     } else {
-        
+
         $cust_email = strip_tags($_POST['cust_email']);
         $cust_password = strip_tags($_POST['cust_password']);
 
-        $statement = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_email=?");
-        $statement->execute(array($cust_email));
-        $total = $statement->rowCount();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        foreach($result as $row) {
-            $cust_status = $row['cust_status'];
-            $row_password = $row['cust_password'];
-        }
+        // API URL with the email as a parameter
+        $api_url = "http://192.168.1.9:8080/login/submit?email=" . urlencode($cust_email);
 
-        if($total==0) {
-            $error_message .= LANG_VALUE_133.'<br>';
-        } else {
-            //using MD5 form
-            if( $row_password != md5($cust_password) ) {
+        // Initialize cURL session
+        $ch = curl_init($api_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Disable SSL verification if using a self-signed certificate
+        $api_response = curl_exec($ch);
+        curl_close($ch);
+
+        // Decode JSON response
+        $response_data = json_decode($api_response, true);
+
+        if ($response_data && isset($response_data['user'][0])) {
+            // Check if the user exists and the password matches
+            $user = $response_data['user'][0];
+            $hashed_password = $user['password'];
+
+            // Verify password using password_verify (assuming the API uses bcrypt hash)
+            if (!password_verify($cust_password, $hashed_password)) {
                 $error_message .= LANG_VALUE_139.'<br>';
             } else {
-                if($cust_status == 0) {
-                    $error_message .= LANG_VALUE_148.'<br>';
-                } else {
-                    $_SESSION['customer'] = $row;
+                // Check if the role_name is 'buyer'
+                if ($user['role_name'] == 'buyer') {
+                    $_SESSION['customer'] = $user;
                     header("location: ".BASE_URL."dashboard.php");
+                    exit;
+                } else {
+                    $error_message .= "No buyer account found.<br>";
                 }
             }
-            
+        } else {
+            $error_message .= LANG_VALUE_133.'<br>';
         }
     }
 }
@@ -60,9 +69,9 @@ if(isset($_POST['form1'])) {
             <div class="col-md-12">
                 <div class="user-content">
 
-                    
+
                     <form action="" method="post">
-                        <?php $csrf->echoInputField(); ?>                  
+                        <?php $csrf->echoInputField(); ?>
                         <div class="row">
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
@@ -88,9 +97,9 @@ if(isset($_POST['form1'])) {
                                 </div>
                                 <a href="forget-password.php" style="color:#e4144d;"><?php echo LANG_VALUE_97; ?>?</a>
                             </div>
-                        </div>                        
+                        </div>
                     </form>
-                </div>                
+                </div>
             </div>
         </div>
     </div>

@@ -72,6 +72,8 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+        $qrcode = request()->file('qr_code');
+        $qrcodes = [];
         $photos = request()->file('photos');
         $paths = [];
 
@@ -80,6 +82,14 @@ class RegisterController extends Controller
                 $filename = time() . '.' . $photo->getClientOriginalExtension();
                 $path = $photo->storeAs('Personal_Info_Photo', $filename, 'public');
                 $paths[] = $path; // Add path to the array
+            }
+        }
+
+        if (!empty($qrcode)) {
+            foreach ($qrcode as $photo) {
+                $filename = time() . '.' . $photo->getClientOriginalExtension();
+                $path = $photo->storeAs('QRCode', $filename, 'public');
+                $qrcodes[] = $path; // Add path to the array
             }
         }
 
@@ -94,6 +104,7 @@ class RegisterController extends Controller
             'contact_number' => $data['contact_number'],
             'telephone_number' => $data['telephone_number'],
             'photos' => json_encode($paths), // Store photo paths as JSON
+            'qrcode' => json_encode($qrcodes),
         ]);
     }
 }
