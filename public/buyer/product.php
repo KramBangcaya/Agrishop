@@ -155,6 +155,9 @@ if(isset($_POST['form_add_to_cart'])) {
             $_SESSION['cart_p_qty'][$new_key] = $_POST['p_qty'];
             $_SESSION['cart_p_current_price'][$new_key] = $_POST['p_current_price'];
             $_SESSION['cart_p_name'][$new_key] = $_POST['p_name'];
+            // $_SESSION['f_name'][$new_key] = $_REQUEST['fname'];
+            // $_SESSION['l_name'][$new_key] = $_REQUEST['lname'];
+
             $_SESSION['cart_p_featured_photo'][$new_key] = $_POST['p_featured_photo'];
 
             $success_message1 = 'Product is added to the cart successfully!';
@@ -202,6 +205,8 @@ if(isset($_POST['form_add_to_cart'])) {
         $_SESSION['cart_p_current_price'][1] = $_POST['p_current_price'];
         $_SESSION['cart_p_name'][1] = $_POST['p_name'];
         $_SESSION['cart_p_featured_photo'][1] = $_POST['p_featured_photo'];
+        // $_SESSION['f_name'][1] = $_REQUEST['fname'];
+        // $_SESSION['l_name'][1] = $_REQUEST['lname'];
 
         $success_message1 = 'Product is added to the cart successfully!';
     }

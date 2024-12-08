@@ -97,7 +97,7 @@
                                     <div class="overlay"></div>
                                 </div>
                                 <div class="text">
-                                    <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['Product_Name']; ?></a></h3>
+                                    <h3><a href="product.php?id=<?php echo $product['id']; ?>&fname=<?php echo $product['first_name']; ?>&lname=<?php echo $product['last_name']; ?>"></a><?php echo $product['Product_Name']; ?></a></h3>
 
                                     <h4>
                                     ₱<?php echo $product['price']; ?>
@@ -111,7 +111,7 @@
                                         }
                                         ?>
                                     </div>
-                                    <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['first_name']; ?> <?php echo $product['last_name']; ?></a></h3>
+                                    <h3><a href="product.php?id=<?php echo $product['id']; ?>&fname=<?php echo $product['first_name']; ?>&lname=<?php echo $product['last_name']; ?>"><?php echo $product['first_name']; ?> <?php echo $product['last_name']; ?></a></h3>
                                         <?php if($product['Quantity'] == 0): ?>
                                             <div class="out-of-stock">
                                                 <div class="inner">
@@ -119,7 +119,7 @@
                                                 </div>
                                             </div>
                                         <?php else: ?>
-                                            <p><a href="product.php?id=<?php echo $product['id']; ?>"><i class="fa fa-shopping-cart"></i> Add to Cart</a></p>
+                                            <p><a href="product.php?id=<?php echo $product['id']; ?>&fname=<?php echo $product['first_name']; ?>&lname=<?php echo $product['last_name']; ?>"><i class="fa fa-shopping-cart"></i> Add to Cart</a></p>
                                         <?php endif; ?>
                                     </div>
                                 </div>

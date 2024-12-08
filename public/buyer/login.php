@@ -18,7 +18,7 @@ if(isset($_POST['form1'])) {
 
         $cust_email = strip_tags($_POST['cust_email']);
         $cust_password = strip_tags($_POST['cust_password']);
-
+        // var_dump($cust_email);
         // API URL with the email as a parameter
         $api_url = "http://192.168.1.9:8080/login/submit?email=" . urlencode($cust_email);
 
@@ -37,12 +37,13 @@ if(isset($_POST['form1'])) {
             $user = $response_data['user'][0];
             $hashed_password = $user['password'];
 
+
             // Verify password using password_verify (assuming the API uses bcrypt hash)
             if (!password_verify($cust_password, $hashed_password)) {
                 $error_message .= LANG_VALUE_139.'<br>';
             } else {
                 // Check if the role_name is 'buyer'
-                if ($user['role_name'] == 'buyer') {
+                if ($user['role_name'] == 'buyer' || $user['role_name'] == 'Buyer' ) {
                     $_SESSION['customer'] = $user;
                     header("location: ".BASE_URL."dashboard.php");
                     exit;

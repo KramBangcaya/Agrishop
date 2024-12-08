@@ -159,6 +159,8 @@ if(isset($_POST['form1'])) {
                         <tr>
 
                             <td><?php echo $i; ?></td>
+                            <!-- <td><?php echo $_SESSION['f_name']; ?></td>
+                            <td><?php echo $_SESSION['l_name']; ?></td> -->
                             <td>
                                 <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>" alt="">
                             </td>
