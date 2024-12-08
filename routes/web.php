@@ -31,6 +31,7 @@ Route::prefix('products')->group(function () {
     Route::get('/all', [ProductsController::class, 'index_all']);
     Route::get('/category/{id}', [App\Http\Controllers\ProductsController::class, 'category_all']);
     Route::get('/product/{id}', [App\Http\Controllers\ProductsController::class, 'product']);
+    Route::get('/product/seller/{id}', [App\Http\Controllers\ProductsController::class, 'seller']);
 });
 
 Route::prefix('categories')->group(function () {
@@ -42,6 +43,10 @@ Route::prefix('login')->group(function () {
 
 Route::prefix('login')->group(function () {
     Route::get('/submit', [UserController::class, 'authenticate']);
+});
+
+Route::prefix('seller')->group(function () {
+    Route::get('/all', [UserController::class, 'all']);
 });
 Route::prefix('register')->group(function () {
     Route::get('/submit', [MobileController::class, 'Registration']);

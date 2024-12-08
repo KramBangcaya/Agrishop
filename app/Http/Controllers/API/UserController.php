@@ -10,12 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-<<<<<<< HEAD
 
 use Illuminate\Support\Facades\DB;
 
-=======
->>>>>>> 11f01c375f2d9e5762aa9155a75b437d7eeaf050
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
@@ -86,9 +83,10 @@ class UserController extends Controller
         }
 
         $qrcode = [];
+
         if ($request->hasFile('qrcode')) {
             foreach ($request->file('qrcode') as $qrcodes) {
-                $path = $qrcodes->store('qrcode', 'public');
+                $path = $qrcodes->store('QRCode', 'public');
                 $qrcode[] = $path;
             }
         }
@@ -190,6 +188,15 @@ class UserController extends Controller
 
         return response(['message' => 'success'], 200);
     }
+
+    public function all(Request $request){
+
+        $user = User::all();
+
+        return response()->json([
+            'user' => $user,
+        ], 200);
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -199,12 +206,6 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-<<<<<<< HEAD
-        // dd($request->id);
-=======
->>>>>>> 11f01c375f2d9e5762aa9155a75b437d7eeaf050
-
-        // dd($request->all());
 
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
@@ -216,14 +217,8 @@ class UserController extends Controller
             'contact_number' => 'required|string|digits:11',
             'telephone_number' => 'nullable|string|digits:7',
             'user_photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // validate each uploaded file
-<<<<<<< HEAD
 
         ]);
-
-        // dd($request->hasFile('user_photo'));
-
-=======
->>>>>>> 11f01c375f2d9e5762aa9155a75b437d7eeaf050
             // 'user_photo.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
 
 
