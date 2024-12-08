@@ -43,6 +43,10 @@ Route::prefix('login')->group(function () {
 Route::prefix('login')->group(function () {
     Route::get('/submit', [UserController::class, 'authenticate']);
 });
+
+Route::prefix('seller')->group(function () {
+    Route::get('/all', [UserController::class, 'all']);
+});
 Route::prefix('register')->group(function () {
     Route::get('/submit', [MobileController::class, 'Registration']);
 });
