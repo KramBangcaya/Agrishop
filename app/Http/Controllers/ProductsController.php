@@ -6,6 +6,7 @@ use App\Models\Measurement;
 use App\Models\Products;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -115,6 +116,30 @@ class ProductsController extends Controller
 
     return response()->json(['data' => $formattedData], 200);
 
+    }
+
+    public function seller (Request $request, $id){
+
+        $seller = User::find($id);
+
+    $results = DB::table('users')
+    ->join('products', 'users.id', '=', 'products.userID')
+    ->select(
+        'users.id',
+        'users.name',
+        'users.lastname',
+        'products.id as product_id',
+        'products.Product_Name',
+        'products.price',
+        'products.Quantity',
+        'products.Description'
+    )
+    ->where('users.id', $id)
+    ->get();
+
+    // dd($results);
+
+    return response()->json(['data' => $results], 200);
     }
 
     public function index1(Request $request)

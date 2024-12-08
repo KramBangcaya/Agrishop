@@ -83,9 +83,10 @@ class UserController extends Controller
         }
 
         $qrcode = [];
+
         if ($request->hasFile('qrcode')) {
             foreach ($request->file('qrcode') as $qrcodes) {
-                $path = $qrcodes->store('qrcode', 'public');
+                $path = $qrcodes->store('QRCode', 'public');
                 $qrcode[] = $path;
             }
         }
