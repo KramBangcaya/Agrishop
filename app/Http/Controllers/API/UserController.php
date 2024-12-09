@@ -11,12 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-<<<<<<< HEAD
-=======
-
 use Illuminate\Support\Facades\DB;
-
->>>>>>> 460146fce2478d2be998602fdf985982d846e192
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
@@ -215,10 +210,6 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-<<<<<<< HEAD
-=======
-
->>>>>>> 460146fce2478d2be998602fdf985982d846e192
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
@@ -231,14 +222,6 @@ class UserController extends Controller
             'user_photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // validate each uploaded file
 
         ]);
-<<<<<<< HEAD
-
-=======
-            // 'user_photo.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
-
-
-        // dd($request->hasFile('photos'));
->>>>>>> 460146fce2478d2be998602fdf985982d846e192
         $photoPaths = [];
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {

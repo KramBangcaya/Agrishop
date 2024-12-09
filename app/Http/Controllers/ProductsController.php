@@ -132,7 +132,8 @@ class ProductsController extends Controller
         'products.Product_Name',
         'products.price',
         'products.Quantity',
-        'products.Description'
+        'products.Description',
+        'products.photos',
     )
     ->where('users.id', $id)
     ->get();
