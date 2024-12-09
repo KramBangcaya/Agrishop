@@ -184,10 +184,10 @@
                             <div class="row mb-3">
                                 <label class="col-md-4 col-form-label text-md-end">Upload QR Code</label>
                                 <div class="col-md-6">
-                                    <input id="qr_code" type="file"
-                                        class="form-control @error('qr_code') is-invalid @enderror" name="qr_code[]"
-                                        value="{{ old('qr_code') }}" autocomplete="qr_code" autofocus>
-                                    @error('qr_code')
+                                    <input id="qrcode" type="file"
+                                        class="form-control @error('qrcode') is-invalid @enderror" name="qrcode[]"
+                                        value="{{ old('qrcode') }}" autocomplete="qr_code" autofocus>
+                                    @error('qrcode')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

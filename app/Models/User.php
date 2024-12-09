@@ -42,7 +42,10 @@ class User extends Authenticatable
         'latitude',
         'longitude',
         'qrcode',
+<<<<<<< HEAD
         'address'
+=======
+>>>>>>> 460146fce2478d2be998602fdf985982d846e192
     ];
 
     /**
