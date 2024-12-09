@@ -297,17 +297,17 @@ if($success_message1 != '') {
 
 
 						<div class="col-md-7">
-							<div class="p-title"><h2><?php echo $p_name; ?></h2></div>
-							<div class="p-review">
+
+
+
+
+							<!-- <div class="p-review">
 								<div class="rating">
 
                                 </div>
-							</div>
-							<div class="p-short-des">
-								<p>
-									<?php echo $p_description; ?>
-								</p>
-							</div>
+							</div> -->
+
+
                             <form action="" method="post">
                             <div class="p-quantity">
                                 <div class="row">
@@ -355,6 +355,16 @@ if($success_message1 != '') {
 
                             </div>
 							<div class="p-price">
+                            <div class="p-title"><h2><?php echo $p_name; ?></h2></div>
+
+
+<div class="p-short-des" style="font-size:14px;">
+    <p>
+        <?php echo $p_description; ?>
+    </p>
+</div>
+
+
                                 <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
                                 <span>
                                         <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
