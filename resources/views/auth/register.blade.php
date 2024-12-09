@@ -13,7 +13,7 @@
 
                             <div class="row mb-3">
                                 <label for="name"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('firstname') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text"
@@ -29,7 +29,7 @@
                             </div>
                             <div class="row mb-3">
                                 <label for="lastname"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('lastname') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Last Name') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="lastname" type="text"
@@ -61,7 +61,7 @@
                             </div>
                             <div class="row mb-3">
                                 <label for="date_of_birth"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('date of birth') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Date of Birth') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="date_of_birth" type="date"
@@ -77,7 +77,7 @@
                             </div>
                             <div class="row mb-3">
                                 <label for="contact_number"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('contact number') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Contact Number') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="contact_number" type="number"
