@@ -45,7 +45,7 @@
                             </div>
                             <div class="row mb-3">
                                 <label for="middle_initial"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('middle initial') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Middle Initial') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="middle_initial" type="text"
@@ -101,6 +101,22 @@
                                         value="{{ old('telephone_number') }}" autocomplete="telephone_number" autofocus>
 
                                     @error('telephone_number')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="address"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Address') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="address" type="text"
+                                        class="form-control @error('address') is-invalid @enderror" name="address"
+                                        value="{{ old('address') }}" required autocomplete="address">
+
+                                    @error('address')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

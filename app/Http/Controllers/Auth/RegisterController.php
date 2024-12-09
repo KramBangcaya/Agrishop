@@ -59,6 +59,7 @@ class RegisterController extends Controller
             'date_of_birth' => ['required', 'date'],
             'contact_number' => ['required', 'string', 'digits:11'],
             'telephone_number' => ['nullable', 'string', 'digits:7'],
+            'address' => ['required', 'string'],
             'photos.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // validate each uploaded file
         ]);
     }
@@ -103,6 +104,7 @@ class RegisterController extends Controller
             'date_of_birth' => $data['date_of_birth'],
             'contact_number' => $data['contact_number'],
             'telephone_number' => $data['telephone_number'],
+            'address' => $data['address'],
             'photos' => json_encode($paths), // Store photo paths as JSON
             'qrcode' => json_encode($qrcodes),
         ]);

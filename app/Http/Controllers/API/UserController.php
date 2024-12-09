@@ -4,18 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ApprovalConfirmation;
+use App\Mail\Disapproval;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-<<<<<<< HEAD
-
-use Illuminate\Support\Facades\DB;
-
-=======
->>>>>>> 11f01c375f2d9e5762aa9155a75b437d7eeaf050
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
@@ -74,6 +69,7 @@ class UserController extends Controller
             'date_of_birth' => 'required|date',
             'contact_number' => 'required|string|digits:11',
             'telephone_number' => 'nullable|string|digits:7',
+            'address' => 'required|string',
             'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -104,10 +100,11 @@ class UserController extends Controller
             'date_of_birth' => $request->date_of_birth,
             'contact_number' => $request->contact_number,
             'telephone_number' => $request->telephone_number,
+            'address' => $request->address,
             'photos' => json_encode($photoPaths),
             'qrcode' => json_encode($qrcode),
         ]);
-
+        // dd($request->all());
         if (isset($request->roles['name'])) {
             $user->assignRole($request->roles['name']);
 
@@ -115,6 +112,7 @@ class UserController extends Controller
                 $user->givePermissionTo($permission['name']);
             }
         }
+
         return response(['message' => 'success'], 200);
     }
 
@@ -175,6 +173,8 @@ class UserController extends Controller
             $user->update([
                 'reason_of_disapproval' => $request->txtdesapproval
             ]);
+
+            Mail::to($user->email)->send(new Disapproval($user));
         }
 
         return response(['message' => 'success'], 200);
@@ -199,13 +199,6 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-<<<<<<< HEAD
-        // dd($request->id);
-=======
->>>>>>> 11f01c375f2d9e5762aa9155a75b437d7eeaf050
-
-        // dd($request->all());
-
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
@@ -216,18 +209,9 @@ class UserController extends Controller
             'contact_number' => 'required|string|digits:11',
             'telephone_number' => 'nullable|string|digits:7',
             'user_photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // validate each uploaded file
-<<<<<<< HEAD
 
         ]);
 
-        // dd($request->hasFile('user_photo'));
-
-=======
->>>>>>> 11f01c375f2d9e5762aa9155a75b437d7eeaf050
-            // 'user_photo.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
-
-
-        // dd($request->hasFile('photos'));
         $photoPaths = [];
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {

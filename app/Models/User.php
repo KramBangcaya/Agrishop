@@ -41,10 +41,8 @@ class User extends Authenticatable
         'user_photo',
         'latitude',
         'longitude',
-<<<<<<< HEAD
-=======
         'qrcode',
->>>>>>> 11f01c375f2d9e5762aa9155a75b437d7eeaf050
+        'address'
     ];
 
     /**

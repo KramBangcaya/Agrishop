@@ -41,8 +41,10 @@ if(isset($_POST['form1'])) {
             if (!password_verify($cust_password, $hashed_password)) {
                 $error_message .= LANG_VALUE_139.'<br>';
             } else {
+
+
                 // Check if the role_name is 'buyer'
-                if ($user['role_name'] == 'buyer') {
+                if ($user['role_name'] == 'buyer' || $user['role_name'] == 'Buyer') {
                     $_SESSION['customer'] = $user;
                     header("location: ".BASE_URL."dashboard.php");
                     exit;
