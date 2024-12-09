@@ -64,10 +64,18 @@ foreach ($result as $row) {
 
                             // Ensure latitude and longitude are valid numbers
                             if (!isNaN(latitude) && !isNaN(longitude)) {
-                                new google.maps.Marker({
+                                const marker = new google.maps.Marker({
                                     position: { lat: latitude, lng: longitude },
                                     map: map,
                                     title: `${user.name} ${user.lastname}`
+                                });
+
+                                // marker.addListener('click', () => {
+                                //     alert(`User ID: ${user.id}`);
+                                // });
+
+                                marker.addListener('click', () => {
+                                    window.location.href = `sellerindex.php?user_id=${user.id}`;
                                 });
                             }
                         });
