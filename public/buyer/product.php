@@ -35,16 +35,17 @@ if(!isset($_REQUEST['id'])) {
      // Extract product details from the "data" key
      $product = $result['data'];
 
-
      $p_name = $product['Product_Name'] ?? 'N/A';
      $p_current_price = $product['price'] ?? 'N/A';
      $p_qty = $product['Quantity'] ?? 'N/A';
+     $p_measurement = $product['measurement'] ?? 'N/A';
      $p_featured_photo = $product['photos'][0] ?? 'N/A';
      $photo2 = $product['photos1'][0] ?? 'N/A';
      $photo3 = $product['photos2'][0] ?? 'N/A';
      $p_description = $product['Description'] ?? 'N/A';
      $s_name = $product['first_name'] ?? 'N/A';
      $s_last = $product['last_name'] ?? 'N/A';
+     $s_address = $product['address'] ?? 'N/A';
  }
 
 if(isset($_POST['form_add_to_cart'])) {
@@ -382,9 +383,15 @@ if($success_message1 != '') {
                             <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
                             <input type="hidden" name="p_name" value="<?php echo $p_name; ?>">
                             <input type="hidden" name="p_featured_photo" value="<?php echo $p_featured_photo; ?>">
+
 							<div class="p-quantity">
                                 <?php echo LANG_VALUE_55; ?> <br>
 								<input type="number" class="input-text qty" step="1" min="1" max="" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric">
+							</div>
+                            <div class="p-short-des">
+								<p>
+									<?php echo $s_address; ?>
+								</p>
 							</div>
 							<div class="btn-cart btn-cart1">
                                 <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
