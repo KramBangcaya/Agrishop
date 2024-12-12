@@ -397,6 +397,15 @@ if($success_message1 != '') {
 	</div>
 </div>
 
+
+
+
+
+
+
+
+
+
 <div class="product bg-gray pt_70 pb_70">
     <div class="container">
         <div class="row">
@@ -407,6 +416,9 @@ if($success_message1 != '') {
                 </div>
             </div>
         </div>
+
+
+
         <div class="row">
             <div class="col-md-12">
 
@@ -445,6 +457,9 @@ if($success_message1 != '') {
                             continue; // Skip the current product
                         }
                         ?>
+
+
+
                         <div class="item">
                             <div class="thumb">
 

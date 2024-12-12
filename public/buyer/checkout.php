@@ -120,6 +120,22 @@ if(!isset($_SESSION['cart_p_id'])) {
 
 
 
+                                    <form action="payment/bank/init.php" method="post" id="bank_form">
+
+
+
+                                     <div class="col-md-12 form-group">
+                                         <label for=""><?php echo "Seller Name"; ?> <br><span style="font-size:12px;font-weight:normal;">(<?php echo "Scan The QR Here to Pay"; ?>)</span></label>
+                                         <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>" alt="">
+                                     </div>
+
+
+                                     <div class="col-md-12 form-group">
+                                     <label for=""><?php echo "Upload here the Proof of Payment"; ?> <br><span style="font-size:12px;font-weight:normal;">(<?php echo "Supporting Documents"; ?>)</span></label>
+                                         <input type="file" class="btn btn-primary" value="Upload" name="form3">
+                                         <!-- <input type="submit" class="btn btn-primary" value="<?php echo LANG_VALUE_46; ?>" name="form3"> -->
+                                     </div>
+                                 </form>
 
 
 	                            </div>
@@ -135,19 +151,6 @@ if(!isset($_SESSION['cart_p_id'])) {
                         <?php endfor; ?>
 
 
-                        <form action="payment/bank/init.php" method="post" id="bank_form">
-
-
-
-                                        <div class="col-md-12 form-group">
-                                            <label for=""><?php echo LANG_VALUE_44; ?> <br><span style="font-size:12px;font-weight:normal;">(<?php echo LANG_VALUE_45; ?>)</span></label>
-                                            <textarea name="transaction_info" class="form-control" cols="30" rows="10"></textarea>
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <input type="file" class="btn btn-primary" value="Upload" name="form3">
-                                            <!-- <input type="submit" class="btn btn-primary" value="<?php echo LANG_VALUE_46; ?>" name="form3"> -->
-                                        </div>
-                                    </form>
 
 
                 </div>
@@ -158,7 +161,9 @@ if(!isset($_SESSION['cart_p_id'])) {
 
                 <div class="cart-buttons">
                     <ul>
+
                         <li><a href="cart.php" class="btn btn-primary"><?php echo LANG_VALUE_21; ?></a></li>
+                        <li><a href="#" class="btn btn-primary"><?php echo "Proceed"; ?></a></li>
                     </ul>
                 </div>
 
