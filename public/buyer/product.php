@@ -426,13 +426,6 @@ if($success_message1 != '') {
 
 					</div>
 
-
-
-
-
-
-
-
 				</div>
 
 			</div>
