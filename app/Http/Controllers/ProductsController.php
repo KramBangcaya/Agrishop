@@ -87,13 +87,12 @@ class ProductsController extends Controller
 
     public function product($id){
          // Fetch the product by ID with the associated User
-    $product = Products::with('User')->find($id);
+    $product = Products::with('User', 'measurement')->find($id);
 
     // Check if product exists
     if (!$product) {
         return response()->json(['message' => 'Product not found'], 404);
     }
-
     // Format the data
     $formattedData = [
         'id' => $product->id,
@@ -112,10 +111,11 @@ class ProductsController extends Controller
         'first_name' => $product->user->name ?? null,
         'last_name' => $product->user->lastname ?? null,
         'contact_number' => $product->user->contact_number ?? null,
+        'address' => $product->user->address ?? null,
+        'measurement' => $product->measurement->measurement ?? null,
     ];
 
     return response()->json(['data' => $formattedData], 200);
-
     }
 
     public function seller (Request $request, $id){
@@ -132,7 +132,8 @@ class ProductsController extends Controller
         'products.Product_Name',
         'products.price',
         'products.Quantity',
-        'products.Description'
+        'products.Description',
+        'products.photos',
     )
     ->where('users.id', $id)
     ->get();
