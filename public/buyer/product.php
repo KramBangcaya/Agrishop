@@ -389,6 +389,7 @@ if($success_message1 != '') {
 							<div class="btn-cart btn-cart1">
                                 <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
 							</div>
+
                             </form>
 
 						</div>
@@ -403,6 +404,37 @@ if($success_message1 != '') {
 
 
 
+
+<div class="page">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+
+
+
+				<div class="product">
+
+
+					<div class="row">
+                    <h1><?php echo $_GET['fname']; ?> <?php echo $_GET['lname']; ?></h1>
+                                    <div class="btn-cart btn-cart1">
+                                <input type="submit" value="<?php echo "Visit Shop"; ?>" name="form_add_to_cart"></div>
+						</div>
+					</div>
+
+
+
+
+
+
+
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
 
 
 
