@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row gx-lg-5 align-items-stretch">
                 <!-- First Column -->
-                <div class="col-lg-6 mb-5 p-4 mb-lg-0 text-center bg-success">
+                <div class="col-lg-6 mb-5 p-4 mb-lg-0 text-center" style="background-color: #049261;">
                     <img src="/images/AgrishopLogo.png" alt="" height="120px">
                     <h1 class="my-3 display-4 fw-bold ls-tight">
                         <span>NEW HERE?</span><br>

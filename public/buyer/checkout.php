@@ -29,6 +29,7 @@ if(!isset($_SESSION['cart_p_id'])) {
             <div class="col-md-12">
 
                 <?php if(!isset($_SESSION['customer'])): ?>
+
                     <p>
                         <a href="login.php" class="btn btn-md btn-danger"><?php echo LANG_VALUE_160; ?></a>
                     </p>
@@ -36,10 +37,6 @@ if(!isset($_SESSION['cart_p_id'])) {
 
                 <h3 class="special"><?php echo LANG_VALUE_26; ?></h3>
                 <div class="cart">
-
-
-
-
 
 
                          <?php
