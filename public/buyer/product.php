@@ -43,6 +43,8 @@ if(!isset($_REQUEST['id'])) {
      $photo2 = $product['photos1'][0] ?? 'N/A';
      $photo3 = $product['photos2'][0] ?? 'N/A';
      $p_description = $product['Description'] ?? 'N/A';
+     $s_name = $product['first_name'] ?? 'N/A';
+     $s_last = $product['last_name'] ?? 'N/A';
  }
 
 if(isset($_POST['form_add_to_cart'])) {
@@ -62,6 +64,7 @@ if(isset($_POST['form_add_to_cart'])) {
 	else:
     if(isset($_SESSION['cart_p_id']))
     {
+
         $arr_cart_p_id = array();
         $arr_cart_size_id = array();
         $arr_cart_color_id = array();
