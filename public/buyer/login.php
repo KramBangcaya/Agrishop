@@ -98,7 +98,7 @@ if(isset($_POST['form1'])) {
                                     <label for=""></label>
                                     <input type="submit" class="btn btn-success" value="<?php echo LANG_VALUE_4; ?>" name="form1">
                                 </div>
-                                <a href="forget-password.php" style="color:#e4144d;"><?php echo LANG_VALUE_97; ?>?</a>
+                                <a href="../resources/views/auth/register.blade.php" style="color:#e4144d;"><?php echo LANG_VALUE_97; ?>?</a>
                             </div>
                         </div>
                     </form>

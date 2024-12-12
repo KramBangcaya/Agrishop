@@ -429,7 +429,6 @@ if($success_message1 != '') {
                             <?php echo $s_address; ?>
                         </div>
 
-<<<<<<< HEAD
 
 
 				<div class="product">
@@ -448,13 +447,6 @@ if($success_message1 != '') {
 			</div>
 		</div>
 	</div>
-=======
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
->>>>>>> fe0707568e0b5fa4ff048f44a20a14624cbd765f
 </div>
 
 
