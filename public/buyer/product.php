@@ -35,14 +35,19 @@ if(!isset($_REQUEST['id'])) {
      // Extract product details from the "data" key
      $product = $result['data'];
 
-
      $p_name = $product['Product_Name'] ?? 'N/A';
      $p_current_price = $product['price'] ?? 'N/A';
      $p_qty = $product['Quantity'] ?? 'N/A';
+     $p_measurement = $product['measurement'] ?? 'N/A';
      $p_featured_photo = $product['photos'][0] ?? 'N/A';
      $photo2 = $product['photos1'][0] ?? 'N/A';
      $photo3 = $product['photos2'][0] ?? 'N/A';
      $p_description = $product['Description'] ?? 'N/A';
+     $s_name = $product['first_name'] ?? 'N/A';
+     $s_last = $product['last_name'] ?? 'N/A';
+     $s_address = $product['address'] ?? 'N/A';
+     $s_id = $product['userID'] ?? 'N/A';
+
  }
 
 if(isset($_POST['form_add_to_cart'])) {
@@ -62,6 +67,7 @@ if(isset($_POST['form_add_to_cart'])) {
 	else:
     if(isset($_SESSION['cart_p_id']))
     {
+
         $arr_cart_p_id = array();
         $arr_cart_size_id = array();
         $arr_cart_color_id = array();
@@ -239,15 +245,14 @@ if($success_message1 != '') {
 
 				<div class="product">
 					<div class="row">
-						<div class="col-md-5">
-							<ul class="prod-slider">
-
-                            <li style="background-image: url(http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>);">
-                                <a class="popup" href="http://192.168.1.101:8080/storage/<?php echo str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>"></a>
-                            </li>
-
-							</ul>
-							<div id="prod-pager">
+                    <div class="col-md-5">
+                            <ul class="prod-slider">
+                                <!-- Main Image -->
+                                <li id="main-image" style="background-image: url(http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>);">
+                                    <a class="popup" href="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>"></a>
+                                </li>
+                            </ul>
+                            <div id="prod-pager">
                                 <?php
                                 $product_id = $_REQUEST['id'];
                                 $api_url = "http://192.168.1.9:8080/products/product/" . $product_id;
@@ -280,34 +285,36 @@ if($success_message1 != '') {
 
                                 // Display images
                                 if ($featured_photo) {
-                                    echo '<a data-slide-index="' . $i . '" href=""><div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($featured_photo) . ');"></div></a>';
+                                    echo '<a href="#" class="prod-thumb" data-image="http://192.168.1.9:8080/storage/' . htmlspecialchars($featured_photo) . '">
+                                            <div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($featured_photo) . ');"></div>
+                                        </a>';
                                     $i++;
                                 }
                                 if ($photo2) {
-                                    echo '<a data-slide-index="' . $i . '" href=""><div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($photo2) . ');"></div></a>';
+                                    echo '<a href="#" class="prod-thumb" data-image="http://192.168.1.9:8080/storage/' . htmlspecialchars($photo2) . '">
+                                            <div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($photo2) . ');"></div>
+                                        </a>';
                                     $i++;
                                 }
                                 if ($photo3) {
-                                    echo '<a data-slide-index="' . $i . '" href=""><div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($photo3) . ');"></div></a>';
+                                    echo '<a href="#" class="prod-thumb" data-image="http://192.168.1.9:8080/storage/' . htmlspecialchars($photo3) . '">
+                                            <div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($photo3) . ');"></div>
+                                        </a>';
                                     $i++;
                                 }
                                 ?>
                             </div>
-						</div>
-
+                        </div>
 
 						<div class="col-md-7">
-							<div class="p-title"><h2><?php echo $p_name; ?></h2></div>
-							<div class="p-review">
+
+							<!-- <div class="p-review">
 								<div class="rating">
 
                                 </div>
-							</div>
-							<div class="p-short-des">
-								<p>
-									<?php echo $p_description; ?>
-								</p>
-							</div>
+							</div> -->
+
+
                             <form action="" method="post">
                             <div class="p-quantity">
                                 <div class="row">
@@ -355,9 +362,21 @@ if($success_message1 != '') {
 
                             </div>
 							<div class="p-price">
+                            <div class="p-title"><h2><?php echo $p_name; ?></h2></div>
+                            <div class="p-short-des" style="font-size:14px;">
+                                <p>
+                                    <?php echo $p_description; ?>
+                                </p>
+                            </div>
                                 <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
                                 <span>
                                         <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
+                                </span>
+                            </div>
+                            <div class="p-price">
+                                <span style="font-size:14px;">Measurement</span><br>
+                                <span>
+                                        <?php echo $p_measurement; ?>
                                 </span>
                             </div>
                             <div class="p-price">
@@ -369,13 +388,16 @@ if($success_message1 != '') {
                             <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
                             <input type="hidden" name="p_name" value="<?php echo $p_name; ?>">
                             <input type="hidden" name="p_featured_photo" value="<?php echo $p_featured_photo; ?>">
+
 							<div class="p-quantity">
                                 <?php echo LANG_VALUE_55; ?> <br>
 								<input type="number" class="input-text qty" step="1" min="1" max="" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric">
 							</div>
+
 							<div class="btn-cart btn-cart1">
                                 <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
 							</div>
+
                             </form>
 
 						</div>
@@ -387,6 +409,38 @@ if($success_message1 != '') {
 	</div>
 </div>
 
+
+
+
+
+    <div class="page">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                <div class="product">
+                        <div class="row">
+                            <h1><?php echo htmlspecialchars($s_name); ?> <?php echo htmlspecialchars($s_last); ?></h1>
+                            <div class="btn-cart btn-cart1">
+                                <form action="sellerindex.php" method="GET">
+                                    <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($s_id); ?>">
+                                    <input type="submit" value="Visit Shop">
+                                </form>
+                            </div>
+                            <?php echo $s_address; ?>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 <div class="product bg-gray pt_70 pb_70">
     <div class="container">
         <div class="row">
@@ -397,6 +451,9 @@ if($success_message1 != '') {
                 </div>
             </div>
         </div>
+
+
+
         <div class="row">
             <div class="col-md-12">
 
@@ -435,6 +492,9 @@ if($success_message1 != '') {
                             continue; // Skip the current product
                         }
                         ?>
+
+
+
                         <div class="item">
                             <div class="thumb">
 
@@ -455,7 +515,7 @@ if($success_message1 != '') {
                                 <h4>
                                     <?php echo LANG_VALUE_1; ?><?php echo htmlspecialchars($row['price']); ?>
                                 </h4>
-                                <p><?php echo $row['first_name']?> <?php echo $row['first_name']?></p>
+                                <p><?php echo $row['first_name']?> <?php echo $row['last_name']?></p>
                                 <p><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo LANG_VALUE_154; ?></a></p>
                             </div>
                         </div>
@@ -467,6 +527,20 @@ if($success_message1 != '') {
         </div>
     </div>
 </div>
+
+<script>
+    // Select all thumbnail links
+    const thumbnails = document.querySelectorAll('.prod-thumb');
+    const mainImage = document.getElementById('main-image');
+
+    thumbnails.forEach(thumb => {
+        thumb.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            const imageUrl = this.getAttribute('data-image');
+            mainImage.style.backgroundImage = `url(${imageUrl})`;
+        });
+    });
+</script>
 
 
 <?php require_once('footer.php'); ?>
