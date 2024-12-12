@@ -388,11 +388,7 @@ if($success_message1 != '') {
                                 <?php echo LANG_VALUE_55; ?> <br>
 								<input type="number" class="input-text qty" step="1" min="1" max="" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric">
 							</div>
-                            <div class="p-short-des">
-								<p>
-									<?php echo $s_address; ?>
-								</p>
-							</div>
+
 							<div class="btn-cart btn-cart1">
                                 <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
 							</div>
@@ -425,8 +421,9 @@ if($success_message1 != '') {
 					<div class="row">
                     <h1><?php echo $_GET['fname']; ?> <?php echo $_GET['lname']; ?></h1>
                                     <div class="btn-cart btn-cart1">
-                                <input type="submit" value="<?php echo "Visit Shop"; ?>" name="form_add_to_cart"></div>
+                                <input type="submit" value="<?php echo "Visit Shop"; ?>" name="form_add_to_cart"></div><?php echo $s_address; ?>
 						</div>
+
 					</div>
 
 
