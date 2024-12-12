@@ -135,7 +135,7 @@ foreach ($result as $row) {
 
 	$cur_page = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
 
-	if($cur_page == 'index.php' || $cur_page == '../resources/views/auth/login.blade.php' || $cur_page == '../resources/views/auth/register.blade' || $cur_page == 'cart.php' || $cur_page == 'checkout.php' || $cur_page == 'forget-password.php' || $cur_page == 'reset-password.php' || $cur_page == 'product-category.php' || $cur_page == 'product.php') {
+	if($cur_page == 'index.php' || $cur_page == '../resources/views/auth/register.blade.php' || $cur_page == '../resources/views/auth/register.blade.php' || $cur_page == 'cart.php' || $cur_page == 'checkout.php' || $cur_page == 'forget-password.php' || $cur_page == 'reset-password.php' || $cur_page == 'product-category.php' || $cur_page == 'product.php') {
 		?>
 		<title><?php echo "Agrishop"; ?></title>
 		<meta name="keywords" content="<?php echo $meta_keyword_home; ?>">
@@ -269,7 +269,8 @@ foreach ($result as $row) {
 					} else {
 						?>
 						<li><a href="login.php"><i class="fa fa-sign-in"></i> <?php echo LANG_VALUE_9; ?></a></li>
-						<li><a href="../resources/views/auth/register.blade.php"><i class="fa fa-user-plus"></i> <?php echo LANG_VALUE_15; ?></a></li>
+						<li><a href="register.php"><i class="fa fa-user-plus"></i> <?php echo LANG_VALUE_15; ?></a></li>
+
 						<?php
 					}
 					?>

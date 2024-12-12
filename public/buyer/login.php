@@ -45,7 +45,7 @@ if(isset($_POST['form1'])) {
 
 
                 // Check if the role_name is 'buyer'
-                if ($user['role_name'] == 'buyer' || $user['role_name'] == 'Buyer') {
+                if ($user['role_name'] == 'buyer' || $user['role_name'] == 'Buyer' ) {
                     $_SESSION['customer'] = $user;
                     header("location: ".BASE_URL."dashboard.php");
                     exit;
