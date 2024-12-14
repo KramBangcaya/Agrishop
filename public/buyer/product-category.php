@@ -59,12 +59,7 @@ if ($category_id) {
                 </div>
 
                 <div class="sidebar-category">
-                <label for="category"><h3>Rating  <?php
-
-                                        for ($i = 0; $i <= 1; $i++) {
-                                            echo '<i class="fa fa-star-half-o"></i>';
-                                        }
-                                        ?></h3></label><br>
+                <label for="category"><h3>Rating  <i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></i></h3></label><br>
 
                     <select name="payment_method" class="btn btn-primary category-button" id="category" >
                         <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
