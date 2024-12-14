@@ -60,14 +60,8 @@ if ($min_price !== null && $max_price !== null) {
             <div class="col-md-3">
                 <!-- Sidebar Category Display -->
                 <div class="sidebar-category">
-<<<<<<< HEAD
                     <label for="category"><h3>Categories</h3></label>
                     <select name="category" class="btn btn-primary category-button" id="category" onchange="location = this.value;">
-=======
-                <label for="category"><h3>Categories <i class="fa fa-sort"></i></h3></label>
-
-                    <select name="payment_method" class="btn btn-primary category-button" id="category" onchange="location = this.value;" style="font-size: 18px;">
->>>>>>> d1f50dc8347bc025d745f98946986b50f8391f7e
                         <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
                             <option value="" selected>Select a Category</option>
                             <?php foreach ($categories['data'] as $category): ?>
@@ -84,7 +78,6 @@ if ($min_price !== null && $max_price !== null) {
 
                 <!-- Sidebar Price Range Filter -->
                 <div class="sidebar-category">
-<<<<<<< HEAD
                     <label for="price_range"><h3>Price Range</h3></label>
                     <form method="GET" action="product-category.php">
                         <label for="min_price">Min:</label>
@@ -95,37 +88,6 @@ if ($min_price !== null && $max_price !== null) {
                         <button type="submit" class="btn btn-success">Filter</button>
                     </form>
                 </div>
-=======
-                <label for="category"><h3>Rating  <i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></i></h3></label><br>
-
-                    <select name="payment_method" class="btn btn-primary category-button" id="category" style="font-size: 18px;">
-
-                            <option value="" style="text-align: left;" selected>Select a Rating</option>
-                            <option value="" style="text-align: left;">5 Star </option>
-                            <option value="" style="text-align: left;">4 Star</option>
-                            <option value="" style="text-align: left;">3 Star</option>
-                            <option value="" style="text-align: left;">2 Star</option>
-                            <option value="" style="text-align: left;">1 Star</option>
-                            <option value="" style="text-align: left;">All</option>
-
-
-	                                    </select>
-
-                </div>
-
-                <div class="sidebar-category">
-                <label for="category"><h3>Price Range (₱)</h3></label><br>
-<label style="font-size: 18px;">Min Price:</label>
-                    <input type="number" class="btn btn-primary category-button" style="font-size: 18px;"> <br><br>
-                    <label style="font-size: 18px;">Max Price:</label>
-                    <input type="number" class="btn btn-primary category-button" style="font-size: 18px;">
-
-                </div>
-
-
-
-
->>>>>>> d1f50dc8347bc025d745f98946986b50f8391f7e
             </div>
 
             <div class="col-md-9">
