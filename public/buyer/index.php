@@ -66,10 +66,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="headline">
+                <div class="headline" >
                     <h2>List of Products</h2>
+                    <div class="btn-cart btn-cart1"><a href="../buyer/product-category.php" class="btn btn-primary">Browse Products <i class="fa fa-search"></i></a></div>
 
-                    <a href="../buyer/product-category.php" class="btn btn-primary" >Browse Products</a>
                 </div>
             </div>
         </div>

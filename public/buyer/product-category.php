@@ -57,9 +57,42 @@ if ($category_id) {
 
 
                 </div>
+
+                <div class="sidebar-category">
+                <label for="category"><h3>Rating</h3></label><br>
+
+                    <select name="payment_method" class="btn btn-primary category-button" id="category" >
+                        <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
+                            <option value="" style="text-align: left;" selected>Select a Rating</option>
+                            <option value="" style="text-align: left;">5 Star </option>
+                            <option value="" style="text-align: left;">4 Star</option>
+                            <option value="" style="text-align: left;">3 Star</option>
+                            <option value="" style="text-align: left;">2 Star</option>
+                            <option value="" style="text-align: left;">1 Star</option>
+                            <option value="product-category.php?category_id=0" style="text-align: left;"><a href="product-category.php?category_id=0">All</a></option>
+                        <?php else: ?>
+                            <p>No categories available.</p>
+                        <?php endif; ?>
+
+	                                    </select>
+
+                </div>
+
+                <div class="sidebar-category">
+                <label for="category"><h3>Price Range</h3></label><br>
+<label>Min:</label>
+                    <input type="number" class="btn btn-primary category-button"> <br><br>
+                    <label>Max:</label>
+                    <input type="number" class="btn btn-primary category-button">
+
+                </div>
+
+
+
+
             </div>
 
-
+i
 
             <div class="col-md-9">
     <h3>Products</h3>
