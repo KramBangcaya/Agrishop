@@ -33,7 +33,7 @@
                             if($row['position'] == 'Center') {echo 'slide_style_center';}
                             ?>">
 
-                            <h1 data-animation="animated <?php
+                            <h1 style="font-size : clamp(2rem, 8vw, 5rem);" data-animation="animated <?php
 
                             if($row['position'] == 'Center') {echo 'fadeInDown';}
                             ?>">Welcome to AgriShop</h1>

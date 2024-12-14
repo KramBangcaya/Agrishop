@@ -32,7 +32,7 @@ if ($category_id) {
             <div class="col-md-3">
                 <!-- Sidebar Category Display -->
                 <div class="sidebar-category">
-                <label for="category"><h3>Categories <i class="fa fa-sort"></i></h3></label>
+                <label for="category"><h3>Categories <i class="fa fa-sort"></i></h3></label><br>
 
                     <select name="payment_method" class="btn btn-primary category-button" id="category" onchange="location = this.value;" style="font-size: 18px;">
                         <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
@@ -90,7 +90,7 @@ if ($category_id) {
 
             </div>
 
-i
+
 
             <div class="col-md-9">
     <h3>Products</h3>
