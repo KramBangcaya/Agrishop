@@ -25,25 +25,75 @@ if ($category_id) {
 <div class="page">
     <div class="container">
         <div class="row">
+
+
+
+
             <div class="col-md-3">
                 <!-- Sidebar Category Display -->
                 <div class="sidebar-category">
-                    <h3>Categories</h3>
-                    <ul>
+                <label for="category"><h3>Categories</h3></label>
+
+                    <select name="payment_method" class="btn btn-primary category-button" id="category" onchange="location = this.value;">
                         <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
+                            <option value="" selected>Select a Category</option>
                             <?php foreach ($categories['data'] as $category): ?>
-                                <li>
-                                <a href="product-category.php?category_id=<?php echo $category['id']; ?>" class="btn btn-primary category-button">
+
+                                    <option value="product-category.php?category_id=<?php echo $category['id']; ?>" style="text-align: left;" >
                                         <?php echo $category['category']; ?>
-                                    </a>
-                                </li>
+
+                                    </option>
+
+
                             <?php endforeach; ?>
+                            <option value="product-category.php?category_id=0" style="text-align: left;"><a href="product-category.php?category_id=0">All</a></option>
                         <?php else: ?>
                             <p>No categories available.</p>
                         <?php endif; ?>
-                    </ul>
+
+	                                    </select>
+
+
+
+
                 </div>
+
+                <div class="sidebar-category">
+                <label for="category"><h3>Rating</h3></label><br>
+
+                    <select name="payment_method" class="btn btn-primary category-button" id="category" >
+                        <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
+                            <option value="" style="text-align: left;" selected>Select a Rating</option>
+                            <option value="" style="text-align: left;">5 Star </option>
+                            <option value="" style="text-align: left;">4 Star</option>
+                            <option value="" style="text-align: left;">3 Star</option>
+                            <option value="" style="text-align: left;">2 Star</option>
+                            <option value="" style="text-align: left;">1 Star</option>
+                            <option value="product-category.php?category_id=0" style="text-align: left;"><a href="product-category.php?category_id=0">All</a></option>
+                        <?php else: ?>
+                            <p>No categories available.</p>
+                        <?php endif; ?>
+
+	                                    </select>
+
+                </div>
+
+                <div class="sidebar-category">
+                <label for="category"><h3>Price Range</h3></label><br>
+<label>Min:</label>
+                    <input type="number" class="btn btn-primary category-button"> <br><br>
+                    <label>Max:</label>
+                    <input type="number" class="btn btn-primary category-button">
+
+                </div>
+
+
+
+
             </div>
+
+i
+
             <div class="col-md-9">
     <h3>Products</h3>
     <div class="product-list">
