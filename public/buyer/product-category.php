@@ -34,7 +34,7 @@ if ($category_id) {
                 <div class="sidebar-category">
                 <label for="category"><h3>Categories <i class="fa fa-sort"></i></h3></label>
 
-                    <select name="payment_method" class="btn btn-primary category-button" id="category" onchange="location = this.value;">
+                    <select name="payment_method" class="btn btn-primary category-button" id="category" onchange="location = this.value;" style="font-size: 18px;">
                         <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
                             <option value="" selected>Select a Category</option>
                             <?php foreach ($categories['data'] as $category): ?>
@@ -61,18 +61,16 @@ if ($category_id) {
                 <div class="sidebar-category">
                 <label for="category"><h3>Rating  <i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></i></h3></label><br>
 
-                    <select name="payment_method" class="btn btn-primary category-button" id="category" >
-                        <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
+                    <select name="payment_method" class="btn btn-primary category-button" id="category" style="font-size: 18px;">
+
                             <option value="" style="text-align: left;" selected>Select a Rating</option>
                             <option value="" style="text-align: left;">5 Star </option>
                             <option value="" style="text-align: left;">4 Star</option>
                             <option value="" style="text-align: left;">3 Star</option>
                             <option value="" style="text-align: left;">2 Star</option>
                             <option value="" style="text-align: left;">1 Star</option>
-                            <option value="product-category.php?category_id=0" style="text-align: left;"><a href="product-category.php?category_id=0">All</a></option>
-                        <?php else: ?>
-                            <p>No categories available.</p>
-                        <?php endif; ?>
+                            <option value="" style="text-align: left;">All</option>
+
 
 	                                    </select>
 
@@ -80,10 +78,10 @@ if ($category_id) {
 
                 <div class="sidebar-category">
                 <label for="category"><h3>Price Range (₱)</h3></label><br>
-<label>Min:</label>
-                    <input type="number" class="btn btn-primary category-button"> <br><br>
-                    <label>Max:</label>
-                    <input type="number" class="btn btn-primary category-button">
+<label style="font-size: 18px;">Min Price:</label>
+                    <input type="number" class="btn btn-primary category-button" style="font-size: 18px;"> <br><br>
+                    <label style="font-size: 18px;">Max Price:</label>
+                    <input type="number" class="btn btn-primary category-button" style="font-size: 18px;">
 
                 </div>
 
