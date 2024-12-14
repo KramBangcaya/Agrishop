@@ -34,8 +34,10 @@
         </nav>
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <div class="container ">
+                <a href="{{ url('/home') }}">
                 <img src="/images/AgrishopLogo.png" alt="AdminLTE Logo" class="user-panel brand-image img-fluid mx-auto"
                     style="opacity: .8">
+                </a>
             </div>
             <div class="sidebar">
                 <router-link to="/Account" class="nav-link">
