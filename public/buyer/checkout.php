@@ -98,7 +98,8 @@ if(!isset($_SESSION['cart_p_id'])) {
                                 $table_total_price = $table_total_price + $row_total_price;
                                 ?>
 
-                <h3 class="special"><?php echo LANG_VALUE_33; ?> for <?php echo $arr_cart_p_name[$i]; ?>  Total Cost: <?php echo LANG_VALUE_1; ?><?php echo $row_total_price; ?></h3>
+                <h3 class="special"><?php echo LANG_VALUE_33; ?> for <?php echo $arr_cart_p_name[$i]; ?>  Total Cost: <?php echo LANG_VALUE_1; ?>
+                <?php echo $row_total_price; ?></h3>
 
 
                 <div class="row">
@@ -126,6 +127,7 @@ if(!isset($_SESSION['cart_p_id'])) {
 		                    </div>
 
                 </div>
+
 
 
                 <form action="payment/bank/init.php" method="post" id="bank_form">

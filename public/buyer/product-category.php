@@ -60,8 +60,8 @@ if ($min_price !== null && $max_price !== null) {
             <div class="col-md-3">
                 <!-- Sidebar Category Display -->
                 <div class="sidebar-category">
-                    <label for="category"><h3>Categories</h3></label>
-                    <select name="category" class="btn btn-primary category-button" id="category" onchange="location = this.value;">
+                    <label for="category"><h3>Categories <i class="fa fa-sort"></i></h3></><br>
+                    <select name="category" class="btn btn-primary category-button" id="category" onchange="location = this.value;" style="font-size: 18px;">
                         <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
                             <option value="" selected>Select a Category</option>
                             <?php foreach ($categories['data'] as $category): ?>
@@ -76,16 +76,34 @@ if ($min_price !== null && $max_price !== null) {
                     </select>
                 </div>
 
+
+                <div class="sidebar-category">
+                <label for="category"><h3>Rating  <i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></i></h3></label><br>
+
+                    <select name="payment_method" class="btn btn-primary category-button" id="category" style="font-size: 18px;">
+
+                            <option value="" style="text-align: left;" selected>Select a Rating</option>
+                            <option value="" style="text-align: left;">5 Star </option>
+                            <option value="" style="text-align: left;">4 Star</option>
+                            <option value="" style="text-align: left;">3 Star</option>
+                            <option value="" style="text-align: left;">2 Star</option>
+                            <option value="" style="text-align: left;">1 Star</option>
+                            <option value="" style="text-align: left;">All</option>
+
+
+	                                    </select>
+
+                </div>
                 <!-- Sidebar Price Range Filter -->
                 <div class="sidebar-category">
-                    <label for="price_range"><h3>Price Range</h3></label>
+                    <label for="price_range"><h3>Price Range (₱)</h3></label>
                     <form method="GET" action="product-category.php">
-                        <label for="min_price">Min:</label>
-                        <input type="number" class="btn btn-primary category-button" name="min_price" value="<?php echo isset($_GET['min_price']) ? $_GET['min_price'] : ''; ?>"> <br><br>
-                        <label for="max_price">Max:</label>
-                        <input type="number" class="btn btn-primary category-button" name="max_price" value="<?php echo isset($_GET['max_price']) ? $_GET['max_price'] : ''; ?>"> <br><br>
+                        <label for="min_price" style="font-size: 18px;">Min:</label>
+                        <input type="number" style="font-size: 18px;" class="btn btn-primary category-button" name="min_price" value="<?php echo isset($_GET['min_price']) ? $_GET['min_price'] : ''; ?>"> <br><br>
+                        <label for="max_price" style="font-size: 18px;">Max:</label>
+                        <input type="number" style="font-size: 18px;" class="btn btn-primary category-button" name="max_price" value="<?php echo isset($_GET['max_price']) ? $_GET['max_price'] : ''; ?>"> <br><br>
                         <input type="hidden" name="category_id" value="<?php echo isset($category_id) ? $category_id : ''; ?>">
-                        <button type="submit" class="btn btn-success">Filter</button>
+                        <button type="submit" style="font-size: 18px;" class="btn btn-success">Filter</button>
                     </form>
                 </div>
             </div>
