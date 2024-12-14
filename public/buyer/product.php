@@ -413,7 +413,8 @@ if($success_message1 != '') {
 
 
 
-    <div class="page">
+    <div class="page" style="border-style: double; border-color: gray; border-width: 2px;">
+        <div >
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -425,22 +426,14 @@ if($success_message1 != '') {
                                     <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($s_id); ?>">
                                     <input type="submit" value="Visit Shop">
                                 </form>
+
                             </div>
-                            <?php echo $s_address; ?>
+                            <h4><?php  echo '<i class="fa fa-map-marker-alt"></i> '; echo $s_address;  ?></h4><br>
                         </div>
 
 
+                        </div>
 
-				<div class="product">
-
-
-					<div class="row">
-                    <h1><?php echo $_GET['fname']; ?> <?php echo $_GET['lname']; ?></h1>
-                                    <div class="btn-cart btn-cart1">
-                                <input type="submit" value="<?php echo "Visit Shop"; ?>" name="form_add_to_cart"></div><?php echo $s_address; ?>
-						</div>
-
-					</div>
 
 				</div>
 
@@ -521,8 +514,14 @@ if($success_message1 != '') {
                                     echo '<div class="photo" style="background-color: gray;">No photo available</div>';
                                 }
                                 ?>
+
+
+
                                 <div class="overlay"></div>
                             </div>
+
+
+
                             <div class="text">
                                 <h3><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['Product_Name']); ?></a></h3>
                                 <h4>
@@ -531,15 +530,85 @@ if($success_message1 != '') {
                                 <p><?php echo $row['first_name']?> <?php echo $row['last_name']?></p>
                                 <p><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo LANG_VALUE_154; ?></a></p>
                             </div>
+
+
+
+
                         </div>
+
+
                         <?php
                     }
                     ?>
+
+
                 </div>
+
             </div>
         </div>
     </div>
 </div>
+
+
+<div class="page">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                <div class="product">
+                        <div class="row" >
+                            <h1>Comments / Feedbacks</h1>
+                            <br>
+<div style="border-style: double; border-color: gray; border-width: 2px;">
+                            <div class="btn-cart btn-cart1">
+                            <h3>User 1</h3>
+                            <div class="rating">
+                                <h5>Rating</h5>
+                                        <?php
+                                        // Assuming no rating system from API. If rating system exists, you can implement it here.
+                                        // Example: Displaying full stars for simplicity as there's no rating data in the API response.
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            echo '<i class="fa fa-star"></i>';
+                                        }
+                                        ?>
+                                    </div>
+
+                           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                            but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+</div></div>
+                            <br>
+
+                            <div class="btn-cart btn-cart1">
+                            <h3>User 2</h3>
+                            <div class="rating">
+                                <h5>Rating / Reviews</h5>
+                                        <?php
+                                        // Assuming no rating system from API. If rating system exists, you can implement it here.
+                                        // Example: Displaying full stars for simplicity as there's no rating data in the API response.
+                                        for ($i = 1; $i <= 2; $i++) {
+                                            echo '<i class="fa fa-star"></i>';
+                                        }
+                                        ?>
+                                    </div>
+                            </div>
+                           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                            but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+
+                        </div>
+
+
+
+
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <script>
     // Select all thumbnail links

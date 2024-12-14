@@ -269,7 +269,7 @@ foreach ($result as $row) {
 					} else {
 						?>
 						<li><a href="login.php"><i class="fa fa-sign-in"></i> <?php echo LANG_VALUE_9; ?></a></li>
-						<li><a href="register.php"><i class="fa fa-user-plus"></i> <?php echo LANG_VALUE_15; ?></a></li>
+						<li><a href="../register"><i class="fa fa-user-plus"></i> <?php echo LANG_VALUE_15; ?></a></li>
 
 						<?php
 					}
@@ -313,12 +313,12 @@ foreach ($result as $row) {
 	</div>
 </div>
 
-<div class="nav">
+<div class="nav" style="background-color:#049261;">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 pl_0 pr_0">
 				<div class="menu-container">
-					<div class="menu">
+					<div class="menu"style="background-color:#049261;">
 						<ul>
 							<li><a href="index.php">Home</a></li>
 

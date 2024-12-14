@@ -25,25 +25,42 @@ if ($category_id) {
 <div class="page">
     <div class="container">
         <div class="row">
+
+
+
+
             <div class="col-md-3">
                 <!-- Sidebar Category Display -->
                 <div class="sidebar-category">
-                    <h3>Categories</h3>
-                    <ul>
+                <label for="category"><h3>Categories</h3></label>
+
+                    <select name="payment_method" class="btn btn-primary category-button" id="category" onchange="location = this.value;">
                         <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
+                            <option value="" selected>Select a Category</option>
                             <?php foreach ($categories['data'] as $category): ?>
-                                <li>
-                                <a href="product-category.php?category_id=<?php echo $category['id']; ?>" class="btn btn-primary category-button">
+
+                                    <option value="product-category.php?category_id=<?php echo $category['id']; ?>" style="text-align: left;" >
                                         <?php echo $category['category']; ?>
-                                    </a>
-                                </li>
+
+                                    </option>
+
+
                             <?php endforeach; ?>
+                            <option value="product-category.php?category_id=0" style="text-align: left;"><a href="product-category.php?category_id=0">All</a></option>
                         <?php else: ?>
                             <p>No categories available.</p>
                         <?php endif; ?>
-                    </ul>
+
+	                                    </select>
+
+
+
+
                 </div>
             </div>
+
+
+
             <div class="col-md-9">
     <h3>Products</h3>
     <div class="product-list">

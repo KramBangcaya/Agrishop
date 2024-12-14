@@ -22,29 +22,26 @@
 
             <div class="item <?php
             if($i==0) {echo 'active';} ?>" style="background-image:url(assets/uploads/agribackground.jpg">
-                <div class="bs-slider-overlay"> </div>
+
 
                 <div class="container">
                     <div class="row">
 
                     <div class="slide-text
                         <?php
-                        if($row['position'] == 'Left') {echo 'slide_style_left';}
-                            elseif($row['position'] == 'Center') {echo 'slide_style_center';}
-                            elseif($row['position'] == 'Right') {echo 'slide_style_right';} ?>">
+
+                            if($row['position'] == 'Center') {echo 'slide_style_center';}
+                            ?>">
 
                             <h1 data-animation="animated <?php
-                            if($row['position'] == 'Left') {echo 'zoomInLeft';}
-                            elseif($row['position'] == 'Center') {echo 'flipInX';}
-                            elseif($row['position'] == 'Right') {echo 'zoomInRight';} ?>">Welcome to AgriShop</h1>
+
+                            if($row['position'] == 'Center') {echo 'fadeInDown';}
+                            ?>">Welcome to AgriShop</h1>
                             <p data-animation="animated <?php
-                            if($row['position'] == 'Left') {echo 'fadeInLeft';}
-                            elseif($row['position'] == 'Center') {echo 'fadeInDown';}
-                            elseif($row['position'] == 'Right') {echo 'fadeInRight';} ?>">One-Stop Shop for Quality Agricultural Products</p>
-                            <a href="<?php echo $row['button_url']; ?>" target="buyer/product-category.php"  class="btn btn-primary" data-animation="animated <?php
-                            if($row['position'] == 'Left') {echo 'fadeInLeft';}
-                            elseif($row['position'] == 'Center') {echo 'fadeInDown';}
-                            elseif($row['position'] == 'Right') {echo 'fadeInRight';} ?>">Browse Products</a>
+
+                            if($row['position'] == 'Center') {echo 'fadeInDown';}
+                            ?>">One-Stop Shop for Quality Agricultural Products</p>
+
 
                         </div>
                     </div>
@@ -71,6 +68,8 @@
             <div class="col-md-12">
                 <div class="headline">
                     <h2>List of Products</h2>
+
+                    <a href="../buyer/product-category.php" class="btn btn-primary" >Browse Products</a>
                 </div>
             </div>
         </div>
@@ -94,7 +93,7 @@
                                 <div class="thumb">
                                     <div class="photo" style="background-image:url(http://192.168.1.9:8080/storage/<?php echo $product['photos'][0]; ?>);"></div>
 
-                                    <div class="overlay"></div>
+
                                 </div>
                                 <div class="text">
                                     <h3><a href="product.php?id=<?php echo $product['id']; ?>&fname=<?php echo $product['first_name']; ?>&lname=<?php echo $product['last_name']; ?>"></a><?php echo $product['Product_Name']; ?></a></h3>
