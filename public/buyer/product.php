@@ -1,7 +1,4 @@
-<?php
-require_once('header.php');
-require_once('api-config.php');
-?>
+<?php require_once('header.php'); ?>
 
 <?php
 if(!isset($_REQUEST['id'])) {
@@ -11,7 +8,7 @@ if(!isset($_REQUEST['id'])) {
 
     $product_id = $_REQUEST['id'];
 
-    $api_url = API_BASE_URL .  "/products/product/" . $product_id;
+    $api_url = "http://192.168.1.9:8080/products/product/" . $product_id;
 
     // Use cURL to fetch data from API
     $ch = curl_init();
@@ -145,15 +142,14 @@ if($success_message1 != '') {
                     <div class="col-md-5">
                             <ul class="prod-slider">
                                 <!-- Main Image -->
-                                <li id="main-image" style="background-image: url(<?php echo API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>);">
-                                    <a class="popup" href="<?php echo API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>"></a>
+                                <li id="main-image" style="background-image: url(http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>);">
+                                    <a class="popup" href="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>"></a>
                                 </li>
-
                             </ul>
                             <div id="prod-pager">
                                 <?php
                                 $product_id = $_REQUEST['id'];
-                                $api_url = API_BASE_URL . "/products/product/" . $product_id;
+                                $api_url = "http://192.168.1.9:8080/products/product/" . $product_id;
 
                                 // Fetch product details from API
                                 $ch = curl_init();
@@ -181,31 +177,25 @@ if($success_message1 != '') {
 
                                 $i = 1;
 
-
-                                // Assuming $featured_photo, $photo2, and $photo3 contain the image file paths
-
+                                // Display images
                                 if ($featured_photo) {
-                                    echo '<a href="#" class="prod-thumb" data-image="' . API_BASE_URL . '/storage/' . htmlspecialchars($featured_photo) . '">
-                                            <div class="prod-pager-thumb" style="background-image: url(' . API_BASE_URL . '/storage/' . htmlspecialchars($featured_photo) . ');"></div>
+                                    echo '<a href="#" class="prod-thumb" data-image="http://192.168.1.9:8080/storage/' . htmlspecialchars($featured_photo) . '">
+                                            <div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($featured_photo) . ');"></div>
                                         </a>';
                                     $i++;
                                 }
-
                                 if ($photo2) {
-                                    echo '<a href="#" class="prod-thumb" data-image="' . API_BASE_URL . '/storage/' . htmlspecialchars($photo2) . '">
-                                            <div class="prod-pager-thumb" style="background-image: url(' . API_BASE_URL . '/storage/' . htmlspecialchars($photo2) . ');"></div>
+                                    echo '<a href="#" class="prod-thumb" data-image="http://192.168.1.9:8080/storage/' . htmlspecialchars($photo2) . '">
+                                            <div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($photo2) . ');"></div>
                                         </a>';
                                     $i++;
                                 }
-
                                 if ($photo3) {
-                                    echo '<a href="#" class="prod-thumb" data-image="' . API_BASE_URL . '/storage/' . htmlspecialchars($photo3) . '">
-                                            <div class="prod-pager-thumb" style="background-image: url(' . API_BASE_URL . '/storage/' . htmlspecialchars($photo3) . ');"></div>
+                                    echo '<a href="#" class="prod-thumb" data-image="http://192.168.1.9:8080/storage/' . htmlspecialchars($photo3) . '">
+                                            <div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($photo3) . ');"></div>
                                         </a>';
                                     $i++;
                                 }
-
-
                                 ?>
                             </div>
                         </div>
@@ -277,7 +267,7 @@ if($success_message1 != '') {
 
     <div class="page" style="border-style: double; border-color: gray; border-width: 2px;">
         <div >
-        <div class="container">
+        <div class="container" style="padding-left:25px;">
             <div class="row">
                 <div class="col-md-12">
                 <div class="product">
@@ -327,7 +317,7 @@ if($success_message1 != '') {
                     $current_product_id = $_REQUEST['id'];
 
                     // API URL to fetch products
-                    $api_url = API_BASE_URL . "/products/all";
+                    $api_url = "http://192.168.1.9:8080/products/all";
 
                     // Use cURL to fetch data from API
                     $ch = curl_init();
@@ -367,7 +357,7 @@ if($success_message1 != '') {
                                 $photos = $row['photos'];
                                 if (!empty($photos) && isset($photos[0])) {
                                     $photoUrl = str_replace('\/', '/', $photos[0]);
-                                    echo '<div class="photo" style="background-image:url(' . API_BASE_URL . '/storage/' . htmlspecialchars($photoUrl) . ');"></div>';
+                                    echo '<div class="photo" style="background-image:url(http://192.168.1.9:8080/storage/' . $photoUrl . ');"></div>';
                                 } else {
                                     echo '<div class="photo" style="background-color: gray;">No photo available</div>';
                                 }
@@ -414,7 +404,7 @@ if($success_message1 != '') {
                 <div class="col-md-12" >
                 <div class="product" >
                         <div class="row" >
-                            <h1>Comments / Feedbacks</h1>
+                            <h1 style="margin-left:15px;">Comments / Feedbacks</h1>
                             <br>
 <div style="border-style: double; border-color: gray; border-width: 2px; float: left; padding: 15px;">
                             <div class="btn-cart btn-cart1">

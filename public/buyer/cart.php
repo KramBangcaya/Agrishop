@@ -146,6 +146,7 @@ if (isset($_POST['form1'])) {
 <h2 class="special" style="margin-left:10px;">Order Details</h2><h3 class="special"> </h3>
 
                         <?php for($i=1;$i<=count($arr_cart_p_id);$i++): ?>
+<<<<<<< HEAD
                         <div class="row">
                         <div class="col-md-4">
                             <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
@@ -162,6 +163,25 @@ if (isset($_POST['form1'])) {
                                             <i class="fa fa-trash" style="color:red;"></i>
                                         </a>
                                     </h2>
+=======
+
+
+
+
+                            <div class="row">
+    <div class="col-md-4">
+        <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
+            <div class="col-md-12 form-group">
+                <h2>
+                    <?php echo $arr_cart_p_name[$i]; ?>&nbsp;
+                    ₱<?php echo $arr_cart_p_current_price[$i]; ?>&nbsp;
+                    <a onclick="return confirmDelete();"
+                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
+                       class="trash">
+                        <i class="fa fa-trash" style="color:red;"></i>
+                    </a>
+                </h2>
+>>>>>>> dcb7497c204ac2229a4e97f9be12cecbd1ceec4c
 
                 <!-- Product Image -->
                 <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
@@ -170,6 +190,7 @@ if (isset($_POST['form1'])) {
 
                 <!-- Quantity and Total -->
                 <div style="margin-top: 10px; font-size: medium;">
+<<<<<<< HEAD
                                                     <label>Quantity: </label>
                                                     <input type="number"
                                                            class="input-text qty text"
@@ -187,6 +208,26 @@ if (isset($_POST['form1'])) {
                                                     <?php $row_total_price = $arr_cart_p_current_price[$i] * $arr_cart_p_qty[$i]; ?>
                                                     ₱<?php echo $row_total_price; ?>
                                                 </div>
+=======
+                    <label>Quantity: </label>
+                    <input type="number"
+                           class="input-text qty text"
+                           step="1"
+                           min="1"
+                           max=""
+                           name="quantity[]"
+                           value="<?php echo $arr_cart_p_qty[$i]; ?>"
+                           title="Qty"
+                           size="4"
+                           pattern="[0-9]*"
+                           inputmode="numeric"
+                           style="width: 60px; margin-right: 10px;">
+
+                    <label>Total: </label>
+                    <?php $row_total_price = $arr_cart_p_current_price[$i] * $arr_cart_p_qty[$i]; ?>
+                    ₱<?php echo $row_total_price; ?>
+                </div>
+>>>>>>> dcb7497c204ac2229a4e97f9be12cecbd1ceec4c
             </div>
         </div>
     </div>
@@ -196,6 +237,7 @@ if (isset($_POST['form1'])) {
                         <?php endfor; ?>
                 </div>
 
+<<<<<<< HEAD
      <!-- Cart Buttons -->
     <div class="cart-buttons" style="text-align:center; margin-right:10px; margin-bottom:10px;">
         <ul style="list-style:none; padding:0; display:inline-block; margin:5px;">
@@ -232,6 +274,40 @@ if (isset($_POST['form1'])) {
         </ul>
     </div>
 </form>
+=======
+              <div class="cart-buttons" style="text-align:center; margin-right:10px; margin-bottom:10px;">
+    <ul style="list-style:none; padding:0; display:inline-block; margin:5px;">
+        <li>
+            <input
+                type="submit"
+                value="<?php echo LANG_VALUE_20; ?>"
+                class="btn btn-secondary"
+                name="form1"
+                style="width:250px; height:50px; text-align:center; display:inline-block;">
+        </li>
+    </ul>
+    <ul style="list-style:none; padding:0; display:inline-block; margin:5px;">
+        <li>
+            <a
+                href="index.php"
+                class="btn btn-primary"
+                style="width:250px; height:50px; line-height:40px; text-align:center; display:inline-block;padding-bottom: 50px;">
+                <?php echo LANG_VALUE_85; ?>
+            </a>
+        </li>
+    </ul>
+    <ul style="list-style:none; padding:0; display:inline-block; margin:5px;">
+        <li>
+            <a
+                href="checkout.php"
+                class="btn btn-primary"
+                style="width:250px; height:50px; line-height:40px; text-align:center; display:inline-block; padding-bottom: 50px;">
+                <?php echo LANG_VALUE_23; ?>
+            </a>
+        </li>
+    </ul>
+</div>
+>>>>>>> dcb7497c204ac2229a4e97f9be12cecbd1ceec4c
 
 
 
