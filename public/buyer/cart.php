@@ -15,7 +15,7 @@ foreach ($result as $row) {
 <?php
 $error_message = '';
 if(isset($_POST['form1'])) {
-    var_dump($_POST);
+
     $i = 0;
     $statement = $pdo->prepare("SELECT * FROM products");
     $statement->execute();
