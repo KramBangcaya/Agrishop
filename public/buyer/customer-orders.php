@@ -48,163 +48,29 @@ if(!isset($_SESSION['customer'])) {
             <div class="col-md-12">
                 <div class="user-content">
                     <h3><?php echo LANG_VALUE_25; ?></h3>
-                    <h3 class="special"> </h3>
                     <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th><?php echo '#' ?></th>
+                                    <th><?php echo LANG_VALUE_48; ?></th>
+                                    <th><?php echo LANG_VALUE_27; ?></th>
+                                    <th><?php echo LANG_VALUE_28; ?></th>
+                                    <th><?php echo LANG_VALUE_29; ?></th>
+                                    <th><?php echo LANG_VALUE_30; ?></th>
+                                    <th><?php echo LANG_VALUE_31; ?></th>
+                                    <th><?php echo LANG_VALUE_32; ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
 
-                    <div class="row">
-    <div class="col-md-4">
-        <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
-            <div class="col-md-12 form-group">
-                <h2>
-                    Apple&nbsp;
-                    ₱30.00&nbsp;
-
-                </h2>
-
-
-                <!-- Product Image -->
-            <!-- Responsive and spaced -->
-
-                <!-- Quantity and Total -->
-                <div style="margin-top: 10px; font-size: medium;">
-                    <label>Quantity: </label>
-                    <input type="number"
-                           class="input-text qty text"
-                           step="1"
-                           min="1"
-                           max=""
-                           name="quantity[]"
-                           value="5"
-                           title="Qty"
-                           size="4"
-                           pattern="[0-9]*"
-                           inputmode="numeric"
-                           style="width: 60px; margin-right: 10px;">
-
-                    <label>Total: </label>
-
-                    ₱200.00<br><br>
-                    <label>Payment date time: 10/20/2024</label><br>
-                    <label>Transaction ID: wenrjwjno3423</label><br>
-                    <label>Payment ID: 213123214</label><br>
-                    <label>Seller Name: Hazel Tomol</label><br>
-                    <label>Seller Number: 09092930003</label><br>
-                    <label>Address to Deliver: Tagum, Davao del Norte.</label><br>
-                    <label>Order Status:  </label><p style="color:green;">Delivered</p>
-                    <br><h4> <a onclick="return confirmDelte();"
-                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
-                       class="trash">
-                       Cancel Order <i class="fa fa-ban" style="color:red;"></i>
-                    </a></h4>
-                    <h4> <a onclick="return confirmDelte();"
-                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
-                       class="trash">
-                       Feedback <i class="fa fa-comments" style="color:green;"></i>
-                    </a></h4>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<h3 class="special"> </h3>
-
-
-<div class="row">
-    <div class="col-md-4">
-        <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
-            <div class="col-md-12 form-group">
-                <h2>
-                    Carrots&nbsp;
-                    ₱10.00&nbsp;
-
-                </h2>
-
-
-                <!-- Product Image -->
-            <!-- Responsive and spaced -->
-
-                <!-- Quantity and Total -->
-                <div style="margin-top: 10px; font-size: medium;">
-                    <label>Quantity: </label>
-                    <input type="number"
-                           class="input-text qty text"
-                           step="1"
-                           min="1"
-                           max=""
-                           name="quantity[]"
-                           value="3"
-                           title="Qty"
-                           size="4"
-                           pattern="[0-9]*"
-                           inputmode="numeric"
-                           style="width: 60px; margin-right: 10px;">
-
-                    <label>Total: </label>
-
-                    ₱300.00<br>
-                    <h2>
-                    Cabbage&nbsp;
-                    ₱50.00&nbsp;
-
-                </h2>
-
-
-                <!-- Product Image -->
-            <!-- Responsive and spaced -->
-
-                <!-- Quantity and Total -->
-                <div style="margin-top: 10px; font-size: medium;">
-                    <label>Quantity: </label>
-                    <input type="number"
-                           class="input-text qty text"
-                           step="1"
-                           min="1"
-                           max=""
-                           name="quantity[]"
-                           value="5"
-                           title="Qty"
-                           size="4"
-                           pattern="[0-9]*"
-                           inputmode="numeric"
-                           style="width: 60px; margin-right: 10px;">
-
-                    <label>Total: </label>
-
-                    ₱500.00<br><br>
-                    <label>Payment date time: 02/12/2025</label><br>
-                    <label>Transaction ID: wtwgtewrwerw</label><br>
-                    <label>Payment ID: 0234230102313</label><br>
-                    <label>Seller Name: Hazel Tomol</label><br>
-                    <label>Seller Number: 09092930003</label><br>
-                    <label>Address to Deliver: Tagum, Davao del Norte.</label><br>
-                    <label>Order Status:  </label><p style="color:#8B8000;">To Ship</p>
-                    <br><h4> <a onclick="return confirmDelte();"
-                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
-                       class="trash">
-                       Cancel Order <i class="fa fa-ban" style="color:red;"></i>
-                    </a></h4>
-                    <h4> <a onclick="return confirmDelte();"
-                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
-                       class="trash">
-                       Feedback <i class="fa fa-comments" style="color:green;"></i>
-                    </a></h4>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
-</div>
             <?php
             /* ===================== Pagination Code Starts ================== */
             $adjacents = 5;
 
             $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE customer_email=? ORDER BY id DESC");
-            //$statement->execute(array($_SESSION['customer']['cust_email']));
+            $statement->execute(array($_SESSION['customer']['cust_email']));
             $total_pages = $statement->rowCount();
 
             $targetpage = BASE_URL.'customer-order.php';
@@ -217,7 +83,7 @@ if(!isset($_SESSION['customer'])) {
 
 
             $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE customer_email=? ORDER BY id DESC LIMIT $start, $limit");
-            //$statement->execute(array($_SESSION['customer']['cust_email']));
+            $statement->execute(array($_SESSION['customer']['cust_email']));
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -304,18 +170,36 @@ if(!isset($_SESSION['customer'])) {
                                 foreach ($result as $row) {
                                     $tip++;
                                     ?>
-
-
-
-
+                                    <tr>
+                                        <td><?php echo $tip; ?></td>
+                                        <td>
+                                            <?php
+                                            $statement1 = $pdo->prepare("SELECT * FROM tbl_order WHERE payment_id=?");
+                                            $statement1->execute(array($row['payment_id']));
+                                            $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+                                            foreach ($result1 as $row1) {
+                                                echo 'Product Name: '.$row1['product_name'];
+                                                echo '<br>Size: '.$row1['size'];
+                                                echo '<br>Color: '.$row1['color'];
+                                                echo '<br>Quantity: '.$row1['quantity'];
+                                                echo '<br>Unit Price: $'.$row1['unit_price'];
+                                                echo '<br><br>';
+                                            }
+                                            ?>
+                                        </td>
+                                        <td><?php echo $row['payment_date']; ?></td>
+                                        <td><?php echo $row['txnid']; ?></td>
+                                        <td><?php echo '$'.$row['paid_amount']; ?></td>
+                                        <td><?php echo $row['payment_status']; ?></td>
+                                        <td><?php echo $row['payment_method']; ?></td>
+                                        <td><?php echo $row['payment_id']; ?></td>
+                                    </tr>
                                     <?php
                                 }
                                 ?>
 
-
-
-
-
+                            </tbody>
+                        </table>
                         <div class="pagination" style="overflow: hidden;">
                         <?php
                             echo $pagination;
