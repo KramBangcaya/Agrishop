@@ -32,6 +32,8 @@ Route::prefix('products')->group(function () {
     Route::get('/category/{id}', [App\Http\Controllers\ProductsController::class, 'category_all']);
     Route::get('/product/{id}', [App\Http\Controllers\ProductsController::class, 'product']);
     Route::get('/product/seller/{id}', [App\Http\Controllers\ProductsController::class, 'seller']);
+    Route::get('/price-range', [App\Http\Controllers\ProductsController::class, 'getPrice']);
+
 });
 
 Route::prefix('categories')->group(function () {

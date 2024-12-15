@@ -52,6 +52,22 @@ class ProductsController extends Controller
         return response()->json(['data' => $data], 200);
     }
 
+    public function getPrice(Request $request){
+
+        // dd($request->all());
+        $request->validate([
+            'min' => 'required|numeric|min:0',
+            'max' => 'required|numeric|min:0|gte:min',
+        ]);
+
+        $minPrice = $request->input('min');
+        $maxPrice = $request->input('max');
+
+        $products = Products::whereBetween('price', [$minPrice, $maxPrice])->get();
+
+        return response()->json(['data' => $products], 200);
+    }
+
     public function index_all()
     {
         // $user = User::all();
@@ -112,6 +128,7 @@ class ProductsController extends Controller
         'last_name' => $product->user->lastname ?? null,
         'contact_number' => $product->user->contact_number ?? null,
         'address' => $product->user->address ?? null,
+        'qrcode' => json_decode($product->user->qrcode) ?? null,
         'measurement' => $product->measurement->measurement ?? null,
     ];
 
