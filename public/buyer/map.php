@@ -1,8 +1,11 @@
-<?php require_once('header.php'); ?>
+<?php
+require_once('header.php');
+require_once('api-config.php');
+?>
 
 <?php
 // Initialize cURL to fetch data from the external API
-$apiUrl = "http://192.168.1.9:8080/seller/all";
+$apiUrl = API_BASE_URL . "/seller/all";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $apiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

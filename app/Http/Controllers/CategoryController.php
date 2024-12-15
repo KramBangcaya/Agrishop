@@ -30,7 +30,6 @@ class CategoryController extends Controller
     public function all()
     {
         $data = Category::get();
-        // dd($data);
         return response()->json(['data' => $data], 200);
     }
 

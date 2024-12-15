@@ -70,11 +70,9 @@ class ProductsController extends Controller
 
     public function index_all()
     {
-        // $user = User::all();
 
         $data = Products::with('User')->get();
 
-        // dd($data);
 
         $formattedData = $data->map(function ($product) {
             return [

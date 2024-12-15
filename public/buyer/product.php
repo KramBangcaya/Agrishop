@@ -47,30 +47,16 @@ if(!isset($_REQUEST['id'])) {
      $s_last = $product['last_name'] ?? 'N/A';
      $s_address = $product['address'] ?? 'N/A';
      $s_id = $product['userID'] ?? 'N/A';
+     $qrcode = $product['qrcode'][0] ?? 'N/A';
 
  }
 
 if(isset($_POST['form_add_to_cart'])) {
 
-	// getting the currect stock of this product
-	$statement = $pdo->prepare("SELECT * FROM products WHERE id=?");
-	$statement->execute(array($_REQUEST['id']));
-	$result = $statement->fetchAll(PDO::FETCH_ASSOC);
-	foreach ($result as $row) {
-		$current_p_qty = $row['Quantity'];
-	}
-	if($_POST['p_Quantityqty'] > $current_p_qty):
-		$temp_msg = 'Sorry! There are only '.$current_p_qty.' item(s) in stock';
-		?>
-		<script type="text/javascript">alert('<?php echo $temp_msg; ?>');</script>
-		<?php
-	else:
     if(isset($_SESSION['cart_p_id']))
     {
 
         $arr_cart_p_id = array();
-        $arr_cart_size_id = array();
-        $arr_cart_color_id = array();
         $arr_cart_p_qty = array();
         $arr_cart_p_current_price = array();
 
@@ -79,39 +65,6 @@ if(isset($_POST['form_add_to_cart'])) {
         {
             $i++;
             $arr_cart_p_id[$i] = $value;
-        }
-
-        $i=0;
-        foreach($_SESSION['cart_size_id'] as $key => $value)
-        {
-            $i++;
-            $arr_cart_size_id[$i] = $value;
-        }
-
-        $i=0;
-        foreach($_SESSION['cart_color_id'] as $key => $value)
-        {
-            $i++;
-            $arr_cart_color_id[$i] = $value;
-        }
-
-
-        $added = 0;
-        if(!isset($_POST['size_id'])) {
-            $size_id = 0;
-        } else {
-            $size_id = $_POST['size_id'];
-        }
-        if(!isset($_POST['color_id'])) {
-            $color_id = 0;
-        } else {
-            $color_id = $_POST['color_id'];
-        }
-        for($i=1;$i<=count($arr_cart_p_id);$i++) {
-            if( ($arr_cart_p_id[$i]==$_REQUEST['id']) && ($arr_cart_size_id[$i]==$size_id) && ($arr_cart_color_id[$i]==$color_id) ) {
-                $added = 1;
-                break;
-            }
         }
         if($added == 1) {
            $error_message1 = 'This product is already added to the shopping cart.';
@@ -124,43 +77,13 @@ if(isset($_POST['form_add_to_cart'])) {
             }
             $new_key = $i+1;
 
-            if(isset($_POST['size_id'])) {
-
-                $size_id = $_POST['size_id'];
-
-                $statement = $pdo->prepare("SELECT * FROM tbl_size WHERE size_id=?");
-                $statement->execute(array($size_id));
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                foreach ($result as $row) {
-                    $size_name = $row['size_name'];
-                }
-            } else {
-                $size_id = 0;
-                $size_name = '';
-            }
-
-            if(isset($_POST['color_id'])) {
-                $color_id = $_POST['color_id'];
-                $statement = $pdo->prepare("SELECT * FROM tbl_color WHERE color_id=?");
-                $statement->execute(array($color_id));
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                foreach ($result as $row) {
-                    $color_name = $row['color_name'];
-                }
-            } else {
-                $color_id = 0;
-                $color_name = '';
-            }
-
-
             $_SESSION['cart_p_id'][$new_key] = $_REQUEST['id'];
-            $_SESSION['cart_size_id'][$new_key] = $size_id;
-            $_SESSION['cart_size_name'][$new_key] = $size_name;
-            $_SESSION['cart_color_id'][$new_key] = $color_id;
-            $_SESSION['cart_color_name'][$new_key] = $color_name;
             $_SESSION['cart_p_qty'][$new_key] = $_POST['p_qty'];
             $_SESSION['cart_p_current_price'][$new_key] = $_POST['p_current_price'];
             $_SESSION['cart_p_name'][$new_key] = $_POST['p_name'];
+            $_SESSION['cart_s_name'][$new_key] = $_POST['s_name'];
+            $_SESSION['cart_s_last'][$new_key] = $_POST['s_lastname'];
+            $_SESSION['cart_qr'][$new_key] = $_POST['qrcode'];
             // $_SESSION['f_name'][$new_key] = $_REQUEST['fname'];
             // $_SESSION['l_name'][$new_key] = $_REQUEST['lname'];
 
@@ -173,50 +96,21 @@ if(isset($_POST['form_add_to_cart'])) {
     else
     {
 
-        if(isset($_POST['size_id'])) {
-
-            $size_id = $_POST['size_id'];
-
-            $statement = $pdo->prepare("SELECT * FROM tbl_size WHERE size_id=?");
-            $statement->execute(array($size_id));
-            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-            foreach ($result as $row) {
-                $size_name = $row['size_name'];
-            }
-        } else {
-            $size_id = 0;
-            $size_name = '';
-        }
-
-        if(isset($_POST['color_id'])) {
-            $color_id = $_POST['color_id'];
-            $statement = $pdo->prepare("SELECT * FROM tbl_color WHERE color_id=?");
-            $statement->execute(array($color_id));
-            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-            foreach ($result as $row) {
-                $color_name = $row['color_name'];
-            }
-        } else {
-            $color_id = 0;
-            $color_name = '';
-        }
 
 
         $_SESSION['cart_p_id'][1] = $_REQUEST['id'];
-        $_SESSION['cart_size_id'][1] = $size_id;
-        $_SESSION['cart_size_name'][1] = $size_name;
-        $_SESSION['cart_color_id'][1] = $color_id;
-        $_SESSION['cart_color_name'][1] = $color_name;
         $_SESSION['cart_p_qty'][1] = $_POST['p_qty'];
         $_SESSION['cart_p_current_price'][1] = $_POST['p_current_price'];
         $_SESSION['cart_p_name'][1] = $_POST['p_name'];
         $_SESSION['cart_p_featured_photo'][1] = $_POST['p_featured_photo'];
+        $_SESSION['cart_s_name'][1] = $_POST['s_name'];
+        $_SESSION['cart_s_last'][1] = $_POST['s_lastname'];
+        $_SESSION['cart_qr'][1] = $_POST['qrcode'];
         // $_SESSION['f_name'][1] = $_REQUEST['fname'];
         // $_SESSION['l_name'][1] = $_REQUEST['lname'];
 
         $success_message1 = 'Product is added to the cart successfully!';
     }
-	endif;
 }
 ?>
 
@@ -316,51 +210,6 @@ if($success_message1 != '') {
 
 
                             <form action="" method="post">
-                            <div class="p-quantity">
-                                <div class="row">
-                                    <?php if(isset($size)): ?>
-                                    <div class="col-md-12 mb_20">
-                                        <?php echo LANG_VALUE_52; ?> <br>
-                                        <select name="size_id" class="form-control select2" style="width:auto;">
-                                            <?php
-                                            $statement = $pdo->prepare("SELECT * FROM tbl_size");
-                                            $statement->execute();
-                                            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                            foreach ($result as $row) {
-                                                if(in_array($row['size_id'],$size)) {
-                                                    ?>
-                                                    <option value="<?php echo $row['size_id']; ?>"><?php echo $row['size_name']; ?></option>
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <?php endif; ?>
-
-                                    <?php if(isset($color)): ?>
-                                    <div class="col-md-12">
-                                        <?php echo LANG_VALUE_53; ?> <br>
-                                        <select name="color_id" class="form-control select2" style="width:auto;">
-                                            <?php
-                                            $statement = $pdo->prepare("SELECT * FROM tbl_color");
-                                            $statement->execute();
-                                            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                            foreach ($result as $row) {
-                                                if(in_array($row['color_id'],$color)) {
-                                                    ?>
-                                                    <option value="<?php echo $row['color_id']; ?>"><?php echo $row['color_name']; ?></option>
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <?php endif; ?>
-
-                                </div>
-
-                            </div>
 							<div class="p-price">
                             <div class="p-title"><h2><?php echo $p_name; ?></h2></div>
                             <div class="p-short-des" style="font-size:14px;">
@@ -388,6 +237,9 @@ if($success_message1 != '') {
                             <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
                             <input type="hidden" name="p_name" value="<?php echo $p_name; ?>">
                             <input type="hidden" name="p_featured_photo" value="<?php echo $p_featured_photo; ?>">
+                            <input type="hidden" name="s_name" value="<?php echo $s_name; ?>">
+                            <input type="hidden" name="s_lastname" value="<?php echo $s_last; ?>">
+                            <input type="hidden" name="qrcode" value="<?php echo $qrcode; ?>">
 
 							<div class="p-quantity">
                                 <?php echo LANG_VALUE_55; ?> <br>
@@ -413,8 +265,9 @@ if($success_message1 != '') {
 
 
 
-    <div class="page">
-        <div class="container">
+    <div class="page" style="border-style: double; border-color: gray; border-width: 2px;">
+        <div >
+        <div class="container" style="padding-left:25px;">
             <div class="row">
                 <div class="col-md-12">
                 <div class="product">
@@ -425,20 +278,21 @@ if($success_message1 != '') {
                                     <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($s_id); ?>">
                                     <input type="submit" value="Visit Shop">
                                 </form>
+
                             </div>
-                            <?php echo $s_address; ?>
+                            <h4><?php  echo '<i class="fa fa-map-marker-alt"></i> '; echo $s_address;  ?></h4><br>
                         </div>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+                        </div>
+
+
+				</div>
+
+			</div>
+		</div>
+	</div>
 </div>
-
-
-
-
 
 
 <div class="product bg-gray pt_70 pb_70">
@@ -508,8 +362,14 @@ if($success_message1 != '') {
                                     echo '<div class="photo" style="background-color: gray;">No photo available</div>';
                                 }
                                 ?>
+
+
+
                                 <div class="overlay"></div>
                             </div>
+
+
+
                             <div class="text">
                                 <h3><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['Product_Name']); ?></a></h3>
                                 <h4>
@@ -518,15 +378,89 @@ if($success_message1 != '') {
                                 <p><?php echo $row['first_name']?> <?php echo $row['last_name']?></p>
                                 <p><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo LANG_VALUE_154; ?></a></p>
                             </div>
+
+
+
+
                         </div>
+
+
                         <?php
                     }
                     ?>
+
+
                 </div>
+
             </div>
         </div>
     </div>
 </div>
+
+
+<div class="page">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" >
+                <div class="product" >
+                        <div class="row" >
+                            <h1 style="margin-left:15px;">Comments / Feedbacks</h1>
+                            <br>
+<div style="border-style: double; border-color: gray; border-width: 2px; float: left; padding: 15px;">
+                            <div class="btn-cart btn-cart1">
+                            <h3>User 1</h3>
+                            <div class="rating">
+                                <h5>Ratings / Reviews</h5>
+                                        <?php
+                                        // Assuming no rating system from API. If rating system exists, you can implement it here.
+                                        // Example: Displaying full stars for simplicity as there's no rating data in the API response.
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            echo '<i class="fa fa-star"></i>';
+                                        }
+                                        ?>
+                                    </div>
+
+                           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                            but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+</div>
+
+</div>
+
+
+                            <br>
+                            <div style="border-style: double; border-color: gray; border-width: 2px; float: left; padding: 15px;margin-top: 5px;">
+                            <div class="btn-cart btn-cart1">
+                            <h3>User 2</h3>
+                            <div class="rating">
+                                <h5>Ratings / Reviews</h5>
+                                        <?php
+                                        // Assuming no rating system from API. If rating system exists, you can implement it here.
+                                        // Example: Displaying full stars for simplicity as there's no rating data in the API response.
+                                        for ($i = 1; $i <= 2; $i++) {
+                                            echo '<i class="fa fa-star"></i>';
+                                        }
+                                        ?>
+                                    </div>
+                            </div>
+                           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                            but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+</div>
+
+                        </div>
+
+
+
+
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <script>
     // Select all thumbnail links

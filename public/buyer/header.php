@@ -269,7 +269,7 @@ foreach ($result as $row) {
 					} else {
 						?>
 						<li><a href="login.php"><i class="fa fa-sign-in"></i> <?php echo LANG_VALUE_9; ?></a></li>
-						<li><a href="register.php"><i class="fa fa-user-plus"></i> <?php echo LANG_VALUE_15; ?></a></li>
+						<li><a href="../register"><i class="fa fa-user-plus"></i> <?php echo LANG_VALUE_15; ?></a></li>
 
 						<?php
 					}
@@ -277,22 +277,29 @@ foreach ($result as $row) {
 
 					<li><a href="cart.php"><i class="fa fa-shopping-cart"></i> <?php echo LANG_VALUE_18; ?> (<?php echo LANG_VALUE_1; ?><?php
 					if(isset($_SESSION['cart_p_id'])) {
+                        // var_dump($_SESSION);
 						$table_total_price = 0;
 						$i=0;
 	                    foreach($_SESSION['cart_p_qty'] as $key => $value)
 	                    {
 	                        $i++;
 	                        $arr_cart_p_qty[$i] = $value;
-	                    }                    $i=0;
+	                    }
+
+                        $i=0;
 	                    foreach($_SESSION['cart_p_current_price'] as $key => $value)
 	                    {
 	                        $i++;
 	                        $arr_cart_p_current_price[$i] = $value;
 	                    }
-	                    for($i=1;$i<=count($arr_cart_p_qty);$i++) {
-	                    	$row_total_price = $arr_cart_p_current_price[$i]*$arr_cart_p_qty[$i];
-	                        $table_total_price = $table_total_price + $row_total_price;
-	                    }
+	                    for ($i = 1; $i <= count($arr_cart_p_qty); $i++) {
+                            // Check if both price and quantity exist for the current index
+                            if (isset($arr_cart_p_current_price[$i])) {
+                                // echo $arr_cart_p_current_price[$i]; // Display the price
+                                $row_total_price = $arr_cart_p_qty[$i] * $arr_cart_p_current_price[$i]; // Calculate row total price
+                                $table_total_price += $row_total_price; // Add to total price
+                            }
+                        }
 						echo $table_total_price;
 					} else {
 						echo '0.00';
@@ -313,12 +320,12 @@ foreach ($result as $row) {
 	</div>
 </div>
 
-<div class="nav">
+<div class="nav" style="background-color:#049261;">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 pl_0 pr_0">
 				<div class="menu-container">
-					<div class="menu">
+					<div class="menu"style="background-color:#049261;">
 						<ul>
 							<li><a href="index.php">Home</a></li>
 

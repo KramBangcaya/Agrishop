@@ -73,12 +73,16 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9a6e47e45f9132bd19afc0f7ed37e4da02d2df48
         $qrcode = request()->file('qrcode');
         $qrcodes = [];
         $photos = request()->file('photos');
         $paths = [];
 
+        // dd($qrcode);
         if (!empty($photos)) {
             foreach ($photos as $photo) {
                 $filename = time() . '.' . $photo->getClientOriginalExtension();
@@ -94,6 +98,7 @@ class RegisterController extends Controller
                 $qrcodes[] = $path; // Add path to the array
             }
         }
+
 
         return User::create([
             'name' => $data['name'],
