@@ -1,4 +1,7 @@
-<?php require_once('header.php'); ?>
+<?php
+require_once('header.php');
+require_once('api-config.php');
+?>
 
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
@@ -154,6 +157,41 @@ if(isset($_POST['form1'])) {
 <h2 class="special" style="margin-left:10px;">Order Details</h2><h3 class="special"> </h3>
 
                         <?php for($i=1;$i<=count($arr_cart_p_id);$i++): ?>
+<<<<<<< HEAD
+                        <tr>
+
+                            <td><?php echo $i; ?></td>
+                            <!-- <td><?php echo $_SESSION['f_name']; ?></td>
+                            <td><?php echo $_SESSION['l_name']; ?></td> -->
+                            <td>
+                            <img src="<?php echo API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i], '[]"')); ?>" alt="">
+                            </td>
+                            <td><?php echo $arr_cart_p_name[$i]; ?></td>
+                            <td><?php echo LANG_VALUE_1; ?><?php echo $arr_cart_p_current_price[$i]; ?></td>
+                            <td>
+                                <input type="hidden" name="product_id[]" value="<?php echo $arr_cart_p_id[$i]; ?>">
+                                <input type="hidden" name="product_name[]" value="<?php echo $arr_cart_p_name[$i]; ?>">
+                                <input type="number" class="input-text qty text" step="1" min="1" max="" name="quantity[]" value="<?php echo $arr_cart_p_qty[$i]; ?>" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric">
+                            </td>
+                            <td class="text-right">
+                                <?php
+                                $row_total_price = $arr_cart_p_current_price[$i]*$arr_cart_p_qty[$i];
+                                $table_total_price = $table_total_price + $row_total_price;
+                                ?>
+                                <?php echo LANG_VALUE_1; ?><?php echo $row_total_price; ?>
+                            </td>
+                            <td class="text-center">
+                                <a  onclick="return confirmDelete();" href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>" class="trash"><i class="fa fa-trash" style="color:red;"></i></a>
+                            </td>
+                        </tr>
+                        <?php endfor; ?>
+                        <tr>
+                            <th colspan="5" class="total-text">Total</th>
+                            <th class="total-amount"><?php echo LANG_VALUE_1; ?><?php echo $table_total_price; ?></th>
+                            <th></th>
+                        </tr>
+                    </table>
+=======
 
 
 
@@ -196,6 +234,7 @@ if(isset($_POST['form1'])) {
                     <label>Total: </label>
                     <?php $row_total_price = $arr_cart_p_current_price[$i] * $arr_cart_p_qty[$i]; ?>
                     ₱<?php echo $row_total_price; ?>
+>>>>>>> c149625e19c8f21819769bac5f7c5911db5a978e
                 </div>
             </div>
         </div>

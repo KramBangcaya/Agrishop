@@ -134,7 +134,8 @@ if(!isset($_SESSION['cart_p_id'])) {
                                      <div class="col-md-12 form-group">
                                          <label for=""><?php echo "Seller Name"; ?> <br>
                                          <span style="font-size:12px;font-weight:normal;">(<?php echo "Scan The QR Here to Pay"; ?>)</span></label>
-                                         <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>" alt="">
+                                         <img src="<?php echo API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>" alt="">
+
                                      </div>
 
 

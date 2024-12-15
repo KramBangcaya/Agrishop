@@ -1,4 +1,8 @@
-<?php require_once('header.php'); ?>
+<?php
+require_once('header.php');
+require_once('api-config.php');
+
+?>
 
 
 
@@ -77,8 +81,9 @@
             <div class="col-md-12">
                 <div class="product-carousel">
                     <?php
+
                     // Fetch product data from the API
-                    $apiUrl = 'http://192.168.1.9:8080/products/all';
+                    $apiUrl = API_BASE_URL . '/products/all';
                     $json = @file_get_contents($apiUrl); // Suppress warnings with @
 
                     $products = json_decode($json, true)['data']; // Decode the JSON response to PHP array
@@ -91,7 +96,8 @@
                             ?>
                             <div class="item">
                                 <div class="thumb">
-                                    <div class="photo" style="background-image:url(http://192.168.1.9:8080/storage/<?php echo $product['photos'][0]; ?>);"></div>
+                                <div class="photo" style="background-image:url(<?php echo API_BASE_URL . '/storage/' . $product['photos'][0]; ?>);"></div>
+
 
 
                                 </div>

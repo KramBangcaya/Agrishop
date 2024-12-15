@@ -1,4 +1,7 @@
-<?php require_once('header.php'); ?>
+<?php
+require_once('header.php');
+require_once('api-config.php');
+?>
 
 <?php
 // Get the user_id from the query string
@@ -10,7 +13,7 @@ if ($user_id <= 0) {
 }
 
 // Fetch product data from the API for the specific seller
-$apiUrl = "http://192.168.1.9:8080/products/product/seller/$user_id";
+$apiUrl = API_BASE_URL ."/products/product/seller/$user_id";
 $json = @file_get_contents($apiUrl);
 
 if ($json === false) {
@@ -47,7 +50,8 @@ if (!empty($products)) {
                             ?>
                             <div class="item">
                                 <div class="thumb">
-                                <div class="photo" style="background-image:url(http://192.168.1.9:8080/storage/<?php echo $photo_url; ?>);"></div>
+                                <div class="photo" style="background-image:url(<?php echo API_BASE_URL . '/storage/' . htmlspecialchars($photo_url); ?>);"></div>
+
                                 <div class="overlay"></div>
                                 </div>
                                 <div class="text">

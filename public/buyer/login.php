@@ -1,4 +1,7 @@
-<?php require_once('header.php'); ?>
+<?php
+require_once('header.php');
+require_once('api-config.php');
+?>
 <!-- fetching row banner login -->
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
@@ -20,7 +23,7 @@ if(isset($_POST['form1'])) {
         $cust_password = strip_tags($_POST['cust_password']);
         // var_dump($cust_email);
         // API URL with the email as a parameter
-        $api_url = "http://192.168.1.9:8080/login/submit?email=" . urlencode($cust_email);
+        $api_url = API_BASE_URL ."/login/submit?email=" . urlencode($cust_email);
 
         // Initialize cURL session
         $ch = curl_init($api_url);
