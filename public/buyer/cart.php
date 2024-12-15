@@ -73,8 +73,8 @@ if(isset($_POST['form1'])) {
 ?>
 
 
-    <div class="page-banner-inner" style="font-size: 4vw;">
-    <h1 style="font-size: 6vw; text-align: center"><?php echo LANG_VALUE_18; ?></h1>
+    <div class="page-banner-inner" style="font-size:50px;">
+    <h1 style="font-size:50px;text-align: center">CART</h1>
 </div>
 
 
@@ -88,20 +88,17 @@ if(isset($_POST['form1'])) {
                     <?php echo '<h2 class="text-center">Cart is Empty!!</h2></br>'; ?>
                     <?php echo '<h4 class="text-center">Add products to the cart in order to view it here.</h4>'; ?>
                 <?php else: ?>
+
+
+
                 <form action="" method="post">
                     <?php $csrf->echoInputField(); ?>
+
                     <div class="table-responsive">
+
 				<div class="cart">
-                    <table class="table table-responsive table-hover table-bordered">
-                        <tr>
-                            <th><?php echo '#' ?></th>
-                            <th><?php echo LANG_VALUE_8; ?></th>
-                            <th><?php echo LANG_VALUE_47; ?></th>
-                            <th><?php echo LANG_VALUE_159; ?></th>
-                            <th><?php echo LANG_VALUE_55; ?></th>
-                            <th class="text-right"><?php echo LANG_VALUE_82; ?></th>
-                            <th class="text-center" style="width: 100px;"><?php echo LANG_VALUE_83; ?></th>
-                        </tr>
+
+
                         <?php
                         $table_total_price = 0;
 
@@ -157,8 +154,10 @@ if(isset($_POST['form1'])) {
                         }
                         ?>
 
+<h2 class="special" style="margin-left:10px;">Order Details</h2><h3 class="special"> </h3>
 
                         <?php for($i=1;$i<=count($arr_cart_p_id);$i++): ?>
+<<<<<<< HEAD
                         <tr>
 
                             <td><?php echo $i; ?></td>
@@ -192,13 +191,103 @@ if(isset($_POST['form1'])) {
                             <th></th>
                         </tr>
                     </table>
+=======
+
+
+
+
+                            <div class="row">
+    <div class="col-md-4">
+        <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
+            <div class="col-md-12 form-group">
+                <h2>
+                    <?php echo $arr_cart_p_name[$i]; ?>&nbsp;
+                    ₱<?php echo $arr_cart_p_current_price[$i]; ?>&nbsp;
+                    <a onclick="return confirmDelete();"
+                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
+                       class="trash">
+                        <i class="fa fa-trash" style="color:red;"></i>
+                    </a>
+                </h2>
+
+                <!-- Product Image -->
+                <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+                     alt="Product Image"
+                     style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
+
+                <!-- Quantity and Total -->
+                <div style="margin-top: 10px; font-size: medium;">
+                    <label>Quantity: </label>
+                    <input type="number"
+                           class="input-text qty text"
+                           step="1"
+                           min="1"
+                           max=""
+                           name="quantity[]"
+                           value="<?php echo $arr_cart_p_qty[$i]; ?>"
+                           title="Qty"
+                           size="4"
+                           pattern="[0-9]*"
+                           inputmode="numeric"
+                           style="width: 60px; margin-right: 10px;">
+
+                    <label>Total: </label>
+                    <?php $row_total_price = $arr_cart_p_current_price[$i] * $arr_cart_p_qty[$i]; ?>
+                    ₱<?php echo $row_total_price; ?>
+>>>>>>> c149625e19c8f21819769bac5f7c5911db5a978e
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <h3 class="special"> </h3>
+
+
+
+                        <?php endfor; ?>
+
+
+
+
+
                 </div>
 
-                <div class="cart-buttons">
-                    <ul>
-                         <li><input type="submit" value="<?php echo LANG_VALUE_20; ?>" class="btn btn-primary" name="form1"><a href="index.php" class="btn btn-primary"><?php echo LANG_VALUE_85; ?></a><a href="checkout.php" class="btn btn-primary"><?php echo LANG_VALUE_23; ?></a></li>
-                    </ul>
-                </div>
+              <div class="cart-buttons" style="text-align:center; margin-right:10px; margin-bottom:10px;">
+    <ul style="list-style:none; padding:0; display:inline-block; margin:5px;">
+        <li>
+            <input
+                type="submit"
+                value="<?php echo LANG_VALUE_20; ?>"
+                class="btn btn-secondary"
+                name="form1"
+                style="width:250px; height:50px; text-align:center; display:inline-block;">
+        </li>
+    </ul>
+    <ul style="list-style:none; padding:0; display:inline-block; margin:5px;">
+        <li>
+            <a
+                href="index.php"
+                class="btn btn-primary"
+                style="width:250px; height:50px; line-height:40px; text-align:center; display:inline-block;">
+                <?php echo LANG_VALUE_85; ?>
+            </a>
+        </li>
+    </ul>
+    <ul style="list-style:none; padding:0; display:inline-block; margin:5px;">
+        <li>
+            <a
+                href="checkout.php"
+                class="btn btn-primary"
+                style="width:250px; height:50px; line-height:40px; text-align:center; display:inline-block;">
+                <?php echo LANG_VALUE_23; ?>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+
                 </form>
                 <?php endif; ?>
 
