@@ -1,4 +1,7 @@
-<?php require_once('header.php'); ?>
+<?php
+require_once('header.php');
+require_once('api-config.php');
+?>
 
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
@@ -162,7 +165,7 @@ if(isset($_POST['form1'])) {
                             <!-- <td><?php echo $_SESSION['f_name']; ?></td>
                             <td><?php echo $_SESSION['l_name']; ?></td> -->
                             <td>
-                                <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>" alt="">
+                            <img src="<?php echo API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i], '[]"')); ?>" alt="">
                             </td>
                             <td><?php echo $arr_cart_p_name[$i]; ?></td>
                             <td><?php echo LANG_VALUE_1; ?><?php echo $arr_cart_p_current_price[$i]; ?></td>

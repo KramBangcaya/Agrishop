@@ -1,6 +1,7 @@
 <?php
+require_once('api-config.php');
 // Fetch categories from API
-$api_url = 'http://192.168.1.9:8080/categories/all';
+$api_url = API_BASE_URL . '/categories/all';
 $response = file_get_contents($api_url);
 $categories = json_decode($response, true);
 
@@ -12,7 +13,7 @@ $max_price = isset($_GET['max_price']) ? $_GET['max_price'] : null;
 $products = [];
 
 // Prepare the product API URL based on category
-$product_api_url = "http://192.168.1.9:8080/products";
+$product_api_url = API_BASE_URL . "/products";
 
 // Prepare the query parameters for price range and category
 $query_params = [];
@@ -25,17 +26,22 @@ if ($category_id && $category_id !== '0') {
 // Apply price range filters if set
 if ($min_price !== null && $max_price !== null) {
     // If price range is set, use the price-range API
-    $price_range_api_url = "http://192.168.1.9:8080/products/price-range?min={$min_price}&max={$max_price}";
+    $price_range_api_url = API_BASE_URL . "/products/price-range?min={$min_price}&max={$max_price}";
 
     // Fetch the filtered products based on the price range
     $price_range_response = file_get_contents($price_range_api_url);
     $products = json_decode($price_range_response, true);
 
     // Filter the products by category if a category is set
-    if ($category_id && $category_id !== '0') {
-        $products['data'] = array_filter($products['data'], function($product) use ($category_id) {
-            return $product['idCategory'] == $category_id;
-        });
+    if (isset($products['data']) && is_array($products['data'])) {
+        // Filter the products by category if a category is set
+        if ($category_id && $category_id !== '0') {
+            $products['data'] = array_filter($products['data'], function($product) use ($category_id) {
+                return $product['idCategory'] == $category_id;
+            });
+        }
+    } else {
+        $products['data'] = []; // Set it to an empty array if 'data' is not set or not an array
     }
 } else {
     // If no price range is set, fetch all products in the selected category
@@ -108,7 +114,7 @@ if ($min_price !== null && $max_price !== null) {
                                                 }
                                                 $photoPath = isset($photosArray[0]) ? $photosArray[0] : 'default.jpg';
                                                 ?>
-                                                <div class="photo" style="background-image:url(http://192.168.1.9:8080/storage/<?php echo $photoPath; ?>); width: 100%; height: 200px; background-size: cover;"></div>
+                                                <div class="photo" style="background-image:url(<?php echo API_BASE_URL . '/storage/' . $photoPath; ?>); width: 100%; height: 200px; background-size: cover;"></div>
                                                 <div class="overlay"></div>
                                             </div>
                                             <div class="text">
