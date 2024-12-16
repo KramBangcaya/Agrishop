@@ -31,6 +31,7 @@ class MobileController extends Controller
 
     public function Registration(Request $request)
     {
+        s
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
