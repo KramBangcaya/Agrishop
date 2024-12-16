@@ -47,7 +47,7 @@ if(!isset($_SESSION['customer'])) {
             </div>
             <div class="col-md-12">
                 <div class="user-content">
-                    <h3><?php echo LANG_VALUE_25; ?></h3>
+                    <h1><?php echo LANG_VALUE_25; ?></h1>
                     <h3 class="special"> </h3>
                     <div class="table-responsive">
 
@@ -90,7 +90,7 @@ if(!isset($_SESSION['customer'])) {
                     <label>Payment ID: 213123214</label><br>
                     <label>Seller Name: Hazel Tomol</label><br>
                     <label>Seller Number: 09092930003</label><br>
-                    <label>Address to Deliver: Tagum, Davao del Norte.</label><br>
+                    <label>Seller Address: Tagum, Davao del Norte.</label><br>
                     <label>Order Status:  </label><p style="color:green;">Delivered</p>
                     <br><h4> <a onclick="return confirmDelte();"
                        href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
@@ -174,13 +174,16 @@ if(!isset($_SESSION['customer'])) {
 
                     <label>Total: </label>
 
-                    ₱500.00<br><br>
+                    ₱500.00<br>  <label>_____________________________________________</label><br>
+                    <label>Total 2 Items: </label>
+
+₱800.00<br><br>
                     <label>Payment date time: 02/12/2025</label><br>
                     <label>Transaction ID: wtwgtewrwerw</label><br>
                     <label>Payment ID: 0234230102313</label><br>
                     <label>Seller Name: Hazel Tomol</label><br>
                     <label>Seller Number: 09092930003</label><br>
-                    <label>Address to Deliver: Tagum, Davao del Norte.</label><br>
+                    <label>Seller Address: Tagum, Davao del Norte.</label><br>
                     <label>Order Status:  </label><p style="color:#8B8000;">To Ship</p>
                     <br><h4> <a onclick="return confirmDelte();"
                        href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
