@@ -48,6 +48,7 @@ if(!isset($_REQUEST['id'])) {
      $s_address = $product['address'] ?? 'N/A';
      $s_id = $product['userID'] ?? 'N/A';
      $qrcode = $product['qrcode'][0] ?? 'N/A';
+     $s_contact_number = $product['contact_number'] ?? 'N/A';
 
  }
 
@@ -84,6 +85,9 @@ if(isset($_POST['form_add_to_cart'])) {
             $_SESSION['cart_s_name'][$new_key] = $_POST['s_name'];
             $_SESSION['cart_s_last'][$new_key] = $_POST['s_lastname'];
             $_SESSION['cart_qr'][$new_key] = $_POST['qrcode'];
+            $_SESSION['s_id'][$new_key] = $_POST['s_id'];
+            $_SESSION['s_contact_number'][$new_key] = $_POST['s_contact_number'];
+            $_SESSION['s_address'][$new_key] = $_POST['s_address'];
             // $_SESSION['f_name'][$new_key] = $_REQUEST['fname'];
             // $_SESSION['l_name'][$new_key] = $_REQUEST['lname'];
 
@@ -105,7 +109,9 @@ if(isset($_POST['form_add_to_cart'])) {
         $_SESSION['cart_p_featured_photo'][1] = $_POST['p_featured_photo'];
         $_SESSION['cart_s_name'][1] = $_POST['s_name'];
         $_SESSION['cart_s_last'][1] = $_POST['s_lastname'];
-        $_SESSION['cart_qr'][1] = $_POST['qrcode'];
+        $_SESSION['s_id'][1] = $_POST['s_id'];
+        $_SESSION['s_contact_number'][1] = $_POST['s_contact_number'];
+        $_SESSION['s_address'][1] = $_POST['s_address'];
         // $_SESSION['f_name'][1] = $_REQUEST['fname'];
         // $_SESSION['l_name'][1] = $_REQUEST['lname'];
 
@@ -240,7 +246,9 @@ if($success_message1 != '') {
                             <input type="hidden" name="s_name" value="<?php echo $s_name; ?>">
                             <input type="hidden" name="s_lastname" value="<?php echo $s_last; ?>">
                             <input type="hidden" name="qrcode" value="<?php echo $qrcode; ?>">
-
+                            <input type="hidden" name="s_id" value="<?php echo $s_id; ?>">
+                            <input type="hidden" name="s_contact_number" value="<?php echo $s_contact_number; ?>">
+                            <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
 							<div class="p-quantity">
                                 <?php echo LANG_VALUE_55; ?> <br>
 								<input type="number" class="input-text qty" step="1" min="1" max="" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric">
