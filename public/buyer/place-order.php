@@ -72,10 +72,95 @@ try {
 }
 
     }
+
+
+
 }
 
 
 ?>
+
+
+
+<div class="row" style="margin: 0 auto; float: center;"> <!-- Centering the inner row -->
+            <div class="col-md-12">
+                <?php require_once('customer-sidebar.php'); ?>
+            </div>
+
+
+
+            <div class="col-md-12">
+                <div class="user-content">
+                    <h1><?php echo LANG_VALUE_25; ?></h1>
+                    <h3 class="special"> </h3>
+                    <div class="table-responsive">
+
+
+                    <div class="row">
+    <div class="col-md-4">
+        <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
+            <div class="col-md-12 form-group">
+                <h2>
+                <?php echo $product_name; ?>&nbsp;
+                    ₱<?php echo $product_price; ?>&nbsp;
+
+                </h2>
+
+
+                <!-- Product Image -->
+            <!-- Responsive and spaced -->
+
+                <!-- Quantity and Total -->
+                <div style="margin-top: 10px; font-size: medium;">
+                    <label>Quantity: </label>
+                    <input type="number"
+                           class="input-text qty text"
+                           step="1"
+                           min="1"
+                           max=""
+                           name="quantity[]"
+                           value="5"
+                           title="Qty"
+                           size="4"
+                           pattern="[0-9]*"
+                           inputmode="numeric"
+                           style="width: 60px; margin-right: 10px;">
+
+                    <label>Total: </label>
+
+                    ₱<?php echo $total_price; ?><br><br>
+                    <label>Payment date time: 10/20/2024</label><br>
+                    <label>Transaction ID: wenrjwjno3423</label><br>
+                    <label>Payment ID: 213123214</label><br>
+                    <label>Seller Name: <?php echo $seller_name; echo " "; echo $seller_last?></label><br>
+                    <label>Seller Number: <?php echo $seller_number; ?></label><br>
+                    <label>Seller Address: <?php echo $seller_address; ?></label><br>
+                    <label>Order Status:  </label><p style="color:green;"><?php echo $order_status; ?></p>
+                    <br><h4> <a onclick="return confirmDelte();"
+                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
+                       class="trash">
+                       Cancel Order <i class="fa fa-ban" style="color:red;"></i>
+                    </a></h4>
+                    <h4> <a onclick="return confirmDelte();"
+                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
+                       class="trash">
+                       Feedback <i class="fa fa-comments" style="color:green;"></i>
+                    </a></h4>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="special"> </h3>
+
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

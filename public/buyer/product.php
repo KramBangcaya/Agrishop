@@ -1,4 +1,7 @@
-<?php require_once('header.php'); ?>
+<?php require_once('header.php');
+require_once('api-config.php');
+
+?>
 
 <?php
 if(!isset($_REQUEST['id'])) {
@@ -8,7 +11,7 @@ if(!isset($_REQUEST['id'])) {
 
     $product_id = $_REQUEST['id'];
 
-    $api_url = "http://192.168.1.9:8080/products/product/" . $product_id;
+    $api_url = API_BASE_URL . "/products/product/" . $product_id;
 
     // Use cURL to fetch data from API
     $ch = curl_init();
@@ -148,14 +151,14 @@ if($success_message1 != '') {
                     <div class="col-md-5">
                             <ul class="prod-slider">
                                 <!-- Main Image -->
-                                <li id="main-image" style="background-image: url(http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>);">
-                                    <a class="popup" href="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>"></a>
+                                <li id="main-image" style="background-image: url(<?php echo  API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>);">
+                                    <a class="popup" href=<?php echo API_BASE_URL .  '/storage/' . str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>"></a>
                                 </li>
                             </ul>
                             <div id="prod-pager">
                                 <?php
                                 $product_id = $_REQUEST['id'];
-                                $api_url = "http://192.168.1.9:8080/products/product/" . $product_id;
+                                $api_url =  API_BASE_URL . "/products/product/" . $product_id;
 
                                 // Fetch product details from API
                                 $ch = curl_init();
@@ -325,7 +328,7 @@ if($success_message1 != '') {
                     $current_product_id = $_REQUEST['id'];
 
                     // API URL to fetch products
-                    $api_url = "http://192.168.1.9:8080/products/all";
+                    $api_url = API_BASE_URL . "/products/all";
 
                     // Use cURL to fetch data from API
                     $ch = curl_init();

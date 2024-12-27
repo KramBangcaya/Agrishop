@@ -206,7 +206,7 @@ foreach ($result as $row) {
 		<meta name="description" content="<?php echo $meta_description_home; ?>">
 		<?php
 	}
-	if($cur_page == 'customer-order.php') {
+	if($cur_page == 'place-order.php') {
 		?>
 		<title>Orders - <?php echo $meta_title_home; ?></title>
 		<meta name="keywords" content="<?php echo $meta_keyword_home; ?>">
