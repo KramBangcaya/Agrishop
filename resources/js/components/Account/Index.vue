@@ -6,14 +6,6 @@
                     <div class="col-sm-6">
                         <h1 class="m-0">User Account</h1>
                     </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <button type="button" class="btn btn-primary btn-sm" @click="openEditModal">
-                                Edit Profile
-                            </button>
-                            <!-- <li class="breadcrumb-item active">Starter Page</li> -->
-                        </ol>
-                    </div>
                 </div>
             </div>
         </div>
@@ -37,7 +29,7 @@
                                     <b>Contact Number</b> <b class="float-right">{{ user.contact_number }}</b>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Telephone Number</b> <b class="float-right">{{ user.telephone_number }}</b>
+                                    <b>Address</b> <b class="float-right">{{ user.address}}</b>
                                 </li>
                                 <li class="list-group-item">
                                     <b>Email</b> <b class="float-right">{{ user.email }}</b>

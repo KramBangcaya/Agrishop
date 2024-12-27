@@ -58,7 +58,6 @@ class RegisterController extends Controller
             'middle_initial' => ['nullable', 'string', 'max:2'],
             'date_of_birth' => ['required', 'date'],
             'contact_number' => ['required', 'string', 'digits:11'],
-            'telephone_number' => ['nullable', 'string', 'digits:7'],
             'address' => ['required', 'string'],
             'photos.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // validate each uploaded file
         ]);
@@ -95,7 +94,7 @@ class RegisterController extends Controller
             }
         }
 
-
+        // dd($data);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -103,8 +102,7 @@ class RegisterController extends Controller
             'password' => $data['password'],
             'lastname' => $data['lastname'],
             'middle_initial' => $data['middle_initial'],
-            'date_of
-            _birth' => $data['date_of_birth'],
+            'date_of_birth' => $data['date_of_birth'],
             'contact_number' => $data['contact_number'],
             'telephone_number' => $data['telephone_number'],
             'address' => $data['address'],

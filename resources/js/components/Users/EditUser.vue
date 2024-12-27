@@ -44,6 +44,11 @@
                         <has-error :form="form" field="telephone_number" />
                     </div>
                     <div class="form-group">
+                        <label>Address</label>
+                        <input v-model="form.address" type="text" class="form-control">
+                        <has-error :form="form" field="address" />
+                    </div>
+                    <div class="form-group">
                         <label>Email address</label>
                         <input v-model="form.email" type="email" class="form-control">
                         <has-error :form="form" field="email" />
@@ -122,6 +127,7 @@ export default {
                 date_of_birth: '',
                 contact_number: '',
                 telephone_number: '',
+                address: '',
                 email: '',
                 password: '',
                 roles: null,
@@ -142,6 +148,7 @@ export default {
         }
     },
     methods: {
+
         loadGoogleMapsScript() {
             return new Promise((resolve, reject) => {
                 const script = document.createElement('script');
@@ -168,6 +175,7 @@ export default {
             formData.append('date_of_birth', this.form.date_of_birth);
             formData.append('contact_number', this.form.contact_number);
             formData.append('telephone_number', this.form.telephone_number);
+            formData.append('address', this.form.address);
             formData.append('email', this.form.email);
             formData.append('password', this.form.password);
             formData.append('roles', this.form.roles);

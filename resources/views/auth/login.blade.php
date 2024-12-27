@@ -61,6 +61,11 @@
                                         </a>
                                     @endif
                                 </div>
+                                <div class="text-center">
+                                    <a class="btn btn-link" href="mailto:faithtimogan@gmail.com?subject=Account Activation&body=Please activate my account.">
+                                        {{ __('Activate Account?') }}
+                                    </a>
+                                </div>
                             </form>
                         </div>
                     </div>
