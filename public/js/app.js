@@ -8658,6 +8658,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         date_of_birth: '',
         contact_number: '',
         telephone_number: '',
+        address: '',
         email: '',
         password: '',
         roles: null,
@@ -8703,6 +8704,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       formData.append('date_of_birth', this.form.date_of_birth);
       formData.append('contact_number', this.form.contact_number);
       formData.append('telephone_number', this.form.telephone_number);
+      formData.append('address', this.form.address);
       formData.append('email', this.form.email);
       formData.append('password', this.form.password);
       formData.append('roles', this.form.roles);
@@ -9146,25 +9148,7 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_c("div", {
-    staticClass: "content-header"
-  }, [_c("div", {
-    staticClass: "container-fluid"
-  }, [_c("div", {
-    staticClass: "row mb-2"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "col-sm-6"
-  }, [_c("ol", {
-    staticClass: "breadcrumb float-sm-right"
-  }, [_c("button", {
-    staticClass: "btn btn-primary btn-sm",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: _vm.openEditModal
-    }
-  }, [_vm._v("\n                            Edit Profile\n                        ")])])])])])]), _vm._v(" "), _c("div", {
+  return _c("div", [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "content"
   }, [_c("div", {
     staticClass: "container-fluid"
@@ -9199,9 +9183,9 @@ var render = function render() {
     staticClass: "float-right"
   }, [_vm._v(_vm._s(_vm.user.contact_number))])]), _vm._v(" "), _c("li", {
     staticClass: "list-group-item"
-  }, [_c("b", [_vm._v("Telephone Number")]), _vm._v(" "), _c("b", {
+  }, [_c("b", [_vm._v("Address")]), _vm._v(" "), _c("b", {
     staticClass: "float-right"
-  }, [_vm._v(_vm._s(_vm.user.telephone_number))])]), _vm._v(" "), _c("li", {
+  }, [_vm._v(_vm._s(_vm.user.address))])]), _vm._v(" "), _c("li", {
     staticClass: "list-group-item"
   }, [_c("b", [_vm._v("Email")]), _vm._v(" "), _c("b", {
     staticClass: "float-right"
@@ -9238,10 +9222,16 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
+    staticClass: "content-header"
+  }, [_c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "row mb-2"
+  }, [_c("div", {
     staticClass: "col-sm-6"
   }, [_c("h1", {
     staticClass: "m-0"
-  }, [_vm._v("User Account")])]);
+  }, [_vm._v("User Account")])])])])]);
 }];
 render._withStripped = true;
 
@@ -13635,24 +13625,7 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_c("div", {
-    staticClass: "content-header"
-  }, [_c("div", {
-    staticClass: "container-fluid"
-  }, [_c("div", {
-    staticClass: "row mb-2"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "col-sm-6"
-  }, [_c("ol", {
-    staticClass: "breadcrumb float-sm-right"
-  }, [_c("button", {
-    staticClass: "nav-link btn",
-    on: {
-      click: _vm.goToAddProducts
-    }
-  }, [_c("i", {
-    staticClass: "nav-icon fas fa-user-tag"
-  }), _vm._v(" "), _c("p", [_vm._v("Add Products")])])])])])])]), _vm._v(" "), _c("div", {
+  return _c("div", [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "content"
   }, [_c("div", {
     staticClass: "container-fluid"
@@ -13822,10 +13795,20 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
+    staticClass: "content-header"
+  }, [_c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "row mb-2"
+  }, [_c("div", {
     staticClass: "col-sm-6"
   }, [_c("h1", {
     staticClass: "m-0"
-  }, [_vm._v("Products Replenishment")])]);
+  }, [_vm._v("Products Replenishment")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-6"
+  }, [_c("ol", {
+    staticClass: "breadcrumb float-sm-right"
+  })])])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -15241,6 +15224,34 @@ var render = function render() {
     attrs: {
       form: _vm.form,
       field: "telephone_number"
+    }
+  })], 1), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Address")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.address,
+      expression: "form.address"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.form.address
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.form, "address", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _c("has-error", {
+    attrs: {
+      form: _vm.form,
+      field: "address"
     }
   })], 1), _vm._v(" "), _c("div", {
     staticClass: "form-group"

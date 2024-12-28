@@ -45,7 +45,7 @@ class UserController extends Controller
 
     public function show()
     {
-        abort_if(Gate::denies('access user'), 403, 'You do not have the required authorization.');
+        abort_if(Gate::denies('edit user'), 403, 'You do not have the required authorization.');
         $data = User::with('roles', 'permissions')->where('id', Auth::user()->id)->get();
 
         return response(['data' => $data], 200);
@@ -220,7 +220,7 @@ class UserController extends Controller
             'middle_initial' => 'nullable|string|max:2',
             'date_of_birth' => 'required|date',
             'contact_number' => 'required|string|digits:11',
-            'telephone_number' => 'nullable|string|digits:7',
+            'address' => 'required', 'string',
             'user_photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // validate each uploaded file
 
         ]);
@@ -241,6 +241,7 @@ class UserController extends Controller
             'middle_initial' => $request->middle_initial,
             'date_of_birth' => $request->date_of_birth,
             'contact_number' => $request->contact_number,
+            'address' => $request->address,
             'telephone_number' => $request->telephone_number,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
