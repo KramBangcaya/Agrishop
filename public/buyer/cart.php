@@ -106,7 +106,7 @@ if (isset($_POST['form1'])) {
 
 
                         <?php
-                        // var_dump($_SESSION);
+                         var_dump($_SESSION);
                         $table_total_price = 0;
                         $i=0;
                         foreach($_SESSION['cart_p_id'] as $key => $value)

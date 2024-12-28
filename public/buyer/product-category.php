@@ -67,7 +67,7 @@ if ($min_price !== null && $max_price !== null) {
                 <!-- Sidebar Category Display -->
                 <div class="sidebar-category">
                     <label for="category"><h3>Categories <i class="fa fa-sort"></i></h3></><br>
-                    <select name="category" class="btn btn-primary category-button" id="category" onchange="location = this.value;" style="font-size: 18px;">
+                    <select name="category" class="btn btn-primary category-button" id="category" onchange="location = this.value;" style="font-size: 18px; text-align: left;">
                         <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
                             <option value="" selected>Select a Category</option>
                             <?php foreach ($categories['data'] as $category): ?>
@@ -105,9 +105,9 @@ if ($min_price !== null && $max_price !== null) {
                     <label for="price_range"><h3>Price Range (₱)</h3></label>
                     <form method="GET" action="product-category.php">
                         <label for="min_price" style="font-size: 18px;">Min:</label>
-                        <input type="number" style="font-size: 18px;" class="btn btn-primary category-button" name="min_price" value="<?php echo isset($_GET['min_price']) ? $_GET['min_price'] : ''; ?>"> <br><br>
+                        <input type="number" style="font-size: 18px;"  name="min_price" value="<?php echo isset($_GET['min_price']) ? $_GET['min_price'] : ''; ?>"> <br><br>
                         <label for="max_price" style="font-size: 18px;">Max:</label>
-                        <input type="number" style="font-size: 18px;" class="btn btn-primary category-button" name="max_price" value="<?php echo isset($_GET['max_price']) ? $_GET['max_price'] : ''; ?>"> <br><br>
+                        <input type="number" style="font-size: 18px;" name="max_price" value="<?php echo isset($_GET['max_price']) ? $_GET['max_price'] : ''; ?>"> <br><br>
                         <input type="hidden" name="category_id" value="<?php echo isset($category_id) ? $category_id : ''; ?>">
                         <button type="submit" style="font-size: 18px;" class="btn btn-success">Filter</button>
                     </form>
