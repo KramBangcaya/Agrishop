@@ -212,6 +212,7 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+        dd($request->all());
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,

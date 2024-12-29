@@ -166,6 +166,7 @@ export default {
             this.form.permissions = this.form.roles.permissions;
         },
         update() {
+            console.log(this.form);
             console.log('Photos before posting:', this.user_photo);
             const formData = new FormData();
             formData.append('id', this.form.id);
