@@ -7185,6 +7185,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     row: {
@@ -7204,26 +7207,52 @@ __webpack_require__.r(__webpack_exports__);
         Description: '',
         measurement_id: null
       }),
-      option_measurement: []
+      option_measurement: [],
+      photos: [],
+      photos1: [],
+      photos2: []
     };
   },
   methods: {
-    // selectRole(){
-    //     this.form.permissions = this.form.roles.permissions;
-    // },
+    onFileChange: function onFileChange(e) {
+      this.photos = Array.from(e.target.files);
+    },
+    onFileChange1: function onFileChange1(e) {
+      this.photos1 = Array.from(e.target.files);
+    },
+    onFileChange2: function onFileChange2(e) {
+      this.photos2 = Array.from(e.target.files);
+    },
     update: function update() {
       var _this = this;
 
-      // const measurementIds = this.form.measurement_id.map(measurement => measurement.id);
-      // this.form.measurement_id = measurementIds;
-      this.form.put('api/product/update/' + this.form.id).then(function () {
+      var formData = new FormData(); // Append the form fields
+
+      Object.keys(this.form).forEach(function (key) {
+        formData.append(key, _this.form[key]);
+      }); // Append the photos arrays
+
+      this.photos.forEach(function (photo, index) {
+        formData.append("photos[".concat(index, "]"), photo);
+      });
+      this.photos1.forEach(function (photo, index) {
+        formData.append("photos1[".concat(index, "]"), photo);
+      });
+      this.photos2.forEach(function (photo, index) {
+        formData.append("photos2[".concat(index, "]"), photo);
+      }); // Send the request
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().put("api/product/update/".concat(this.form.id), formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function () {
         toast.fire({
           icon: 'success',
           text: 'Data Saved.'
-        }); //"page" maintain selected page in the parent page
+        }); // Emit to reload data in the parent component
 
-        _this.$emit('getData', _this.page); // call method from parent (reload data table)
-
+        _this.$emit('getData', _this.page);
 
         $('#edit-user').modal('hide');
       })["catch"](function (error) {
@@ -7236,7 +7265,7 @@ __webpack_require__.r(__webpack_exports__);
     loadMeasurement: function loadMeasurement() {
       var _this2 = this;
 
-      axios.get('/api/measurement/all').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/measurement/all').then(function (response) {
         _this2.option_measurement = response.data.data;
         console.log('Loaded measurements:', _this2.option_measurement);
       });
@@ -11737,7 +11766,36 @@ var render = function render() {
       form: _vm.form,
       field: "measurement"
     }
-  })], 1)], 1), _vm._v(" "), _c("div", {
+  })], 1), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Upload Photos")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "file",
+      multiple: ""
+    },
+    on: {
+      change: _vm.onFileChange
+    }
+  }), _vm._v(" "), _c("br"), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "file",
+      multiple: ""
+    },
+    on: {
+      change: _vm.onFileChange1
+    }
+  }), _vm._v(" "), _c("br"), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "file",
+      multiple: ""
+    },
+    on: {
+      change: _vm.onFileChange2
+    }
+  })])], 1), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"
   }, [_c("button", {
     staticClass: "btn btn-secondary",

@@ -179,13 +179,14 @@ if(!isset($_SESSION['cart_p_id'])) {
                             $cart_qr[$i] = $value;
                         }
                         ?>
-<<<<<<< HEAD
 
 
 
 
 
-
+#1
+#2
+#3
 
 <?php
 // Grouping products by seller (using first and last name as the key)
@@ -232,30 +233,6 @@ for ($i = 1; $i <= count($arr_cart_p_id); $i++) {
                         <option value="PayPal">CASH ON DELIVERY</option>
                         <option value="Bank Deposit">QR CODE</option>
                     </select>
-=======
-                        <!?php for($i=1;$i<=count($arr_cart_p_id);$i++): ?>
-                            <div class="clear"></div>
-                            <!?php
-                                $row_total_price = $arr_cart_p_current_price[$i]*$arr_cart_p_qty[$i];
-                                $table_total_price = $table_total_price + $row_total_price;
-                                ?>
-                <h3 class="special"><!?php echo LANG_VALUE_33; ?> for <!?php echo $arr_cart_p_name[$i]; ?>  Total Cost: <!?php echo LANG_VALUE_1; ?>
-                <!?php echo $row_total_price; ?></h3>
-                <div class="row">
-                <div class="col-md-4">
-	                            <div class="row">
-
-	                                <div class="col-md-12 form-group">
-	                                    <label for=""><!?php echo LANG_VALUE_34; ?> *</label>
-	                                    <select name="payment_method" class="form-control select2" id="advFieldsStatus">
-	                                        <option value=""><!?php echo LANG_VALUE_35; ?></option>
-	                                        <option value="PayPal">CASH ON DELIVERY</option>
-	                                        <option value="Bank Deposit">QR CODE</option>
-	                                    </select>
-	                                </div>
-	                            </div>
-		                    </div>
->>>>>>> 3120d23dc2f1c3a4efecb44bc524880e78ca78f3
                 </div>
             </div>
         </div>
@@ -285,31 +262,12 @@ for ($i = 1; $i <= count($arr_cart_p_id); $i++) {
     </form>
 
 <?php endforeach; ?>
-
-
-
-
                 <form action="place-order.php" method="post" enctype="multipart/form-data" id="order_form">
                             <div class="col-md-12 form-group">
                                 <label for=""><!?php echo $cart_s_name[$i]; ?> <!?php echo $cart_s_last[$i]; ?><br>
                                     <span style="font-size:12px;font-weight:normal;">(<!?php echo "Scan The QR Here to Pay"; ?>)</span></label>
-                                <img src="<!?php echo API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($cart_qr[$i])); ?>" alt="">
+                                <img src="<s?php echo API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($cart_qr[$i])); ?>" alt="">
                             </div>
-
-<<<<<<< HEAD
-
-
-
-
-
-=======
-                            <div class="col-md-12 form-group">
-                                <label for=""><!?php echo "Upload here the Proof of Payment"; ?> <br>
-                                    <span style="font-size:12px;font-weight:normal;">(<!?php echo "Supporting Documents"; ?>)</span></label>
-                                <input type="file" class="btn btn-primary" value="Upload" name="photo" required>
-                            </div>
->>>>>>> 3120d23dc2f1c3a4efecb44bc524880e78ca78f3
-
                             <input type="submit" class="btn btn-primary" value="Place Order">
                         </form>
 
@@ -318,13 +276,8 @@ for ($i = 1; $i <= count($arr_cart_p_id); $i++) {
                 <div class="cart-buttons">
                     <ul>
 
-<<<<<<< HEAD
                         <li><a href="cart.php" class="btn btn-primary"><?php echo LANG_VALUE_21; ?></a></li>
                         <li><a href="customer-order.php" class="btn btn-primary"><?php echo "Place Order"; ?></a></li>
-=======
-                        <li><a href="cart.php" class="btn btn-primary"><!?php echo LANG_VALUE_21; ?></a></li>
-                        <li><a href="#" class="btn btn-primary"><!?php echo "Proceed"; ?></a></li>
->>>>>>> 3120d23dc2f1c3a4efecb44bc524880e78ca78f3
                     </ul>
                 </div>
                 <!?php endif; ?>

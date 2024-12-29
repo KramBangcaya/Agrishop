@@ -253,9 +253,7 @@ class ProductsController extends Controller
     public function update(Request $request, $id)
     {
 
-        // dd($request->measurement_id);
-        // dd($request->measurement_id);
-
+        dd($request->all());
         $measurement = $request->measurement_id['id'];
 
         // dd($measurement);
@@ -269,6 +267,37 @@ class ProductsController extends Controller
             'Description' => $request->Description,
             'idMeasurement' => $measurement,
         ]);
+
+        // Handle photos
+    if ($request->hasFile('photos')) {
+        $photos = $request->file('photos');
+        $photoPaths = [];
+        foreach ($photos as $photo) {
+            $photoPaths[] = $photo->store('product_photos/photos', 'public'); // Save in 'storage/app/public/product_photos/photos'
+        }
+        $user->photos = json_encode($photoPaths); // Save as JSON or update accordingly
+    }
+
+    if ($request->hasFile('photos1')) {
+        $photos1 = $request->file('photos1');
+        $photo1Paths = [];
+        foreach ($photos1 as $photo1) {
+            $photo1Paths[] = $photo1->store('product_photos/photos1', 'public'); // Save in 'storage/app/public/product_photos/photos1'
+        }
+        $user->photos1 = json_encode($photo1Paths);
+    }
+
+    if ($request->hasFile('photos2')) {
+        $photos2 = $request->file('photos2');
+        $photo2Paths = [];
+        foreach ($photos2 as $photo2) {
+            $photo2Paths[] = $photo2->store('product_photos/photos2', 'public'); // Save in 'storage/app/public/product_photos/photos2'
+        }
+        $user->photos2 = json_encode($photo2Paths);
+    }
+
+    // Save the product
+    $user->save();
 
 
         return response(['message' => 'success'], 200);
