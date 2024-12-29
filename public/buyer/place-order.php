@@ -111,30 +111,29 @@ try {
 
                 <!-- Quantity and Total -->
                 <div style="margin-top: 10px; font-size: medium;">
-                    <label>Quantity: </label>
-                    <input type="number"
-                           class="input-text qty text"
-                           step="1"
-                           min="1"
-                           max=""
-                           name="quantity[]"
-                           value="5"
-                           title="Qty"
-                           size="4"
-                           pattern="[0-9]*"
-                           inputmode="numeric"
-                           style="width: 60px; margin-right: 10px;">
+                    <label>Quantity: <?php echo $product_quantity; ?> </label>
+
 
                     <label>Total: </label>
 
                     ₱<?php echo $total_price; ?><br><br>
-                    <label>Payment date time: 10/20/2024</label><br>
-                    <label>Transaction ID: wenrjwjno3423</label><br>
-                    <label>Payment ID: 213123214</label><br>
+                    <label>Payment date time: <?php echo $timedate; ?></label><br>
+                    <label>Transaction ID: 0024903AFJE91</label><br>
+
                     <label>Seller Name: <?php echo $seller_name; echo " "; echo $seller_last?></label><br>
                     <label>Seller Number: <?php echo $seller_number; ?></label><br>
                     <label>Seller Address: <?php echo $seller_address; ?></label><br>
-                    <label>Order Status:  </label><p style="color:green;"><?php echo $order_status; ?></p>
+                    <label>Expected Delivery: 1-2 days</label><br>
+                    <label>Order Status:
+                    <?php if ($order_status == "Delivered") { ?>
+                    <span class="badge bg-danger w-100" style="background-color:green;"><?php echo $order_status; ?></span>
+                    <?php } elseif ($order_status == "For Delivery") { ?>
+                    <span class="badge bg-danger w-100" style="background-color:gray;"><?php echo $order_status; ?></span>
+                    <?php } else { ?>
+                    <span class="badge bg-danger w-100" style="background-color:red;"><?php echo $order_status; ?></span>
+                    <?php } ?>
+
+                  </label>
                     <br><h4> <a onclick="return confirmDelte();"
                        href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
                        class="trash">
