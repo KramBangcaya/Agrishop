@@ -1,6 +1,20 @@
 <?php
 require_once('header.php');
 require_once('api-config.php');
+
+// session_destroy();
+
+// // Delete the session cookie
+// if (ini_get("session.use_cookies")) {
+//     $params = session_get_cookie_params();
+//     setcookie(session_name(), '', time() - 42000,
+//         $params["path"], $params["domain"],
+//         $params["secure"], $params["httponly"]
+//     );
+// }
+
+// // Optional: Redirect or display a confirmation
+// echo "All sessions have been erased.";
 ?>
 
 <?php

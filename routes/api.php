@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('list', [App\Http\Controllers\ProductsController::class, 'index']);
         Route::get('all', [App\Http\Controllers\ProductsController::class, 'index_all']);
         Route::post('create', [App\Http\Controllers\ProductsController::class, 'store']);
-        Route::put('update/{id}', [App\Http\Controllers\ProductsController::class, 'update']);
+        Route::post('update/{id}', [App\Http\Controllers\ProductsController::class, 'update']);
         Route::delete('delete/{id}', [App\Http\Controllers\ProductsController::class, 'destroy']);
     });
     Route::group(['prefix' => 'replenishment'], function () {

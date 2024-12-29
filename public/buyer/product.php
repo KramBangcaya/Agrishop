@@ -103,8 +103,6 @@ if(isset($_POST['form_add_to_cart'])) {
     else
     {
 
-
-
         $_SESSION['cart_p_id'][1] = $_REQUEST['id'];
         $_SESSION['cart_p_qty'][1] = $_POST['p_qty'];
         $_SESSION['cart_p_current_price'][1] = $_POST['p_current_price'];
@@ -115,6 +113,7 @@ if(isset($_POST['form_add_to_cart'])) {
         $_SESSION['s_id'][1] = $_POST['s_id'];
         $_SESSION['s_contact_number'][1] = $_POST['s_contact_number'];
         $_SESSION['s_address'][1] = $_POST['s_address'];
+        $_SESSION['cart_qr'][1] = $_POST['qrcode'];
         // $_SESSION['f_name'][1] = $_REQUEST['fname'];
         // $_SESSION['l_name'][1] = $_REQUEST['lname'];
 
