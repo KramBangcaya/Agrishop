@@ -252,11 +252,11 @@ class ProductsController extends Controller
 
     public function update(Request $request, $id)
     {
+        Log::info('Request payload:', $request->all());
+        // dd($request->measurement_id);
+        // $measurement = $request->measurement_id['id'];
 
-        dd($request->all());
-        $measurement = $request->measurement_id['id'];
-
-        // dd($measurement);
+        // dd($request->measurement_id);
         $this->validate($request, []);
         $user = Products::findOrFail($id);
 
@@ -265,7 +265,7 @@ class ProductsController extends Controller
             'price' => $request->price,
             'Quantity' => $request->Quantity,
             'Description' => $request->Description,
-            'idMeasurement' => $measurement,
+            'idMeasurement' => $request->measurement_id,
         ]);
 
         // Handle photos
@@ -273,7 +273,7 @@ class ProductsController extends Controller
         $photos = $request->file('photos');
         $photoPaths = [];
         foreach ($photos as $photo) {
-            $photoPaths[] = $photo->store('product_photos/photos', 'public'); // Save in 'storage/app/public/product_photos/photos'
+            $photoPaths[] = $photo->store('product_photos', 'public'); // Save in 'storage/app/public/product_photos/photos'
         }
         $user->photos = json_encode($photoPaths); // Save as JSON or update accordingly
     }
@@ -282,7 +282,7 @@ class ProductsController extends Controller
         $photos1 = $request->file('photos1');
         $photo1Paths = [];
         foreach ($photos1 as $photo1) {
-            $photo1Paths[] = $photo1->store('product_photos/photos1', 'public'); // Save in 'storage/app/public/product_photos/photos1'
+            $photo1Paths[] = $photo1->store('product_photos', 'public'); // Save in 'storage/app/public/product_photos/photos1'
         }
         $user->photos1 = json_encode($photo1Paths);
     }
@@ -291,7 +291,7 @@ class ProductsController extends Controller
         $photos2 = $request->file('photos2');
         $photo2Paths = [];
         foreach ($photos2 as $photo2) {
-            $photo2Paths[] = $photo2->store('product_photos/photos2', 'public'); // Save in 'storage/app/public/product_photos/photos2'
+            $photo2Paths[] = $photo2->store('product_photos', 'public'); // Save in 'storage/app/public/product_photos/photos2'
         }
         $user->photos2 = json_encode($photo2Paths);
     }

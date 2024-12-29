@@ -94,8 +94,13 @@ export default {
 
             // Append the form fields
             Object.keys(this.form).forEach((key) => {
+        // Only append measurement_id if it is an object and include only the `id`
+            if (key === 'measurement_id' && this.form.measurement_id) {
+                formData.append(key, this.form.measurement_id.id); // Accessing 'id' of the measurement object
+            } else {
                 formData.append(key, this.form[key]);
-            });
+            }
+        });
 
             // Append the photos arrays
             this.photos.forEach((photo, index) => {
@@ -112,7 +117,7 @@ export default {
 
 
             // Send the request
-            axios.put(`api/product/update/${this.form.id}`, formData, {
+            axios.post(`api/product/update/${this.form.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },

@@ -7229,7 +7229,12 @@ __webpack_require__.r(__webpack_exports__);
       var formData = new FormData(); // Append the form fields
 
       Object.keys(this.form).forEach(function (key) {
-        formData.append(key, _this.form[key]);
+        // Only append measurement_id if it is an object and include only the `id`
+        if (key === 'measurement_id' && _this.form.measurement_id) {
+          formData.append(key, _this.form.measurement_id.id); // Accessing 'id' of the measurement object
+        } else {
+          formData.append(key, _this.form[key]);
+        }
       }); // Append the photos arrays
 
       this.photos.forEach(function (photo, index) {
@@ -7242,7 +7247,7 @@ __webpack_require__.r(__webpack_exports__);
         formData.append("photos2[".concat(index, "]"), photo);
       }); // Send the request
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().put("api/product/update/".concat(this.form.id), formData, {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("api/product/update/".concat(this.form.id), formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
