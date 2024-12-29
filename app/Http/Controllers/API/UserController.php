@@ -283,7 +283,6 @@ class UserController extends Controller
             $user->password  = $request->password;
             $user->save();
         }
-
         return response(['message' => 'success'], 200);
     }
 
