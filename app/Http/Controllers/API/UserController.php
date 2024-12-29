@@ -212,6 +212,8 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+
+        // dd($request->all());
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
@@ -220,15 +222,20 @@ class UserController extends Controller
             'middle_initial' => 'nullable|string|max:2',
             'date_of_birth' => 'required|date',
             'contact_number' => 'required|string|digits:11',
-            'address' => 'required', 'string',
-            'user_photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // validate each uploaded file
-
+            'address' => 'required', 'string',// validate each uploaded file
         ]);
         $photoPaths = [];
-        if ($request->hasFile('photos')) {
-            foreach ($request->file('photos') as $photo) {
+        if ($request->hasFile('user_photo')) {
+            foreach ($request->file('user_photo') as $photo) {
                 $path = $photo->store('user_photo', 'public');
                 $photoPaths[] = $path;
+            }
+        }
+        $photoPaths1 = [];
+        if ($request->hasFile('qrcode')) {
+            foreach ($request->file('qrcode') as $photo) {
+                $path = $photo->store('QRCode', 'public');
+                $photoPaths1[] = $path;
             }
         }
         // dd(json_encode($photoPaths));
@@ -245,9 +252,20 @@ class UserController extends Controller
             'telephone_number' => $request->telephone_number,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            // 'photos' => $request->photos,
-            'user_photo' => json_encode($photoPaths)
         ]);
+
+          // Only update the user_photo if there is a new file
+            if (!empty($photoPaths)) {
+                $userData['user_photo'] = json_encode($photoPaths);
+            }
+
+            // Only update the qrcode if there is a new file
+            if (!empty($photoPaths1)) {
+                $userData['qrcode'] = json_encode($photoPaths1);
+            }
+
+            // Update user data
+            $user->update($userData);
 
         if ($request->password) {
             // $user->password = Hash::make($request->password);

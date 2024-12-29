@@ -98,6 +98,11 @@
                         <label>Longitude</label>
                         <input v-model="form.longitude" type="text" class="form-control" readonly>
                     </div>
+                    <div class="form-group">
+                        <label>Re-upload QR Code</label>
+                        <input type="file" @change="onFileChange1" multiple class="form-control">
+                        <!-- <has-error :form="form" field="user_photo" /> -->
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -137,6 +142,7 @@ export default {
 
             }),
             user_photo: [],
+            qrcode: [],
             option_permissions: [],
             option_roles: [],
             options: {
@@ -161,6 +167,10 @@ export default {
         },
         onFileChange(e) {
             this.user_photo = Array.from(e.target.files);
+            console.log('User photo selected:', this.user_photo);
+        },
+        onFileChange1(e) {
+            this.qrcode = Array.from(e.target.files);
         },
         selectRole() {
             this.form.permissions = this.form.roles.permissions;
@@ -188,15 +198,15 @@ export default {
             this.user_photo.forEach((photo, index) => {
                 formData.append(`user_photo[${index}]`, photo);
             });
-            // console.log('FormData:', formData.getAll('user_photo[0]'));
 
-            for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]);  // Log each key-value pair in the formData
-    }
-            this.form.put('/api/user/update', formData, {
+            this.qrcode.forEach((photo, index) => {
+                formData.append(`qrcode[${index}]`, photo);
+            });
+
+            axios.post(`/api/user/update`, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                        'Content-Type': 'multipart/form-data',
+                    },
             }).then(() => {
                 toast.fire({
                     icon: 'success',

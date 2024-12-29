@@ -8693,12 +8693,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -8732,6 +8726,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         longitude: null
       }),
       user_photo: [],
+      qrcode: [],
       option_permissions: [],
       option_roles: [],
       options: (_options = {
@@ -8753,6 +8748,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     onFileChange: function onFileChange(e) {
       this.user_photo = Array.from(e.target.files);
+      console.log('User photo selected:', this.user_photo);
+    },
+    onFileChange1: function onFileChange1(e) {
+      this.qrcode = Array.from(e.target.files);
     },
     selectRole: function selectRole() {
       this.form.permissions = this.form.roles.permissions;
@@ -8781,23 +8780,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.user_photo.forEach(function (photo, index) {
         formData.append("user_photo[".concat(index, "]"), photo);
-      }); // console.log('FormData:', formData.getAll('user_photo[0]'));
-
-      var _iterator = _createForOfIteratorHelper(formData.entries()),
-          _step;
-
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var pair = _step.value;
-          console.log(pair[0], pair[1]); // Log each key-value pair in the formData
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-
-      this.form.put('/api/user/update', formData, {
+      });
+      this.qrcode.forEach(function (photo, index) {
+        formData.append("qrcode[".concat(index, "]"), photo);
+      });
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/user/update", formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -15428,6 +15415,17 @@ var render = function render() {
 
         _vm.$set(_vm.form, "longitude", $event.target.value);
       }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Re-upload QR Code")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "file",
+      multiple: ""
+    },
+    on: {
+      change: _vm.onFileChange1
     }
   })])], 1), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"
