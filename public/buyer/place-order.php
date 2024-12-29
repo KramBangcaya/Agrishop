@@ -81,7 +81,7 @@ try {
 
 
 
-<div class="row" style="margin: 0 auto; float: center;"> <!-- Centering the inner row -->
+<div class="row" style="margin: 0 auto; float: auoto;"> <!-- Centering the inner row -->
             <div class="col-md-12">
                 <?php require_once('customer-sidebar.php'); ?>
             </div>

@@ -79,19 +79,6 @@ if(!isset($_SESSION['cart_p_id'])) {
                                     <input type="file" name="photo[<?php echo $i; ?>]" class="form-control" required>
                                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                                 <!-- Include hidden inputs to pass product data -->
                                 <input type="hidden" name="product_name[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_name'][$i]; ?>">
                                 <input type="hidden" name="product_quantity[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_qty'][$i]; ?>">
@@ -101,17 +88,12 @@ if(!isset($_SESSION['cart_p_id'])) {
                                 <input type="hidden" name="seller_contact[<?php echo $i; ?>]" value="<?php echo $_SESSION['s_contact_number'][$i]; ?>">
                                 <input type="hidden" name="seller_address[<?php echo $i; ?>]" value="<?php echo $_SESSION['s_address'][$i]; ?>">
                                 <input type="hidden" name="seller_id[<?php echo $i; ?>]" value="<?php echo $_SESSION['s_id'][$i]; ?>">
-
-
-
-
                             <?php } ?>
 
                             <div class="cart-buttons">
                                 <ul>
                                     <li><a href="cart.php" class="btn btn-primary"><?php echo LANG_VALUE_21; ?></a></li>
-
-                                    <li><button type="submit" class="btn btn-primary">Proceed</button></li>
+                                    <li><button type="submit" class="btn btn-primary">Place Order</button></li>
                                 </ul>
                             </div>
                         </form>
@@ -123,8 +105,4 @@ if(!isset($_SESSION['cart_p_id'])) {
     </div>
 </div>
 
-
-
-
 <?php require_once('footer.php'); ?>
-

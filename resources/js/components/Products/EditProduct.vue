@@ -29,15 +29,21 @@
                         <has-error :form="form" field="Description" />
                     </div>
                     <div class="form-group">
-
-
-
                         <label>Measurement</label>
                         <multiselect v-model="form.measurement_id" :options="option_measurement"
                             :close-on-select="true" :clear-on-select="false" :preserve-search="true"
                             placeholder="Measurement" label="measurement" track-by="id" :preselect-first="true">
                         </multiselect>
                         <has-error :form="form" field="measurement" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Photos</label>
+                        <input type="file" @change="onFileChange" multiple class="form-control">
+                        <br>
+                        <input type="file" @change="onFileChange1" multiple class="form-control">
+                        <br>
+                        <input type="file" @change="onFileChange2" multiple class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -50,6 +56,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     props: {
         row: {required: true},
@@ -66,31 +74,64 @@ export default {
                 measurement_id:null,
             }),
             option_measurement:[],
+            photos: [],
+            photos1: [],
+            photos2: [],
         }
     },
     methods: {
-        // selectRole(){
-        //     this.form.permissions = this.form.roles.permissions;
-        // },
-        update(){
+        onFileChange(e) {
+            this.photos = Array.from(e.target.files);
+        },
+        onFileChange1(e) {
+            this.photos1 = Array.from(e.target.files);
+        },
+        onFileChange2(e) {
+            this.photos2 = Array.from(e.target.files);
+        },
+        update() {
+            const formData = new FormData();
 
-            // const measurementIds = this.form.measurement_id.map(measurement => measurement.id);
-
-            // this.form.measurement_id = measurementIds;
-            this.form.put('api/product/update/'+this.form.id).then(()=>{
-                toast.fire({
-                    icon: 'success',
-                    text: 'Data Saved.',
-                })
-                //"page" maintain selected page in the parent page
-                this.$emit('getData', this.page);// call method from parent (reload data table)
-                $('#edit-user').modal('hide');
-            }).catch(error =>{
-                toast.fire({
-                    icon: 'error',
-                    text: error.message,
-                })
+            // Append the form fields
+            Object.keys(this.form).forEach((key) => {
+                formData.append(key, this.form[key]);
             });
+
+            // Append the photos arrays
+            this.photos.forEach((photo, index) => {
+                formData.append(`photos[${index}]`, photo);
+            });
+
+            this.photos1.forEach((photo, index) => {
+                formData.append(`photos1[${index}]`, photo);
+            });
+
+            this.photos2.forEach((photo, index) => {
+                formData.append(`photos2[${index}]`, photo);
+            });
+
+
+            // Send the request
+            axios.put(`api/product/update/${this.form.id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                })
+                .then(() => {
+                    toast.fire({
+                        icon: 'success',
+                        text: 'Data Saved.',
+                    });
+                    // Emit to reload data in the parent component
+                    this.$emit('getData', this.page);
+                    $('#edit-user').modal('hide');
+                })
+                .catch((error) => {
+                    toast.fire({
+                        icon: 'error',
+                        text: error.message,
+                    });
+                });
         },
         loadMeasurement() {
             axios.get('/api/measurement/all')
