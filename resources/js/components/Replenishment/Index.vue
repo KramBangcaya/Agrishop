@@ -8,10 +8,6 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <button class="nav-link btn" @click="goToAddProducts">
-                                <i class="nav-icon fas fa-user-tag"></i>
-                                <p>Add Products</p>
-                            </button>
                         </ol>
                     </div>
                 </div>

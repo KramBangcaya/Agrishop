@@ -59,20 +59,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        {{-- <li class="nav-item">
-                            <router-link to="/Student" class="nav-link">
-                                <i class="nav-icon fas fa-user-alt"></i>
-                                <p>Student</p>
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/Courses" class="nav-link">
-                                <i class="nav-icon fas fa-book"></i>
-                                <p>
-                                    Courses
-                                </p>
-                            </router-link>
-                        </li> --}}
+                        @if (Auth::check() && strtoupper(Auth::user()->getRoleNames()->first()) === 'SELLER')
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa fa-address-book"></i>
@@ -119,6 +106,8 @@
                                 </li>
                             </ul>
                         </li>
+                        @endif
+                        @if (Auth::check() && strtoupper(Auth::user()->getRoleNames()->first()) === 'SELLER')
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa fa-bell"></i>
@@ -142,6 +131,7 @@
                                 </li>
                             </ul>
                         </li>
+                        @endif
                         @can('access user')
                             <li class="nav-item">
                                 <router-link to="/users" class="nav-link">

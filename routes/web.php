@@ -24,7 +24,7 @@ Route::middleware('auth')->get('/user', function (Request $request) {
 });
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login'); // Redirect to login route
 });
 
 Route::get('/public/buyer/index.php', function () {

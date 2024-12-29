@@ -24,10 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'auth:api'], function () {
 
-    Route::group(['prefix' => 'course'], function () {
-        Route::get('all', [App\Http\Controllers\HomeController::class, 'all_courses']);
-    });
-
     Route::group(['prefix' => 'product'], function () {
         Route::get('list', [App\Http\Controllers\ProductsController::class, 'index']);
         Route::get('all', [App\Http\Controllers\ProductsController::class, 'index_all']);
@@ -50,18 +46,12 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::put('update/{id}', [App\Http\Controllers\CategoryController::class, 'update']);
         Route::delete('delete/{id}', [App\Http\Controllers\CategoryController::class, 'destroy']);
     });
-
-
     Route::group(['prefix' => 'measurement'], function () {
         Route::get('list', [App\Http\Controllers\MeasurementController::class, 'index']);
         Route::get('all', [App\Http\Controllers\MeasurementController::class, 'index_all']);
         Route::post('create', [App\Http\Controllers\MeasurementController::class, 'store']);
         Route::put('update/{id}', [App\Http\Controllers\MeasurementController::class, 'update']);
         Route::delete('delete/{id}', [App\Http\Controllers\MeasurementController::class, 'destroy']);
-    });
-    Route::group(['prefix' => 'create'], function () {
-        Route::post('student', [App\Http\Controllers\HomeController::class, 'store_student']);
-        Route::post('course', [App\Http\Controllers\HomeController::class, 'store_course']);
     });
     Route::group(['prefix' => 'user'], function () {
         Route::get('list', [App\Http\Controllers\API\UserController::class, 'index']);
@@ -94,20 +84,6 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('create', [App\Http\Controllers\API\RoleController::class, 'store']);
         Route::put('update/{id}', [App\Http\Controllers\API\RoleController::class, 'update']);
         Route::delete('delete/{id}', [App\Http\Controllers\API\RoleController::class, 'destroy']);
-    });
-    Route::group(['prefix' => 'registrar'], function () {
-        Route::get('list', [App\Http\Controllers\API\RegistrarController::class, 'index']);
-        Route::get('all', [App\Http\Controllers\API\RegistrarController::class, 'index_all']);
-        Route::post('create', [App\Http\Controllers\API\RegistrarController::class, 'store']);
-        Route::put('update/{id}', [App\Http\Controllers\API\RegistrarController::class, 'update']);
-        Route::delete('delete/{id}', [App\Http\Controllers\API\RegistrarController::class, 'destroy']);
-    });
-    Route::group(['prefix' => 'program'], function () {
-        Route::get('list', [App\Http\Controllers\API\ProgramController::class, 'index']);
-        Route::get('all', [App\Http\Controllers\API\ProgramController::class, 'index_all']);
-        Route::post('create', [App\Http\Controllers\API\ProgramController::class, 'store']);
-        Route::put('update/{id}', [App\Http\Controllers\API\ProgramController::class, 'update']);
-        Route::delete('delete/{id}', [App\Http\Controllers\API\ProgramController::class, 'destroy']);
     });
 });
 
