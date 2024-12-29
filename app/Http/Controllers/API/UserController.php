@@ -163,7 +163,8 @@ class UserController extends Controller
             $user = User::findOrFail($id);
 
             $user->update([
-                'approved_at' => Carbon::now()->format('Y-m-d H:i:s')
+                'approved_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
             // dd($user);
 
@@ -212,7 +213,12 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+<<<<<<< HEAD
         dd($request->all());
+=======
+
+        // dd($request->all());
+>>>>>>> b963fe76dbaf236a4579d36f571c7b7d33b1c2dc
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
@@ -221,15 +227,27 @@ class UserController extends Controller
             'middle_initial' => 'nullable|string|max:2',
             'date_of_birth' => 'required|date',
             'contact_number' => 'required|string|digits:11',
-            'address' => 'required', 'string',
-            'user_photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // validate each uploaded file
-
+            'address' => 'required', 'string',// validate each uploaded file
         ]);
         $photoPaths = [];
-        if ($request->hasFile('photos')) {
-            foreach ($request->file('photos') as $photo) {
+        if ($request->hasFile('user_photo')) {
+            foreach ($request->file('user_photo') as $photo) {
                 $path = $photo->store('user_photo', 'public');
                 $photoPaths[] = $path;
+            }
+        }
+        $photoPaths1 = [];
+        if ($request->hasFile('qrcode')) {
+            foreach ($request->file('qrcode') as $photo) {
+                $path = $photo->store('QRCode', 'public');
+                $photoPaths1[] = $path;
+            }
+        }
+        $photoPaths2 = [];
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('Personal_Info_Photo', 'public');
+                $photoPaths2[] = $path;
             }
         }
         // dd(json_encode($photoPaths));
@@ -246,9 +264,39 @@ class UserController extends Controller
             'telephone_number' => $request->telephone_number,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            // 'photos' => $request->photos,
-            'user_photo' => json_encode($photoPaths)
         ]);
+
+          // Only update the user_photo if there is a new file
+            if (!empty($photoPaths)) {
+                $user['user_photo'] = json_encode($photoPaths);
+            }
+
+            // Only update the qrcode if there is a new file
+            if (!empty($photoPaths1)) {
+                $user['qrcode'] = json_encode($photoPaths1);
+            }
+
+            if (!empty($photoPaths2)) {
+                $user['photos'] = json_encode($photoPaths2);
+            }
+
+            // Update user data
+            $user->update();
+
+        if ($request->password) {
+            // $user->password = Hash::make($request->password);
+            $user->password  = $request->password;
+            $user->save();
+        }
+
+        return response(['message' => 'success'], 200);
+    }
+
+    public function assign(Request $request)
+    {
+        // dd(json_encode($photoPaths));
+
+        $user = User::findOrFail($request->id);
 
         if ($request->password) {
             // $user->password = Hash::make($request->password);

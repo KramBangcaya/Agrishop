@@ -60,7 +60,7 @@
 
 <script>
 import DisapproveModal from "./DisapproveUser.vue";
-import EditModal from "./EditUser.vue";
+import EditModal from "./AssignUser.vue";
 export default {
     props: {
         row: { required: true },
@@ -108,7 +108,7 @@ export default {
         },
         openEditModal(data) {
             this.selected_user = data;
-            $('#edit-user').modal('show');
+            $('#assign-user').modal('show');
         },
         selectDisapprove() {
             this.selected_user = this.form;
