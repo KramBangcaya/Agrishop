@@ -72,9 +72,93 @@ try {
 }
 
     }
+
+
+
 }
 
 ?>
+
+
+
+<div class="row" style="margin: 0 auto; float: auoto;"> <!-- Centering the inner row -->
+            <div class="col-md-12">
+                <?php require_once('customer-sidebar.php'); ?>
+            </div>
+
+
+
+            <div class="col-md-12">
+                <div class="user-content">
+                    <h1><?php echo LANG_VALUE_25; ?></h1>
+                    <h3 class="special"> </h3>
+                    <div class="table-responsive">
+
+
+                    <div class="row">
+    <div class="col-md-4">
+        <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
+            <div class="col-md-12 form-group">
+                <h2>
+                <?php echo $product_name; ?>&nbsp;
+                    ₱<?php echo $product_price; ?>&nbsp;
+
+                </h2>
+
+
+                <!-- Product Image -->
+            <!-- Responsive and spaced -->
+
+                <!-- Quantity and Total -->
+                <div style="margin-top: 10px; font-size: medium;">
+                    <label>Quantity: <?php echo $product_quantity; ?> </label>
+
+
+                    <label>Total: </label>
+
+                    ₱<?php echo $total_price; ?><br><br>
+                    <label>Payment date time: <?php echo $timedate; ?></label><br>
+                    <label>Transaction ID: 0024903AFJE91</label><br>
+
+                    <label>Seller Name: <?php echo $seller_name; echo " "; echo $seller_last?></label><br>
+                    <label>Seller Number: <?php echo $seller_number; ?></label><br>
+                    <label>Seller Address: <?php echo $seller_address; ?></label><br>
+                    <label>Expected Delivery: 1-2 days</label><br>
+                    <label>Order Status:
+                    <?php if ($order_status == "Delivered") { ?>
+                    <span class="badge bg-danger w-100" style="background-color:green;"><?php echo $order_status; ?></span>
+                    <?php } elseif ($order_status == "For Delivery") { ?>
+                    <span class="badge bg-danger w-100" style="background-color:gray;"><?php echo $order_status; ?></span>
+                    <?php } else { ?>
+                    <span class="badge bg-danger w-100" style="background-color:red;"><?php echo $order_status; ?></span>
+                    <?php } ?>
+
+                  </label>
+                    <br><h4> <a onclick="return confirmDelte();"
+                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
+                       class="trash">
+                       Cancel Order <i class="fa fa-ban" style="color:red;"></i>
+                    </a></h4>
+                    <h4> <a onclick="return confirmDelte();"
+                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
+                       class="trash">
+                       Feedback <i class="fa fa-comments" style="color:green;"></i>
+                    </a></h4>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="special"> </h3>
+
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
