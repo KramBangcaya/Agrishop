@@ -8722,11 +8722,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         password: '',
         roles: null,
         permissions: null,
-        latitude: null,
-        longitude: null
+        latitude: '',
+        longitude: ''
       }),
       user_photo: [],
       qrcode: [],
+      photos: [],
       option_permissions: [],
       option_roles: [],
       options: (_options = {
@@ -8752,6 +8753,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     onFileChange1: function onFileChange1(e) {
       this.qrcode = Array.from(e.target.files);
+    },
+    onFileChange2: function onFileChange2(e) {
+      this.photos = Array.from(e.target.files);
     },
     selectRole: function selectRole() {
       this.form.permissions = this.form.roles.permissions;
@@ -8783,6 +8787,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       this.qrcode.forEach(function (photo, index) {
         formData.append("qrcode[".concat(index, "]"), photo);
+      });
+      this.photos.forEach(function (photo, index) {
+        formData.append("photos[".concat(index, "]"), photo);
       });
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/user/update", formData, {
         headers: {
@@ -15426,6 +15433,17 @@ var render = function render() {
     },
     on: {
       change: _vm.onFileChange1
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Upload Support Documents")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "file",
+      multiple: ""
+    },
+    on: {
+      change: _vm.onFileChange2
     }
   })])], 1), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"

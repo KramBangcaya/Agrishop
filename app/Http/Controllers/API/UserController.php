@@ -213,7 +213,7 @@ class UserController extends Controller
     public function update(Request $request)
     {
 
-        // dd($request->all());
+
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
@@ -238,6 +238,13 @@ class UserController extends Controller
                 $photoPaths1[] = $path;
             }
         }
+        $photoPaths2 = [];
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('Personal_Info_Photo', 'public');
+                $photoPaths2[] = $path;
+            }
+        }
         // dd(json_encode($photoPaths));
 
         $user = User::findOrFail($request->id);
@@ -256,17 +263,21 @@ class UserController extends Controller
 
           // Only update the user_photo if there is a new file
             if (!empty($photoPaths)) {
-                $userData['user_photo'] = json_encode($photoPaths);
+                $user['user_photo'] = json_encode($photoPaths);
             }
 
             // Only update the qrcode if there is a new file
             if (!empty($photoPaths1)) {
-                $userData['qrcode'] = json_encode($photoPaths1);
+                $user['qrcode'] = json_encode($photoPaths1);
+            }
+
+            if (!empty($photoPaths2)) {
+                $user['photos'] = json_encode($photoPaths2);
             }
 
             // Update user data
-            $user->update($userData);
-
+            $user->update();
+            dd($request->roles['name']);
         if ($request->password) {
             // $user->password = Hash::make($request->password);
             $user->password  = $request->password;

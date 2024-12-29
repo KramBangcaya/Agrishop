@@ -68,13 +68,6 @@
                         <has-error :form="form" field="roles" />
 
                     </div>
-
-                    <!-- <div class="form-group">
-                        <label>Upload Profile</label>
-                        <input type="file" @change="onFileChange" multiple class="form-control">
-                    </div> -->
-
-
                     <div class="form-group">
                         <label>Permission</label>
                         <multiselect v-model="form.permissions" :options="option_permissions" :multiple="true"
@@ -101,9 +94,11 @@
                     <div class="form-group">
                         <label>Re-upload QR Code</label>
                         <input type="file" @change="onFileChange1" multiple class="form-control">
-                        <!-- <has-error :form="form" field="user_photo" /> -->
                     </div>
-
+                    <div class="form-group">
+                        <label>Upload Support Documents</label>
+                        <input type="file" @change="onFileChange2" multiple class="form-control">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -137,12 +132,13 @@ export default {
                 password: '',
                 roles: null,
                 permissions: null,
-                latitude: null,
-                longitude: null,
+                latitude: '',
+                longitude: '',
 
             }),
             user_photo: [],
             qrcode: [],
+            photos: [],
             option_permissions: [],
             option_roles: [],
             options: {
@@ -171,6 +167,9 @@ export default {
         },
         onFileChange1(e) {
             this.qrcode = Array.from(e.target.files);
+        },
+        onFileChange2(e) {
+            this.photos = Array.from(e.target.files);
         },
         selectRole() {
             this.form.permissions = this.form.roles.permissions;
@@ -201,6 +200,10 @@ export default {
 
             this.qrcode.forEach((photo, index) => {
                 formData.append(`qrcode[${index}]`, photo);
+            });
+
+            this.photos.forEach((photo, index) => {
+                formData.append(`photos[${index}]`, photo);
             });
 
             axios.post(`/api/user/update`, formData, {
