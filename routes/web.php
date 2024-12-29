@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\MobileController;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware('auth')->get('/user', function (Request $request) {
+    return response()->json(['userID' => $request->user()->id]);
+});
 
 Route::get('/', function () {
     return view('welcome');
