@@ -220,7 +220,6 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $request->id,
             'password' => 'required|sometimes',
             'lastname' => 'required|string',
-            'middle_initial' => 'nullable|string|max:2',
             'date_of_birth' => 'required|date',
             'contact_number' => 'required|string|digits:11',
             'address' => 'required', 'string',// validate each uploaded file
