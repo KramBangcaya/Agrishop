@@ -31,7 +31,6 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::put('update/{id}', [App\Http\Controllers\ProductsController::class, 'update']);
         Route::delete('delete/{id}', [App\Http\Controllers\ProductsController::class, 'destroy']);
     });
-
     Route::group(['prefix' => 'replenishment'], function () {
         Route::get('list', [App\Http\Controllers\ProductsController::class, 'index1']);
         Route::post('create', [App\Http\Controllers\ProductsController::class, 'store1']);
