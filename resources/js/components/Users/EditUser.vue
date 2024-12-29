@@ -58,24 +58,6 @@
                         <input v-model="form.password" type="password" class="form-control">
                         <has-error :form="form" field="password" />
                     </div>
-                    <div class="form-group">
-                        <label>Role</label>
-                        <multiselect v-model="form.roles" :options="option_roles" :multiple="false"
-                            :close-on-select="true" :clear-on-select="false" :preserve-search="true"
-                            placeholder="Pick some" label="name" track-by="name" :preselect-first="true"
-                            @input="selectRole">
-                        </multiselect>
-                        <has-error :form="form" field="roles" />
-
-                    </div>
-                    <div class="form-group">
-                        <label>Permission</label>
-                        <multiselect v-model="form.permissions" :options="option_permissions" :multiple="true"
-                            :close-on-select="false" :clear-on-select="false" :preserve-search="true"
-                            placeholder="Pick some" label="name" track-by="name" :preselect-first="true">
-                        </multiselect>
-                        <has-error :form="form" field="permissions" />
-                    </div>
 
                     <div class="form-group">
                         <label>Location</label>
@@ -130,17 +112,12 @@ export default {
                 address: '',
                 email: '',
                 password: '',
-                roles: null,
-                permissions: null,
-                latitude: '',
-                longitude: '',
-
+                latitude: null,
+                longitude: null,
             }),
             user_photo: [],
             qrcode: [],
             photos: [],
-            option_permissions: [],
-            option_roles: [],
             options: {
                 toolbar: true,
                 url: 'data-source',
@@ -171,10 +148,8 @@ export default {
         onFileChange2(e) {
             this.photos = Array.from(e.target.files);
         },
-        selectRole() {
-            this.form.permissions = this.form.roles.permissions;
-        },
         update() {
+            console.log(this.form);
             console.log('Photos before posting:', this.user_photo);
             const formData = new FormData();
             formData.append('id', this.form.id);
@@ -186,13 +161,12 @@ export default {
             formData.append('telephone_number', this.form.telephone_number);
             formData.append('address', this.form.address);
             formData.append('email', this.form.email);
-            formData.append('password', this.form.password);
-            formData.append('roles', this.form.roles);
-            formData.append('permissions', this.form.permissions);
             formData.append('latitude', this.form.latitude); // Use default if undefined
             formData.append('longitude', this.form.longitude); // Use default if undefined
 
-
+            if (this.form.password && this.form.password.trim() !== '') {
+                formData.append('password', this.form.password);
+            }
             // Append each selected photo file to the formData
             this.user_photo.forEach((photo, index) => {
                 formData.append(`user_photo[${index}]`, photo);
@@ -221,19 +195,6 @@ export default {
             }).catch(error => {
                 console.error('Error during submission:', error);
             });
-        },
-        loadMeasurement() {
-            axios.get('/api/measurement/all')
-                .then(response => {
-                    this.option_measurement = response.data.data;
-                    console.log('Loaded measurements:', this.option_measurement);
-                });
-        },
-        loadRoles() {
-            axios.get('/api/role/all')
-                .then(response => {
-                    this.option_roles = response.data.data;
-                });
         },
         initMap() {
             // Initialize Google Map
@@ -297,8 +258,6 @@ export default {
         }
     },
     mounted() {
-        // this.loadPermissions();
-        this.loadRoles();
         this.loadGoogleMapsScript().then(() => {
             this.initMap();
         }).catch((error) => {

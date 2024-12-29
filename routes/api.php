@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('create', [App\Http\Controllers\API\UserController::class, 'store']);
         Route::put('validate/{id}', [App\Http\Controllers\API\UserController::class, 'validated']);
         Route::post('update', [App\Http\Controllers\API\UserController::class, 'update']);
+        Route::put('assign', [App\Http\Controllers\API\UserController::class, 'assign']);
         Route::delete('delete/{id}', [App\Http\Controllers\API\UserController::class, 'destroy']);
         Route::put('activate/{id}', [App\Http\Controllers\API\UserController::class, 'activate']);
     });

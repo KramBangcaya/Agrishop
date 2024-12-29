@@ -163,7 +163,8 @@ class UserController extends Controller
             $user = User::findOrFail($id);
 
             $user->update([
-                'approved_at' => Carbon::now()->format('Y-m-d H:i:s')
+                'approved_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
             // dd($user);
 
@@ -213,7 +214,7 @@ class UserController extends Controller
     public function update(Request $request)
     {
 
-
+        // dd($request->all());
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
@@ -277,7 +278,22 @@ class UserController extends Controller
 
             // Update user data
             $user->update();
-            dd($request->roles['name']);
+
+        if ($request->password) {
+            // $user->password = Hash::make($request->password);
+            $user->password  = $request->password;
+            $user->save();
+        }
+
+        return response(['message' => 'success'], 200);
+    }
+
+    public function assign(Request $request)
+    {
+        // dd(json_encode($photoPaths));
+
+        $user = User::findOrFail($request->id);
+
         if ($request->password) {
             // $user->password = Hash::make($request->password);
             $user->password  = $request->password;
