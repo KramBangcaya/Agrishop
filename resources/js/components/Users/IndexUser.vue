@@ -107,7 +107,7 @@
                                                     v-if="data.approved_at != null && data.reason_of_disapproval === null"
                                                     type="button" class="btn btn-primary btn-sm"
                                                     @click="openEditModal(data)"><i class="fas fa-edit"></i>
-                                                    Edit</button>
+                                                    Assign Permission</button>
                                                 <button v-if="data.deleted_at === null && can('delete user')"
                                                     type="button" class="btn btn-danger btn-sm"
                                                     @click="remove(data.id)"><i class="fas fa-ban"></i> Deactivate
@@ -158,7 +158,7 @@
 
 <script>
 import addModal from "./AddUser.vue";
-import EditModal from "./EditUser.vue";
+import EditModal from "./AssignUser.vue";
 import ValidateModal from "./ValidateUser.vue";
 export default {
     components: {
@@ -204,7 +204,7 @@ export default {
         },
         openEditModal(data) {
             this.selected_user = data;
-            $('#edit-user').modal('show');
+            $('#assign-user').modal('show');
         },
         openValidateModal(data) {
             this.selected_user = data;
