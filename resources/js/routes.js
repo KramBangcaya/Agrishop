@@ -18,6 +18,16 @@ const routes = [
         component: require('./components/Products/Index.vue').default,
     },
     {
+        path: '/Report',
+        name: 'Report',
+        component: require('./components/Report/Index.vue').default,
+    },
+    {
+        path: '/FileReport',
+        name: 'Create',
+        component: require('./components/Report/Create.vue').default,
+    },
+    {
         path: '/Replenishment',
         name: 'Replenishment',
         component: require('./components/Replenishment/Index.vue').default,

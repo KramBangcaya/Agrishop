@@ -132,6 +132,16 @@
                             </ul>
                         </li>
                         @endif
+                        @if (Auth::check() && strtoupper(Auth::user()->getRoleNames()->first()) === 'SELLER')
+                            <li class="nav-item">
+                                <router-link to="/Report" class="nav-link">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Reports
+                                    </p>
+                                </router-link>
+                            </li>
+                            @endif
                         @can('access user')
                             <li class="nav-item">
                                 <router-link to="/users" class="nav-link">

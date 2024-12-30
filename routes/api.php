@@ -31,6 +31,13 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('update/{id}', [App\Http\Controllers\ProductsController::class, 'update']);
         Route::delete('delete/{id}', [App\Http\Controllers\ProductsController::class, 'destroy']);
     });
+    Route::group(['prefix' => 'Report'], function () {
+        Route::get('list', [App\Http\Controllers\ReportController::class, 'index']);
+        Route::post('create', [App\Http\Controllers\ReportController::class, 'store']);
+        Route::put('response', [App\Http\Controllers\ReportController::class, 'response']);
+        Route::delete('delete/{id}', [App\Http\Controllers\ReportController::class, 'destroy']);
+        Route::get('list_all', [App\Http\Controllers\ReportController::class, 'index_all']);
+    });
     Route::group(['prefix' => 'replenishment'], function () {
         Route::get('list', [App\Http\Controllers\ProductsController::class, 'index1']);
         Route::post('create', [App\Http\Controllers\ProductsController::class, 'store1']);
@@ -55,6 +62,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
     Route::group(['prefix' => 'user'], function () {
         Route::get('list', [App\Http\Controllers\API\UserController::class, 'index']);
+        Route::get('all', [App\Http\Controllers\API\UserController::class, 'index_all']);
         Route::get('show', [App\Http\Controllers\API\UserController::class, 'show']);
         Route::post('create', [App\Http\Controllers\API\UserController::class, 'store']);
         Route::put('validate/{id}', [App\Http\Controllers\API\UserController::class, 'validated']);

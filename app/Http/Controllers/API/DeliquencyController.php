@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Deliquency;
+use App\Models\report;
 use Illuminate\Http\Request;
 
 class DeliquencyController extends Controller
@@ -15,22 +16,23 @@ class DeliquencyController extends Controller
      */
     public function index(Request $request)
     {
-        //
-        // abort_if(Gate::denies('list user'), 403, 'You do not have the required authorization.');
-        $data = Deliquency::with('committedBy')->latest();
 
-        if ($request->search) {
-            $data = $data->where('committed_by', 'LIKE', '%' . $request->search . '%');
-        }
-        // if ($request->filter == 'Deactivate') {
-        //     $data = $data->where('deleted_at', null);
-        // }
-        // if ($request->filter == 'Activate') {
-        //     $data = $data->whereNotNull('deleted_at');
-        // }
-        $data = $data->paginate($request->length);
-        // dd($data);
-        return response(['data' => $data], 200);
+        // Load reports with the associated user data
+    $data = Report::latest()->with('user')->paginate($request->length);
+
+    // Optionally, you can loop through the reports and get the user name
+    $data->getCollection()->transform(function ($item) {
+        // dd($item);
+        $item->user_name = $item->user ? $item->user->name . " " . $item->user->lastname: null; // Get user name
+        return $item;
+    });
+
+    // dd($data);
+
+    return response([
+        'data' => $data,
+    ], 200);
+
     }
 
     /**

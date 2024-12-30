@@ -43,6 +43,26 @@ class UserController extends Controller
         return response(['data' => $data], 200);
     }
 
+    public function index_all(Request $request){
+        $users = User::join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                ->join('roles', 'model_has_roles.role_id', '=', 'roles.id') // Join with the roles table
+                ->whereNotNull('users.approved_at')
+                ->whereIn('roles.name', ['Buyer', 'Seller']) // Add condition for role names
+                ->select(
+                    'users.id as user_id',
+                    'users.name as user_name',
+                    'users.lastname as user_lastname',
+                    'model_has_roles.role_id',
+                    'roles.name as role_name' // Retrieve the role name
+                )
+                ->get();
+
+    return response()->json([
+        'data' => $users,
+        'message' => 'Users retrieved successfully',
+    ], 200);
+    }
+
     public function show()
     {
         abort_if(Gate::denies('edit user'), 403, 'You do not have the required authorization.');
@@ -214,13 +234,11 @@ class UserController extends Controller
     public function update(Request $request)
     {
 
-        // dd($request->all());
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
             'password' => 'required|sometimes',
             'lastname' => 'required|string',
-            'middle_initial' => 'nullable|string|max:2',
             'date_of_birth' => 'required|date',
             'contact_number' => 'required|string|digits:11',
             'address' => 'required', 'string',// validate each uploaded file
@@ -284,7 +302,6 @@ class UserController extends Controller
             $user->password  = $request->password;
             $user->save();
         }
-
         return response(['message' => 'success'], 200);
     }
 
