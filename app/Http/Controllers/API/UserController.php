@@ -213,12 +213,7 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-<<<<<<< HEAD
-        dd($request->all());
-=======
 
-        // dd($request->all());
->>>>>>> b963fe76dbaf236a4579d36f571c7b7d33b1c2dc
         $this->validate($request, [
             'name' => 'required|string|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
