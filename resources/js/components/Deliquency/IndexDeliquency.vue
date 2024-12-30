@@ -52,9 +52,15 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(data, index) in         option_users.data        " :key="index">
-                                            <td> <img v-if="data.proof && data.proof.length"
-                                                    :src="'/storage/'+formatPhotoPath(data.proof)" alt="Product Photo"
-                                                    style="max-width: 200px; max-height: 200px;">
+                                            <td>
+                                                    <img
+                                                    v-if="data.proof && data.proof.length"
+                                                    :src="'/storage/'+formatPhotoPath(data.proof)"
+                                                    alt="Product Photo"
+                                                    style="max-width: 200px; max-height: 200px; cursor: pointer;"
+                                                    @click="openImageModal('/storage/' + formatPhotoPath(data.proof))"
+                                                />
+
                                             </td>
                                             <td>{{ data.buyer_name }}</td>
                                             <td>{{ data.reason }}</td>
@@ -87,10 +93,18 @@
                     </div>
                     <!-- declare the edit modal -->
                     <edit-modal @getData="getData" :row="selected_user" :page="current_page"></edit-modal>
+
                 </div>
             </div>
+
         </div>
+        <div v-if="showImageModal" class="modal-overlay" @click="closeImageModal">
+                        <div class="modal-content">
+                            <img :src="zoomedImage" alt="Zoomed Image" />
+                        </div>
+                    </div>
     </div>
+
 </template>
 <script>
 import EditModal from "./Create.vue";
@@ -112,9 +126,18 @@ export default {
                 id: '',
             }),
             error: '',
+            showImageModal: false,
+            zoomedImage: '',
         }
     },
     methods: {
+        openImageModal(imageSrc) {
+            this.zoomedImage = imageSrc;
+            this.showImageModal = true;
+        },
+        closeImageModal() {
+            this.showImageModal = false;
+        },
         formatPhotoPath(photoPath) {
             if (photoPath) {
                 return photoPath.replace(/^\["(.+)"\]$/, '$1');
@@ -195,3 +218,32 @@ export default {
     },
 }
 </script>
+<style>
+.modal-overlay {
+    position: fixed;
+    top: 50%; /* Center vertically */
+    left: 60%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center horizontally */
+    width: 70%;
+    height: 70%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 500;
+}
+
+
+.modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content img {
+    max-width: 50%;
+    max-height: 50%;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+</style>
