@@ -35,16 +35,11 @@ if(!isset($_SESSION['cart_p_id'])) {
                     </p>
                 <?php else:
 
-                    //var_dump($_SESSION);?>
+                    var_dump($_SESSION);?>
 
                     <h3 class="special"><?php echo LANG_VALUE_26; ?></h3>
                     <div class="cart">
                         <form action="place-order.php" method="post" enctype="multipart/form-data" id="order_form">
-
-
-
-
-
 
 
 
@@ -85,12 +80,15 @@ for ($i = 1; $i <= count($_SESSION['cart_p_id']); $i++) {
     </div>
 
     <div class="col-md-12 form-groups" style="padding: 0; margin: 0;">
+    <?php echo $_SESSION['cart_p_name'][$i]; ?>
         <label>Upload Proof of Payment</label>
         <input type="file" name="photo[<?php echo $i; ?>]" class="form-control">
+
     </div>
 </div>
 
     <!-- Include hidden inputs to pass product data -->
+
     <input type="hidden" name="product_name[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_name'][$i]; ?>">
     <input type="hidden" name="product_quantity[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_qty'][$i]; ?>">
     <input type="hidden" name="product_price[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_current_price'][$i]; ?>">

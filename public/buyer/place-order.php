@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 continue; // Skip this product if file upload fails
             }
         }
-        $query = "INSERT INTO orders (buyer_name, product_name, seller_name, seller_number, seller_address, order_status, photo, totalPayment, timedate, product_quantity, seller_id)
-        VALUES (:buyer_name, :product_name, :seller_name, :seller_number, :seller_address ,:order_status, :photo, :totalPayment, :timedate, :product_quantity, :seller_id)";
+        $query = "INSERT INTO orders (buyer_name, buyer_id, product_name, seller_name, seller_number, seller_address, order_status, photo, totalPayment, timedate, product_quantity, seller_id)
+        VALUES (:buyer_name, :buyer_id, :product_name, :seller_name, :seller_number, :seller_address ,:order_status, :photo, :totalPayment, :timedate, :product_quantity, :seller_id)";
 $stmt = $pdo->prepare($query);
 
 $timedate = date('Y-m-d H:i:s');
@@ -45,10 +45,14 @@ if (!isset($_SESSION['customer']['name'])) {
   die("Session customer name is not set.");
 }
 
+// var_dump($_SESSION['customer']['name']);
+
+
 // Debug variable values
 var_dump($product_name, $seller_name, $seller_number, $photo, $total_price, $product_quantity, $seller_address, $seller_number, $seller_id);
 
 $stmt->bindParam(':buyer_name', $_SESSION['customer']['name']);
+$stmt->bindParam(':buyer_id', $_SESSION['customer']['user_id']);
 $stmt->bindParam(':product_name', $product_name);
 $stmt->bindParam(':seller_name', $seller_name);
 $stmt->bindParam(':seller_number', $seller_number);

@@ -31,6 +31,7 @@ $error_message = '';
 if (isset($_POST['form1'])) {
 
     var_dump($_POST);
+    // var_dump($_POST['_csrf']);
     // Fetch data from the API
     $url = API_BASE_URL. '/products/all';
     $json = file_get_contents($url);
@@ -51,11 +52,12 @@ if (isset($_POST['form1'])) {
         $table_quantity[] = $row['Quantity'];
     }
 
-    // echo $_POST['quantity'];
+
     // Initialize arrays from POST request
     $arr1 = $arr2 = $arr3 = [];
     if (isset($_POST['product_id']) && is_array($_POST['product_id'])) {
         $arr1 = $_POST['product_id'];
+        // var_dump($_POST['product_id']);
     }
     if (isset($_POST['quantity']) && is_array($_POST['quantity'])) {
         $arr2 = $_POST['quantity'];
@@ -66,11 +68,11 @@ if (isset($_POST['form1'])) {
 
     $allow_update = 1;
     $error_message = '';
-
     // Loop through each item in the cart
     for ($i = 0; $i < count($arr1); $i++) {
+        // var_dump(count($arr1));
         $temp_index = array_search($arr1[$i], $table_product_id);
-
+        // var_dump($table_product_id);
         if ($temp_index !== false) {
             // Check stock availability
             if ($table_quantity[$temp_index] < $arr2[$i]) {
@@ -78,7 +80,11 @@ if (isset($_POST['form1'])) {
                 $error_message .= '"' . $arr2[$i] . '" items are not available for "' . $arr3[$i] . '"\n';
             } else {
                 // Update quantity in session
-                $_SESSION['cart_p_qty'][$arr1[$i]] = $arr2[$i];
+                // $_SESSION['cart_p_qty'][$arr1[$i]] = $arr2[$i];
+
+
+                $product_id = $arr1[$i]; // Product ID
+                $_SESSION['cart_p_qty'][$product_id] = $arr2[$i];
             }
         }
     }
@@ -91,10 +97,6 @@ if (isset($_POST['form1'])) {
     }
 }
 ?>
-
-
-
-
     <div class="page-banner-inner" style="font-size:50px;">
     <h1 style="font-size:50px;text-align: center">CART</h1>
 </div>
@@ -117,8 +119,6 @@ if (isset($_POST['form1'])) {
                     <div class="table-responsive">
 
 				<div class="cart">
-
-
                         <?php
                          var_dump($_SESSION);
                         $table_total_price = 0;
@@ -157,56 +157,56 @@ if (isset($_POST['form1'])) {
                         }
                         ?>
 
-<h2 class="special" style="margin-left:10px;">Order Details</h2><h3 class="special"> </h3>
-
-                        <?php for($i=1;$i<=count($arr_cart_p_id);$i++): ?>
-
-
-
-
+                    <h2 class="special" style="margin-left:10px;">Order Details</h2><h3 class="special"> </h3>
+                        <?php for($i=1;$i<=count($arr_cart_p_id);$i++):
+                            echo count($arr_cart_p_id);
+                            echo $i;
+                            ?>
                             <div class="row">
-    <div class="col-md-4">
-        <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
-            <div class="col-md-12 form-group">
-                <h2>
-                    <?php echo $arr_cart_p_name[$i]; ?>&nbsp;
-                    ₱<?php echo $arr_cart_p_current_price[$i]; ?>&nbsp;
-                    <a onclick="return confirmDelete();"
-                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
-                       class="trash">
-                        <i class="fa fa-trash" style="color:red;"></i>
-                    </a>
-                </h2>
+                                <div class="col-md-4">
+                                    <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
+                                        <div class="col-md-12 form-group">
+                                            <h2>
+                                                <?php echo $arr_cart_p_name[$i]; ?>&nbsp;
+                                                ₱<?php echo $arr_cart_p_current_price[$i]; ?>&nbsp;
+                                                <a onclick="return confirmDelete();"
+                                                href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
+                                                class="trash">
+                                                    <i class="fa fa-trash" style="color:red;"></i>
+                                                </a>
+                                            </h2>
 
-                <!-- Product Image -->
-                <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
-                     alt="Product Image"
-                     style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
+                                            <!-- Product Image -->
+                                            <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+                                                alt="Product Image"
+                                                style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
+                                                <input type="hidden" name="product_id[]" value="<?php echo $arr_cart_p_id[$i]; ?>">
+                                            <!-- Quantity and Total -->
+                                            <div style="margin-top: 10px; font-size: medium;">
+                                                <label>Quantity: </label>
+                                                <input type="number"
+                                                    class="input-text qty text"
+                                                    step="1"
+                                                    min="1"
+                                                    max=""
+                                                    name="quantity[]"
+                                                    value="<?php echo $arr_cart_p_qty[$i]; ?>"
+                                                    title="Qty"
+                                                    size="4"
+                                                    pattern="[0-9]*"
+                                                    inputmode="numeric"
+                                                    style="width: 60px; margin-right: 10px;">
 
-                <!-- Quantity and Total -->
-                <div style="margin-top: 10px; font-size: medium;">
-                    <label>Quantity: </label>
-                    <input type="number"
-                           class="input-text qty text"
-                           step="1"
-                           min="1"
-                           max=""
-                           name="quantity[]"
-                           value="<?php echo $arr_cart_p_qty[$i]; ?>"
-                           title="Qty"
-                           size="4"
-                           pattern="[0-9]*"
-                           inputmode="numeric"
-                           style="width: 60px; margin-right: 10px;">
-
-                    <label>Total: </label>
-                    <?php $row_total_price = $arr_cart_p_current_price[$i] * $arr_cart_p_qty[$i]; ?>
-                    ₱<?php echo $row_total_price; ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                                                <label>Total: </label>
+                                                <?php
+                                                // var_dump($arr_cart_p_qty[$i]);
+                                                $row_total_price = $arr_cart_p_current_price[$i] * $arr_cart_p_qty[$i]; ?>
+                                                ₱<?php echo $row_total_price; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                 <h3 class="special"> </h3>
                         <?php endfor; ?>

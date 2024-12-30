@@ -51,7 +51,7 @@ foreach ($result as $row) {
                 <script>
                     function initMap() {
                         // Create a map centered at a default location
-                        const defaultLocation = { lat: 7.0740, lng: 125.6076 }; // Example: Davao de Oro
+                        const defaultLocation = { lat: 7.448212, lng: 125.809425 }; // Example: Davao de Oro
                         const map = new google.maps.Map(document.getElementById("map"), {
                             zoom: 12,
                             center: defaultLocation
