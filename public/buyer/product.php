@@ -146,8 +146,8 @@ if($success_message1 != '') {
                     </ul>
                 </div>
 
-				<div class="product">
-					<div class="row">
+			<div class="product">
+				<div class="row">
                     <div class="col-md-5">
                             <ul class="prod-slider">
                                 <!-- Main Image -->
@@ -209,15 +209,12 @@ if($success_message1 != '') {
                             </div>
                         </div>
 
-						<div class="col-md-7">
-
+                        <div class="col-md-7">
 							<!-- <div class="p-review">
 								<div class="rating">
 
                                 </div>
 							</div> -->
-
-
                             <form action="" method="post">
 							<div class="p-price">
                             <div class="p-title"><h2><?php echo $p_name; ?></h2></div>
@@ -264,7 +261,9 @@ if($success_message1 != '') {
                             </form>
 
 						</div>
-					</div>
+                        </div>
+
+
 				</div>
 
 			</div>
@@ -486,6 +485,5 @@ if($success_message1 != '') {
         });
     });
 </script>
-
 
 <?php require_once('footer.php'); ?>
