@@ -16,8 +16,9 @@ class ReportController extends Controller
 
     public function index(Request $request){
         $userID = auth()->user()->id;
-
-        $data = report::latest();
+        // dd($userID);
+        $data = report::where('userID',$userID)
+        ->latest();
 
         $data = $data->paginate($request->length);
 
@@ -42,8 +43,7 @@ class ReportController extends Controller
         $userID = auth()->user()->id;
         // dd($userID);
         $request->validate([
-            'reason' => 'required|string',
-            'proof.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // validate each uploaded file
+            'reason' => 'required|string', // validate each uploaded file
         ]);
 
         $photoPaths = [];

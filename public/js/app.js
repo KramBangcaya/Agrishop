@@ -7684,7 +7684,7 @@ __webpack_require__.r(__webpack_exports__);
       // const measurementIds = this.form.measurement_id.map(measurement => measurement.id);
 
       // this.form.measurement_id = measurementIds;
-      this.form.put('api/product/update/' + this.form.id).then(function () {
+      this.form.post('api/product/update/' + this.form.id).then(function () {
         toast.fire({
           icon: 'success',
           text: 'Data Saved.'
