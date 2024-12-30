@@ -39,7 +39,7 @@ if(isset($_POST['form1'])) {
             // Check if the user exists and the password matches
             $user = $response_data['user'][0];
             $hashed_password = $user['password'];
-
+            $_SESSION['user_id'] = $user['user_id'];
 
             // Verify password using password_verify (assuming the API uses bcrypt hash)
             if (!password_verify($cust_password, $hashed_password)) {
@@ -50,7 +50,8 @@ if(isset($_POST['form1'])) {
                 // Check if the role_name is 'buyer'
                 if ($user['role_name'] == 'buyer' || $user['role_name'] == 'Buyer' ) {
                     $_SESSION['customer'] = $user;
-                    header("location: ".BASE_URL."dashboard.php");
+
+                    header("location: ".BASE_URL."dashboard.php?id= ".$_SESSION['user_id']);
                     exit;
                 } else {
                     $error_message .= "No buyer account found.<br>";

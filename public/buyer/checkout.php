@@ -35,7 +35,7 @@ if(!isset($_SESSION['cart_p_id'])) {
                     </p>
                 <?php else:
 
-                    //var_dump($_SESSION);?>
+                    var_dump($_SESSION);?>
 
                     <h3 class="special"><?php echo LANG_VALUE_26; ?></h3>
                     <div class="cart">
@@ -91,6 +91,7 @@ for ($i = 1; $i <= count($_SESSION['cart_p_id']); $i++) {
 </div>
 
     <!-- Include hidden inputs to pass product data -->
+    <input type="hidden" name="buyer_id[<?php echo $i; ?>]" value="<?php echo $_SESSION['user_id'][$i]; ?>">
     <input type="hidden" name="product_name[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_name'][$i]; ?>">
     <input type="hidden" name="product_quantity[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_qty'][$i]; ?>">
     <input type="hidden" name="product_price[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_current_price'][$i]; ?>">
