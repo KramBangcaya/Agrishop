@@ -199,7 +199,7 @@ export default {
         initMap() {
             // Initialize Google Map
             this.map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 51.505, lng: -0.09 }, // Default position (latitude, longitude)
+        center: { lat: 7.448212, lng: 125.809425 }, // Default position (latitude, longitude)
         zoom: 13,
     });
 
