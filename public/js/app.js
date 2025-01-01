@@ -5803,7 +5803,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.isConfirmed) {
           axios["delete"]('/api/user/delete/' + _this2.user.id).then(function (response) {
-            Swal.fire('Disable!', 'Your file has been Deactivated.', 'success');
+            Swal.fire('Disable!', 'Your Account has been Deactivated.', 'success');
 
             _this2.getData();
           });
@@ -9382,7 +9382,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.isConfirmed) {
           axios["delete"]('/api/user/delete/' + id).then(function (response) {
-            Swal.fire('Disable!', 'Your file has been Deactivated.', 'success');
+            Swal.fire('Disable!', 'Your Account has been Deactivated.', 'success');
 
             _this2.getData();
           });

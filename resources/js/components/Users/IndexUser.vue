@@ -259,7 +259,7 @@ export default {
                         .then(response => {
                             Swal.fire(
                                 'Disable!',
-                                'Your file has been Deactivated.',
+                                'Your Account has been Deactivated.',
                                 'success'
                             )
                             this.getData();
