@@ -15,7 +15,7 @@ if (!$user_id) {
 <div class="user-sidebar">
     <ul>
 
-    <a href="customer-profile-update.php"><button class="btn btn-danger"><?php echo LANG_VALUE_117; ?></button></a>
+    <a href="customer-profile-update.php?id=<?php echo $user_id; ?>"><button class="btn btn-danger"><?php echo LANG_VALUE_117; ?></button></a>
         <a href="customer-billing-shipping-update.php"><button class="btn btn-danger">Report Seller</button></a>
 
         <a href="customer-order.php?id=<?php echo $user_id; ?>"><button class="btn btn-danger"><?php echo LANG_VALUE_24; ?></button></a>

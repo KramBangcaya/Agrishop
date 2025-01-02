@@ -11,6 +11,7 @@ if(!isset($_SESSION['customer'])) {
 } else {
 
     $cust_email = $_SESSION['customer']['email'];
+
     // var_dump($_SESSION);// Get email from session
 
     $api_url = API_BASE_URL . "/login/submit?email=" . urlencode($cust_email);
@@ -29,6 +30,7 @@ if(!isset($_SESSION['customer'])) {
         // Get the user's data from the API response
         $user = $response_data['user'][0];// Assuming 'status' field exists in the API response
         $_SESSION['user_id'] = $user['user_id'];
+
         // If the user is inactive, log them out
 
     } else {

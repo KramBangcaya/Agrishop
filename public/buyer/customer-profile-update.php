@@ -7,8 +7,9 @@ if(!isset($_SESSION['customer'])) {
     exit;
 } else {
     // If customer is logged in, but admin make him inactive, then force logout this user.
-    $statement = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=? AND cust_status=?");
-    $statement->execute(array($_SESSION['customer']['cust_id'],0));
+
+    $statement = $pdo->prepare("SELECT * FROM users WHERE id=?");
+    $statement->execute(array($_SESSION['customer']['user_id']));
     $total = $statement->rowCount();
     if($total) {
         header('location: '.BASE_URL.'logout.php');
@@ -90,9 +91,7 @@ if (isset($_POST['form1'])) {
 <div class="page">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <?php require_once('customer-sidebar.php'); ?>
-            </div>
+
             <div class="col-md-12">
                 <div class="user-content">
                     <h3>
@@ -109,53 +108,37 @@ if (isset($_POST['form1'])) {
                     <form action="" method="post">
                         <?php $csrf->echoInputField(); ?>
                         <div class="row">
+
+
                             <div class="col-md-6 form-group">
-                                <label for=""><?php echo LANG_VALUE_102; ?> *</label>
-                                <input type="text" class="form-control" name="cust_name" value="<?php echo $_SESSION['customer']['cust_name']; ?>">
+                                <label for="">First Name *</label>
+                                <input type="text" class="form-control" name="cust_name" value="<?php echo $_SESSION['customer']['name']; ?>">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for=""><?php echo LANG_VALUE_103; ?></label>
-                                <input type="text" class="form-control" name="cust_cname" value="<?php echo $_SESSION['customer']['cust_cname']; ?>">
+                                <label for="">Last Name</label>
+                                <input type="text" class="form-control" name="cust_cname" value="<?php echo $_SESSION['customer']['lastname']; ?>">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for=""><?php echo LANG_VALUE_94; ?> *</label>
-                                <input type="text" class="form-control" name="" value="<?php echo $_SESSION['customer']['cust_email']; ?>" disabled>
+                                <input type="text" class="form-control" name="" value="<?php echo $_SESSION['customer']['email']; ?>" disabled>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for=""><?php echo LANG_VALUE_104; ?> *</label>
-                                <input type="text" class="form-control" name="cust_phone" value="<?php echo $_SESSION['customer']['cust_phone']; ?>">
+                                <label for="">Phone Number *</label>
+                                <input type="text" class="form-control" name="cust_phone" value="<?php echo $_SESSION['customer']['contact_number']; ?>">
                             </div>
                             <div class="col-md-12 form-group">
                                 <label for=""><?php echo LANG_VALUE_105; ?> *</label>
-                                <textarea name="cust_address" class="form-control" cols="30" rows="10" style="height:70px;"><?php echo $_SESSION['customer']['cust_address']; ?></textarea>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for=""><?php echo LANG_VALUE_106; ?> *</label>
-                                <select name="cust_country" class="form-control">
-                                <?php
-                                $statement = $pdo->prepare("SELECT * FROM tbl_country ORDER BY country_name ASC");
-                                $statement->execute();
-                                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                foreach ($result as $row) {
-                                    ?>
-                                    <option value="<?php echo $row['country_id']; ?>" <?php if($row['country_id'] == $_SESSION['customer']['cust_country']) {echo 'selected';} ?>><?php echo $row['country_name']; ?></option>
-                                    <?php
-                                }
-                                ?>
-                                </select>
+                                <textarea name="cust_address" class="form-control" cols="30" rows="10" style="height:70px;"><?php echo $_SESSION['customer']['address']; ?></textarea>
                             </div>
 
+
                             <div class="col-md-6 form-group">
-                                <label for=""><?php echo LANG_VALUE_107; ?> *</label>
-                                <input type="text" class="form-control" name="cust_city" value="">
+                                <label for="">Password *</label>
+                                <input type="password" class="form-control" name="cust_city" value="">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for=""><?php echo LANG_VALUE_108; ?> *</label>
-                                <input type="text" class="form-control" name="cust_state" value="">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for=""><?php echo LANG_VALUE_109; ?> *</label>
-                                <input type="text" class="form-control" name="cust_zip" value="">
+                                <label for="">Profile Picture *</label>
+                                <input type="file" class="form-control" name="cust_state" value="">
                             </div>
 
                         </div>

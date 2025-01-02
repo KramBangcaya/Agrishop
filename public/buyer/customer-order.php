@@ -46,9 +46,7 @@ if(!isset($_SESSION['customer'])) {
 
 
         <div class="row">
-            <div class="col-md-12">
-                <?php require_once('customer-sidebar.php'); ?>
-            </div>
+
 
             <div class="col-md-12">
                 <div class="user-content">
@@ -104,6 +102,8 @@ if(!isset($_SESSION['customer'])) {
 <h4 onclick="toggleFeedbackForm(event)" style="cursor: pointer;">
     Feedback <i class="fa fa-comments" style="color:green;"></i>
 </h4>
+
+
 <div id="feedback-form" style="display: none; margin-top: 10px;">
     <textarea id="feedback-text" placeholder="Enter your feedback here..." rows="4" cols="50"></textarea>
     <br>
