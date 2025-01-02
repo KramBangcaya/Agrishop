@@ -102,11 +102,16 @@ if(!isset($_SESSION['customer'])) {
                        class="trash">
                        Cancel Order <i class="fa fa-ban" style="color:red;"></i>
                     </a></h4>
-                    <h4> <a onclick="return confirmDelte();"
-                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
-                       class="trash">
-                       Feedback <i class="fa fa-comments" style="color:green;"></i>
-                    </a></h4>
+                    <h4 onclick="toggleFeedbackForm(event)" style="cursor: pointer;">
+    Feedback <i class="fa fa-comments" style="color:green;"></i>
+</h4>
+<div id="feedback-form" style="display: none; margin-top: 10px;">
+    <textarea id="feedback-text" placeholder="Enter your feedback here..." rows="4" cols="50"></textarea>
+    <br>
+    <button onclick="submitFeedback()">Submit</button>
+    <button onclick="cancelFeedback()">Cancel</button>
+</div>
+
                 </div>
 
 
@@ -114,99 +119,46 @@ if(!isset($_SESSION['customer'])) {
         </div>
     </div>
 </div>
+<script>
+function toggleFeedbackForm(event) {
+    event.preventDefault(); // Prevent default behavior (if needed)
+    const feedbackForm = document.getElementById('feedback-form');
+    if (feedbackForm) {
+        feedbackForm.style.display = feedbackForm.style.display === 'none' ? 'block' : 'none';
+    } else {
+        console.error('Feedback form not found.');
+    }
+}
 
+function submitFeedback() {
+    const textarea = document.getElementById('feedback-text');
+    if (textarea) {
+        const feedback = textarea.value.trim();
+        if (feedback) {
+            console.log('Feedback:', feedback);
+            alert(`Feedback submitted: ${feedback}`);
+            document.getElementById('feedback-form').style.display = 'none'; // Hide the form after submission
+        } else {
+            alert('Please enter your feedback before submitting.');
+        }
+    } else {
+        console.error('Feedback textarea not found.');
+    }
+}
+
+function cancelFeedback() {
+    const feedbackForm = document.getElementById('feedback-form');
+    if (feedbackForm) {
+        feedbackForm.style.display = 'none'; // Hide the feedback form
+    } else {
+        console.error('Feedback form not found.');
+    }
+}
+</script>
 <h3 class="special"> </h3>
 
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
-            <div class="col-md-12 form-group">
-                <h2>
-                    Carrots&nbsp;
-                    ₱10.00&nbsp;
 
-                </h2>
-
-
-                <!-- Product Image -->
-            <!-- Responsive and spaced -->
-
-                <!-- Quantity and Total -->
-                <div style="margin-top: 10px; font-size: medium;">
-                    <label>Quantity: </label>
-                    <input type="number"
-                           class="input-text qty text"
-                           step="1"
-                           min="1"
-                           max=""
-                           name="quantity[]"
-                           value="3"
-                           title="Qty"
-                           size="4"
-                           pattern="[0-9]*"
-                           inputmode="numeric"
-                           style="width: 60px; margin-right: 10px;">
-
-                    <label>Total: </label>
-
-                    ₱300.00<br>
-                    <h2>
-                    Cabbage&nbsp;
-                    ₱50.00&nbsp;
-
-                </h2>
-
-
-                <!-- Product Image -->
-            <!-- Responsive and spaced -->
-
-                <!-- Quantity and Total -->
-                <div style="margin-top: 10px; font-size: medium;">
-                    <label>Quantity: </label>
-                    <input type="number"
-                           class="input-text qty text"
-                           step="1"
-                           min="1"
-                           max=""
-                           name="quantity[]"
-                           value="5"
-                           title="Qty"
-                           size="4"
-                           pattern="[0-9]*"
-                           inputmode="numeric"
-                           style="width: 60px; margin-right: 10px;">
-
-                    <label>Total: </label>
-
-                    ₱500.00<br>  <label>_____________________________________________</label><br>
-                    <label>Total 2 Items: </label>
-
-₱800.00<br><br>
-                    <label>Payment date time: 02/12/2025</label><br>
-                    <label>Transaction ID: wtwgtewrwerw</label><br>
-                    <label>Payment ID: 0234230102313</label><br>
-                    <label>Seller Name: Hazel Tomol</label><br>
-                    <label>Seller Number: 09092930003</label><br>
-                    <label>Seller Address: Tagum, Davao del Norte.</label><br>
-                    <label>Order Status:  </label><p style="color:#8B8000;">To Ship</p>
-                    <br><h4> <a onclick="return confirmDelte();"
-                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
-                       class="trash">
-                       Cancel Order <i class="fa fa-ban" style="color:red;"></i>
-                    </a></h4>
-                    <h4> <a onclick="return confirmDelte();"
-                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
-                       class="trash">
-                       Feedback <i class="fa fa-comments" style="color:green;"></i>
-                    </a></h4>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
-</div>
             <?php
             /* ===================== Pagination Code Starts ================== */
             $adjacents = 5;

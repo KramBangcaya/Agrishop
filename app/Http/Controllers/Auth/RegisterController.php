@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AccountRegistration;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
@@ -93,11 +95,11 @@ class RegisterController extends Controller
             }
         }
 
-        // dd($data);
-        return User::create([
+
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            // 'password' => Hash::make($data['password']),
+            // 'password' => Hash::make($data['password']), // Use Hash::make for security
             'password' => $data['password'],
             'lastname' => $data['lastname'],
             'middle_initial' => $data['middle_initial'],
@@ -108,5 +110,8 @@ class RegisterController extends Controller
             'photos' => json_encode($paths), // Store photo paths as JSON
             'qrcode' => json_encode($qrcodes),
         ]);
+        Mail::to($user->email)->send(new AccountRegistration($user));
+
+        return $user;
     }
 }

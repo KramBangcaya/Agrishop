@@ -39,12 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 continue;
             }
         }
-<<<<<<< HEAD
-=======
         $query = "INSERT INTO orders (buyer_name, buyer_id, product_name, seller_name, seller_number, seller_address, order_status, photo, totalPayment, timedate, product_quantity, seller_id)
         VALUES (:buyer_name, :buyer_id, :product_name, :seller_name, :seller_number, :seller_address ,:order_status, :photo, :totalPayment, :timedate, :product_quantity, :seller_id)";
 $stmt = $pdo->prepare($query);
->>>>>>> db5955bfdde775c8cca250b42c0948f55eaffcea
 
         // Prepare SQL query for inserting the order
         $query = "
@@ -80,25 +77,6 @@ $stmt = $pdo->prepare($query);
         $stmt = $pdo->prepare($query);
         $timedate = date('Y-m-d H:i:s');
 
-<<<<<<< HEAD
-        if (!isset($_SESSION['customer']['name'])) {
-            die("Session customer name is not set.");
-        }
-
-        // Bind parameters to the SQL query
-        $stmt->bindParam(':buyer_name', $_SESSION['customer']['name']);
-        $stmt->bindParam(':buyer_id', $buyer_id);
-        $stmt->bindParam(':product_name', $product_name);
-        $stmt->bindParam(':seller_name', $seller_name);
-        $stmt->bindParam(':seller_number', $seller_number);
-        $stmt->bindParam(':seller_address', $seller_address);
-        $stmt->bindParam(':order_status', $order_status);
-        $stmt->bindParam(':photo', $photo);
-        $stmt->bindParam(':totalPayment', $total_price);
-        $stmt->bindParam(':timedate', $timedate);
-        $stmt->bindParam(':product_quantity', $product_quantity);
-        $stmt->bindParam(':seller_id', $seller_id);
-=======
 // var_dump($_SESSION['customer']['name']);
 
 
@@ -117,7 +95,6 @@ $stmt->bindParam(':totalPayment', $total_price);
 $stmt->bindParam(':timedate', $timedate);
 $stmt->bindParam(':product_quantity', $product_quantity);
 $stmt->bindParam(':seller_id', $seller_id);
->>>>>>> db5955bfdde775c8cca250b42c0948f55eaffcea
 
         try {
             if ($stmt->execute()) {
