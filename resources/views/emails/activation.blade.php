@@ -88,7 +88,7 @@
         <!-- Content Section -->
         <div class="content">
             <h2>Hello {{ $user->name . " " . $user->lastname }}</h2>
-            <p>Your account has been Activation.</p>
+            <p>Your account has been Activated.</p>
 
             <p>You can now login again. Thank you!</p>
             <a href="http://192.168.1.101:8080/" class="button">Visit Your Dashboard</a>

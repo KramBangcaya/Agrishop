@@ -10657,7 +10657,7 @@ var render = function render() {
           _vm.openImageModal("/storage/" + _vm.formatPhotoPath(data.proof));
         }
       }
-    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.reason))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.user_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.reply))]), _vm._v(" "), _c("td", {
+    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.buyer_name))]), _vm._v(" "), _c("td"), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.reason))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.user_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.reply))]), _vm._v(" "), _c("td", {
       staticClass: "text-right"
     }, [_c("button", {
       staticClass: "btn btn-primary btn-sm",
@@ -10746,6 +10746,10 @@ var staticRenderFns = [function () {
       width: "10%"
     }
   }, [_vm._v("Reported Name")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "10%"
+    }
+  }, [_vm._v("Number of Reports")]), _vm._v(" "), _c("th", {
     staticStyle: {
       width: "30%"
     }
