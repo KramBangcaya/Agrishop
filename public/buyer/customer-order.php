@@ -61,9 +61,9 @@ if(!isset($_SESSION['customer'])) {
     <div class="col-md-4">
         <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
             <div class="col-md-12 form-group">
-                <h2>
-                    Apple&nbsp;
-                    ₱30.00&nbsp;
+            <h2>Productname:
+                &nbsp;Product Price
+                    ₱&nbsp;
 
                 </h2>
 
@@ -73,41 +73,49 @@ if(!isset($_SESSION['customer'])) {
 
                 <!-- Quantity and Total -->
                 <div style="margin-top: 10px; font-size: medium;">
-                    <label>Quantity: </label>
-                    <input type="number"
-                           class="input-text qty text"
-                           step="1"
-                           min="1"
-                           max=""
-                           name="quantity[]"
-                           value="5"
-                           title="Qty"
-                           size="4"
-                           pattern="[0-9]*"
-                           inputmode="numeric"
-                           style="width: 60px; margin-right: 10px;">
+                <label>Quantity:  </label>
 
-                    <label>Total: </label>
 
-                    ₱200.00<br><br>
-                    <label>Payment date time: 10/20/2024</label><br>
-                    <label>Transaction ID: wenrjwjno3423</label><br>
-                    <label>Payment ID: 213123214</label><br>
-                    <label>Seller Name: Hazel Tomol</label><br>
-                    <label>Seller Number: 09092930003</label><br>
-                    <label>Seller Address: Tagum, Davao del Norte.</label><br>
-                    <label>Order Status:  </label><p style="color:green;">Delivered</p>
-                    <br><h4> <a onclick="return confirmDelte();"
-                       href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
-                       class="trash">
-                       Cancel Order <i class="fa fa-ban" style="color:red;"></i>
-                    </a></h4>
-                    <h4 onclick="toggleFeedbackForm(event)" style="cursor: pointer;">
+<label>Total: </label>
+
+₱<br><br>
+<label>Payment date time: </label><br>
+<label>Transaction ID: 0024903AFJE91</label><br>
+
+<label>Seller Name: </label><br>
+<label>Seller Number:</label><br>
+<label>Seller Address: </label><br>
+<label>Expected Delivery: 1-2 days</label><br>
+<label>Order Status:
+<?php if ("Delivered" == "Delivered") { ?>
+<span class="badge bg-danger w-100" style="background-color:green;">Delivered</span>
+<?php } elseif ("For Delivery" == "For Delivery") { ?>
+<span class="badge bg-danger w-100" style="background-color:gray;">For Delivery</span>
+<?php } else { ?>
+<span class="badge bg-danger w-100" style="background-color:red;">Pending</label></span>
+<?php } ?>
+
+</label>
+<br><h4> <a onclick="return confirmDelte();"
+   href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
+   class="trash">
+   Cancel Order <i class="fa fa-ban" style="color:red;"></i>
+</a></h4>
+<h4 onclick="toggleFeedbackForm(event)" style="cursor: pointer;">
     Feedback <i class="fa fa-comments" style="color:green;"></i>
 </h4>
 <div id="feedback-form" style="display: none; margin-top: 10px;">
     <textarea id="feedback-text" placeholder="Enter your feedback here..." rows="4" cols="50"></textarea>
     <br>
+    <label for="rating">Rate your experience (1-5): </label>
+    <select id="rating">
+        <option value="1">1 - Very Poor</option>
+        <option value="2">2 - Poor</option>
+        <option value="3">3 - Average</option>
+        <option value="4">4 - Good</option>
+        <option value="5">5 - Excellent</option>
+    </select>
+    <br><br>
     <button onclick="submitFeedback()">Submit</button>
     <button onclick="cancelFeedback()">Cancel</button>
 </div>
@@ -121,7 +129,7 @@ if(!isset($_SESSION['customer'])) {
 </div>
 <script>
 function toggleFeedbackForm(event) {
-    event.preventDefault(); // Prevent default behavior (if needed)
+    event.preventDefault(); // Prevent default behavior
     const feedbackForm = document.getElementById('feedback-form');
     if (feedbackForm) {
         feedbackForm.style.display = feedbackForm.style.display === 'none' ? 'block' : 'none';
@@ -132,17 +140,20 @@ function toggleFeedbackForm(event) {
 
 function submitFeedback() {
     const textarea = document.getElementById('feedback-text');
-    if (textarea) {
+    const ratingSelect = document.getElementById('rating');
+    if (textarea && ratingSelect) {
         const feedback = textarea.value.trim();
+        const rating = ratingSelect.value;
         if (feedback) {
             console.log('Feedback:', feedback);
-            alert(`Feedback submitted: ${feedback}`);
+            console.log('Rating:', rating);
+            alert(`Feedback submitted: ${feedback}\nRating: ${rating}/5`);
             document.getElementById('feedback-form').style.display = 'none'; // Hide the form after submission
         } else {
             alert('Please enter your feedback before submitting.');
         }
     } else {
-        console.error('Feedback textarea not found.');
+        console.error('Feedback textarea or rating select not found.');
     }
 }
 
