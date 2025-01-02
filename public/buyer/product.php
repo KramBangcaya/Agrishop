@@ -209,7 +209,12 @@ if($success_message1 != '') {
                             </div>
                         </div>
 
+<<<<<<< HEAD
+						<div class="col-md-7">
+                        <div class="p-title"><h2><?php echo $p_name; ?></h2></div>
+=======
                         <div class="col-md-7">
+>>>>>>> 5786e396ea9eda1714b81477a6fb9da95481c0e5
 							<!-- <div class="p-review">
 								<div class="rating">
 
@@ -217,7 +222,7 @@ if($success_message1 != '') {
 							</div> -->
                             <form action="" method="post">
 							<div class="p-price">
-                            <div class="p-title"><h2><?php echo $p_name; ?></h2></div>
+
                             <div class="p-short-des" style="font-size:14px;">
                                 <p>
                                     <?php echo $p_description; ?>

@@ -71,8 +71,8 @@ if (isset($_POST['form1'])) {
                     strip_tags($_POST['cust_state']),
                     strip_tags($_POST['cust_zip']),
                     $_SESSION['customer']['cust_id']
-                ));  
-       
+                ));
+
         $success_message = LANG_VALUE_130;
 
         $_SESSION['customer']['cust_name'] = $_POST['cust_name'];
@@ -89,8 +89,8 @@ if (isset($_POST['form1'])) {
 
 <div class="page">
     <div class="container">
-        <div class="row">            
-            <div class="col-md-12"> 
+        <div class="row">
+            <div class="col-md-12">
                 <?php require_once('customer-sidebar.php'); ?>
             </div>
             <div class="col-md-12">
@@ -142,25 +142,26 @@ if (isset($_POST['form1'])) {
                                     <?php
                                 }
                                 ?>
-                                </select>                                    
+                                </select>
                             </div>
-                            
+
                             <div class="col-md-6 form-group">
                                 <label for=""><?php echo LANG_VALUE_107; ?> *</label>
-                                <input type="text" class="form-control" name="cust_city" value="<?php echo $_SESSION['customer']['cust_city']; ?>">
+                                <input type="text" class="form-control" name="cust_city" value="">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for=""><?php echo LANG_VALUE_108; ?> *</label>
-                                <input type="text" class="form-control" name="cust_state" value="<?php echo $_SESSION['customer']['cust_state']; ?>">
+                                <input type="text" class="form-control" name="cust_state" value="">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for=""><?php echo LANG_VALUE_109; ?> *</label>
-                                <input type="text" class="form-control" name="cust_zip" value="<?php echo $_SESSION['customer']['cust_zip']; ?>">
+                                <input type="text" class="form-control" name="cust_zip" value="">
                             </div>
+
                         </div>
                         <input type="submit" class="btn btn-primary" value="<?php echo LANG_VALUE_5; ?>" name="form1">
                     </form>
-                </div>                
+                </div>
             </div>
         </div>
     </div>

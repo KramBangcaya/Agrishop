@@ -88,7 +88,11 @@ for ($i = 1; $i <= count($_SESSION['cart_p_id']); $i++) {
 </div>
 
     <!-- Include hidden inputs to pass product data -->
+<<<<<<< HEAD
+    <input type="hidden" name="buyer_id[<?php echo $i; ?>]" value="<?php echo $_SESSION['user_id'][$i]; ?>">
+=======
 
+>>>>>>> db5955bfdde775c8cca250b42c0948f55eaffcea
     <input type="hidden" name="product_name[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_name'][$i]; ?>">
     <input type="hidden" name="product_quantity[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_qty'][$i]; ?>">
     <input type="hidden" name="product_price[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_current_price'][$i]; ?>">

@@ -28,7 +28,7 @@ if(!isset($_SESSION['customer'])) {
     if ($response_data && isset($response_data['user'][0])) {
         // Get the user's data from the API response
         $user = $response_data['user'][0];// Assuming 'status' field exists in the API response
-
+        $_SESSION['user_id'] = $user['user_id'];
         // If the user is inactive, log them out
 
     } else {
@@ -46,7 +46,17 @@ if(!isset($_SESSION['customer'])) {
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <?php require_once('customer-sidebar.php'); ?>
+                <?php
+                // Ensure the user_id is set in the session
+                if (isset($_SESSION['user_id'])) {
+                    $user_id = $_SESSION['user_id'];
+                } else {
+                    $user_id = null; // Handle this appropriately if user_id is not set
+                }
+
+                // Include the file without query string
+                require_once('customer-sidebar.php');
+                ?>
             </div>
             <div class="col-md-12">
                 <div class="user-content">
@@ -58,5 +68,6 @@ if(!isset($_SESSION['customer'])) {
         </div>
     </div>
 </div>
+
 
 <?php require_once('footer.php'); ?>
