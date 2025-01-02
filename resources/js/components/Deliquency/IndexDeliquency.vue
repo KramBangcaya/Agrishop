@@ -44,6 +44,7 @@
                                         <tr>
                                             <th style="width: 10%;">Proof</th>
                                             <th style="width: 10%;">Reported Name</th>
+                                            <th style="width: 10%;">Number of Reports</th>
                                             <th style="width: 30%;">Reason</th>
                                             <th style="width: 10%;">Reported By</th>
                                             <th style="width: 30%;">Reply</th>
@@ -63,6 +64,7 @@
 
                                             </td>
                                             <td>{{ data.buyer_name }}</td>
+                                            <td></td>
                                             <td>{{ data.reason }}</td>
                                             <td>{{ data.user_name }}</td>
                                             <td>{{ data.reply }}</td>

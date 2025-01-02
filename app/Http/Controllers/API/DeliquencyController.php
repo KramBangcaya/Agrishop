@@ -21,16 +21,21 @@ class DeliquencyController extends Controller
     $data = Report::latest()->with('user')->paginate($request->length);
 
     // Optionally, you can loop through the reports and get the user name
+
+    $buyerCounts = Report::select('buyer_name')
+        ->groupBy('buyer_name')
+        ->selectRaw('buyer_name, COUNT(*) as count')
+        ->pluck('count', 'buyer_name'); // Pluck to get an associative array
+
     $data->getCollection()->transform(function ($item) {
         // dd($item);
         $item->user_name = $item->user ? $item->user->name . " " . $item->user->lastname: null; // Get user name
         return $item;
     });
 
-    // dd($data);
-
     return response([
         'data' => $data,
+        'buyerCounts' => $buyerCounts,
     ], 200);
 
     }
