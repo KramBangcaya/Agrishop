@@ -226,7 +226,7 @@ export default {
     transform: translate(-50%, -50%); /* Center horizontally */
     width: 70%;
     height: 70%;
-    background: rgba(0, 0, 0, 0.8);
+    background: white;
     display: flex;
     justify-content: center;
     align-items: center;
