@@ -38,8 +38,8 @@ if(!isset($_SESSION['customer'])) {
         exit;
     }
 }
-?>
 
+?>
 
 <div class="page">
     <div class="container">
