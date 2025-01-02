@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Activation;
 use App\Mail\ApprovalConfirmation;
+use App\Mail\Deactivation;
 use App\Mail\Disapproval;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -342,12 +344,15 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
+
+        Mail::to($user->email)->send(new Deactivation($user));
         return response(['message' => 'success'], 200);
     }
     public function activate($id)
     {
         $user = User::withTrashed()->findOrFail($id);
         $user->restore();
+        Mail::to($user->email)->send(new Activation($user));
         return response(['message' => 'success'], 200);
     }
 }
