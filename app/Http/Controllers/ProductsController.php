@@ -313,10 +313,8 @@ class ProductsController extends Controller
         $user = Products::findOrFail($id);
         // dd($user);
         $user->update([
-            'Product_Name' => $request->Product_Name,
             'price' => $request->price,
             'Quantity' => $request->Quantity,
-            'Description' => $request->Description,
             // 'idMeasurement' => $request->measurement_id,
         ]);
 
