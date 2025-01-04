@@ -11,20 +11,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request; // Use the correct Request class
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
     /**
@@ -70,7 +60,6 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-
     protected function create(array $data)
     {
         $qrcode = request()->file('qrcode');
@@ -78,7 +67,7 @@ class RegisterController extends Controller
         $photos = request()->file('photos');
         $paths = [];
 
-        // dd($qrcode);
+        // Handle photo uploads
         if (!empty($photos)) {
             foreach ($photos as $photo) {
                 $filename = time() . '.' . $photo->getClientOriginalExtension();
@@ -87,6 +76,7 @@ class RegisterController extends Controller
             }
         }
 
+        // Handle QR code uploads
         if (!empty($qrcode)) {
             foreach ($qrcode as $photo) {
                 $filename = time() . '.' . $photo->getClientOriginalExtension();
@@ -95,23 +85,50 @@ class RegisterController extends Controller
             }
         }
 
-
+        // Create the user in the database
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            // 'password' => Hash::make($data['password']), // Use Hash::make for security
-            'password' => $data['password'],
+            'password' => Hash::make($data['password']), // Hash the password for security
             'lastname' => $data['lastname'],
-            'middle_initial' => $data['middle_initial'],
+            'middle_initial' => $data['middle_initial'] ?? null, // Handle optional middle initial
             'date_of_birth' => $data['date_of_birth'],
             'contact_number' => $data['contact_number'],
-            'telephone_number' => $data['telephone_number'],
+            'telephone_number' => $data['telephone_number'] ?? null, // Optional field
             'address' => $data['address'],
             'photos' => json_encode($paths), // Store photo paths as JSON
             'qrcode' => json_encode($qrcodes),
         ]);
+
+        // Send the account registration email
         Mail::to($user->email)->send(new AccountRegistration($user));
 
         return $user;
     }
+
+    /**
+     * Override the registered method to handle custom redirection logic.
+     *
+     * @param  \Illuminate\Http\Request  $request  // Correct the Request class type
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    protected function registered(Request $request, $user)
+    {
+        // Get the 'id' query parameter from the URL
+        $id = $request->query('id'); // Use query() to get query parameters
+
+        if ($id === 'Buyer' || $id === 'buyer') {
+            // Redirect to buyer login page if the ID is 'buyer'
+            return redirect('/buyer/login.php');
+        }
+        else if ($id === 'Seller' || $id === 'seller') {
+            // Redirect to seller login page if the ID is 'seller'
+            return redirect('../resources/views/auth/login.blade.php');  // Assuming you have a seller login page
+        }
+
+        // Default redirection if ID is not 'buyer' or 'seller'
+          // Or any default route
+    }
+
 }

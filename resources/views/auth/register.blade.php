@@ -75,6 +75,7 @@
                                     @enderror
                                 </div>
                             </div>
+                            <input type="hidden" name="id" value="buyer">
                             <div class="row mb-3">
                                 <label for="contact_number"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Contact Number') }}</label>

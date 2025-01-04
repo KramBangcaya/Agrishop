@@ -14,7 +14,8 @@
                     <h1 class="my-3 lead fw-bold ls-tight">
                         Connect farmers and buyers easily - Sign up to buy or sell agricultural products today!
                     </h1>
-                    <a type="button" class="btn btn-success text-dark rounded-pill border-white" style="color: black" href="{{ route('register') }}">Sign Up</a>
+                    <a type="button" class="btn btn-success text-dark rounded-pill border-white" style="color: black" href="{{ route('register') }}?id=seller">Sign Up</a>
+
                 </div>
 
                 <!-- Second Column -->

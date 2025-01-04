@@ -96,26 +96,24 @@ $stmt->bindParam(':timedate', $timedate);
 $stmt->bindParam(':product_quantity', $product_quantity);
 $stmt->bindParam(':seller_id', $seller_id);
 
-        try {
-            if ($stmt->execute()) {
-                // Sanitize the URL parameter
-        // echo $userids;
-
-                // Clean any output before redirecting
-                if (ob_get_level()) {
-                    ob_end_clean(); // Clean (erase) any buffered output
-                }
-
-                // Send the header for redirection
-                //header("Location: $redirect_url");
-                exit;
-            } else {
-                echo "Error placing order for $product_name.<br>";
-                print_r($stmt->errorInfo()); // Log detailed error for debugging
-            }
-        } catch (PDOException $e) {
-            echo "Database error: " . $e->getMessage();
+try {
+    if ($stmt->execute()) {
+        // Clear any buffered output to prevent header issues
+        if (ob_get_level()) {
+            ob_end_clean(); // Clean (erase) any buffered output
         }
+
+        // Redirect to customer-order.php
+        header('Location: customer-order.php');
+        exit; // Stop script execution after redirection
+    } else {
+        echo "Error placing order for $product_name.<br>";
+        print_r($stmt->errorInfo()); // Log detailed error for debugging
+    }
+} catch (PDOException $e) {
+    echo "Database error: " . $e->getMessage();
+}
+
 
     }
 }
