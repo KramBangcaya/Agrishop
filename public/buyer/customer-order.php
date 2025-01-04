@@ -23,6 +23,9 @@ if(!isset($_SESSION['customer'])) {
     // var_dump($orders);
 }
 
+
+// Fetch feedback for the given user and product
+
 ?>
 
 <div class="page">
@@ -42,6 +45,15 @@ if(!isset($_SESSION['customer'])) {
         <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
             <div class="col-md-12 form-group">
                 <?php foreach ($orders as $order): ?>
+
+                    <!-- Check if the user has already provided feedback for this product -->
+                    <?php
+                    $feedbackQuery = "SELECT * FROM Feedback WHERE buyer_id = ? AND product_id = ?";
+                    $stmt = $pdo->prepare($feedbackQuery);
+                    $stmt->execute([$_SESSION['user_id'], $order['product_id']]);
+                    $feedback = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+
                     <h2>Product Name:</h2>
                     <span><?php echo htmlspecialchars($order['product_name']); ?></span>
 
@@ -80,74 +92,111 @@ if(!isset($_SESSION['customer'])) {
                         <?php endif; ?>
                         <br>
 
+
+
                         <h4>
                             <a onclick="return confirmDelte();" href="cart-item-delete.php?id=<?php echo $order['id']; ?>" class="trash">
                                 Cancel Order <i class="fa fa-ban" style="color:red;"></i>
                             </a>
                         </h4>
+
+                        <?php if ($feedback): ?>
+                        <h4>Your Feedback:</h4>
+                        <div style="border: 2px solid #ddd; padding: 10px; border-radius: 5px; background-color: #f9f9f9;">
+                        <p><strong>Rating:</strong> <?php echo htmlspecialchars($feedback['rating']); ?>/5</p>
+                        <p><strong>Comment:</strong> <?php echo nl2br(htmlspecialchars($feedback['feedback'])); ?></p>
+                        </div>
+                    <?php else: ?>
                         <h4 onclick="toggleFeedbackForm(event)" style="cursor: pointer;">
                             Feedback <i class="fa fa-comments" style="color:green;"></i>
                         </h4>
-                        <div id="feedback-form" style="display: none; margin-top: 10px;">
-                            <textarea id="feedback-text" placeholder="Enter your feedback here..." rows="4" cols="50"></textarea>
-                            <br>
-                            <label for="rating">Rate your experience (1-5): </label>
-                            <select id="rating">
-                                <option value="1">1 - Very Poor</option>
-                                <option value="2">2 - Poor</option>
-                                <option value="3">3 - Average</option>
-                                <option value="4">4 - Good</option>
-                                <option value="5">5 - Excellent</option>
-                            </select>
-                            <br><br>
-                            <button onclick="submitFeedback()">Submit</button>
-                            <button onclick="cancelFeedback()">Cancel</button>
-                        </div>
+                        <div id="feedback-form-<?php echo $order['id']; ?>" style="display: none; margin-top: 10px;">
+                                                    <textarea id="feedback-text-<?php echo $order['id']; ?>" placeholder="Enter your feedback here..." rows="4" cols="50"></textarea>
+                                                    <br>
+                                                    <label for="rating">Rate your experience (1-5): </label>
+                                                    <select id="rating-<?php echo $order['id']; ?>">
+                                                        <option value="1">1 - Very Poor</option>
+                                                        <option value="2">2 - Poor</option>
+                                                        <option value="3">3 - Average</option>
+                                                        <option value="4">4 - Good</option>
+                                                        <option value="5">5 - Excellent</option>
+                                                    </select>
+                                                    <br><br>
+                                                    <button onclick="submitFeedback(
+     <?php echo $order['id']; ?>,
+    <?php echo $_SESSION['user_id']; ?>,
+    '<?php echo addslashes($order['buyer_name']); ?>',
+    <?php echo $order['product_id']; ?>,
+    '<?php echo addslashes($order['product_name']); ?>'
+)">Submit</button>
+
+<button onclick="cancelFeedback(<?php echo $order['id']; ?>)">Cancel</button>
+                                                </div>
                     </div>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </div>
         </div>
     </div>
 </div>
-                    <script>
-                    function toggleFeedbackForm(event) {
-                        event.preventDefault(); // Prevent default behavior
-                        const feedbackForm = document.getElementById('feedback-form');
-                        if (feedbackForm) {
-                            feedbackForm.style.display = feedbackForm.style.display === 'none' ? 'block' : 'none';
-                        } else {
-                            console.error('Feedback form not found.');
-                        }
-                    }
-
-                    function submitFeedback() {
-                        const textarea = document.getElementById('feedback-text');
-                        const ratingSelect = document.getElementById('rating');
-                        if (textarea && ratingSelect) {
-                            const feedback = textarea.value.trim();
-                            const rating = ratingSelect.value;
-                            if (feedback) {
-                                console.log('Feedback:', feedback);
-                                console.log('Rating:', rating);
-                                alert(`Feedback submitted: ${feedback}\nRating: ${rating}/5`);
-                                document.getElementById('feedback-form').style.display = 'none'; // Hide the form after submission
-                            } else {
-                                alert('Please enter your feedback before submitting.');
+<script>
+                            function toggleFeedbackForm(event) {
+                                event.preventDefault();
+                                const feedbackForm = event.target.nextElementSibling;
+                                if (feedbackForm) {
+                                    feedbackForm.style.display = feedbackForm.style.display === 'none' ? 'block' : 'none';
+                                }
                             }
-                        } else {
-                            console.error('Feedback textarea or rating select not found.');
-                        }
-                    }
 
-                    function cancelFeedback() {
-                        const feedbackForm = document.getElementById('feedback-form');
-                        if (feedbackForm) {
-                            feedbackForm.style.display = 'none'; // Hide the feedback form
-                        } else {
-                            console.error('Feedback form not found.');
-                        }
-                    }
-                    </script>
+                            function submitFeedback(orderId, buyerId, buyerName, productId, productName) {
+                                const feedbackTextarea = document.getElementById('feedback-text-' + orderId);
+                                const ratingSelect = document.getElementById('rating-' + orderId);
+
+                                if (feedbackTextarea && ratingSelect) {
+                                    const feedback = feedbackTextarea.value.trim();
+                                    const rating = ratingSelect.value;
+
+                                    if (feedback && rating) {
+                                        fetch('submit-feedback.php', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/x-www-form-urlencoded',
+                                            },
+                                            body: new URLSearchParams({
+                                                buyer_id: buyerId,
+                                                buyer_name: buyerName,
+                                                product_id: productId,
+                                                product_name: productName,
+                                                feedback: feedback,
+                                                rating: rating,
+                                            }),
+                                        })
+                                            .then((response) => response.json())
+                                            .then((data) => {
+                                                if (data.success) {
+                                                    alert('Feedback submitted successfully!');
+                                                    document.getElementById('feedback-form-' + orderId).style.display = 'none';
+                                                } else {
+                                                    alert('Error: ' + data.message);
+                                                }
+                                            })
+                                            .catch((error) => {
+                                                console.error('Error:', error);
+                                                alert('Failed to submit feedback.');
+                                            });
+                                    } else {
+                                        alert('Please complete all fields before submitting.');
+                                    }
+                                }
+                            }
+
+                            function cancelFeedback(orderId) {
+                                const feedbackForm = document.getElementById('feedback-form-' + orderId);
+                                if (feedbackForm) {
+                                    feedbackForm.style.display = 'none';
+                                }
+                            }
+                        </script>
 
 
                     </div>

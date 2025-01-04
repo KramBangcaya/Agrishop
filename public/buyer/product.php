@@ -56,10 +56,13 @@ if(!isset($_REQUEST['id'])) {
 
  }
 
+    var_dump($_SESSION);
 if(isset($_POST['form_add_to_cart'])) {
+
 
     if(isset($_SESSION['cart_p_id']))
     {
+
 
         $arr_cart_p_id = array();
         $arr_cart_p_qty = array();
@@ -262,19 +265,11 @@ if($success_message1 != '') {
 
 						</div>
                         </div>
-
-
 				</div>
-
 			</div>
 		</div>
 	</div>
 </div>
-
-
-
-
-
     <div class="page" style="border-style: double; border-color: gray; border-width: 2px;">
         <div >
         <div class="container" style="padding-left:25px;">
@@ -292,13 +287,8 @@ if($success_message1 != '') {
                             </div>
                             <h4><?php  echo '<i class="fa fa-map-marker-alt"></i> '; echo $s_address;  ?></h4><br>
                         </div>
-
-
                         </div>
-
-
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -315,9 +305,6 @@ if($success_message1 != '') {
                 </div>
             </div>
         </div>
-
-
-
         <div class="row">
             <div class="col-md-12">
 
@@ -349,15 +336,12 @@ if($success_message1 != '') {
                         echo "No products available.";
                         exit;
                     }
-
                     // Loop through products and exclude the current product
                     foreach ($products['data'] as $row) {
                         if ($row['id'] == $current_product_id) {
                             continue; // Skip the current product
                         }
                         ?>
-
-
 
                         <div class="item">
                             <div class="thumb">
@@ -372,14 +356,8 @@ if($success_message1 != '') {
                                     echo '<div class="photo" style="background-color: gray;">No photo available</div>';
                                 }
                                 ?>
-
-
-
                                 <div class="overlay"></div>
                             </div>
-
-
-
                             <div class="text">
                                 <h3><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['Product_Name']); ?></a></h3>
                                 <h4>
@@ -388,88 +366,110 @@ if($success_message1 != '') {
                                 <p><?php echo $row['first_name']?> <?php echo $row['last_name']?></p>
                                 <p><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo LANG_VALUE_154; ?></a></p>
                             </div>
-
-
-
-
                         </div>
-
-
                         <?php
                     }
                     ?>
-
-
                 </div>
-
             </div>
         </div>
     </div>
 </div>
 
+                    <?php
+                    // Assuming your database connection is already established (e.g., using PDO or mysqli)
+                    $product_id = $_REQUEST['id'];  // Get the product ID from the URL
 
-<div class="page">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12" >
-                <div class="product" >
-                        <div class="row" >
+                    // Fetch feedback from the database
+                    $query = "SELECT * FROM feedback WHERE product_id = :product_id ORDER BY date DESC";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+                    $stmt->execute();
+
+                    $feedbacks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+                    ?>
+
+                    <div class="feedback">
+                        <div class="row">
                             <h1 style="margin-left:15px;">Comments / Feedbacks</h1>
                             <br>
-<div style="border-style: double; border-color: gray; border-width: 2px; float: left; padding: 15px;">
-                            <div class="btn-cart btn-cart1">
-                            <h3>User 1</h3>
-                            <div class="rating">
-                                <h5>Ratings / Reviews</h5>
-                                        <?php
-                                        // Assuming no rating system from API. If rating system exists, you can implement it here.
-                                        // Example: Displaying full stars for simplicity as there's no rating data in the API response.
-                                        for ($i = 1; $i <= 5; $i++) {
+
+                            <?php
+                            if (count($feedbacks) > 0) {
+                                foreach ($feedbacks as $feedback) {
+                                    $date = $feedback['date']; // Original date
+                                    $datetime = new DateTime($date); // Create DateTime object
+                                    $formattedDate = $datetime->format('M. d, Y');
+                                    echo '<div class="feedback-box">';
+                                    echo '<div class="feedback-header">';
+                                    echo '<h3>' . htmlspecialchars($feedback['buyer_name']) . '</h3>';
+                                    echo '<h5>' . htmlspecialchars($formattedDate) . '</h5>';
+                                    echo '<div class="rating">';
+
+                                    // Display the rating as stars (you can adjust based on your rating system)
+                                    for ($i = 1; $i <= 5; $i++) {
+                                        if ($i <= $feedback['rating']) {
                                             echo '<i class="fa fa-star"></i>';
+                                        } else {
+                                            echo '<i class="fa fa-star-o"></i>';
                                         }
-                                        ?>
-                                    </div>
+                                    }
 
-                           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
-                            but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-</div>
-
-</div>
-
-
-                            <br>
-                            <div style="border-style: double; border-color: gray; border-width: 2px; float: left; padding: 15px;margin-top: 5px;">
-                            <div class="btn-cart btn-cart1">
-                            <h3>User 2</h3>
-                            <div class="rating">
-                                <h5>Ratings / Reviews</h5>
-                                        <?php
-                                        // Assuming no rating system from API. If rating system exists, you can implement it here.
-                                        // Example: Displaying full stars for simplicity as there's no rating data in the API response.
-                                        for ($i = 1; $i <= 2; $i++) {
-                                            echo '<i class="fa fa-star"></i>';
-                                        }
-                                        ?>
-                                    </div>
-                            </div>
-                           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
-                            but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-</div>
-
+                                    echo '</div>';
+                                    echo '</div>'; // .feedback-header
+                                    echo '<div class="feedback-content">';
+                                    echo '<p>' . htmlspecialchars($feedback['feedback']) . '</p>';
+                                    echo '</div>'; // .feedback-content
+                                    echo '</div>'; // .feedback-box
+                                }
+                            } else {
+                                echo '<p>No feedback available yet.</p>';
+                            }
+                            ?>
                         </div>
+                    </div>
 
+<style>
+    .feedback {
+        font-family: Arial, sans-serif;
+        margin-left: 25px; /* Adds margin to the left */
+        margin-right: 25px;
+    }
+    .feedback-box {
+        border-style: double;
+        border-color: gray;
+        border-width: 2px;
+        padding: 15px;
+        margin-bottom: 20px;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-left: 10px; /* Adds some left margin for each feedback box */
+        margin-right: 10px;
+    }
+    .feedback-header h3 {
+        margin: 0;
+        font-size: 18px;
+        color: #333;
+    }
+    .rating {
+        margin-top: 5px;
+    }
+    .rating i {
+        color: gold;
+    }
+    .feedback-content p {
+        font-size: 14px;
+        color: #555;
+        margin-top: 10px;
+    }
+    .feedback-box:hover {
+        background-color: #f1f1f1;
+    }
+</style>
 
-
-
-
-				</div>
-
-			</div>
-		</div>
-	</div>
-</div>
 
 
 <script>
