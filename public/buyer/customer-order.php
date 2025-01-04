@@ -87,18 +87,50 @@ if(!isset($_SESSION['customer'])) {
                             <span class="badge bg-danger w-100" style="background-color:green;">Delivered</span>
                         <?php elseif ($order['order_status'] === "For Delivery"): ?>
                             <span class="badge bg-danger w-100" style="background-color:gray;">For Delivery</span>
+                        <?php elseif ($order['order_status'] === "Cancelled Order"): ?>
+                                <span class="badge bg-danger w-100" style="background-color:red;">Cancelled Order</span>
                         <?php else: ?>
                             <span class="badge bg-danger w-100" style="background-color:red;">Pending</span>
                         <?php endif; ?>
                         <br>
 
+                        <?php
+                            if (!empty($order['reason_cancel'])) {
+                                echo "<br><label>Cancellation Reason: </label>";
+                                echo "<span>" . nl2br(htmlspecialchars($order['reason_cancel'])) . "</span>";
+                            }
+                            ?>
 
 
-                        <h4>
-                            <a onclick="return confirmDelte();" href="cart-item-delete.php?id=<?php echo $order['id']; ?>" class="trash">
-                                Cancel Order <i class="fa fa-ban" style="color:red;"></i>
-                            </a>
-                        </h4>
+                        <?php if ($order['order_status'] === 'For Delivery'): ?>
+                                <h4>
+                                    <a href="#" onclick="markAsDelivered(<?php echo $order['id']; ?>);" class="trash">
+                                        Mark as Delivered <i class="fa fa-truck" style="color:green;"></i>
+                                    </a>
+                                </h4>
+                            <?php elseif ($order['order_status'] === 'Delivered'): ?>
+                                <h4 style="color: gray;">
+                                    Order Delivered <i class="fa fa-check" style="color: green;"></i>
+                                </h4>
+                            <?php elseif ($order['order_status'] === 'Cancelled Order'): ?>
+                                <h4 style="color: gray;">
+                                    Order Cancelled <i class="fa fa-check" style="color: green;"></i>
+                                </h4>
+                            <?php else: ?>
+                                <h4>
+                                <a href="#" onclick="showCancelReasonForm(<?php echo $order['id']; ?>);" class="trash">
+                                    Cancel Order <i class="fa fa-ban" style="color:red;"></i>
+                                </a>
+                                </h4>
+                            <?php endif; ?>
+
+
+
+                            <div id="cancel-form-<?php echo $order['id']; ?>" style="display: none; margin-top: 10px;">
+                                    <textarea id="cancel-reason-<?php echo $order['id']; ?>" placeholder="Please provide a reason for cancelling..." rows="4" cols="50"></textarea><br>
+                                    <button onclick="cancelOrderWithReason(<?php echo $order['id']; ?>)">Submit Cancellation</button>
+                                    <button onclick="cancelCancellationForm(<?php echo $order['id']; ?>)">Cancel</button>
+                                </div>
 
                         <?php if ($feedback): ?>
                         <h4>Your Feedback:</h4>
@@ -123,16 +155,16 @@ if(!isset($_SESSION['customer'])) {
                                                     </select>
                                                     <br><br>
                                                     <button onclick="submitFeedback(
-     <?php echo $order['id']; ?>,
-    <?php echo $_SESSION['user_id']; ?>,
-    '<?php echo addslashes($order['buyer_name']); ?>',
-    <?php echo $order['product_id']; ?>,
-    '<?php echo addslashes($order['product_name']); ?>'
-)">Submit</button>
+                                                    <?php echo $order['id']; ?>,
+                                                    <?php echo $_SESSION['user_id']; ?>,
+                                                    '<?php echo addslashes($order['buyer_name']); ?>',
+                                                    <?php echo $order['product_id']; ?>,
+                                                    '<?php echo addslashes($order['product_name']); ?>'
+                                                )">Submit</button>
 
-<button onclick="cancelFeedback(<?php echo $order['id']; ?>)">Cancel</button>
-                                                </div>
-                    </div>
+                                                <button onclick="cancelFeedback(<?php echo $order['id']; ?>)">Cancel</button>
+                                                                                                </div>
+                                                                    </div>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </div>
@@ -140,6 +172,22 @@ if(!isset($_SESSION['customer'])) {
     </div>
 </div>
 <script>
+
+                function showCancelReasonForm(orderId) {
+                    // Show the cancellation reason form
+                    const cancelForm = document.getElementById('cancel-form-' + orderId);
+                    if (cancelForm) {
+                        cancelForm.style.display = 'block';
+                    }
+                }
+
+                function cancelCancellationForm(orderId) {
+                    // Hide the cancellation reason form without submitting
+                    const cancelForm = document.getElementById('cancel-form-' + orderId);
+                    if (cancelForm) {
+                        cancelForm.style.display = 'none';
+                    }
+                }
                             function toggleFeedbackForm(event) {
                                 event.preventDefault();
                                 const feedbackForm = event.target.nextElementSibling;
@@ -196,6 +244,83 @@ if(!isset($_SESSION['customer'])) {
                                     feedbackForm.style.display = 'none';
                                 }
                             }
+
+                        function cancelOrderWithReason(orderId) {
+                            const cancelReason = document.getElementById('cancel-reason-' + orderId).value.trim();
+
+                            if (cancelReason) {
+                                if (confirm('Are you sure you want to cancel this order?')) {
+                                    fetch('cancel-order.php', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: new URLSearchParams({
+                                            order_id: orderId,
+                                            status: 'Cancelled Order',
+                                            reason: cancelReason
+                                        }),
+                                    })
+                                    .then((response) => response.json())
+                                    .then((data) => {
+                                        if (data.success) {
+                                            alert('Order has been cancelled with reason: ' + cancelReason);
+                                            location.reload(); // Reload the page to reflect changes
+                                        } else {
+                                            alert('Error: ' + data.message);
+                                        }
+                                    })
+                                    .catch((error) => {
+                                        console.error('Error:', error);
+                                        alert('Failed to cancel order.');
+                                    });
+                                }
+                            } else {
+                                alert('Please provide a reason for the cancellation.');
+                            }
+                        }
+function markAsDelivered(orderId) {
+    if (confirm('Are you sure you want to mark this order as delivered?')) {
+        fetch('update-order.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                order_id: orderId,
+                status: 'Delivered'
+            }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                alert('Order marked as delivered.');
+
+                // Hide the "Mark as Delivered" button
+                const markAsDeliveredLink = document.querySelector(`a[onclick="markAsDelivered(${orderId});"]`);
+                if (markAsDeliveredLink) {
+                    markAsDeliveredLink.style.display = 'none'; // Hides the button
+                }
+
+                // Optionally update the displayed order status text
+                const orderStatusElement = document.querySelector(`#order-status-${orderId}`);
+                if (orderStatusElement) {
+                    orderStatusElement.innerHTML = 'Delivered <i class="fa fa-check" style="color: green;"></i>';
+                    orderStatusElement.style.color = 'gray'; // Change the text color
+                }
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Failed to update order status.');
+        });
+    }
+}
+
+
+
                         </script>
 
 
