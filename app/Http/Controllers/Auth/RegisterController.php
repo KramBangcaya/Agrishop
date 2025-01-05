@@ -67,6 +67,7 @@ class RegisterController extends Controller
         $photos = request()->file('photos');
         $paths = [];
 
+        // dd('Sample');ss
         // Handle photo uploads
         if (!empty($photos)) {
             foreach ($photos as $photo) {
@@ -104,35 +105,5 @@ class RegisterController extends Controller
         Mail::to($user->email)->send(new AccountRegistration($user));
 
         return $user;
-        $dataspa3s=$data['id'];
-        // if ($data['id'] === 'buyer') {
-        //     // Redirect to buyer login page if the ID is 'buyer'
-        //     return redirect('/buyer/login.php');
-        // }
     }
-
-    /**
-     * Override the registered method to handle custom redirection logic.
-     *
-     * @param  \Illuminate\Http\Request  $request  // Correct the Request class type
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    protected function registered(Request $request, $user)
-    {
-        $id = $request->input('id'); // Get the role from the form
-
-        if ($id === 'buyer'||$data['address'] === 'buyer') {
-            return redirect('/buyer/login.php'); // Redirect to buyer login
-        }
-
-        if ($id === 'seller') {
-            return redirect('/login'); // Redirect to seller login
-        }
-
-        // Default redirection
-        return redirect('/login');
-    }
-
-
 }
