@@ -133,7 +133,7 @@ if(!isset($_SESSION['customer'])) {
                     <?php else: ?>
                         <h4 onclick="toggleFeedbackForm(event)" style="cursor: pointer;">
                             Feedback <i class="fa fa-comments" style="color:green;"></i>
-                        </h4><h3 class="special"> </h3>
+                        </h4>
                         <div id="feedback-form-<?php echo $order['id']; ?>" style="display: none; margin-top: 10px;">
                                                     <textarea id="feedback-text-<?php echo $order['id']; ?>" placeholder="Enter your feedback here..." rows="4" cols="50"></textarea>
                                                     <br>
@@ -157,8 +157,12 @@ if(!isset($_SESSION['customer'])) {
                                                 <button onclick="cancelFeedback(<?php echo $order['id']; ?>)">Cancel</button>
                                                                                                 </div>
                                                                     </div>
+
+                                                                    <h3 class="special"> </h3>
                                 <?php endif; ?>
                             <?php endforeach; ?>
+
+
                         </div>
                     </div>
                 </div>
