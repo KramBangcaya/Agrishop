@@ -386,7 +386,6 @@ if($success_message1 != '') {
                     $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
                     $stmt->execute();
 
-
                     $feedbacks = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ?>
                     <div class="feedback">
