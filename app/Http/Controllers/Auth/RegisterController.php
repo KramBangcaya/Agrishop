@@ -22,7 +22,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/login';
+    protected $redirectTo = '../buyer/login.php';
 
     /**
      * Create a new controller instance.
@@ -104,6 +104,10 @@ class RegisterController extends Controller
         Mail::to($user->email)->send(new AccountRegistration($user));
 
         return $user;
+        if ($data['id'] === 'buyer') {
+            // Redirect to buyer login page if the ID is 'buyer'
+            return redirect('/buyer/login.php');
+        }
     }
 
     /**
@@ -113,22 +117,19 @@ class RegisterController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    protected function registered(Request $request, $user)
-    {
-        // Get the 'id' query parameter from the URL
-        $id = $request->query('id'); // Use query() to get query parameters
+    // protected function registered(Request $request, $user)
+    // {
+    //     // Get the 'id' query parameter from the URL
+    //     $id = $request->query('id'); // Use query() to get query parameters
 
-        if ($id === 'Buyer' || $id === 'buyer') {
-            // Redirect to buyer login page if the ID is 'buyer'
-            return redirect('/buyer/login.php');
-        }
-        else if ($id === 'Seller' || $id === 'seller') {
-            // Redirect to seller login page if the ID is 'seller'
-            return redirect('../resources/views/auth/login.blade.php');  // Assuming you have a seller login page
-        }
 
-        // Default redirection if ID is not 'buyer' or 'seller'
-          // Or any default route
-    }
+    //     else if ($id === 'Seller' || $id === 'seller') {
+    //         // Redirect to seller login page if the ID is 'seller'
+    //         return redirect('../resources/views/auth/login.blade.php');  // Assuming you have a seller login page
+    //     }
+
+    //     // Default redirection if ID is not 'buyer' or 'seller'
+    //       // Or any default route
+    // }
 
 }
