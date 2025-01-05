@@ -79,15 +79,10 @@ try {
 
 ?>
 
-
-
 <div class="row" style="margin: 0 auto; float: auoto;"> <!-- Centering the inner row -->
             <div class="col-md-12">
                 <?php require_once('customer-sidebar.php'); ?>
             </div>
-
-
-
             <div class="col-md-12">
                 <div class="user-content">
                     <h1><?php echo LANG_VALUE_25; ?></h1>
