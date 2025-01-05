@@ -26,7 +26,7 @@ try {
     $seller_id = intval($_GET['seller_id']);
 
     // SQL query to fetch rows filtered by seller_id
-    $query = "SELECT * FROM orders WHERE seller_id = :seller_id AND order_status != 'Delivered'";
+    $query = "SELECT * FROM orders WHERE seller_id = :seller_id AND order_status = 'Delivered'";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':seller_id', $seller_id, PDO::PARAM_INT);
     $stmt->execute();

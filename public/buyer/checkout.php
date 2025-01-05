@@ -40,12 +40,6 @@ if(!isset($_SESSION['cart_p_id'])) {
                     <h3 class="special"><?php echo LANG_VALUE_26; ?></h3>
                     <div class="cart">
                         <form action="place-order.php" method="post" enctype="multipart/form-data" id="order_form">
-
-
-
-
-
-
                         <?php
 $table_total_price = 0;
 
@@ -88,14 +82,10 @@ for ($i = 1; $i <= count($_SESSION['cart_p_id']); $i++) {
 </div>
 
     <!-- Include hidden inputs to pass product data -->
-<<<<<<< HEAD
-    <input type="hidden" name="buyer_id[<?php echo $i; ?>]" value="<?php echo $_SESSION['user_id'][$i]; ?>">
-=======
-
->>>>>>> db5955bfdde775c8cca250b42c0948f55eaffcea
     <input type="hidden" name="product_name[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_name'][$i]; ?>">
     <input type="hidden" name="product_quantity[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_qty'][$i]; ?>">
     <input type="hidden" name="product_price[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_current_price'][$i]; ?>">
+    <input type="hidden" name="product_id[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_id'][$i]; ?>">
     <input type="hidden" name="seller_name[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_s_name'][$i]; ?>">
     <input type="hidden" name="seller_last[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_s_last'][$i]; ?>">
     <input type="hidden" name="seller_contact[<?php echo $i; ?>]" value="<?php echo $_SESSION['s_contact_number'][$i]; ?>">
@@ -156,15 +146,6 @@ for ($i = 1; $i <= count($_SESSION['cart_p_id']); $i++) {
         });
     });
 </script>
-
-
-
-
-
-
-
-
-
                             <div class="cart-buttons">
                                 <ul>
                                     <li><a href="cart.php" class="btn btn-primary"><?php echo LANG_VALUE_21; ?></a></li>
