@@ -95,17 +95,17 @@ if (isset($_POST['form1'])) {
 
                             <div class="col-md-6 form-group">
                                 <label for="">Seller Name *</label>
-                                <input type="text" class="form-control" name="cust_name" value="<?php echo $_SESSION['customer']['name']; ?>">
+                                <input type="text" class="form-control" name="cust_name" value="">
                             </div>
 
                             <div class="col-md-6 form-group">
                                 <label for="">Attached File *</label>
-                                <input type="file" class="form-control" name="cust_name" value="<?php echo $_SESSION['customer']['name']; ?>">
+                                <input type="file" class="form-control" name="cust_name" value="">
                             </div>
 
                             <div class="col-md-12 form-group">
                                 <label for="">Reason *</label>
-                                <textarea name="cust_address" class="form-control" cols="30" rows="10" style="height:70px;"><?php echo $_SESSION['customer']['address']; ?></textarea>
+                                <textarea name="cust_address" class="form-control" cols="30" rows="10" style="height:70px;"></textarea>
                             </div>
 
 
