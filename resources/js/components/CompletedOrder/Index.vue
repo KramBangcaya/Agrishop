@@ -115,7 +115,7 @@ export default {
             return;
         }
             try {
-                const response = await fetch('http://192.168.1.101:8080/buyer/delivered-orders.php?seller_id=${this.userID}');
+                const response = await fetch(`http://192.168.1.101:8080/buyer/delivered-orders.php?seller_id=${this.userID}`);
                 const data = await response.json();
                 if (data.status === 'success') {
                     this.orders = data.data;

@@ -62,6 +62,7 @@
                                                 @click="openImageModal('/buyer/' + order.photo)"
                                                 />
                                             </td>
+
                                             <td>{{ order.buyer_name }}</td>
                                             <td>{{ order.buyer_address }}</td>
                                             <td>{{ order.product_name }}</td>
@@ -160,7 +161,8 @@ export default {
             const data = await response.json();
             if (data.userID) {
                 this.userID = data.userID; // Store the userID
-                this.getData(); // Now fetch orders after userID is fetched
+                this.getData();
+                // console.log(this.userID); // Now fetch orders after userID is fetched
             }
         } catch (error) {
             console.error('Error fetching userID:', error);
@@ -174,11 +176,13 @@ export default {
             return;
         }
             try {
-                const response = await fetch('http://192.168.1.101:8080/buyer/get-orders.php?seller_id=${this.userID}');
+                const response = await fetch(`http://192.168.1.101:8080/buyer/get-orders.php?seller_id=${this.userID}`);
                 const data = await response.json();
                 if (data.status === 'success') {
                     this.orders = data.data;
+                    console.log(this.orders);
                 }
+
             } catch (error) {
                 console.error('Error fetching orders:', error);
             }

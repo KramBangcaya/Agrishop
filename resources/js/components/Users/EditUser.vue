@@ -235,22 +235,7 @@ export default {
         }
     },
     mounted() {
-<<<<<<< HEAD
-        this.loadGoogleMapsScript().then(() => {
-            this.initMap();
-        }).catch((error) => {
-            console.error("Google Maps script failed to load", error);
-        });
-
-        $('#edit-user').on('shown.bs.modal', () => {
-        // Wait for the modal to fully show before resizing the map
-        google.maps.event.trigger(this.map, 'resize');
-        this.map.setCenter(new google.maps.LatLng(this.form.latitude, this.form.longitude)); // Recenter if needed
-    });
-
-=======
         this.loadGoogleMapsScript();
->>>>>>> d2e30abd70ba0be0c912fb95cc499531cf1f0caa
     }
 }
 </script>
