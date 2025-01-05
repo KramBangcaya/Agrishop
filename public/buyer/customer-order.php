@@ -23,9 +23,6 @@ if(!isset($_SESSION['customer'])) {
     // var_dump($orders);
 }
 
-
-// Fetch feedback for the given user and product
-
 ?>
 
 <div class="page">
@@ -120,7 +117,7 @@ if(!isset($_SESSION['customer'])) {
                             <?php
                             if (!empty($order['reason_cancel'])) {
                                 echo "<br><label>Cancellation Reason: </label>";
-                                echo "<span>" . nl2br(htmlspecialchars($cancelReason['reason_cancel'])) . "</span>";
+                                echo "<span>" . nl2br(htmlspecialchars($order['reason_cancel'])) . "</span>";
                             }
                             ?>
 
@@ -163,29 +160,27 @@ if(!isset($_SESSION['customer'])) {
                                                 <button onclick="cancelFeedback(<?php echo $order['id']; ?>)">Cancel</button>
                                                                                                 </div>
                                                                     </div>
-                    <?php endif; ?>
-                <?php endforeach; ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-<script>
-
-                function showCancelReasonForm(orderId) {
-                    // Show the cancellation reason form
-                    const cancelForm = document.getElementById('cancel-form-' + orderId);
-                    if (cancelForm) {
-                        cancelForm.style.display = 'block';
-                    }
-                }
-
-                function cancelCancellationForm(orderId) {
-                    // Hide the cancellation reason form without submitting
-                    const cancelForm = document.getElementById('cancel-form-' + orderId);
-                    if (cancelForm) {
-                        cancelForm.style.display = 'none';
-                    }
-                }
+            <script>
+                            function showCancelReasonForm(orderId) {
+                                // Show the cancellation reason form
+                                const cancelForm = document.getElementById('cancel-form-' + orderId);
+                                if (cancelForm) {
+                                    cancelForm.style.display = 'block';
+                                }
+                            }
+                            function cancelCancellationForm(orderId) {
+                                // Hide the cancellation reason form without submitting
+                                const cancelForm = document.getElementById('cancel-form-' + orderId);
+                                if (cancelForm) {
+                                    cancelForm.style.display = 'none';
+                                }
+                            }
                             function toggleFeedbackForm(event) {
                                 event.preventDefault();
                                 const feedbackForm = event.target.nextElementSibling;
@@ -244,9 +239,9 @@ if(!isset($_SESSION['customer'])) {
                             }
 
                         function cancelOrderWithReason(orderId) {
-                            const cancelReason = document.getElementById('cancel-reason-' + orderId).value.trim();
+                            const reason_cancel = document.getElementById('cancel-reason-' + orderId).value.trim();
 
-                            if (cancelReason) {
+                            if (reason_cancel) {
                                 if (confirm('Are you sure you want to cancel this order?')) {
                                     fetch('cancel-order.php', {
                                         method: 'POST',
@@ -256,13 +251,13 @@ if(!isset($_SESSION['customer'])) {
                                         body: new URLSearchParams({
                                             order_id: orderId,
                                             status: 'Cancelled Order',
-                                            reason: cancelReason
+                                            reason: reason_cancel
                                         }),
                                     })
                                     .then((response) => response.json())
                                     .then((data) => {
                                         if (data.success) {
-                                            alert('Order has been cancelled with reason: ' + cancelReason);
+                                            alert('Order has been cancelled with reason: ' + reason_cancel);
                                             location.reload(); // Reload the page to reflect changes
                                         } else {
                                             alert('Error: ' + data.message);
@@ -277,51 +272,46 @@ if(!isset($_SESSION['customer'])) {
                                 alert('Please provide a reason for the cancellation.');
                             }
                         }
-function markAsDelivered(orderId) {
-    if (confirm('Are you sure you want to mark this order as delivered?')) {
-        fetch('update-order.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                order_id: orderId,
-                status: 'Delivered'
-            }),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.success) {
-                alert('Order marked as delivered.');
+                        function markAsDelivered(orderId) {
+                            if (confirm('Are you sure you want to mark this order as delivered?')) {
+                                fetch('update-order.php', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                    },
+                                    body: new URLSearchParams({
+                                        order_id: orderId,
+                                        status: 'Delivered'
+                                    }),
+                                })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data.success) {
+                                        alert('Order marked as delivered.');
 
-                // Hide the "Mark as Delivered" button
-                const markAsDeliveredLink = document.querySelector(`a[onclick="markAsDelivered(${orderId});"]`);
-                if (markAsDeliveredLink) {
-                    markAsDeliveredLink.style.display = 'none'; // Hides the button
-                }
+                                        // Hide the "Mark as Delivered" button
+                                        const markAsDeliveredLink = document.querySelector(`a[onclick="markAsDelivered(${orderId});"]`);
+                                        if (markAsDeliveredLink) {
+                                            markAsDeliveredLink.style.display = 'none'; // Hides the button
+                                        }
 
-                // Optionally update the displayed order status text
-                const orderStatusElement = document.querySelector(`#order-status-${orderId}`);
-                if (orderStatusElement) {
-                    orderStatusElement.innerHTML = 'Delivered <i class="fa fa-check" style="color: green;"></i>';
-                    orderStatusElement.style.color = 'gray'; // Change the text color
-                }
-            } else {
-                alert('Error: ' + data.message);
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            alert('Failed to update order status.');
-        });
-    }
-}
-
-
-
+                                        // Optionally update the displayed order status text
+                                        const orderStatusElement = document.querySelector(`#order-status-${orderId}`);
+                                        if (orderStatusElement) {
+                                            orderStatusElement.innerHTML = 'Delivered <i class="fa fa-check" style="color: green;"></i>';
+                                            orderStatusElement.style.color = 'gray'; // Change the text color
+                                        }
+                                    } else {
+                                        alert('Error: ' + data.message);
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error('Error:', error);
+                                    alert('Failed to update order status.');
+                                });
+                            }
+                        }
                         </script>
-
-
                     </div>
                 </div>
             </div>

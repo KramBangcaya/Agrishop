@@ -386,19 +386,21 @@ if($success_message1 != '') {
                     $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
                     $stmt->execute();
 
+
                     $feedbacks = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
                     ?>
-
                     <div class="feedback">
                         <div class="row">
                             <h1 style="margin-left:15px;">Comments / Feedbacks</h1>
                             <br>
 
                             <?php
+
+                            // var_dump($feedbacks);
                             if (count($feedbacks) > 0) {
                                 foreach ($feedbacks as $feedback) {
+
+
                                     $date = $feedback['date']; // Original date
                                     $datetime = new DateTime($date); // Create DateTime object
                                     $formattedDate = $datetime->format('M. d, Y');
