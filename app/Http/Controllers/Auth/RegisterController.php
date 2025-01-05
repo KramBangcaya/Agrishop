@@ -22,7 +22,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    //protected $redirectTo = '../buyer/login.php';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -105,5 +105,14 @@ class RegisterController extends Controller
         Mail::to($user->email)->send(new AccountRegistration($user));
 
         return $user;
+
+        // if ($data['id'] === 'buyer') {
+        //     // Redirect to buyer login page if the ID is 'buyer'
+        //     return redirect('/buyer/login.php');
+        // }
     }
+
+
+
+
 }
