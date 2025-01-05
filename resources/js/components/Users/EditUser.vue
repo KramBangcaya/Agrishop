@@ -127,17 +127,47 @@ export default {
         }
     },
     methods: {
-
         loadGoogleMapsScript() {
-            return new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBa72Eer6ilUkPDSQn4ENOACV_oDYIpkOk&libraries=places`;
-                script.async = true;
-                script.onload = resolve;
-                script.onerror = reject;
-                document.head.appendChild(script);
-            });
-        },
+        if (!document.getElementById('google-maps-script')) {
+            const script = document.createElement('script');
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBa72Eer6ilUkPDSQn4ENOACV_oDYIpkOk&libraries=places';
+            script.id = 'google-maps-script';
+            script.onload = this.initMap; // Initialize the map after the script loads
+            document.head.appendChild(script);
+        } else {
+            this.initMap(); // If the script is already loaded, initialize the map directly
+        }
+    },
+    initMap() {
+        const defaultLocation = { lat: 7.0731, lng: 125.6128 }; // Replace with a default location
+        const map = new google.maps.Map(document.getElementById("map"), {
+            center: defaultLocation,
+            zoom: 12,
+        });
+
+        const marker = new google.maps.Marker({
+            position: defaultLocation,
+            map: map,
+            draggable: true,
+        });
+
+        // Update latitude and longitude on drag
+        google.maps.event.addListener(marker, 'dragend', (event) => {
+            const { lat, lng } = event.latLng.toJSON();
+            this.form.latitude = lat;
+            this.form.longitude = lng;
+        });
+
+        // Update latitude and longitude on map click
+        google.maps.event.addListener(map, 'click', (event) => {
+            const { lat, lng } = event.latLng.toJSON();
+            this.form.latitude = lat;
+            this.form.longitude = lng;
+
+            // Move the marker to the clicked location
+            marker.setPosition(event.latLng);
+        });
+    },
         onFileChange(e) {
             this.user_photo = Array.from(e.target.files);
             console.log('User photo selected:', this.user_photo);
@@ -196,59 +226,6 @@ export default {
                 console.error('Error during submission:', error);
             });
         },
-        initMap() {
-            // Initialize Google Map
-            this.map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 7.448212, lng: 125.809425 }, // Default position (latitude, longitude)
-        zoom: 13,
-    });
-
-    // Create a marker and set it as null initially
-    this.marker = new google.maps.Marker({
-        map: this.map,
-        position: this.map.getCenter(),  // Start at the map's center
-        draggable: true,
-    });
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                // If successful, set the position based on geolocation
-                const userLat = position.coords.latitude;
-                const userLng = position.coords.longitude;
-
-                const userLocation = new google.maps.LatLng(userLat, userLng);
-                this.map.setCenter(userLocation);  // Move the map center to the user's location
-                this.marker.setPosition(userLocation);  // Move the marker to the user's location
-                this.form.latitude = userLat;  // Update the form with latitude
-                this.form.longitude = userLng; // Update the form with longitude
-            },
-            (error) => {
-                console.error('Geolocation error:', error);
-                // In case of error, default to the initial center location
-                console.log('Could not retrieve your location, using default.');
-            }
-        );
-    } else {
-        console.log('Geolocation is not supported by this browser.');
-    }
-
-    // Handle map clicks to update latitude and longitude
-    google.maps.event.addListener(this.map, 'click', (event) => {
-        this.form.latitude = event.latLng.lat();  // Update latitude
-        this.form.longitude = event.latLng.lng(); // Update longitude
-
-        // Move the marker to the clicked position
-        this.marker.setPosition(event.latLng);
-    });
-
-    // If you already have a saved location (latitude, longitude)
-    if (this.form.latitude && this.form.longitude) {
-        const latLng = new google.maps.LatLng(this.form.latitude, this.form.longitude);
-        this.marker.setPosition(latLng);
-        this.map.setCenter(latLng);
-    }
-}
     },
 
     watch: {
@@ -258,6 +235,7 @@ export default {
         }
     },
     mounted() {
+<<<<<<< HEAD
         this.loadGoogleMapsScript().then(() => {
             this.initMap();
         }).catch((error) => {
@@ -270,13 +248,10 @@ export default {
         this.map.setCenter(new google.maps.LatLng(this.form.latitude, this.form.longitude)); // Recenter if needed
     });
 
+=======
+        this.loadGoogleMapsScript();
+>>>>>>> d2e30abd70ba0be0c912fb95cc499531cf1f0caa
     }
 }
 </script>
-<style scoped>
-  /* Add the CSS for the map */
-  #map {
-    height: 400px;
-    width: 100%;
-  }
-</style>
+
