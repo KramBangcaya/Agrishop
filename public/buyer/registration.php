@@ -257,10 +257,7 @@ if (isset($_POST['form1'])) {
                                     <label for="">Upload Supporting Information *</label>
                                     <input type="file" class="form-control" name="cust_re_password">
                                 </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="">Upload QR Code *</label>
-                                    <input type="file" class="form-control" name="cust_re_password">
-                                </div>
+
 
 
                                 <div style=" color: #ff0000;"class="col-md-6 form-group">

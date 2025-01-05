@@ -55,26 +55,28 @@ if(!isset($_SESSION['customer'])) {
 
 
                     <div style="margin-top: 10px; font-size: medium;">
-                        <label>Quantity: </label>
-                        <span><?php echo htmlspecialchars($order['product_quantity']); ?>  <label>Total:</span> ₱<?php echo htmlspecialchars($order['totalPayment']); ?></label><br>
+                    <label>Quantity: </label>
+                    <span><?php echo htmlspecialchars($order['product_quantity'] ?? ''); ?>  <label>Total:</span> ₱<?php echo htmlspecialchars($order['totalPayment'] ?? ''); ?></label><br>
 
-                        <label>Payment date time: </label>
-                        <span><?php echo htmlspecialchars($order['timedate']); ?></span><br>
+                    <label>Payment date time: </label>
+                    <span><?php echo htmlspecialchars($order['timedate'] ?? ''); ?></span><br>
 
-                        <label>Transaction ID: </label>
-                        <span><?php echo htmlspecialchars($order['id']); ?></span><br>
+                    <label>Transaction ID: </label>
+                    <span><?php echo htmlspecialchars($order['id'] ?? ''); ?></span><br>
 
-                        <label>Seller Name: </label>
-                        <span><?php echo htmlspecialchars($order['seller_name']); ?></span><br>
+                    <label>Seller Name: </label>
+                    <span><?php echo htmlspecialchars($order['seller_name'] ?? ''); ?></span><br>
 
-                        <label>Seller Number: </label>
-                        <span><?php echo htmlspecialchars($order['seller_number']); ?></span><br>
+                    <label>Seller Number: </label>
+                    <span><?php echo htmlspecialchars($order['seller_number'] ?? ''); ?></span><br>
 
-                        <label>Seller Address: </label>
-                        <span><?php echo htmlspecialchars($order['seller_address']); ?></span><br>
+                    <label>Seller Address: </label>
+                    <span><?php echo htmlspecialchars($order['seller_address'] ?? ''); ?></span><br>
 
-                        <label>Expected Delivery: </label>
-                        <span>1-2 days</span><br>
+                    <label>Expected Delivery: </label>
+                    <span>1-2 days</span><br>
+
+
 
                         <label>Order Status: </label>
                         <?php if ($order['order_status'] === "Delivered"): ?>

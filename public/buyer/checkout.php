@@ -40,7 +40,9 @@ if(!isset($_SESSION['cart_p_id'])) {
                     <h3 class="special"><?php echo LANG_VALUE_26; ?></h3>
                     <div class="cart">
                         <form action="place-order.php" method="post" enctype="multipart/form-data" id="order_form">
-                        <?php
+
+
+                       <?php
                     $table_total_price = 0;
 
 
@@ -75,8 +77,10 @@ if(!isset($_SESSION['cart_p_id'])) {
     </div>
 
     <div class="col-md-12 form-groups" style="padding: 0; margin: 0;">
-    <?php echo $_SESSION['cart_p_name'][$i]; ?>
-        <label>Upload Proof of Payment</label>
+    <!-- <?php echo $_SESSION['cart_p_name'][$i]; ?> -->
+    <br><label>Upload Proof of Payment</label><br>
+        <p>- Must Downloaded QR Code</p>
+        <p>- Must Clear Image & Not Screenshot</p>
         <input type="file" name="photo[<?php echo $i; ?>]" class="form-control">
 
     </div>
@@ -97,8 +101,8 @@ if(!isset($_SESSION['cart_p_id'])) {
 <!-- Add CSS for Fixed Size and Responsive Design -->
 <style>
     .qr-code-img {
-        width: 650px; /* Fixed width */
-        height: 650px; /* Fixed height */
+        width: 550px; /* Fixed width */
+        height: 550px; /* Fixed height */
         object-fit: contain; /* Ensures image scales within the fixed dimensions */
         display: block;
         padding: -50;
@@ -107,20 +111,20 @@ if(!isset($_SESSION['cart_p_id'])) {
     }
 
 
-    @media (max-width: 768px) {
+    @media (max-width: 550px) {
         .qr-code-img {
-            width: 620px; /* Adjusted width for tablets */
-            height: 620px; /* Adjusted height for tablets */
+            width: 50px; /* Adjusted width for tablets */
+            height: 420px; /* Adjusted height for tablets */
             padding: -50;
         padding-left: -50;
         margin: -50; /* Removes any space around the imag*/
         }
     }
 
-    @media (max-width: 576px) {
+    @media (max-width: 456px) {
         .qr-code-img {
-            width: 600px; /* Adjusted width for smaller screens */
-            height: 600px; /* Adjusted height for smaller screens */
+            width: 380px; /* Adjusted width for smaller screens */
+            height: 400px; /* Adjusted height for smaller screens */
             padding: -50;
         padding-left: -50;
         margin: -50; /* Removes any space around the imag*/

@@ -120,7 +120,7 @@ if (isset($_POST['form1'])) {
 
 				<div class="cart">
                         <?php
-                         var_dump($_SESSION);
+                         //var_dump($_SESSION);
                         $table_total_price = 0;
                         $i=0;
                         foreach($_SESSION['cart_p_id'] as $key => $value)
@@ -159,8 +159,8 @@ if (isset($_POST['form1'])) {
 
                     <h2 class="special" style="margin-left:10px;">Order Details</h2><h3 class="special"> </h3>
                         <?php for($i=1;$i<=count($arr_cart_p_id);$i++):
-                            echo count($arr_cart_p_id);
-                            echo $i;
+                            //echo count($arr_cart_p_id);
+                            //echo $i;
                             ?>
                             <div class="row">
                                 <div class="col-md-4">
