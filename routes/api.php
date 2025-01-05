@@ -70,6 +70,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::put('assign', [App\Http\Controllers\API\UserController::class, 'assign']);
         Route::delete('delete/{id}', [App\Http\Controllers\API\UserController::class, 'destroy']);
         Route::put('activate/{id}', [App\Http\Controllers\API\UserController::class, 'activate']);
+        Route::post('register', [App\Http\Controllers\API\UserController::class, 'register']);
     });
     Route::group(['prefix' => 'deliquency'], function () {
         Route::get('list', [App\Http\Controllers\API\DeliquencyController::class, 'index']);

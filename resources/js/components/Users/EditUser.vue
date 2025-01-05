@@ -264,6 +264,12 @@ export default {
             console.error("Google Maps script failed to load", error);
         });
 
+        $('#edit-user').on('shown.bs.modal', () => {
+        // Wait for the modal to fully show before resizing the map
+        google.maps.event.trigger(this.map, 'resize');
+        this.map.setCenter(new google.maps.LatLng(this.form.latitude, this.form.longitude)); // Recenter if needed
+    });
+
     }
 }
 </script>

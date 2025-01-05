@@ -8824,6 +8824,11 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     })["catch"](function (error) {
       console.error("Google Maps script failed to load", error);
     });
+    $('#edit-user').on('shown.bs.modal', function () {
+      // Wait for the modal to fully show before resizing the map
+      google.maps.event.trigger(_this3.map, 'resize');
+      _this3.map.setCenter(new google.maps.LatLng(_this3.form.latitude, _this3.form.longitude)); // Recenter if needed
+    });
   }
 });
 

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -43,6 +44,69 @@ class UserController extends Controller
         $data = $data->paginate($request->length);
         // dd($data);
         return response(['data' => $data], 200);
+    }
+
+    public function register(Request $request){
+
+        // dd('Sample');
+        // dd($request->all(
+
+
+
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+            'address' => 'required|string',
+            // Add any other required fields and validation
+        ]);
+        // Handle file uploads (photos and QR codes)
+        $photos = [];
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $photos[] = Storage::putFile('public/Personal_Info_Photo', $photo);
+            }
+        }
+
+        // Create the user
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'lastname' => $request->lastname,
+            'middle_initial' => $request->middle_initial ?? null,
+            'date_of_birth' => $request->date_of_birth,
+            'contact_number' => $request->contact_number,
+            'telephone_number' => $request->telephone_number ?? null,
+            'address' => $request->address,
+            'photos' => json_encode($photos),  // Store photo paths as JSON=
+        ]);
+
+        // Return response
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User successfully registered.',
+            'user' => $user
+
+
+        ], 201);
+    }
+
+
+    private function uploadFile($file)
+    {
+        // Assuming file is uploaded via the request and stored in a directory
+        $storagePath = 'storage/Personal_Info_Photo/';
+        $filename = uniqid() . '-' . basename($file['name']);
+        $targetPath = $storagePath . $filename;
+
+        // Move the uploaded file to the target path
+        if (move_uploaded_file($file['tmp_name'], public_path($targetPath))) {
+            return $targetPath;
+        }
+
+        return null;
     }
 
     public function index_all(Request $request){
