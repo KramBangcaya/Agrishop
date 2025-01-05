@@ -159,8 +159,12 @@ if(!isset($_SESSION['customer'])) {
                                                 <button onclick="cancelFeedback(<?php echo $order['id']; ?>)">Cancel</button>
                                                                                                 </div>
                                                                     </div>
+
+                                                                    <h3 class="special"> </h3>
                                 <?php endif; ?>
                             <?php endforeach; ?>
+
+
                         </div>
                     </div>
                 </div>
