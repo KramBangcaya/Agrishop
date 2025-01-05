@@ -67,6 +67,7 @@ class RegisterController extends Controller
         $photos = request()->file('photos');
         $paths = [];
 
+        // dd('Sample');ss
         // Handle photo uploads
         if (!empty($photos)) {
             foreach ($photos as $photo) {
