@@ -84,12 +84,12 @@ class RegisterController extends Controller
                 $qrcodes[] = $path; // Add path to the array
             }
         }
-
+        // dd(Hash::make($data['password']));
         // Create the user in the database
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']), // Hash the password for security
+            'password' => $data['password'],
             'lastname' => $data['lastname'],
             'middle_initial' => $data['middle_initial'] ?? null, // Handle optional middle initial
             'date_of_birth' => $data['date_of_birth'],
@@ -104,14 +104,5 @@ class RegisterController extends Controller
         Mail::to($user->email)->send(new AccountRegistration($user));
 
         return $user;
-
-        // if ($data['id'] === 'buyer') {
-        //     // Redirect to buyer login page if the ID is 'buyer'
-        //     return redirect('/buyer/login.php');
-        // }
     }
-
-
-
-
 }

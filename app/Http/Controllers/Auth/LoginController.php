@@ -38,6 +38,7 @@ class LoginController extends Controller
     {
         $user = Auth::user();
 
+
         if ($user && !is_null($user->deleted_at)) {
             $this->middleware('guest')->except('logout');
         }
