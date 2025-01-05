@@ -56,7 +56,7 @@ if(!isset($_REQUEST['id'])) {
 
  }
 
-    var_dump($_SESSION);
+    //var_dump($_SESSION);
 if(isset($_POST['form_add_to_cart'])) {
 
 
@@ -220,9 +220,10 @@ if($success_message1 != '') {
 							</div> -->
                             <form action="" method="post">
 							<div class="p-price">
-
+                            <span style="font-size:14px;">Product name</span>
+<h1><?php echo $p_name; ?></h1>
                             <div class="p-short-des" style="font-size:14px;">
-                                <p>
+                            <span style="font-size:14px;">Product description</span> <p>
                                     <?php echo $p_description; ?>
                                 </p>
                             </div>
