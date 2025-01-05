@@ -35,35 +35,36 @@ if(!isset($_SESSION['cart_p_id'])) {
                     </p>
                 <?php else:
 
-                    var_dump($_SESSION);?>
+                    // var_dump($_SESSION);?>
 
                     <h3 class="special"><?php echo LANG_VALUE_26; ?></h3>
                     <div class="cart">
                         <form action="place-order.php" method="post" enctype="multipart/form-data" id="order_form">
                         <?php
-$table_total_price = 0;
+                    $table_total_price = 0;
 
-for ($i = 1; $i <= count($_SESSION['cart_p_id']); $i++) {
-    $row_total_price = $_SESSION['cart_p_current_price'][$i] * $_SESSION['cart_p_qty'][$i];
-    $table_total_price += $row_total_price;
-?>
-    <h3 class="special">
-        Payment Section for <?php echo $_SESSION['cart_p_name'][$i]; ?>
-        Total Cost: <?php echo LANG_VALUE_1; ?><?php echo $row_total_price; ?>
-    </h3>
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label><?php echo LANG_VALUE_34; ?> *</label>
-                <select name="payment_method[<?php echo $i; ?>]" class="form-control payment-method" data-index="<?php echo $i; ?>">
-                    <option value="">Select Payment Method</option>
-                    <option value="1">CASH ON DELIVERY</option>
-                    <option value="2">QR CODE</option>
-                </select>
-            </div>
-        </div>
-    </div>
+                    for ($i = 1; $i <= count($_SESSION['cart_p_id']); $i++) {
+                        $row_total_price = $_SESSION['cart_p_current_price'][$i] * $_SESSION['cart_p_qty'][$i];
+                        $table_total_price += $row_total_price;
+                    ?>
+                        <h3 class="special">
+                            Payment Section for <?php echo $_SESSION['cart_p_name'][$i]; ?>
+                            Total Cost: <?php echo LANG_VALUE_1; ?><?php echo $row_total_price; ?>
+                        </h3>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><?php echo LANG_VALUE_34; ?> *</label>
+                                <select name="payment_method[<?php echo $i; ?>]" class="form-control payment-method" data-index="<?php echo $i; ?>">
+                                    <option value="">Select Payment Method</option>
+                                    <option value="1">CASH ON DELIVERY</option>
+                                    <option value="2">QR CODE</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
     <!-- QR Code and Proof of Payment Section -->
     <div id="payment-details-<?php echo $i; ?>" class="payment-details" style="display:none;">
