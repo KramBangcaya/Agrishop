@@ -111,8 +111,18 @@ if (isset($_POST['form1'])) {
 
 
 
+
+
                         </div>
                         <input type="submit" class="btn btn-primary" value="Report" name="form1">
+                        <a href="reportseller.php" class="btn btn-primary" style="
+
+
+  padding: 7px 12px 7px 12px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;">Cancel Report</button></a>
                     </form>
                 </div>
             </div>

@@ -74,13 +74,12 @@ if(!isset($_SESSION['customer'])) {
                         <span><?php echo htmlspecialchars($order['proof']); ?></span><br>
                         <br>
                         <h4>
-                                <a href="#" onclick="showCancelReasonForm(<?php echo $order['id']; ?>);" class="trash">
-                                    Confirm Report <i class="fa fa-ban" style="color:green;"></i>
-                                </a>
-                                </h4>
-                                <h4 style="color: gray;">
-                                    Cancel Report <i class="fa fa-check" style="color: red;"></i>
-                                </h4>
+
+
+                        <a style="float: right;" href="#"><button style="color:green;" class="btn btn-success">Confirm Report</button></a><br>
+                        <a style="float: right;" href="customer-billing-shipping-update.php"><button style="color: red;" class="btn btn-danger">Cancel Report</button></a><br>
+
+
 
 
 
