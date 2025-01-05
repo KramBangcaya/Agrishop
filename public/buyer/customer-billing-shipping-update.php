@@ -1,22 +1,5 @@
 <?php require_once('header.php'); ?>
-
-<?php
-// Check if the customer is logged in or not
-if(!isset($_SESSION['customer'])) {
-    header('location: '.BASE_URL.'logout.php');
-    exit;
-} else {
-    // If customer is logged in, but admin make him inactive, then force logout this user.
-
-    $statement = $pdo->prepare("SELECT * FROM users WHERE id=?");
-    $statement->execute(array($_SESSION['customer']['user_id']));
-    $total = $statement->rowCount();
-    if($total) {
-        header('location: '.BASE_URL.'logout.php');
-        exit;
-    }
-}
-?>
+<!--  -->
 
 <?php
 if (isset($_POST['form1'])) {
