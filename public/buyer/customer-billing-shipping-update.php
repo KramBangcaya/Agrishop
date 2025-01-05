@@ -1,22 +1,5 @@
 <?php require_once('header.php'); ?>
-
-<?php
-// Check if the customer is logged in or not
-if(!isset($_SESSION['customer'])) {
-    header('location: '.BASE_URL.'logout.php');
-    exit;
-} else {
-    // If customer is logged in, but admin make him inactive, then force logout this user.
-
-    $statement = $pdo->prepare("SELECT * FROM users WHERE id=?");
-    $statement->execute(array($_SESSION['customer']['user_id']));
-    $total = $statement->rowCount();
-    if($total) {
-        header('location: '.BASE_URL.'logout.php');
-        exit;
-    }
-}
-?>
+<!--  -->
 
 <?php
 if (isset($_POST['form1'])) {
@@ -112,24 +95,34 @@ if (isset($_POST['form1'])) {
 
                             <div class="col-md-6 form-group">
                                 <label for="">Seller Name *</label>
-                                <input type="text" class="form-control" name="cust_name" value="<?php echo $_SESSION['customer']['name']; ?>">
+                                <input type="text" class="form-control" name="cust_name" value="">
                             </div>
 
                             <div class="col-md-6 form-group">
                                 <label for="">Attached File *</label>
-                                <input type="file" class="form-control" name="cust_name" value="<?php echo $_SESSION['customer']['name']; ?>">
+                                <input type="file" class="form-control" name="cust_name" value="">
                             </div>
 
                             <div class="col-md-12 form-group">
                                 <label for="">Reason *</label>
-                                <textarea name="cust_address" class="form-control" cols="30" rows="10" style="height:70px;"><?php echo $_SESSION['customer']['address']; ?></textarea>
+                                <textarea name="cust_address" class="form-control" cols="30" rows="10" style="height:70px;"></textarea>
                             </div>
+
+
 
 
 
 
                         </div>
                         <input type="submit" class="btn btn-primary" value="Report" name="form1">
+                        <a href="reportseller.php" class="btn btn-primary" style="
+
+
+  padding: 7px 12px 7px 12px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;">Cancel Report</button></a>
                     </form>
                 </div>
             </div>

@@ -22,7 +22,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/login';
+    //protected $redirectTo = '../buyer/login.php';
 
     /**
      * Create a new controller instance.
@@ -104,6 +104,11 @@ class RegisterController extends Controller
         Mail::to($user->email)->send(new AccountRegistration($user));
 
         return $user;
+        $dataspa3s=$data['id'];
+        // if ($data['id'] === 'buyer') {
+        //     // Redirect to buyer login page if the ID is 'buyer'
+        //     return redirect('/buyer/login.php');
+        // }
     }
 
     /**
@@ -115,20 +120,19 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        // Get the 'id' query parameter from the URL
-        $id = $request->query('id'); // Use query() to get query parameters
+        $id = $request->input('id'); // Get the role from the form
 
-        if ($id === 'Buyer' || $id === 'buyer') {
-            // Redirect to buyer login page if the ID is 'buyer'
-            return redirect('/buyer/login.php');
-        }
-        else if ($id === 'Seller' || $id === 'seller') {
-            // Redirect to seller login page if the ID is 'seller'
-            return redirect('../resources/views/auth/login.blade.php');  // Assuming you have a seller login page
+        if ($id === 'buyer'||$data['address'] === 'buyer') {
+            return redirect('/buyer/login.php'); // Redirect to buyer login
         }
 
-        // Default redirection if ID is not 'buyer' or 'seller'
-          // Or any default route
+        if ($id === 'seller') {
+            return redirect('/login'); // Redirect to seller login
+        }
+
+        // Default redirection
+        return redirect('/login');
     }
+
 
 }

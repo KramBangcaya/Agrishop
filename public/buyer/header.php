@@ -269,7 +269,7 @@ foreach ($result as $row) {
 					} else {
 						?>
 						<li><a href="login.php"><i class="fa fa-sign-in"></i> <?php echo LANG_VALUE_9; ?></a></li>
-						<li><a href="../register?id=buyer"><i class="fa fa-user-plus"></i> <?php echo LANG_VALUE_15; ?></a></li>
+						<li><a href="registration.php?id=buyer"><i class="fa fa-user-plus"></i> <?php echo LANG_VALUE_15; ?></a></li>
 
 						<?php
 					}

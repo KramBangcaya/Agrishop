@@ -66,7 +66,7 @@ if(isset($_POST['form1'])) {
 
 <div class="page-banner" style="background-color:#444;background-image: url(assets/uploads/<?php echo $banner_login; ?>);">
     <div class="inner">
-        <h1><?php echo LANG_VALUE_10; ?></h1>
+        <h1>Login</h1>
     </div>
 </div>
 

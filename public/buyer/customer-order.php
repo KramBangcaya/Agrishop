@@ -51,15 +51,12 @@ if(!isset($_SESSION['customer'])) {
                     $feedback = $stmt->fetch(PDO::FETCH_ASSOC);
                     ?>
 
-                    <h2>Product Name:</h2>
-                    <span><?php echo htmlspecialchars($order['product_name']); ?></span>
+                    <h2> <span><?php echo htmlspecialchars($order['product_name']); ?></span></h2>
+
 
                     <div style="margin-top: 10px; font-size: medium;">
                         <label>Quantity: </label>
-                        <span><?php echo htmlspecialchars($order['product_quantity']); ?></span><br>
-
-                        <label>Total: ₱</label>
-                        <span><?php echo htmlspecialchars($order['totalPayment']); ?></span><br><br>
+                        <span><?php echo htmlspecialchars($order['product_quantity']); ?>  <label>Total:</span> ₱<?php echo htmlspecialchars($order['totalPayment']); ?></label><br>
 
                         <label>Payment date time: </label>
                         <span><?php echo htmlspecialchars($order['timedate']); ?></span><br>
@@ -136,7 +133,7 @@ if(!isset($_SESSION['customer'])) {
                     <?php else: ?>
                         <h4 onclick="toggleFeedbackForm(event)" style="cursor: pointer;">
                             Feedback <i class="fa fa-comments" style="color:green;"></i>
-                        </h4>
+                        </h4><h3 class="special"> </h3>
                         <div id="feedback-form-<?php echo $order['id']; ?>" style="display: none; margin-top: 10px;">
                                                     <textarea id="feedback-text-<?php echo $order['id']; ?>" placeholder="Enter your feedback here..." rows="4" cols="50"></textarea>
                                                     <br>
