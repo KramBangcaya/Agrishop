@@ -6177,7 +6177,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _context2.prev = 3;
                 _context2.next = 6;
-                return fetch('http://192.168.1.101:8080/buyer/delivered-orders.php?seller_id=${this.userID}');
+                return fetch("http://192.168.1.101:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
 
               case 6:
                 response = _context2.sent;
@@ -7825,7 +7825,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (data.userID) {
                   _this.userID = data.userID; // Store the userID
 
-                  _this.getData(); // Now fetch orders after userID is fetched
+                  _this.getData(); // console.log(this.userID); // Now fetch orders after userID is fetched
 
                 }
 
@@ -7866,7 +7866,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _context2.prev = 3;
                 _context2.next = 6;
-                return fetch('http://192.168.1.101:8080/buyer/get-orders.php?seller_id=${this.userID}');
+                return fetch("http://192.168.1.101:8080/buyer/get-orders.php?seller_id=".concat(_this2.userID));
 
               case 6:
                 response = _context2.sent;
@@ -7878,6 +7878,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (data.status === 'success') {
                   _this2.orders = data.data;
+                  console.log(_this2.orders);
                 }
 
                 _context2.next = 16;

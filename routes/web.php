@@ -40,6 +40,11 @@ Route::prefix('products')->group(function () {
 
 });
 
+
+// Route::prefix('user')->group(function () {
+//     Route::post('/register', [App\Http\Controllers\API\UserController::class, 'register']);
+// });
+
 Route::prefix('categories')->group(function () {
     Route::get('/all', [CategoryController::class, 'all']);
 });
