@@ -30,7 +30,7 @@ foreach ($result as $row) {
 $error_message = '';
 if (isset($_POST['form1'])) {
 
-    var_dump($_POST);
+    //var_dump($_POST);
     // var_dump($_POST['_csrf']);
     // Fetch data from the API
     $url = API_BASE_URL. '/products/all';

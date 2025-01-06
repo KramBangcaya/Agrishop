@@ -6177,7 +6177,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _context2.prev = 3;
                 _context2.next = 6;
-                return fetch("http://192.168.1.101:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
+                return fetch("http://192.168.1.129:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
 
               case 6:
                 response = _context2.sent;
@@ -7866,7 +7866,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _context2.prev = 3;
                 _context2.next = 6;
-                return fetch("http://192.168.1.101:8080/buyer/get-orders.php?seller_id=".concat(_this2.userID));
+                return fetch("http://192.168.1.129:8080/buyer/get-orders.php?seller_id=".concat(_this2.userID));
 
               case 6:
                 response = _context2.sent;
@@ -7905,7 +7905,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         order_id: id,
         order_status: "For Delivery"
       };
-      fetch('http://192.168.1.101:8080/buyer/update-order-status.php', {
+      fetch('http://192.168.1.129:8080/buyer/update-order-status.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -7977,7 +7977,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log(cancelPayload);
                 _context4.prev = 5;
                 _context4.next = 8;
-                return fetch('http://192.168.1.101:8080/buyer/order-cancelled.php', {
+                return fetch('http://192.168.1.129:8080/buyer/order-cancelled.php', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'

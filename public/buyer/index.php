@@ -124,7 +124,7 @@ require_once('api-config.php');
                                                 </div>
                                             </div>
                                         <?php else: ?>
-                                            <p><a href="product.php?id=<?php echo $product['id']; ?>&fname=<?php echo $product['first_name']; ?>&lname=<?php echo $product['last_name']; ?>"><i class="fa fa-shopping-cart"></i> Add to Cart</a></p>
+                                            <p><a href="product.php?id=<?php echo $product['id']; ?>&fname=<?php echo $product['first_name']; ?>&lname=<?php echo $product['last_name']; ?>">View</a></p>
                                         <?php endif; ?>
                                     </div>
                                 </div>

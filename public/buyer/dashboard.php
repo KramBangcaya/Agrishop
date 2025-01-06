@@ -57,14 +57,15 @@ if(!isset($_SESSION['customer'])) {
                 }
 
                 // Include the file without query string
-                require_once('customer-sidebar.php');
+
                 ?>
             </div>
             <div class="col-md-12">
                 <div class="user-content">
                     <h3 class="text-center">
-                        <?php echo LANG_VALUE_90; ?>
-                    </h3>
+                        <?php echo LANG_VALUE_90; ?><br>
+
+                    </h3> <?php  require_once('customer-sidebar.php'); ?>
                 </div>
             </div>
         </div>
