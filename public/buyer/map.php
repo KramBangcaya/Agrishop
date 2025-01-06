@@ -6,7 +6,7 @@ require_once('api-config.php');
 $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Initialize cURL to fetch data from the new API with search term
-$apiUrl = "http://192.168.1.9:8080/products/all_product?search=" . urlencode($searchTerm);
+$apiUrl =  API_BASE_URL . "/products/all_product?search=" . urlencode($searchTerm);
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $apiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

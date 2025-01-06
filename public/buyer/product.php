@@ -233,20 +233,20 @@ if($success_message1 != '') {
 
                                 // Display images
                                 if ($featured_photo) {
-                                    echo '<a href="#" class="prod-thumb" data-image="http://192.168.1.9:8080/storage/' . htmlspecialchars($featured_photo) . '">
-                                            <div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($featured_photo) . ');"></div>
-                                        </a>';
+                                    echo '<a href="#" class="prod-thumb" data-image="' . API_BASE_URL . '/storage/' . htmlspecialchars($featured_photo) . '">
+                                            <div class="prod-pager-thumb" style="background-image: url(' . API_BASE_URL . '/storage/' . htmlspecialchars($featured_photo) . ');"></div>
+                                          </a>';
                                     $i++;
                                 }
                                 if ($photo2) {
-                                    echo '<a href="#" class="prod-thumb" data-image="http://192.168.1.9:8080/storage/' . htmlspecialchars($photo2) . '">
-                                            <div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($photo2) . ');"></div>
+                                    echo '<a href="#" class="prod-thumb" data-image="' . API_BASE_URL . '/storage/' . htmlspecialchars($photo2) . '">
+                                            <div class="prod-pager-thumb" style="background-image: url(' . API_BASE_URL . '/storage/' . htmlspecialchars($photo2) . ');"></div>
                                         </a>';
                                     $i++;
                                 }
                                 if ($photo3) {
-                                    echo '<a href="#" class="prod-thumb" data-image="http://192.168.1.9:8080/storage/' . htmlspecialchars($photo3) . '">
-                                            <div class="prod-pager-thumb" style="background-image: url(http://192.168.1.9:8080/storage/' . htmlspecialchars($photo3) . ');"></div>
+                                    echo '<a href="#" class="prod-thumb" data-image="' . API_BASE_URL . '/storage/' . htmlspecialchars($photo3) . '">
+                                            <div class="prod-pager-thumb" style="background-image: url(' . API_BASE_URL . '/storage/' . htmlspecialchars($photo3) . ');"></div>
                                         </a>';
                                     $i++;
                                 }
@@ -398,7 +398,7 @@ if($success_message1 != '') {
                                 $photos = $row['photos'];
                                 if (!empty($photos) && isset($photos[0])) {
                                     $photoUrl = str_replace('\/', '/', $photos[0]);
-                                    echo '<div class="photo" style="background-image:url(http://192.168.1.9:8080/storage/' . $photoUrl . ');"></div>';
+                                    echo '<div class="photo" style="background-image:url(' . API_BASE_URL . '/storage/' .  $photoUrl . ');"></div>';
                                 } else {
                                     echo '<div class="photo" style="background-color: gray;">No photo available</div>';
                                 }

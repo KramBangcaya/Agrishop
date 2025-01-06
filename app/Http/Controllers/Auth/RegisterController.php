@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request; // Use the correct Request class
 
@@ -64,6 +65,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+        $validator = Validator::make($data, [
+            'date_of_birth' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) {
+                    if (Carbon::parse($value)->diffInYears(Carbon::now()) < 18) {
+                        $fail('The date of birth indicates the user is under 18 years old.');
+                    }
+                },
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
         $qrcode = request()->file('qrcode');
         $qrcodes = [];
         $photos = request()->file('photos');

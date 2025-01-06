@@ -10291,7 +10291,7 @@ var staticRenderFns = [function () {
     staticClass: "card-header p-3"
   }, [_c("div", {
     staticClass: "card-tools"
-  }, [_vm._v("\n                            filter\n                            ")])]);
+  })]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -13337,52 +13337,11 @@ var render = function render() {
     staticClass: "col-12"
   }, [_c("div", {
     staticClass: "card"
-  }, [_c("div", {
-    staticClass: "card-header p-3"
-  }, [_c("div", {
-    staticClass: "card-tools"
-  }, [_c("div", {
-    staticClass: "input-group input-group-sm"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.search,
-      expression: "search"
-    }],
-    staticClass: "form-control float-right",
-    attrs: {
-      type: "text",
-      name: "table_search",
-      placeholder: "Search"
-    },
-    domProps: {
-      value: _vm.search
-    },
-    on: {
-      keyup: _vm.getData,
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.search = $event.target.value;
-      }
-    }
-  }), _vm._v(" "), _c("div", {
-    staticClass: "input-group-append"
-  }, [_c("button", {
-    staticClass: "btn btn-primary",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: _vm.getData
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-search"
-  })])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
     staticClass: "card-body table-responsive p-0"
   }, [_c("table", {
     staticClass: "table table-head-fixed text-nowrap"
-  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.orders, function (order, index) {
+  }, [_vm._m(2), _vm._v(" "), _c("tbody", _vm._l(_vm.orders, function (order, index) {
     return _c("tr", {
       key: index
     }, [_c("td", [order.photo && order.photo.length ? _c("img", {
@@ -13494,6 +13453,15 @@ var staticRenderFns = [function () {
   }, [_c("h1", {
     staticClass: "m-0"
   }, [_vm._v("Orders ")])])])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "card-header p-3"
+  }, [_c("div", {
+    staticClass: "card-tools"
+  })]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
