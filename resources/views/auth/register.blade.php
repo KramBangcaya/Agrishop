@@ -201,8 +201,7 @@
 
                                 <div class="col-md-6">
                                     <span class="text-danger">If You are a Buyer provide your Valid ID</span><br>
-                                    <span class="text-danger">If You are a Seller provide your Business Permit</span><br>
-                                    <span class="text-danger">If You are a Seller provide your QR Code</span>
+                                    <span class="text-danger">If You are a Seller provide your Business Permit and QR Code</span><br>
                                 </div>
                             </div>
 

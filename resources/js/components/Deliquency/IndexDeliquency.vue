@@ -43,10 +43,10 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 10%;">Proof</th>
-                                            <th style="width: 10%;">Reported Name</th>
+                                            <th style="width: 10%;">Complainee's Name</th>
                                             <th style="width: 10%;">Number of Reports</th>
                                             <th style="width: 30%;">Reason</th>
-                                            <th style="width: 10%;">Reported By</th>
+                                            <th style="width: 10%;">Complaints Name</th>
                                             <th style="width: 30%;">Reply</th>
                                             <th></th>
                                         </tr>

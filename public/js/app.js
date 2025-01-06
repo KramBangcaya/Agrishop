@@ -10795,7 +10795,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       width: "10%"
     }
-  }, [_vm._v("Reported Name")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Complainee's Name")]), _vm._v(" "), _c("th", {
     staticStyle: {
       width: "10%"
     }
@@ -10807,7 +10807,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       width: "10%"
     }
-  }, [_vm._v("Reported By")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Complaints Name")]), _vm._v(" "), _c("th", {
     staticStyle: {
       width: "30%"
     }
