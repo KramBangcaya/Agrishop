@@ -33,11 +33,11 @@ Route::get('/public/buyer/index.php', function () {
 
 Route::prefix('products')->group(function () {
     Route::get('/all', [ProductsController::class, 'index_all']);
+    Route::get('/all_product', [ProductsController::class, 'all_product']);
     Route::get('/category/{id}', [App\Http\Controllers\ProductsController::class, 'category_all']);
     Route::get('/product/{id}', [App\Http\Controllers\ProductsController::class, 'product']);
     Route::get('/product/seller/{id}', [App\Http\Controllers\ProductsController::class, 'seller']);
     Route::get('/price-range', [App\Http\Controllers\ProductsController::class, 'getPrice']);
-
 });
 
 

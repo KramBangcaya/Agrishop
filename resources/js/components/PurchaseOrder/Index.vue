@@ -56,10 +56,10 @@
                                             <td>
                                                 <img
                                                 v-if="order.photo && order.photo.length"
-                                                :src="'/buyer/'+order.photo"
+                                                :src="'http://192.168.1.129:8080/buyer/'+order.photo"
                                                 alt="Product Photo"
                                                 style="max-width: 200px; max-height: 200px; cursor: pointer;"
-                                                @click="openImageModal('/buyer/' + order.photo)"
+                                                @click="openImageModal('http://192.168.1.129:8080/buyer/' + order.photo)"
                                                 />
                                             </td>
 
@@ -176,7 +176,7 @@ export default {
             return;
         }
             try {
-                const response = await fetch(`http://192.168.1.101:8080/buyer/get-orders.php?seller_id=${this.userID}`);
+                const response = await fetch(`http://192.168.1.129:8080/buyer/get-orders.php?seller_id=${this.userID}`);
                 const data = await response.json();
                 if (data.status === 'success') {
                     this.orders = data.data;
@@ -194,7 +194,7 @@ export default {
                     order_status: "For Delivery",
                 };
 
-                fetch('http://192.168.1.101:8080/buyer/update-order-status.php', {
+                fetch('http://192.168.1.129:8080/buyer/update-order-status.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -232,10 +232,9 @@ export default {
             reason_cancel: this.reason_cancel,
             order_status: "Cancelled Order",
         };
-
         console.log(cancelPayload);
         try {
-            const response = await fetch('http://192.168.1.101:8080/buyer/order-cancelled.php', {
+            const response = await fetch('http://192.168.1.129:8080/buyer/order-cancelled.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
