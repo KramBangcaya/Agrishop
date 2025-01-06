@@ -299,10 +299,71 @@ if($success_message1 != '') {
                             <input type="hidden" name="s_id" value="<?php echo $s_id; ?>">
                             <input type="hidden" name="s_contact_number" value="<?php echo $s_contact_number; ?>">
                             <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
-							<div class="p-quantity">
-                                <?php echo LANG_VALUE_55; ?> <br>
-								<input type="number" class="input-text qty" step="1" min="1" max="" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric">
-							</div>
+                            <div class="p-quantity">
+    <?php echo LANG_VALUE_55; ?> <br>
+    <div class="quantity-container">
+        <button type="button" class="qty-btn qty-minus">-</button>
+        <input type="text" class="input-text qty" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" id="quantityInput">
+        <button type="button" class="qty-btn qty-plus">+</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('quantityInput').addEventListener('input', function (e) {
+        // Ensure the input is numeric
+        var value = e.target.value;
+        e.target.value = value.replace(/[^0-9]/g, ''); // Strip non-numeric characters
+    });
+
+    // Increment
+    document.querySelector('.qty-plus').addEventListener('click', function () {
+        var input = document.getElementById('quantityInput');
+        var value = parseInt(input.value, 10);
+        if (!isNaN(value)) {
+            input.value = value + 1;
+        } else {
+            input.value = 1; // default to 1 if the input is empty or invalid
+        }
+    });
+
+    // Decrement
+    document.querySelector('.qty-minus').addEventListener('click', function () {
+        var input = document.getElementById('quantityInput');
+        var value = parseInt(input.value, 10);
+        if (!isNaN(value) && value > 1) {
+            input.value = value - 1;
+        } else {
+            input.value = 1; // prevent going below 1
+        }
+    });
+</script>
+
+<style>
+    .quantity-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .qty-btn {
+        width: 30px;
+        height: 30px;
+        background-color: #ddd;
+        border: none;
+        text-align: center;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .qty-btn:focus {
+        outline: none;
+    }
+
+    .input-text.qty {
+        width: 50px;
+        text-align: center;
+    }
+</style>
+
 
 							<div class="btn-cart btn-cart1">
                                 <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
