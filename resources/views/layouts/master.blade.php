@@ -120,13 +120,13 @@
                                 <li class="nav-item">
                                     <router-link to="/Purchase" class="nav-link">
                                         <i class="nav-icon fa fa-credit-card"></i>
-                                        <p>Purchase Order</p>
+                                        <p>Customer Orders</p>
                                     </router-link>
                                 </li>
                                 <li class="nav-item">
                                     <router-link to="/Order" class="nav-link">
                                         <i class="far fa-ruler-combined nav-icon"></i>
-                                        <p>Complete Orders</p>
+                                        <p>Completed Orders</p>
                                     </router-link>
                                 </li>
                             </ul>
@@ -137,7 +137,7 @@
                                 <router-link to="/Report" class="nav-link">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>
-                                        Reports
+                                        Complaints
                                     </p>
                                 </router-link>
                             </li>
