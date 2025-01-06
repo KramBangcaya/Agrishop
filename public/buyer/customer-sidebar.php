@@ -15,10 +15,10 @@ if (!$user_id) {
 <div class="user-sidebar">
     <ul>
 
-    <a href="customer-profile-update.php?id=<?php echo $user_id; ?>"><button class="btn btn-danger"><?php echo LANG_VALUE_117; ?></button></a>
+    <a  href="customer-profile-update.php?id=<?php echo $user_id; ?>"><button style="width:250px; height:50px; text-align:center; display:inline-block;" class="btn btn-danger"><?php echo LANG_VALUE_117; ?></button></a><br><br>
         <!-- <a href="customer-billing-shipping-update.php"><button class="btn btn-danger">Report Seller</button></a> -->
-        <a href="reportseller.php"><button class="btn btn-danger">Report Seller</button></a>
-        <a href="customer-order.php?id=<?php echo $user_id; ?>"><button class="btn btn-danger"><?php echo LANG_VALUE_24; ?></button></a>
-        <a href="logout.php"><button class="btn btn-danger"><?php echo LANG_VALUE_14; ?></button></a>
+        <a  href="reportseller.php"><button style="width:250px; height:50px; text-align:center; display:inline-block;" class="btn btn-danger">Report Seller</button></a><br><br>
+        <a  href="customer-order.php?id=<?php echo $user_id; ?>"><button style="width:250px; height:50px; text-align:center; display:inline-block;" class="btn btn-danger"><?php echo LANG_VALUE_24; ?></button></a><br><br>
+        <a  href="logout.php"><button style="width:250px; height:50px; text-align:center; display:inline-block;" class="btn btn-danger"><?php echo LANG_VALUE_14; ?></button></a>
     </ul>
 </div>

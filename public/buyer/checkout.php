@@ -39,6 +39,11 @@ if(!isset($_SESSION['cart_p_id'])) {
 
                     <h3 class="special"><?php echo LANG_VALUE_26; ?></h3>
                     <div class="cart">
+
+
+
+
+
                         <form action="place-order.php" method="post" enctype="multipart/form-data" id="order_form">
 
 

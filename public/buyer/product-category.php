@@ -121,7 +121,9 @@ if ($min_price !== null && $max_price !== null) {
                         <div class="row">
                             <?php foreach ($products['data'] as $product): ?>
                                 <?php if (isset($product['id'], $product['Product_Name'], $product['price'], $product['photos'])): ?>
-                                    <div class="col-md-4 item item-product-cat">
+                                    <div class="col-md-4 item item-product-cat" style="border: 2px solid #e0e0e0; border-radius: 5px; padding: 15px; background-color: #f9f9f9;">
+    <!-- Content goes here -->
+
                                         <div class="inner">
                                             <div class="thumb">
                                                 <?php

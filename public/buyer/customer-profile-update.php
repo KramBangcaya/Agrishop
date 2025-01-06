@@ -52,7 +52,7 @@ if (!isset($_SESSION['customer'])) {
                     ?>
                     <form id="profile-form" method="post" enctype="multipart/form-data">
                         <?php $csrf->echoInputField();
-                        var_dump($_SESSION);
+                        //var_dump($_SESSION);
                         ?>
                         <div class="row">
                             <input type="hidden" name="user_id" value="<?php echo $_SESSION['customer']['user_id']; ?>">

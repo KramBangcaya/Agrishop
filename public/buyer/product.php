@@ -152,12 +152,54 @@ if($success_message1 != '') {
 			<div class="product">
 				<div class="row">
                     <div class="col-md-5">
-                            <ul class="prod-slider">
-                                <!-- Main Image -->
-                                <li id="main-image" style="background-image: url(<?php echo  API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>);">
-                                    <a class="popup" href=<?php echo API_BASE_URL .  '/storage/' . str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>"></a>
-                                </li>
-                            </ul>
+                    <ul class="prod-slider">
+    <!-- Main Image -->
+    <li
+        id="main-image"
+        style="background-image: url(<?php echo API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>);">
+        <a
+            class="popup"
+            href="<?php echo API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($p_featured_photo, '[]"')); ?>">
+        </a>
+    </li>
+</ul>
+<style>
+/* Base Styles */
+.prod-slider {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.prod-slider .main-image {
+    style: "
+        width: 100%;
+        height: auto;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        aspect-ratio: 16 / 9;
+    ";
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 768px) {
+    .prod-slider .main-image {
+        style: "
+            aspect-ratio: 4 / 3;
+        ";
+    }
+}
+
+@media (max-width: 480px) {
+    .prod-slider .main-image {
+        style: "
+            aspect-ratio: 1 / 1;
+        ";
+    }
+}
+</style>
+
                             <div id="prod-pager">
                                 <?php
                                 $product_id = $_REQUEST['id'];
@@ -219,14 +261,18 @@ if($success_message1 != '') {
                                 </div>
 							</div> -->
                             <form action="" method="post">
-							<div class="p-price">
-                            <span style="font-size:14px;">Product name</span>
-<h1><?php echo $p_name; ?></h1>
-                            <div class="p-short-des" style="font-size:14px;">
-                            <span style="font-size:14px;">Product description</span> <p>
+							<div class="p-price"><br><br><br><br>
+
+                            <h1><?php echo $p_name; ?></h1>
+<br>
+                            <span style="font-size:18px;">Product description</span>
+                            <div class="p-short-des" style="font-size:14px;font-weight: normal">
+                           <p>
                                     <?php echo $p_description; ?>
                                 </p>
                             </div>
+
+
                                 <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
                                 <span>
                                         <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
@@ -365,7 +411,7 @@ if($success_message1 != '') {
                                     <?php echo LANG_VALUE_1; ?><?php echo htmlspecialchars($row['price']); ?>
                                 </h4>
                                 <p><?php echo $row['first_name']?> <?php echo $row['last_name']?></p>
-                                <p><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo LANG_VALUE_154; ?></a></p>
+                                <p><a href="product.php?id=<?php echo $row['id']; ?>">View</a></p>
                             </div>
                         </div>
                         <?php
