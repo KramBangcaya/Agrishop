@@ -106,3 +106,8 @@ Route::group(['prefix' => 'product1'], function () {
 Route::group(['prefix' => 'report'], function () {
 Route::post('receive-report', [App\Http\Controllers\ReportController::class, 'receiveFromAPI']);
 });
+
+
+Route::group(['prefix' => 'user'], function () {
+     Route::post('register', [App\Http\Controllers\API\UserController::class, 'register']);
+    });

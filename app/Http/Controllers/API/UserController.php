@@ -48,24 +48,18 @@ class UserController extends Controller
 
     public function register(Request $request){
 
-        // dd('Sample');
-        // dd($request->all(
-
-
-
-
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8',
-            'address' => 'required|string',
-            // Add any other required fields and validation
-        ]);
-        // Handle file uploads (photos and QR codes)
+        // Handle file uploads (photos)
         $photos = [];
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
-                $photos[] = Storage::putFile('public/Personal_Info_Photo', $photo);
+                // Generate a unique filename using current timestamp
+                $filename = time() . '.' . $photo->getClientOriginalExtension();
+
+                // Store the file in 'Personal_Info_Photo' directory, using 'public' disk
+                $path = $photo->storeAs('Personal_Info_Photo', $filename, 'public');
+
+                // Remove the 'public/' prefix from the path and store the relative path
+                $photos[] = str_replace('public/', '', $path); // Format path as required
             }
         }
 
