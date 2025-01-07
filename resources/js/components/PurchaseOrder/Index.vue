@@ -16,21 +16,7 @@
                         <div class="card">
                             <div class="card-header p-3">
                                 <div class="card-tools">
-                                    <div class="input-group input-group-sm">
-                                        <input
-                                            v-model="search"
-                                            type="text"
-                                            @keyup="getData"
-                                            name="table_search"
-                                            class="form-control float-right"
-                                            placeholder="Search"
-                                        />
-                                        <div class="input-group-append">
-                                            <button type="button" class="btn btn-primary" @click="getData">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
 

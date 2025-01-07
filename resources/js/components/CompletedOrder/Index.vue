@@ -16,7 +16,7 @@
                         <div class="card">
                             <div class="card-header p-3">
                                 <div class="card-tools">
-                                filter
+
                                 </div>
                             </div>
 
