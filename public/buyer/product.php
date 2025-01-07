@@ -313,8 +313,6 @@ if($success_message1 != '') {
     </div>
 </form>
 
-<<<<<<< HEAD
-=======
                                 <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
                                 <span>
                                         <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
@@ -488,7 +486,6 @@ if($success_message1 != '') {
 
 
                             </form>
->>>>>>> df4680cb15b87ee1ab2bb0cf3b0757b2e326d090
 
 						</div>
                         </div>
