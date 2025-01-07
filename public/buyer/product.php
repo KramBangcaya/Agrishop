@@ -261,6 +261,8 @@ if($success_message1 != '') {
                                 </div>
 							</div> -->
                             <form action="" method="post" onsubmit="return checkStock();">
+
+
     <div class="p-price"><br><br><br><br>
 
         <h1><?php echo $p_name; ?></h1>
@@ -277,6 +279,8 @@ if($success_message1 != '') {
             <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
         </span>
     </div>
+
+
     <div class="p-price">
         <span style="font-size:14px;">Measurement</span><br>
         <span>
@@ -298,11 +302,14 @@ if($success_message1 != '') {
     <input type="hidden" name="s_id" value="<?php echo $s_id; ?>">
     <input type="hidden" name="s_contact_number" value="<?php echo $s_contact_number; ?>">
     <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
-
     <div class="p-quantity">
-        <?php echo LANG_VALUE_55; ?> <br>
-        <input type="number" class="input-text qty" step="1" min="1" max="<?php echo $p_qty; ?>" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" id="quantityInput">
+    <?php echo LANG_VALUE_55; ?> <br>
+    <div class="quantity-container">
+        <button type="button" class="qty-btn qty-minus">-</button>
+        <input type="text" class="input-text qty" step="1" min="1" max="<?php echo $p_qty; ?>" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" id="quantityInput">
+        <button type="button" class="qty-btn qty-plus">+</button>
     </div>
+</div>
 
     <div id="stockErrorMessage" style="color: red; font-size: 14px; display: none;">
         Item is over the available stocks.
@@ -313,40 +320,10 @@ if($success_message1 != '') {
     </div>
 </form>
 
-                                <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
-                                <span>
-                                        <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
-                                </span>
-                            </div>
-                            <div class="p-price">
-                                <span style="font-size:14px;">Measurement</span><br>
-                                <span>
-                                        <?php echo $p_measurement; ?>
-                                </span>
-                            </div>
-                            <div class="p-price">
-                                <span style="font-size:14px;">Stock</span><br>
-                                <span>
-                                        <?php echo $p_qty; ?>
-                                </span>
-                            </div>
-                            <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
-                            <input type="hidden" name="p_name" value="<?php echo $p_name; ?>">
-                            <input type="hidden" name="p_featured_photo" value="<?php echo $p_featured_photo; ?>">
-                            <input type="hidden" name="s_name" value="<?php echo $s_name; ?>">
-                            <input type="hidden" name="s_lastname" value="<?php echo $s_last; ?>">
-                            <input type="hidden" name="qrcode" value="<?php echo $qrcode; ?>">
-                            <input type="hidden" name="s_id" value="<?php echo $s_id; ?>">
-                            <input type="hidden" name="s_contact_number" value="<?php echo $s_contact_number; ?>">
-                            <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
-                            <div class="p-quantity">
-    <?php echo LANG_VALUE_55; ?> <br>
-    <div class="quantity-container">
-        <button type="button" class="qty-btn qty-minus">-</button>
-        <input type="text" class="input-text qty" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" id="quantityInput">
-        <button type="button" class="qty-btn qty-plus">+</button>
-    </div>
-</div>
+
+
+
+
 
 <script>
     document.getElementById('quantityInput').addEventListener('input', function (e) {
