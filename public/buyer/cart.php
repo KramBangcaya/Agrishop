@@ -25,13 +25,93 @@ foreach ($result as $row) {
     $banner_cart = $row['banner_cart'];
 }
 ?>
+<?php
+$error_message = '';
+if(isset($_POST['form1'])) {
+//var_dump($_POST);
+
+$url = API_BASE_URL. '/products/all';
+$json = file_get_contents($url);
+$apiResponse = json_decode($json, true);
+
+// Check if API response is valid
+if (isset($apiResponse['data'])) {
+    $result = $apiResponse['data'];
+} else {
+    $result = [];
+}
+
+// Initialize arrays for product information
+$table_product_id = [];
+$table_quantity = [];
+foreach ($result as $row) {
+    $table_product_id[] = $row['id'];
+    $table_quantity[] = $row['Quantity'];
+
+}
+
+
+// Initialize arrays from POST request
+$arr1 = $arr2 = $arr3 = [];
+if (isset($_POST['product_id']) && is_array($_POST['product_id'])) {
+    $arr1 = $_POST['product_id'];
+    // var_dump($_POST['product_id']);
+}
+if (isset($_POST['quantity']) && is_array($_POST['quantity'])) {
+    $arr2 = $_POST['quantity'];
+}
+if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
+    $arr3 = $_POST['product_name'];
+}
+
+    $i=0;
+    foreach($_POST['product_id'] as $val) {
+        $i++;
+        $arr1[$i] = $val;
+    }
+    $i=0;
+    foreach($_POST['quantity'] as $val) {
+        $i++;
+        $arr2[$i] = $val;
+    }
+
+    $allow_update = 1;
+    for($i=1;$i<=count($arr1);$i++) {
+        for($j=1;$j<=count($table_product_id);$j++) {
+            if($arr1[$i] == $table_product_id[$j]) {
+                $temp_index = $j;
+                break;
+            }
+        }
+        if($table_quantity[$temp_index] < $arr2[$i]) {
+        	$allow_update = 0;
+           // $error_message .= '"'.$arr2[$i].'" items are not available for "'.$arr3[$i].'"\n';
+        } else {
+            $_SESSION['cart_p_qty'][$i] = $arr2[$i];
+        }
+    }
+  //  $error_message .= '\nOther items quantity are updated successfully!';
+    ?>
+
+    <?php if($allow_update == 0): ?>
+    	<script>alert('<?php echo $error_message; ?>');</script>
+	<?php else: ?>
+		<script>alert('All Items Quantity Update is Successful!');</script>
+	<?php endif; ?>
+    <?php
+
+}
+?>
+
+
+
 
 <?php
 $error_message = '';
 if (isset($_POST['form1'])) {
 
-    var_dump($_POST);
-    var_dump($_POST['_csrf']);
+    //var_dump($_POST);
+    //var_dump($_POST['_csrf']);
     // Fetch data from the API
     $url = API_BASE_URL. '/products/all';
     $json = file_get_contents($url);
@@ -90,12 +170,12 @@ if (isset($_POST['form1'])) {
         }
     }
 
-    if ($allow_update == 0) {
-        $error_message .= '\nOther items quantity are updated successfully!';
-        echo "<script>alert('" . $error_message . "');</script>";
-    } else {
-        echo "<script>alert('All Items Quantity Update is Successful!');</script>";
-    }
+    // if ($allow_update == 0) {
+    //     $error_message .= '\nOther items quantity are updated successfully!';
+    //     echo "<script>alert('" . $error_message . "');</script>";
+    // } else {
+    //     echo "<script>alert('All Items Quantity Update is Successful!');</script>";
+    // }
 }
 ?>
     <div class="page-banner-inner" style="font-size:50px;">
@@ -120,9 +200,19 @@ if (isset($_POST['form1'])) {
                     <div class="table-responsive">
 
                     <div class="cart">
+
+
+
     <?php
     // Ensure session data is properly initialized
     $table_total_price = 0;
+
+    $i=0;
+    foreach($_SESSION['cart_p_qty'] as $key => $value)
+    {
+        $i++;
+        $arr_cart_p_qty[$i] = $value;
+    }
 
     $arr_cart_p_id = isset($_SESSION['cart_p_id']) ? array_values($_SESSION['cart_p_id']) : [];
     $arr_cart_p_qty = isset($_SESSION['cart_p_qty']) ? array_values($_SESSION['cart_p_qty']) : [];
@@ -158,7 +248,7 @@ if (isset($_POST['form1'])) {
                         <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
                              alt="Product Image"
                              style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
-                        <input type="text" name="product_id[]" value="<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>">
+                        <input type="hidden" name="product_id[]" value="<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>">
 
                         <!-- Quantity and Total -->
                         <div style="margin-top: 10px; font-size: medium;">

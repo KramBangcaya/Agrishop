@@ -37,6 +37,43 @@ foreach ($result as $row)
     $after_body = $row['after_body'];
 }
 
+// Checking the order table and removing the pending transaction that are 24 hours+ old. Very important
+$current_date_time = date('Y-m-d H:i:s');
+$statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_status=?");
+$statement->execute(array('Pending'));
+$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+foreach ($result as $row) {
+	$ts1 = strtotime($row['payment_date']);
+	$ts2 = strtotime($current_date_time);
+	$diff = $ts2 - $ts1;
+	$time = $diff/(3600);
+	if($time>24) {
+
+		// Return back the stock amount
+		$statement1 = $pdo->prepare("SELECT * FROM tbl_order WHERE payment_id=?");
+		$statement1->execute(array($row['payment_id']));
+		$result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($result1 as $row1) {
+			$statement2 = $pdo->prepare("SELECT * FROM products WHERE id=?");
+			$statement2->execute(array($row1['product_id']));
+			$result2 = $statement2->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($result2 as $row2) {
+				$p_qty = $row2['Quantity'];
+			}
+			$final = $p_qty+$row1['quantity'];
+
+			$statement = $pdo->prepare("UPDATE products SET Quantity=? WHERE id=?");
+			$statement->execute(array($final,$row1['product_id']));
+		}
+
+		// Deleting data from table
+		$statement1 = $pdo->prepare("DELETE FROM tbl_order WHERE payment_id=?");
+		$statement1->execute(array($row['payment_id']));
+
+		$statement1 = $pdo->prepare("DELETE FROM tbl_payment WHERE id=?");
+		$statement1->execute(array($row['id']));
+	}
+}
 ?>
 
 
@@ -106,6 +143,27 @@ foreach ($result as $row)
 		<?php
 	}
 
+	if($cur_page == 'about.php') {
+		?>
+		<title><?php echo $about_meta_title; ?></title>
+		<meta name="keywords" content="<?php echo $about_meta_keyword; ?>">
+		<meta name="description" content="<?php echo $about_meta_description; ?>">
+		<?php
+	}
+	if($cur_page == 'faq.php') {
+		?>
+		<title><?php echo $faq_meta_title; ?></title>
+		<meta name="keywords" content="<?php echo $faq_meta_keyword; ?>">
+		<meta name="description" content="<?php echo $faq_meta_description; ?>">
+		<?php
+	}
+	if($cur_page == 'contact.php') {
+		?>
+		<title><?php echo $contact_meta_title; ?></title>
+		<meta name="keywords" content="<?php echo $contact_meta_keyword; ?>">
+		<meta name="description" content="<?php echo $contact_meta_description; ?>">
+		<?php
+	}
 	if($cur_page == 'product.php')
 	{
 		$statement = $pdo->prepare("SELECT * FROM products WHERE id=?");
@@ -217,8 +275,56 @@ foreach ($result as $row)
 					}
 					?>
 
+<li>
+    <a href="cart.php">
+        <i class="fa fa-shopping-cart"></i>
+        <?php echo LANG_VALUE_18; ?> (<b><?php
+        if (isset($_SESSION['cart_p_id']) && is_array($_SESSION['cart_p_id'])) {
+            // Count the total number of unique product IDs
+            $total_products = count($_SESSION['cart_p_id']);
+            echo $total_products; // Display the total product count
+            echo ' ';
+        } else {
+            echo '0';
+        }
 
+        if (isset($_SESSION['cart_p_qty']) && is_array($_SESSION['cart_p_qty'])) {
+            $table_total_price = 0;
+            $i = 0;
+
+            // Loop through quantities and prices to calculate the total price
+            foreach ($_SESSION['cart_p_qty'] as $key => $value) {
+                $i++;
+                $arr_cart_p_qty[$i] = $value;
+            }
+
+            $i = 0;
+            foreach ($_SESSION['cart_p_current_price'] as $key => $value) {
+                $i++;
+                $arr_cart_p_current_price[$i] = $value;
+            }
+
+            for ($i = 1; $i <= count($arr_cart_p_qty); $i++) {
+                if (isset($arr_cart_p_current_price[$i])) {
+                    $row_total_price = $arr_cart_p_qty[$i] * $arr_cart_p_current_price[$i];
+                    $table_total_price += $row_total_price;
+                }
+            }
+
+           // echo number_format($table_total_price, 2); // Display total price formatted
+        } else {
+          //  echo '0.00'; // If no items, total price is 0
+        }
+        ?></b>)
+    </a>
+</li>
 				</ul>
+			</div>
+			<div class="col-md-3 search-area">
+				<form class="navbar-form navbar-left" role="search" action="search-result.php" method="get">
+					<?php $csrf->echoInputField(); ?>
+
+				</form>
 			</div>
 		</div>
 	</div>

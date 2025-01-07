@@ -364,10 +364,86 @@ if($success_message1 != '') {
     }
 </style>
 
+<!-- Modal -->
+<div id="successModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" style="cursor: pointer;">&times;</span>
+        <p style="font-size:18px; font-weight: bold">Item has been added to the cart!</p>
+    </div>
+</div>
 
-							<div class="btn-cart btn-cart1">
-                                <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
-							</div>
+<!-- Add to Cart Button -->
+<div class="btn-cart btn-cart1">
+    <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart" id="addToCartBtn">
+</div>
+
+<!-- JavaScript -->
+<script>
+    // Get modal and button elements
+    var addToCartBtn = document.getElementById('addToCartBtn');
+    var modal = document.getElementById('successModal');
+    var closeBtn = document.getElementsByClassName('close')[0];
+
+    // Show the modal when the Add to Cart button is clicked
+    addToCartBtn.addEventListener('click', function() {
+        modal.style.display = 'block';
+    });
+
+    // Close the modal when the close button is clicked
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    // Close the modal if the user clicks outside the modal content
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+</script>
+
+<!-- Optional Styling -->
+<style>
+    /* Modal styling */
+    .modal {
+        display: none; /* Initially hidden */
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+    }
+
+    .close {
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        float: right;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
 
                             </form>
 
