@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('create', [App\Http\Controllers\ProductsController::class, 'store']);
         Route::post('update/{id}', [App\Http\Controllers\ProductsController::class, 'update']);
         Route::delete('delete/{id}', [App\Http\Controllers\ProductsController::class, 'destroy']);
+
     });
     Route::group(['prefix' => 'Report'], function () {
         Route::get('list', [App\Http\Controllers\ReportController::class, 'index']);
@@ -101,6 +102,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 Route::group(['prefix' => 'product1'], function () {
     Route::get('all', [App\Http\Controllers\ProductsController::class, 'index_all']);
+    Route::post('minus_product/{id}', [App\Http\Controllers\ProductsController::class, 'minus_product']);
 });
 
 Route::group(['prefix' => 'report'], function () {

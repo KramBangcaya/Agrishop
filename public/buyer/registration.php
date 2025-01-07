@@ -11,8 +11,6 @@ foreach ($result as $row) {
 }
 ?>
 
-<<<<<<< HEAD
-=======
 <!-- Modal for displaying messages -->
 <div id="messageModal" class="modal" tabindex="-1" role="dialog" style="display: none;">
     <div class="modal-dialog" role="document">
@@ -59,7 +57,6 @@ foreach ($result as $row) {
     }
 </style>
 
->>>>>>> aa34e4fecb5c50a8a6538b9226766963f0402361
 <?php
 if (isset($_POST['form1'])) {
 

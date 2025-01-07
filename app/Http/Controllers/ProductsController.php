@@ -46,6 +46,38 @@ class ProductsController extends Controller
         ], 200);
     }
 
+    public function minus_product($id, Request $request)
+{
+    // Get the product by its ID
+    $product = Products::find($id);
+
+    if (!$product) {
+        return response()->json(['status' => 'error', 'message' => 'Product not found'], 404);
+    }
+
+
+    // Get the quantity to decrease from the request body
+    $quantity_to_decrease = $request->input('quantity_to_decrease');
+
+    if ($quantity_to_decrease <= 0) {
+        return response()->json(['status' => 'error', 'message' => 'Invalid quantity'], 400);
+    }
+
+    // Check if there is enough stock
+    if ($product->Quantity < $quantity_to_decrease) {
+        return response()->json(['status' => 'error', 'message' => 'Not enough stock'], 400);
+    }
+
+    // Reduce the stock by the specified quantity
+    $product->Quantity -= $quantity_to_decrease;
+
+    // Save the updated product stock
+    $product->save();
+
+    return response()->json(['status' => 'success', 'message' => 'Product stock updated successfully']);
+}
+
+
     public function category_all(Request $request, $id){
         $data = Products::where('idCategory', $id)->get();
 

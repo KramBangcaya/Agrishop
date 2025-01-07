@@ -78,9 +78,9 @@ class RegisterController extends Controller
             ],
         ]);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+        // if ($validator->fails()) {
+        //     return back()->withErrors($validator)->withInput();
+        // }
 
         $qrcode = request()->file('qrcode');
         $qrcodes = [];
