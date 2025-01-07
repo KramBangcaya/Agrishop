@@ -12859,11 +12859,7 @@ var staticRenderFns = [function () {
   }, [_vm._v("Orders ")])])])])]);
 }, function () {
   var _vm = this,
-<<<<<<< HEAD
     _c = _vm._self._c;
-=======
-      _c = _vm._self._c;
-
   return _c("div", {
     staticClass: "card-header p-3"
   }, [_c("div", {
@@ -12871,9 +12867,7 @@ var staticRenderFns = [function () {
   })]);
 }, function () {
   var _vm = this,
-      _c = _vm._self._c;
-
->>>>>>> 24c4c8bc0edc364f1d39896536d1ccdb9e7c2736
+    _c = _vm._self._c;
   return _c("thead", [_c("tr", [_c("th", [_vm._v("Proof")]), _vm._v(" "), _c("th", [_vm._v("Buyer's Name")]), _vm._v(" "), _c("th", [_vm._v("Buyer Address")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Ordered Quantity")]), _vm._v(" "), _c("th", [_vm._v("Total Price")]), _vm._v(" "), _c("th", [_vm._v("Status")]), _vm._v(" "), _c("th", [_vm._v("Reason")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]);
 }];
 render._withStripped = true;
@@ -33907,7 +33901,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.nav-link.btn[data-v-98c5f55e] {\n    background: none;\n    border: 1px solid #ccc;\n    padding: 5px 10px;\n    font: inherit;\n    color: inherit;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    border-radius: 4px;\n    text-align: left;\n}\n.nav-link.btn p[data-v-98c5f55e] {\n    margin: 0;\n    padding-left: 5px;\n}\n.nav-link.btn[data-v-98c5f55e]:hover {\n    background-color: #f0f0f0;\n}\n.modal-overlay[data-v-98c5f55e] {\nposition: fixed;\ntop: 50%; /* Center vertically */\nleft: 60%; /* Center horizontally */\ntransform: translate(-50%, -50%); /* Center horizontally */\nwidth: 70%;\nheight: 70%;\nbackground: white;\ndisplay: flex;\njustify-content: center;\nalign-items: center;\nz-index: 500;\n}\n.modal-content[data-v-98c5f55e] {\ndisplay: flex;\njustify-content: center;\nalign-items: center;\n}\n.modal-content img[data-v-98c5f55e] {\nmax-width: 50%;\nmax-height: 50%;\nborder: 2px solid white;\nborder-radius: 10px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.nav-link.btn[data-v-98c5f55e] {\r\n    background: none;\r\n    border: 1px solid #ccc;\r\n    padding: 5px 10px;\r\n    font: inherit;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    display: flex;\r\n    align-items: center;\r\n    border-radius: 4px;\r\n    text-align: left;\n}\n.nav-link.btn p[data-v-98c5f55e] {\r\n    margin: 0;\r\n    padding-left: 5px;\n}\n.nav-link.btn[data-v-98c5f55e]:hover {\r\n    background-color: #f0f0f0;\n}\n.modal-overlay[data-v-98c5f55e] {\r\nposition: fixed;\r\ntop: 50%; /* Center vertically */\r\nleft: 60%; /* Center horizontally */\r\ntransform: translate(-50%, -50%); /* Center horizontally */\r\nwidth: 70%;\r\nheight: 70%;\r\nbackground: white;\r\ndisplay: flex;\r\njustify-content: center;\r\nalign-items: center;\r\nz-index: 500;\n}\n.modal-content[data-v-98c5f55e] {\r\ndisplay: flex;\r\njustify-content: center;\r\nalign-items: center;\n}\n.modal-content img[data-v-98c5f55e] {\r\nmax-width: 50%;\r\nmax-height: 50%;\r\nborder: 2px solid white;\r\nborder-radius: 10px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -34027,7 +34021,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.nav-link.btn[data-v-a6ae3e56] {\n    background: none;\n    border: 1px solid #ccc;\n    padding: 5px 10px;\n    font: inherit;\n    color: inherit;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    border-radius: 4px;\n    text-align: left;\n}\n.nav-link.btn p[data-v-a6ae3e56] {\n    margin: 0;\n    padding-left: 5px;\n}\n.nav-link.btn[data-v-a6ae3e56]:hover {\n    background-color: #f0f0f0;\n}\n.modal-overlay[data-v-a6ae3e56] {\nposition: fixed;\ntop: 50%; /* Center vertically */\nleft: 60%; /* Center horizontally */\ntransform: translate(-50%, -50%); /* Center horizontally */\nwidth: 70%;\nheight: 70%;\nbackground: white;\ndisplay: flex;\njustify-content: center;\nalign-items: center;\nz-index: 500;\n}\n.modal-content[data-v-a6ae3e56] {\ndisplay: flex;\njustify-content: center;\nalign-items: center;\n}\n.modal-content img[data-v-a6ae3e56] {\nmax-width: 50%;\nmax-height: 50%;\nborder: 2px solid white;\nborder-radius: 10px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.nav-link.btn[data-v-a6ae3e56] {\r\n    background: none;\r\n    border: 1px solid #ccc;\r\n    padding: 5px 10px;\r\n    font: inherit;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    display: flex;\r\n    align-items: center;\r\n    border-radius: 4px;\r\n    text-align: left;\n}\n.nav-link.btn p[data-v-a6ae3e56] {\r\n    margin: 0;\r\n    padding-left: 5px;\n}\n.nav-link.btn[data-v-a6ae3e56]:hover {\r\n    background-color: #f0f0f0;\n}\n.modal-overlay[data-v-a6ae3e56] {\r\nposition: fixed;\r\ntop: 50%; /* Center vertically */\r\nleft: 60%; /* Center horizontally */\r\ntransform: translate(-50%, -50%); /* Center horizontally */\r\nwidth: 70%;\r\nheight: 70%;\r\nbackground: white;\r\ndisplay: flex;\r\njustify-content: center;\r\nalign-items: center;\r\nz-index: 500;\n}\n.modal-content[data-v-a6ae3e56] {\r\ndisplay: flex;\r\njustify-content: center;\r\nalign-items: center;\n}\n.modal-content img[data-v-a6ae3e56] {\r\nmax-width: 50%;\r\nmax-height: 50%;\r\nborder: 2px solid white;\r\nborder-radius: 10px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

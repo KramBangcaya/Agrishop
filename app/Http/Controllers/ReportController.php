@@ -28,6 +28,21 @@ class ReportController extends Controller
         ], 200);
     }
 
+    public function report_user(Request $request){
+        // dd($request->all());
+        $userID = $request->id;
+        // dd($userID);
+        $data = report::where('userID',$userID)
+        ->get();
+
+        // $data = $data->paginate($request->length);
+
+        return response([
+            'data' => $data,
+            'userID' => $userID,
+        ], 200);
+    }
+
     public function index_all(Request $request){
         $data = report::all();
 
@@ -35,6 +50,8 @@ class ReportController extends Controller
             'data' => $data
         ], 200);
     }
+
+
 
     public function store(Request $request)
     {
@@ -86,4 +103,26 @@ class ReportController extends Controller
         $user->delete();
         return response(['message' => 'success'], 200);
     }
+
+    public function receiveFromAPI(Request $request)
+{
+
+    $photoPaths = [];
+    if ($request->hasFile('proof')) {
+        foreach ($request->file('proof') as $photo) {
+            $path = $photo->store('proof', 'public'); // Store files in 'proof' directory
+            $photoPaths[] = $path;
+        }
+    }
+
+    // Create a new report
+    $report = report::create([
+        'reason' => $request->reason,
+        'buyer_name' => $request->reported_name,
+        'userID' => $request->userID,
+        'proof' => json_encode($photoPaths),
+    ]);
+
+    return response(['message' => 'Report received successfully'], 201);
+}
 }

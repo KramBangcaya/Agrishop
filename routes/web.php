@@ -4,6 +4,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\MobileController;
+use App\Http\Controllers\ReportController;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,9 @@ Route::prefix('products')->group(function () {
 // Route::prefix('user')->group(function () {
 //     Route::post('/register', [App\Http\Controllers\API\UserController::class, 'register']);
 // });
+Route::prefix('report')->group(function () {
+    Route::get('/all_user', [ReportController::class, 'report_user']);
+});
 
 Route::prefix('categories')->group(function () {
     Route::get('/all', [CategoryController::class, 'all']);
@@ -58,6 +62,7 @@ Route::prefix('login')->group(function () {
 
 Route::prefix('seller')->group(function () {
     Route::get('/all', [UserController::class, 'all']);
+    Route::get('/all_buyer', [UserController::class, 'all_buyer']);
 });
 Route::prefix('register')->group(function () {
     Route::get('/submit', [MobileController::class, 'Registration']);
