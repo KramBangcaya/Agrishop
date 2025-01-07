@@ -7832,7 +7832,7 @@ __webpack_require__.r(__webpack_exports__);
       // const measurementIds = this.form.measurement_id.map(measurement => measurement.id);
 
       // this.form.measurement_id = measurementIds;
-      this.form.post('api/product/update/' + this.form.id).then(function () {
+      this.form.post('api/replenishment/update/' + this.form.id).then(function () {
         toast.fire({
           icon: 'success',
           text: 'Data Saved.'
@@ -9744,7 +9744,7 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "/buyer/" + order.photo,
+        src: "http://192.168.1.129:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
@@ -12757,12 +12757,12 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "/buyer/" + order.photo,
+        src: "http://192.168.1.129:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
         click: function click($event) {
-          return _vm.openImageModal("/buyer/" + order.photo);
+          return _vm.openImageModal("http://192.168.1.129:8080/buyer/" + order.photo);
         }
       }
     }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.reason_cancel))]), _vm._v(" "), order.order_status !== "Cancelled Order" ? _c("td", {
@@ -12859,7 +12859,16 @@ var staticRenderFns = [function () {
   }, [_vm._v("Orders ")])])])])]);
 }, function () {
   var _vm = this,
+<<<<<<< HEAD
     _c = _vm._self._c;
+=======
+<<<<<<< HEAD
+    _c = _vm._self._c;
+=======
+      _c = _vm._self._c;
+
+>>>>>>> 0a1738e038cf5ee1c7ab6e2192ca14d544f7d641
+>>>>>>> 474b29534885f73b9ef02cadeda9d7cfd2c0e7fa
   return _c("div", {
     staticClass: "card-header p-3"
   }, [_c("div", {
@@ -12867,7 +12876,16 @@ var staticRenderFns = [function () {
   })]);
 }, function () {
   var _vm = this,
+<<<<<<< HEAD
     _c = _vm._self._c;
+=======
+<<<<<<< HEAD
+    _c = _vm._self._c;
+=======
+      _c = _vm._self._c;
+
+>>>>>>> 0a1738e038cf5ee1c7ab6e2192ca14d544f7d641
+>>>>>>> 474b29534885f73b9ef02cadeda9d7cfd2c0e7fa
   return _c("thead", [_c("tr", [_c("th", [_vm._v("Proof")]), _vm._v(" "), _c("th", [_vm._v("Buyer's Name")]), _vm._v(" "), _c("th", [_vm._v("Buyer Address")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Ordered Quantity")]), _vm._v(" "), _c("th", [_vm._v("Total Price")]), _vm._v(" "), _c("th", [_vm._v("Status")]), _vm._v(" "), _c("th", [_vm._v("Reason")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]);
 }];
 render._withStripped = true;

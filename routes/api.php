@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::put('response', [App\Http\Controllers\ReportController::class, 'response']);
         Route::delete('delete/{id}', [App\Http\Controllers\ReportController::class, 'destroy']);
         Route::get('list_all', [App\Http\Controllers\ReportController::class, 'index_all']);
+
     });
     Route::group(['prefix' => 'replenishment'], function () {
         Route::get('list', [App\Http\Controllers\ProductsController::class, 'index1']);
@@ -100,4 +101,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 Route::group(['prefix' => 'product1'], function () {
     Route::get('all', [App\Http\Controllers\ProductsController::class, 'index_all']);
+});
+
+Route::group(['prefix' => 'report'], function () {
+Route::post('receive-report', [App\Http\Controllers\ReportController::class, 'receiveFromAPI']);
 });

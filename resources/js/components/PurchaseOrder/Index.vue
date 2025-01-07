@@ -42,10 +42,10 @@
                                             <td>
                                                 <img
                                                 v-if="order.photo && order.photo.length"
-                                                :src="'/buyer/'+order.photo"
+                                                :src="'http://192.168.1.129:8080/buyer/'+order.photo"
                                                 alt="Product Photo"
                                                 style="max-width: 200px; max-height: 200px; cursor: pointer;"
-                                                @click="openImageModal('/buyer/' + order.photo)"
+                                                @click="openImageModal('http://192.168.1.129:8080/buyer/' + order.photo)"
                                                 />
                                             </td>
 
@@ -218,7 +218,6 @@ export default {
             reason_cancel: this.reason_cancel,
             order_status: "Cancelled Order",
         };
-
         console.log(cancelPayload);
         try {
             const response = await fetch('http://192.168.1.129:8080/buyer/order-cancelled.php', {

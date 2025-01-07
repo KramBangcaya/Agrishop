@@ -74,7 +74,7 @@ export default {
             // const measurementIds = this.form.measurement_id.map(measurement => measurement.id);
 
             // this.form.measurement_id = measurementIds;
-            this.form.post('api/product/update/' + this.form.id).then(() => {
+            this.form.post('api/replenishment/update/' + this.form.id).then(() => {
                 toast.fire({
                     icon: 'success',
                     text: 'Data Saved.',
