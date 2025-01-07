@@ -302,22 +302,121 @@ if($success_message1 != '') {
     <input type="hidden" name="s_id" value="<?php echo $s_id; ?>">
     <input type="hidden" name="s_contact_number" value="<?php echo $s_contact_number; ?>">
     <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
+
+
     <div class="p-quantity">
     <?php echo LANG_VALUE_55; ?> <br>
     <div class="quantity-container">
         <button type="button" class="qty-btn qty-minus">-</button>
-        <input type="text" class="input-text qty" step="1" min="1" max="<?php echo $p_qty; ?>" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" id="quantityInput">
+        <input
+            type="text"
+            class="input-text qty"
+            step="1"
+            min="1"
+            max="<?php echo $p_qty; ?>"
+            name="p_qty"
+            value="1"
+            title="Qty"
+            size="4"
+            pattern="[0-9]*"
+            inputmode="numeric"
+            id="quantityInput">
         <button type="button" class="qty-btn qty-plus">+</button>
     </div>
 </div>
 
-    <div id="stockErrorMessage" style="color: red; font-size: 14px; display: none;">
-        Item is over the available stocks.
-    </div>
+<div id="stockErrorMessage" style="color: red; font-size: 14px; display: none;">
+    Item is over the available stocks.
+</div>
 
-    <div class="btn-cart btn-cart1">
-        <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
+<div class="btn-cart btn-cart1" id="addToCartDiv">
+    <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart" id="addToCartBtn">
+</div>
+
+<div id="successModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" style="cursor: pointer;">&times;</span>
+        <p style="font-size:18px; font-weight: bold">Item has been added to the cart!</p>
     </div>
+</div>
+
+<script>
+    // Get elements
+    var addToCartBtn = document.getElementById('addToCartBtn');
+    var addToCartDiv = document.getElementById('addToCartDiv');
+    var modal = document.getElementById('successModal');
+    var closeBtn = document.getElementsByClassName('close')[0];
+    var stockErrorMessage = document.getElementById('stockErrorMessage');
+    var quantityInput = document.getElementById('quantityInput');
+    var qtyPlusBtn = document.querySelector('.qty-plus');
+    var qtyMinusBtn = document.querySelector('.qty-minus');
+    var availableStock = <?php echo $p_qty; ?>;
+
+    // Function to check stock and toggle UI
+    function checkStock() {
+        var enteredQty = parseInt(quantityInput.value, 10);
+
+        // Restrict quantity to available stock
+        if (enteredQty > availableStock) {
+            stockErrorMessage.style.display = 'block'; // Show error message
+            addToCartBtn.disabled = true; // Disable Add to Cart button
+            quantityInput.value = availableStock; // Reset to max stock
+        } else if (enteredQty < 1 || isNaN(enteredQty)) {
+            quantityInput.value = 1; // Reset to minimum
+            stockErrorMessage.style.display = 'none';
+            addToCartBtn.disabled = false;
+        } else {
+            stockErrorMessage.style.display = 'none'; // Hide error message
+            addToCartBtn.disabled = false; // Enable Add to Cart button
+        }
+    }
+
+    // Increment Quantity
+    qtyPlusBtn.addEventListener('click', function () {
+        var currentQty = parseInt(quantityInput.value, 10);
+        if (isNaN(currentQty)) currentQty = 1;
+
+        if (currentQty < availableStock) {
+            quantityInput.value = currentQty + 1;
+            checkStock();
+        }
+    });
+
+    // Decrement Quantity
+    qtyMinusBtn.addEventListener('click', function () {
+        var currentQty = parseInt(quantityInput.value, 10);
+        if (isNaN(currentQty) || currentQty <= 1) {
+            quantityInput.value = 1;
+        } else {
+            quantityInput.value = currentQty - 1;
+        }
+        checkStock();
+    });
+
+    // Validate manually entered quantity
+    quantityInput.addEventListener('input', function () {
+        checkStock();
+    });
+
+    // Show modal when Add to Cart button is clicked
+    addToCartBtn.addEventListener('click', function () {
+        modal.style.display = 'block';
+    });
+
+    // Close the modal when the close button is clicked
+    closeBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    // Close the modal if the user clicks outside the modal content
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+</script>
+
+
 </form>
 
 
@@ -382,42 +481,7 @@ if($success_message1 != '') {
 </style>
 
 <!-- Modal -->
-<div id="successModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <span class="close" style="cursor: pointer;">&times;</span>
-        <p style="font-size:18px; font-weight: bold">Item has been added to the cart!</p>
-    </div>
-</div>
 
-<!-- Add to Cart Button -->
-<div class="btn-cart btn-cart1">
-    <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart" id="addToCartBtn">
-</div>
-
-<!-- JavaScript -->
-<script>
-    // Get modal and button elements
-    var addToCartBtn = document.getElementById('addToCartBtn');
-    var modal = document.getElementById('successModal');
-    var closeBtn = document.getElementsByClassName('close')[0];
-
-    // Show the modal when the Add to Cart button is clicked
-    addToCartBtn.addEventListener('click', function() {
-        modal.style.display = 'block';
-    });
-
-    // Close the modal when the close button is clicked
-    closeBtn.addEventListener('click', function() {
-        modal.style.display = 'none';
-    });
-
-    // Close the modal if the user clicks outside the modal content
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
-</script>
 
 <!-- Optional Styling -->
 <style>
@@ -687,21 +751,7 @@ if($success_message1 != '') {
         });
     });
 
-    function checkStock() {
-        var enteredQty = document.getElementById('quantityInput').value;
-        var availableStock = <?php echo $p_qty; ?>;
-        var errorMessage = document.getElementById('stockErrorMessage');
 
-        // Check if entered quantity is greater than available stock
-        if (enteredQty > availableStock) {
-            errorMessage.style.display = 'block'; // Show the error message
-            return false; // Prevent form submission
-        } else {
-            errorMessage.style.display = 'none'; // Hide the error message
-        }
-
-        return true; // Allow form submission
-    }
 </script>
 
 <?php require_once('footer.php'); ?>
