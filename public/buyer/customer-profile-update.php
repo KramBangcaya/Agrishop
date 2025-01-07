@@ -51,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form1'])) {
         'lastname' => $_POST['lastname'],
         'contact_number' => $_POST['contact_number'],
         'address' => $_POST['address'],
-        'cust_password' => $_POST['cust_password']
     ];
 
     // Send the POST request to the API
