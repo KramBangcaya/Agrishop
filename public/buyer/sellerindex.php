@@ -64,7 +64,7 @@ if (!empty($products)) {
                                     <?php if ($product['Quantity'] == 0): ?>
                                         <div class="out-of-stock"><div class="inner">Out Of Stock</div></div>
                                     <?php else: ?>
-                                        <p><a href="product.php?id=<?php echo $product['product_id']; ?>"><i class="fa fa-shopping-cart"></i> Add to Cart</a></p>
+                                        <p><a href="product.php?id=<?php echo $product['product_id']; ?>"></i>View</a></p>
                                     <?php endif; ?>
                                 </div>
                             </div>

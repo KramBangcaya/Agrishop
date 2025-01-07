@@ -228,6 +228,8 @@ class UserController extends Controller
                     'users.lastname',
                     'users.email',
                     'users.password',
+                    'users.contact_number',
+                    'users.address',
                     'model_has_roles.role_id as role_id',
                     'roles.name as role_name')
             ->get();
