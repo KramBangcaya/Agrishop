@@ -260,55 +260,59 @@ if($success_message1 != '') {
 
                                 </div>
 							</div> -->
-                            <form action="" method="post">
-							<div class="p-price"><br><br><br><br>
+                            <form action="" method="post" onsubmit="return checkStock();">
+    <div class="p-price"><br><br><br><br>
 
-                            <h1><?php echo $p_name; ?></h1>
-<br>
-                            <span style="font-size:18px;">Product description</span>
-                            <div class="p-short-des" style="font-size:14px;font-weight: normal">
-                           <p>
-                                    <?php echo $p_description; ?>
-                                </p>
-                            </div>
+        <h1><?php echo $p_name; ?></h1>
+        <br>
+        <span style="font-size:18px;">Product description</span>
+        <div class="p-short-des" style="font-size:14px;font-weight: normal">
+            <p>
+                <?php echo $p_description; ?>
+            </p>
+        </div>
 
+        <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
+        <span>
+            <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
+        </span>
+    </div>
+    <div class="p-price">
+        <span style="font-size:14px;">Measurement</span><br>
+        <span>
+            <?php echo $p_measurement; ?>
+        </span>
+    </div>
+    <div class="p-price">
+        <span style="font-size:14px;">Stock</span><br>
+        <span>
+            <?php echo $p_qty; ?>
+        </span>
+    </div>
+    <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
+    <input type="hidden" name="p_name" value="<?php echo $p_name; ?>">
+    <input type="hidden" name="p_featured_photo" value="<?php echo $p_featured_photo; ?>">
+    <input type="hidden" name="s_name" value="<?php echo $s_name; ?>">
+    <input type="hidden" name="s_lastname" value="<?php echo $s_last; ?>">
+    <input type="hidden" name="qrcode" value="<?php echo $qrcode; ?>">
+    <input type="hidden" name="s_id" value="<?php echo $s_id; ?>">
+    <input type="hidden" name="s_contact_number" value="<?php echo $s_contact_number; ?>">
+    <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
 
-                                <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
-                                <span>
-                                        <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
-                                </span>
-                            </div>
-                            <div class="p-price">
-                                <span style="font-size:14px;">Measurement</span><br>
-                                <span>
-                                        <?php echo $p_measurement; ?>
-                                </span>
-                            </div>
-                            <div class="p-price">
-                                <span style="font-size:14px;">Stock</span><br>
-                                <span>
-                                        <?php echo $p_qty; ?>
-                                </span>
-                            </div>
-                            <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
-                            <input type="hidden" name="p_name" value="<?php echo $p_name; ?>">
-                            <input type="hidden" name="p_featured_photo" value="<?php echo $p_featured_photo; ?>">
-                            <input type="hidden" name="s_name" value="<?php echo $s_name; ?>">
-                            <input type="hidden" name="s_lastname" value="<?php echo $s_last; ?>">
-                            <input type="hidden" name="qrcode" value="<?php echo $qrcode; ?>">
-                            <input type="hidden" name="s_id" value="<?php echo $s_id; ?>">
-                            <input type="hidden" name="s_contact_number" value="<?php echo $s_contact_number; ?>">
-                            <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
-							<div class="p-quantity">
-                                <?php echo LANG_VALUE_55; ?> <br>
-								<input type="number" class="input-text qty" step="1" min="1" max="" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric">
-							</div>
+    <div class="p-quantity">
+        <?php echo LANG_VALUE_55; ?> <br>
+        <input type="number" class="input-text qty" step="1" min="1" max="<?php echo $p_qty; ?>" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" id="quantityInput">
+    </div>
 
-							<div class="btn-cart btn-cart1">
-                                <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
-							</div>
+    <div id="stockErrorMessage" style="color: red; font-size: 14px; display: none;">
+        Item is over the available stocks.
+    </div>
 
-                            </form>
+    <div class="btn-cart btn-cart1">
+        <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
+    </div>
+</form>
+
 
 						</div>
                         </div>
@@ -532,6 +536,22 @@ if($success_message1 != '') {
             mainImage.style.backgroundImage = `url(${imageUrl})`;
         });
     });
+
+    function checkStock() {
+        var enteredQty = document.getElementById('quantityInput').value;
+        var availableStock = <?php echo $p_qty; ?>;
+        var errorMessage = document.getElementById('stockErrorMessage');
+
+        // Check if entered quantity is greater than available stock
+        if (enteredQty > availableStock) {
+            errorMessage.style.display = 'block'; // Show the error message
+            return false; // Prevent form submission
+        } else {
+            errorMessage.style.display = 'none'; // Hide the error message
+        }
+
+        return true; // Allow form submission
+    }
 </script>
 
 <?php require_once('footer.php'); ?>
