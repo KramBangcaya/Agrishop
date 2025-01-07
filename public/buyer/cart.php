@@ -30,6 +30,11 @@ $error_message = '';
 if(isset($_POST['form1'])) {
 //var_dump($_POST);
 
+
+
+// Initialize arrays for product information
+
+$i = 0;
 $url = API_BASE_URL. '/products/all';
 $json = file_get_contents($url);
 $apiResponse = json_decode($json, true);
@@ -41,12 +46,10 @@ if (isset($apiResponse['data'])) {
     $result = [];
 }
 
-// Initialize arrays for product information
-$table_product_id = [];
-$table_quantity = [];
 foreach ($result as $row) {
-    $table_product_id[] = $row['id'];
-    $table_quantity[] = $row['Quantity'];
+    $i++;
+    $table_product_id[$i] = $row['id'];
+    $table_quantity[$i] = $row['Quantity'];
 
 }
 
@@ -75,77 +78,8 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
         $arr2[$i] = $val;
     }
 
-    $allow_update = 1;
-    for($i=1;$i<=count($arr1);$i++) {
-        for($j=1;$j<=count($table_product_id);$j++) {
-            if($arr1[$i] == $table_product_id[$j]) {
-                $temp_index = $j;
-                break;
-            }
-        }
-        if($table_quantity[$temp_index] < $arr2[$i]) {
-        	$allow_update = 0;
-           // $error_message .= '"'.$arr2[$i].'" items are not available for "'.$arr3[$i].'"\n';
-        } else {
-            $_SESSION['cart_p_qty'][$i] = $arr2[$i];
-        }
-    }
-  //  $error_message .= '\nOther items quantity are updated successfully!';
-    ?>
-
-    <?php if($allow_update == 0): ?>
-    	<script>alert('<?php echo $error_message; ?>');</script>
-	<?php else: ?>
-		<script>alert('All Items Quantity Update is Successful!');</script>
-	<?php endif; ?>
-    <?php
-
-}
-?>
 
 
-
-
-<?php
-$error_message = '';
-if (isset($_POST['form1'])) {
-
-    //var_dump($_POST);
-    //var_dump($_POST['_csrf']);
-    // Fetch data from the API
-    $url = API_BASE_URL. '/products/all';
-    $json = file_get_contents($url);
-    $apiResponse = json_decode($json, true);
-
-    // Check if API response is valid
-    if (isset($apiResponse['data'])) {
-        $result = $apiResponse['data'];
-    } else {
-        $result = [];
-    }
-
-    // Initialize arrays for product information
-    $table_product_id = [];
-    $table_quantity = [];
-    foreach ($result as $row) {
-        $table_product_id[] = $row['id'];
-        $table_quantity[] = $row['Quantity'];
-
-    }
-
-
-    // Initialize arrays from POST request
-    $arr1 = $arr2 = $arr3 = [];
-    if (isset($_POST['product_id']) && is_array($_POST['product_id'])) {
-        $arr1 = $_POST['product_id'];
-        // var_dump($_POST['product_id']);
-    }
-    if (isset($_POST['quantity']) && is_array($_POST['quantity'])) {
-        $arr2 = $_POST['quantity'];
-    }
-    if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
-        $arr3 = $_POST['product_name'];
-    }
 
     $allow_update = 1;
     $error_message = '';
@@ -165,19 +99,24 @@ if (isset($_POST['form1'])) {
 
 
                 $product_id = $arr1[$i]; // Product ID
-                $_SESSION['cart_p_qty'][$product_id] = $arr2[$i];
+                $_SESSION['cart_p_qty'][$i] = $arr2[$i];
             }
         }
     }
+  //  $error_message .= '\nOther items quantity are updated successfully!';
+    ?>
 
-    // if ($allow_update == 0) {
-    //     $error_message .= '\nOther items quantity are updated successfully!';
-    //     echo "<script>alert('" . $error_message . "');</script>";
-    // } else {
-    //     echo "<script>alert('All Items Quantity Update is Successful!');</script>";
-    // }
+    <?php if($allow_update == 0): ?>
+    	<script>alert('<?php echo $error_message; ?>');</script>
+	<?php else: ?>
+		<script>alert('All Items Quantity Update is Successful!');</script>
+	<?php endif; ?>
+    <?php
+
 }
 ?>
+
+
     <div class="page-banner-inner" style="font-size:50px;">
     <h1 style="font-size:50px;text-align: center">CART</h1>
 </div>
