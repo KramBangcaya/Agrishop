@@ -125,4 +125,6 @@ class ReportController extends Controller
 
     return response(['message' => 'Report received successfully'], 201);
 }
+
+
 }

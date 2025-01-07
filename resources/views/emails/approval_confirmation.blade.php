@@ -92,7 +92,7 @@
             <p class="approved-date">Approval Date: {{ $user->approved_at }}</p>
 
             <p>Thank you for joining us! We're excited to have you on board.</p>
-            <a href="http://192.168.1.101:8080/" class="button">Visit Your Dashboard</a>
+
         </div>
 
         <!-- Footer Section -->

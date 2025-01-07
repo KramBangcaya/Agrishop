@@ -41,10 +41,6 @@ Route::prefix('products')->group(function () {
     Route::get('/price-range', [App\Http\Controllers\ProductsController::class, 'getPrice']);
 });
 
-
-// Route::prefix('user')->group(function () {
-//     Route::post('/register', [App\Http\Controllers\API\UserController::class, 'register']);
-// });
 Route::prefix('report')->group(function () {
     Route::get('/all_user', [ReportController::class, 'report_user']);
 });
