@@ -58,6 +58,7 @@
                                             <td>{{ order.reason_cancel }}</td>
                                             <td v-if="order.order_status !== 'Cancelled Order'" class="text-left">
                                                 <button
+                                                 v-if="order.order_status !== 'For Delivery'"
                                                     type="button"
                                                     class="btn btn-primary btn-sm"
                                                     @click="confirmOrder(order.id)">
@@ -175,36 +176,73 @@ export default {
         },
         // Handle Confirm Order
         confirmOrder(id) {
-                const confirmPayload = {
-                    order_id: id,
-                    order_status: "For Delivery",
-                };
+    const confirmPayload = {
+        order_id: id,
+        order_status: "For Delivery",
+    };
 
-                fetch('http://192.168.1.129:8080/buyer/update-order-status.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(confirmPayload),
-                    })
-                        .then(async (response) => {
-                            const text = await response.text();
-                            console.log('Raw response:', text);
-                            return JSON.parse(text); // Attempt to parse JSON
-                        })
-                        .then(data => {
-                            if (data.status === 'success') {
-                                alert('Order with has been confirmed.');
-                                this.getData();
-                            } else {
-                                alert('Failed to confirm the order. Please try again.');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error confirming order:', error);
-                            alert('An error occurred while confirming the order.');
-                        });
-            },
+    // Find the order to get the product details
+    const order = this.orders.find(order => order.id === id);
+    if (!order) {
+        alert('Order not found');
+        return;
+    }
+
+    // Prepare the payload to decrease the product quantity
+    const productPayload = {
+        quantity_to_decrease: order.product_quantity, // Decrease the quantity based on the order
+    };
+
+    // Call the 'minus_product' API to update the product stock
+    fetch(`api/product1/minus_product/${order.product_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(productPayload),
+    })
+    .then(async (response) => {
+        const text = await response.text();
+        console.log('Raw response:', text);
+        return JSON.parse(text); // Parse JSON response
+    })
+    .then(data => {
+        if (data.status === 'success') {
+            // If product stock is updated successfully, proceed to confirm the order status
+            fetch('http://192.168.1.129:8080/buyer/update-order-status.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(confirmPayload),
+            })
+            .then(async (response) => {
+                const text = await response.text();
+                console.log('Raw response:', text);
+                return JSON.parse(text);
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Order has been confirmed.');
+                    this.getData(); // Refresh the order list
+                } else {
+                    alert('Failed to confirm the order. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error confirming order:', error);
+                alert('An error occurred while confirming the order.');
+            });
+        } else {
+            alert('Failed to update product stock. Please try again.');
+        }
+    })
+    .catch(error => {
+        // console.log(data.status);
+        console.error('Error updating product stock:', error);
+        alert('An error occurred while updating the product stock.');
+    });
+},
 
         // Handle Cancel Order
         async submitCancelOrder() {
