@@ -260,19 +260,61 @@ if($success_message1 != '') {
 
                                 </div>
 							</div> -->
-                            <form action="" method="post">
-							<div class="p-price"><br><br><br><br>
+                            <form action="" method="post" onsubmit="return checkStock();">
+    <div class="p-price"><br><br><br><br>
 
-                            <h1><?php echo $p_name; ?></h1>
-<br>
-                            <span style="font-size:18px;">Product description</span>
-                            <div class="p-short-des" style="font-size:14px;font-weight: normal">
-                           <p>
-                                    <?php echo $p_description; ?>
-                                </p>
-                            </div>
+        <h1><?php echo $p_name; ?></h1>
+        <br>
+        <span style="font-size:18px;">Product description</span>
+        <div class="p-short-des" style="font-size:14px;font-weight: normal">
+            <p>
+                <?php echo $p_description; ?>
+            </p>
+        </div>
 
+        <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
+        <span>
+            <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
+        </span>
+    </div>
+    <div class="p-price">
+        <span style="font-size:14px;">Measurement</span><br>
+        <span>
+            <?php echo $p_measurement; ?>
+        </span>
+    </div>
+    <div class="p-price">
+        <span style="font-size:14px;">Stock</span><br>
+        <span>
+            <?php echo $p_qty; ?>
+        </span>
+    </div>
+    <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
+    <input type="hidden" name="p_name" value="<?php echo $p_name; ?>">
+    <input type="hidden" name="p_featured_photo" value="<?php echo $p_featured_photo; ?>">
+    <input type="hidden" name="s_name" value="<?php echo $s_name; ?>">
+    <input type="hidden" name="s_lastname" value="<?php echo $s_last; ?>">
+    <input type="hidden" name="qrcode" value="<?php echo $qrcode; ?>">
+    <input type="hidden" name="s_id" value="<?php echo $s_id; ?>">
+    <input type="hidden" name="s_contact_number" value="<?php echo $s_contact_number; ?>">
+    <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
 
+    <div class="p-quantity">
+        <?php echo LANG_VALUE_55; ?> <br>
+        <input type="number" class="input-text qty" step="1" min="1" max="<?php echo $p_qty; ?>" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" id="quantityInput">
+    </div>
+
+    <div id="stockErrorMessage" style="color: red; font-size: 14px; display: none;">
+        Item is over the available stocks.
+    </div>
+
+    <div class="btn-cart btn-cart1">
+        <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
+    </div>
+</form>
+
+<<<<<<< HEAD
+=======
                                 <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
                                 <span>
                                         <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
@@ -299,16 +341,154 @@ if($success_message1 != '') {
                             <input type="hidden" name="s_id" value="<?php echo $s_id; ?>">
                             <input type="hidden" name="s_contact_number" value="<?php echo $s_contact_number; ?>">
                             <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
-							<div class="p-quantity">
-                                <?php echo LANG_VALUE_55; ?> <br>
-								<input type="number" class="input-text qty" step="1" min="1" max="" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric">
-							</div>
+                            <div class="p-quantity">
+    <?php echo LANG_VALUE_55; ?> <br>
+    <div class="quantity-container">
+        <button type="button" class="qty-btn qty-minus">-</button>
+        <input type="text" class="input-text qty" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" id="quantityInput">
+        <button type="button" class="qty-btn qty-plus">+</button>
+    </div>
+</div>
 
-							<div class="btn-cart btn-cart1">
-                                <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
-							</div>
+<script>
+    document.getElementById('quantityInput').addEventListener('input', function (e) {
+        // Ensure the input is numeric
+        var value = e.target.value;
+        e.target.value = value.replace(/[^0-9]/g, ''); // Strip non-numeric characters
+    });
+
+    // Increment
+    document.querySelector('.qty-plus').addEventListener('click', function () {
+        var input = document.getElementById('quantityInput');
+        var value = parseInt(input.value, 10);
+        if (!isNaN(value)) {
+            input.value = value + 1;
+        } else {
+            input.value = 1; // default to 1 if the input is empty or invalid
+        }
+    });
+
+    // Decrement
+    document.querySelector('.qty-minus').addEventListener('click', function () {
+        var input = document.getElementById('quantityInput');
+        var value = parseInt(input.value, 10);
+        if (!isNaN(value) && value > 1) {
+            input.value = value - 1;
+        } else {
+            input.value = 1; // prevent going below 1
+        }
+    });
+</script>
+
+<style>
+    .quantity-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .qty-btn {
+        width: 30px;
+        height: 30px;
+        background-color: #ddd;
+        border: none;
+        text-align: center;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .qty-btn:focus {
+        outline: none;
+    }
+
+    .input-text.qty {
+        width: 50px;
+        text-align: center;
+    }
+</style>
+
+<!-- Modal -->
+<div id="successModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" style="cursor: pointer;">&times;</span>
+        <p style="font-size:18px; font-weight: bold">Item has been added to the cart!</p>
+    </div>
+</div>
+
+<!-- Add to Cart Button -->
+<div class="btn-cart btn-cart1">
+    <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart" id="addToCartBtn">
+</div>
+
+<!-- JavaScript -->
+<script>
+    // Get modal and button elements
+    var addToCartBtn = document.getElementById('addToCartBtn');
+    var modal = document.getElementById('successModal');
+    var closeBtn = document.getElementsByClassName('close')[0];
+
+    // Show the modal when the Add to Cart button is clicked
+    addToCartBtn.addEventListener('click', function() {
+        modal.style.display = 'block';
+    });
+
+    // Close the modal when the close button is clicked
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    // Close the modal if the user clicks outside the modal content
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+</script>
+
+<!-- Optional Styling -->
+<style>
+    /* Modal styling */
+    .modal {
+        display: none; /* Initially hidden */
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+    }
+
+    .close {
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        float: right;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
 
                             </form>
+>>>>>>> df4680cb15b87ee1ab2bb0cf3b0757b2e326d090
 
 						</div>
                         </div>
@@ -532,6 +712,22 @@ if($success_message1 != '') {
             mainImage.style.backgroundImage = `url(${imageUrl})`;
         });
     });
+
+    function checkStock() {
+        var enteredQty = document.getElementById('quantityInput').value;
+        var availableStock = <?php echo $p_qty; ?>;
+        var errorMessage = document.getElementById('stockErrorMessage');
+
+        // Check if entered quantity is greater than available stock
+        if (enteredQty > availableStock) {
+            errorMessage.style.display = 'block'; // Show the error message
+            return false; // Prevent form submission
+        } else {
+            errorMessage.style.display = 'none'; // Hide the error message
+        }
+
+        return true; // Allow form submission
+    }
 </script>
 
 <?php require_once('footer.php'); ?>

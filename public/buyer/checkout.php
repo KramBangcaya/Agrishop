@@ -64,9 +64,9 @@ if(!isset($_SESSION['cart_p_id'])) {
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label><?php echo LANG_VALUE_34; ?> *</label>
-                                <select name="payment_method[<?php echo $i; ?>]" class="form-control payment-method" data-index="<?php echo $i; ?>">
-                                    <option value="">Select Payment Method</option>
-                                    <option value="1">CASH ON DELIVERY</option>
+                                <select required name="payment_method[<?php echo $i; ?>]" placeholder="Select Payment Method" class="form-control payment-method" data-index="<?php echo $i; ?>">
+
+                                    <option value="1">CASH ON DELIVERY (COD)</option>
                                     <option value="2">QR CODE</option>
                                 </select>
                             </div>

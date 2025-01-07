@@ -25,46 +25,61 @@ foreach ($result as $row) {
     $banner_cart = $row['banner_cart'];
 }
 ?>
-
 <?php
 $error_message = '';
-if (isset($_POST['form1'])) {
-
-    //var_dump($_POST);
-    // var_dump($_POST['_csrf']);
-    // Fetch data from the API
-    $url = API_BASE_URL. '/products/all';
-    $json = file_get_contents($url);
-    $apiResponse = json_decode($json, true);
-
-    // Check if API response is valid
-    if (isset($apiResponse['data'])) {
-        $result = $apiResponse['data'];
-    } else {
-        $result = [];
-    }
-
-    // Initialize arrays for product information
-    $table_product_id = [];
-    $table_quantity = [];
-    foreach ($result as $row) {
-        $table_product_id[] = $row['id'];
-        $table_quantity[] = $row['Quantity'];
-    }
+if(isset($_POST['form1'])) {
+//var_dump($_POST);
 
 
-    // Initialize arrays from POST request
-    $arr1 = $arr2 = $arr3 = [];
-    if (isset($_POST['product_id']) && is_array($_POST['product_id'])) {
-        $arr1 = $_POST['product_id'];
-        // var_dump($_POST['product_id']);
+
+// Initialize arrays for product information
+
+$i = 0;
+$url = API_BASE_URL. '/products/all';
+$json = file_get_contents($url);
+$apiResponse = json_decode($json, true);
+
+// Check if API response is valid
+if (isset($apiResponse['data'])) {
+    $result = $apiResponse['data'];
+} else {
+    $result = [];
+}
+
+foreach ($result as $row) {
+    $i++;
+    $table_product_id[$i] = $row['id'];
+    $table_quantity[$i] = $row['Quantity'];
+
+}
+
+
+// Initialize arrays from POST request
+$arr1 = $arr2 = $arr3 = [];
+if (isset($_POST['product_id']) && is_array($_POST['product_id'])) {
+    $arr1 = $_POST['product_id'];
+    // var_dump($_POST['product_id']);
+}
+if (isset($_POST['quantity']) && is_array($_POST['quantity'])) {
+    $arr2 = $_POST['quantity'];
+}
+if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
+    $arr3 = $_POST['product_name'];
+}
+
+    $i=0;
+    foreach($_POST['product_id'] as $val) {
+        $i++;
+        $arr1[$i] = $val;
     }
-    if (isset($_POST['quantity']) && is_array($_POST['quantity'])) {
-        $arr2 = $_POST['quantity'];
+    $i=0;
+    foreach($_POST['quantity'] as $val) {
+        $i++;
+        $arr2[$i] = $val;
     }
-    if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
-        $arr3 = $_POST['product_name'];
-    }
+
+
+
 
     $allow_update = 1;
     $error_message = '';
@@ -84,19 +99,24 @@ if (isset($_POST['form1'])) {
 
 
                 $product_id = $arr1[$i]; // Product ID
-                $_SESSION['cart_p_qty'][$product_id] = $arr2[$i];
+                $_SESSION['cart_p_qty'][$i] = $arr2[$i];
             }
         }
     }
+  //  $error_message .= '\nOther items quantity are updated successfully!';
+    ?>
 
-    if ($allow_update == 0) {
-        $error_message .= '\nOther items quantity are updated successfully!';
-        echo "<script>alert('" . $error_message . "');</script>";
-    } else {
-        echo "<script>alert('All Items Quantity Update is Successful!');</script>";
-    }
+    <?php if($allow_update == 0): ?>
+    	<script>alert('<?php echo $error_message; ?>');</script>
+	<?php else: ?>
+		<script>alert('All Items Quantity Update is Successful!');</script>
+	<?php endif; ?>
+    <?php
+
 }
 ?>
+
+
     <div class="page-banner-inner" style="font-size:50px;">
     <h1 style="font-size:50px;text-align: center">CART</h1>
 </div>
@@ -118,99 +138,154 @@ if (isset($_POST['form1'])) {
 
                     <div class="table-responsive">
 
-				<div class="cart">
-                        <?php
-                         //var_dump($_SESSION);
-                        $table_total_price = 0;
-                        $i=0;
-                        foreach($_SESSION['cart_p_id'] as $key => $value)
-                        {
-                            $i++;
-                            $arr_cart_p_id[$i] = $value;
-                        }
-                        $i=0;
-                        foreach($_SESSION['cart_p_qty'] as $key => $value)
-                        {
-                            $i++;
-                            $arr_cart_p_qty[$i] = $value;
-                        }
+                    <div class="cart">
 
-                        $i=0;
-                        foreach($_SESSION['cart_p_current_price'] as $key => $value)
-                        {
-                            $i++;
-                            $arr_cart_p_current_price[$i] = $value;
-                        }
 
-                        $i=0;
-                        foreach($_SESSION['cart_p_name'] as $key => $value)
-                        {
-                            $i++;
-                            $arr_cart_p_name[$i] = $value;
-                        }
 
-                        $i=0;
-                        foreach($_SESSION['cart_p_featured_photo'] as $key => $value)
-                        {
-                            $i++;
-                            $arr_cart_p_featured_photo[$i] = $value;
-                        }
-                        ?>
+    <?php
+    // Ensure session data is properly initialized
+    $table_total_price = 0;
 
-                    <h2 class="special" style="margin-left:10px;">Order Details</h2><h3 class="special"> </h3>
-                        <?php for($i=1;$i<=count($arr_cart_p_id);$i++):
-                            //echo count($arr_cart_p_id);
-                            //echo $i;
-                            ?>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
-                                        <div class="col-md-12 form-group">
-                                            <h2>
-                                                <?php echo $arr_cart_p_name[$i]; ?>&nbsp;
-                                                ₱<?php echo $arr_cart_p_current_price[$i]; ?>&nbsp;
-                                                <a onclick="return confirmDelete();"
-                                                href="cart-item-delete.php?id=<?php echo $arr_cart_p_id[$i]; ?>"
-                                                class="trash">
-                                                    <i class="fa fa-trash" style="color:red;"></i>
-                                                </a>
-                                            </h2>
+    $i=0;
+    foreach($_SESSION['cart_p_qty'] as $key => $value)
+    {
+        $i++;
+        $arr_cart_p_qty[$i] = $value;
+    }
 
-                                            <!-- Product Image -->
-                                            <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
-                                                alt="Product Image"
-                                                style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
-                                                <input type="hidden" name="product_id[]" value="<?php echo $arr_cart_p_id[$i]; ?>">
-                                            <!-- Quantity and Total -->
-                                            <div style="margin-top: 10px; font-size: medium;">
-                                                <label>Quantity: </label>
-                                                <input type="number"
-                                                    class="input-text qty text"
-                                                    step="1"
-                                                    min="1"
-                                                    max=""
-                                                    name="quantity[]"
-                                                    value="<?php echo $arr_cart_p_qty[$i]; ?>"
-                                                    title="Qty"
-                                                    size="4"
-                                                    pattern="[0-9]*"
-                                                    inputmode="numeric"
-                                                    style="width: 60px; margin-right: 10px;">
+    $arr_cart_p_id = isset($_SESSION['cart_p_id']) ? array_values($_SESSION['cart_p_id']) : [];
+    $arr_cart_p_qty = isset($_SESSION['cart_p_qty']) ? array_values($_SESSION['cart_p_qty']) : [];
+    $arr_cart_p_current_price = isset($_SESSION['cart_p_current_price']) ? array_values($_SESSION['cart_p_current_price']) : [];
+    $arr_cart_p_name = isset($_SESSION['cart_p_name']) ? array_values($_SESSION['cart_p_name']) : [];
+    $arr_cart_p_featured_photo = isset($_SESSION['cart_p_featured_photo']) ? array_values($_SESSION['cart_p_featured_photo']) : [];
 
-                                                <label>Total: </label>
-                                                <?php
-                                                // var_dump($arr_cart_p_qty[$i]);
-                                                $row_total_price = $arr_cart_p_current_price[$i] * $arr_cart_p_qty[$i]; ?>
-                                                ₱<?php echo $row_total_price; ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+    if (empty($arr_cart_p_id)) {
+        echo '<h2 class="text-center">Cart is Empty!!</h2><br>';
+        echo '<h4 class="text-center">Add products to the cart to view them here.</h4>';
+        return; // Stop execution if the cart is empty
+    }
+    ?>
+
+    <h2 class="special" style="margin-left:10px;">Order Details</h2>
+    <h3 class="special"></h3>
+    <?php for ($i = 0; $i < count($arr_cart_p_id); $i++): ?>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row" style="margin: 0 auto;"> <!-- Centering the inner row -->
+                    <div class="col-md-12 form-group">
+                        <h2>
+                            <?php echo htmlspecialchars($arr_cart_p_name[$i]); ?>&nbsp;
+                            ₱<?php echo htmlspecialchars($arr_cart_p_current_price[$i]); ?>&nbsp;
+                            <a onclick="return confirmDelete();"
+                               href="cart-item-delete.php?id=<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>"
+                               class="trash">
+                                <i class="fa fa-trash" style="color:red;"></i>
+                            </a>
+                        </h2>
+
+                        <!-- Product Image -->
+                        <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+                             alt="Product Image"
+                             style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
+                        <input type="hidden" name="product_id[]" value="<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>">
+
+                        <!-- Quantity and Total -->
+                        <div style="margin-top: 10px; font-size: medium;">
+                            <label>Quantity: </label>
+                            <div class="quantity-container">
+                                <button type="button" class="qty-btn qty-minus" data-index="<?php echo $i; ?>">-</button>
+                                <input type="text" class="input-text qty text" name="quantity[]"
+                                       value="<?php echo  $arr_cart_p_qty[$i]; ?>"
+                                       title="Qty" size="4" pattern="[0-9]*" inputmode="numeric"
+                                       id="quantityInput<?php echo $i; ?>"
+                                       style="width: 60px; margin-right: 10px;">
+                                <button type="button" class="qty-btn qty-plus" data-index="<?php echo $i; ?>">+</button>
                             </div>
 
-                <h3 class="special"> </h3>
-                        <?php endfor; ?>
+                            <label>Total: </label>
+                            <?php
+                            $row_total_price = $arr_cart_p_current_price[$i] * $arr_cart_p_qty[$i];
+                            echo '₱' . htmlspecialchars($row_total_price);
+                            ?>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <h3 class="special"></h3>
+    <?php endfor; ?>
+</div>
+
+<script>
+    // JavaScript to handle quantity updates
+    document.addEventListener('DOMContentLoaded', function () {
+        // Attach event listeners for all quantity buttons
+        const minusButtons = document.querySelectorAll('.qty-minus');
+        const plusButtons = document.querySelectorAll('.qty-plus');
+
+        minusButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const index = this.getAttribute('data-index');
+                const input = document.getElementById('quantityInput' + index);
+                let value = parseInt(input.value, 10);
+                if (!isNaN(value) && value > 1) {
+                    input.value = value - 1;
+                } else {
+                    input.value = 1; // Prevent going below 1
+                }
+            });
+        });
+
+        plusButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const index = this.getAttribute('data-index');
+                const input = document.getElementById('quantityInput' + index);
+                let value = parseInt(input.value, 10);
+                if (!isNaN(value)) {
+                    input.value = value + 1;
+                } else {
+                    input.value = 1; // Default to 1 if the input is empty or invalid
+                }
+            });
+        });
+
+        // Ensure input fields accept only numeric values
+        const quantityInputs = document.querySelectorAll('.input-text.qty');
+        quantityInputs.forEach(input => {
+            input.addEventListener('input', function (e) {
+                this.value = this.value.replace(/[^0-9]/g, ''); // Strip non-numeric characters
+            });
+        });
+    });
+</script>
+
+<style>
+    .quantity-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .qty-btn {
+        width: 30px;
+        height: 30px;
+        background-color: #ddd;
+        border: none;
+        text-align: center;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .qty-btn:focus {
+        outline: none;
+    }
+
+    .input-text.qty {
+        width: 60px;
+        text-align: center;
+    }
+</style>
+
 
               <div class="cart-buttons" style="text-align:center; margin-right:10px; margin-bottom:10px;">
     <ul style="list-style:none; padding:0; display:inline-block; margin:5px;">
