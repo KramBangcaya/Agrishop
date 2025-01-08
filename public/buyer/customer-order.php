@@ -113,20 +113,11 @@ foreach ($orders as $order) {
 
                     <!-- Check if the user has already provided feedback for this product -->
                     <?php
-<<<<<<< HEAD
-                    $feedbackQuery = "SELECT * FROM Feedback WHERE buyer_id = ? AND product_id = ?";
-                    $stmt = $pdo->prepare($feedbackQuery);
-                    // var_dump($order);
-                    $stmt->execute([$_SESSION['user_id'], $order['product_id']]);
-                    $feedback = $stmt->fetch(PDO::FETCH_ASSOC);
-                    ?>
-=======
                 $feedbackQuery = "SELECT * FROM Feedback WHERE order_id = ?";
                 $stmt = $pdo->prepare($feedbackQuery);
-                $stmt->execute([$order['id']]);
+                $stmt->execute([ $order['id']]);
                 $feedback = $stmt->fetch(PDO::FETCH_ASSOC);
                 ?>
->>>>>>> 51599d5be4889790a456fab4b295e79f7d498d9b
 
 
                     <h3> <span>Product Name: <?php echo htmlspecialchars($order['product_name']); ?></span></h3>
@@ -299,7 +290,7 @@ foreach ($orders as $order) {
                                                 product_name: productName,
                                                 feedback: feedback,
                                                 rating: rating,
-                                                orderId: orderId,
+                                                order_id: orderId
                                             }),
                                         })
                                             .then((response) => response.json())
@@ -460,7 +451,7 @@ $groupedOrders[$order['order_status']][] = $order;
                 <?php
                 $feedbackQuery = "SELECT * FROM Feedback WHERE order_id = ?";
                 $stmt = $pdo->prepare($feedbackQuery);
-                $stmt->execute([$order['id']]);
+                $stmt->execute([ $order['id']]);
                 $feedback = $stmt->fetch(PDO::FETCH_ASSOC);
                 ?>
 
@@ -639,7 +630,7 @@ $groupedOrders[$order['order_status']][] = $order;
                                             product_name: productName,
                                             feedback: feedback,
                                             rating: rating,
-                                            orderId: orderId,
+                                            order_id: orderId
                                         }),
                                     })
                                         .then((response) => response.json())
@@ -794,18 +785,9 @@ $groupedOrders[$order['order_status']][] = $order;
 
                 <!-- Check if the user has already provided feedback for this product -->
                 <?php
-<<<<<<< HEAD
-                echo 'sample';
-                echo $order['product_id'], $_SESSION['user_id'];
-                $feedbackQuery = "SELECT * FROM Feedback WHERE buyer_id = ? AND product_id = ? and id = ?";
-                $stmt = $pdo->prepare($feedbackQuery);
-
-                $stmt->execute([$_SESSION['user_id'], $order['product_id']]);
-=======
                 $feedbackQuery = "SELECT * FROM Feedback WHERE order_id = ?";
                 $stmt = $pdo->prepare($feedbackQuery);
-                $stmt->execute([$order['id']]);
->>>>>>> 51599d5be4889790a456fab4b295e79f7d498d9b
+                $stmt->execute([ $order['id']]);
                 $feedback = $stmt->fetch(PDO::FETCH_ASSOC);
                 ?>
 
@@ -977,7 +959,7 @@ $groupedOrders[$order['order_status']][] = $order;
                                             product_name: productName,
                                             feedback: feedback,
                                             rating: rating,
-                                            orderId: orderId,
+                                            order_id: orderId
                                         }),
                                     })
                                         .then((response) => response.json())
@@ -1143,7 +1125,7 @@ $groupedOrders[$order['order_status']][] = $order;
                 <?php
                 $feedbackQuery = "SELECT * FROM Feedback WHERE order_id = ?";
                 $stmt = $pdo->prepare($feedbackQuery);
-                $stmt->execute([$order['id']]);
+                $stmt->execute([ $order['id']]);
                 $feedback = $stmt->fetch(PDO::FETCH_ASSOC);
                 ?>
 
@@ -1186,10 +1168,36 @@ $groupedOrders[$order['order_status']][] = $order;
     </div>
 </details>
 
+
+
+
 </div>
+
+
+
+
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
                     </div>
                 </div>
+
+
+
+
+
+
             </div>
             <script>
                             function showCancelReasonForm(orderId) {
@@ -1229,13 +1237,13 @@ $groupedOrders[$order['order_status']][] = $order;
                                                 'Content-Type': 'application/x-www-form-urlencoded',
                                             },
                                             body: new URLSearchParams({
-                                                orderId: orderId,
                                                 buyer_id: buyerId,
                                                 buyer_name: buyerName,
                                                 product_id: productId,
                                                 product_name: productName,
                                                 feedback: feedback,
                                                 rating: rating,
+                                                order_id: orderId
                                             }),
                                         })
                                             .then((response) => response.json())
