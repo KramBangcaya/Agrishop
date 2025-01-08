@@ -55,7 +55,19 @@ if(!isset($_SESSION['customer'])) {
 
 
 
+<?php
 
+// Fetch orders from the database
+$queryCount = "SELECT COUNT(*) AS total_delivered FROM Orders WHERE buyer_id = ? AND order_status=?";
+$stmtCount = $pdo->prepare($queryCount);
+$stmtCount->execute([$_SESSION['user_id'], "Pending"]);
+$countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
+
+$totalDelivered = $countResult['total_delivered'];
+//echo "Total Pending Orders: " . $totalDelivered;
+
+
+?>
 
 
 
@@ -67,18 +79,22 @@ if(!isset($_SESSION['customer'])) {
     <h2>Pending Orders</h2>
     <details>
     <summary style="cursor: pointer; font-size: 1.2em; font-weight: bold;color:rgb(54, 71, 228);">
-        View Pending Orders
+        View Pending Orders (<?php echo $totalDelivered = $countResult['total_delivered']; ?>)
     </summary>
 
     <div style="margin-top: 10px;">
 
 
     <?php
-// Fetch orders from the database
-$query = "SELECT * FROM Orders WHERE buyer_id = ? AND order_status=? ORDER BY order_status ASC";
-$stmt = $pdo->prepare($query);
-$stmt->execute([$_SESSION['user_id'],"Pending"]);
-$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Query for the data rows
+$queryData = "SELECT * FROM Orders WHERE buyer_id = ? AND order_status=? ORDER BY order_status ASC";
+$stmtData = $pdo->prepare($queryData);
+$stmtData->execute([$_SESSION['user_id'], "Pending"]);
+$orders = $stmtData->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 
 // Group orders by status
 $groupedOrders = [
@@ -99,6 +115,7 @@ foreach ($orders as $order) {
                     <?php
                     $feedbackQuery = "SELECT * FROM Feedback WHERE buyer_id = ? AND product_id = ?";
                     $stmt = $pdo->prepare($feedbackQuery);
+                    // var_dump($order);
                     $stmt->execute([$_SESSION['user_id'], $order['product_id']]);
                     $feedback = $stmt->fetch(PDO::FETCH_ASSOC);
                     ?>
@@ -382,6 +399,19 @@ foreach ($orders as $order) {
 
 
 
+    <?php
+
+// Fetch orders from the database
+$queryCount = "SELECT COUNT(*) AS total_delivereds FROM Orders WHERE buyer_id = ? AND order_status=?";
+$stmtCount = $pdo->prepare($queryCount);
+$stmtCount->execute([$_SESSION['user_id'], "For Delivery"]);
+$countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
+
+//$totalDelivereds = $countResult['total_delivereds'];
+//echo "Total Pending Orders: " . $totalDelivered;
+
+
+?>
 
 
 
@@ -390,7 +420,7 @@ foreach ($orders as $order) {
 
     <details>
     <summary style="cursor: pointer; font-size: 1.2em; font-weight: bold;color:rgb(54, 71, 228);">
-        View For Delivery Orders
+        View For Delivery Orders (<?php echo $totalDelivereds = $countResult['total_delivereds']; ?>)
     </summary>
 
     <div style="margin-top: 10px;">
@@ -704,6 +734,19 @@ $groupedOrders[$order['order_status']][] = $order;
                     </script>
 
 
+<?php
+
+// Fetch orders from the database
+$queryCount = "SELECT COUNT(*) AS total_deliveredss FROM Orders WHERE buyer_id = ? AND order_status=?";
+$stmtCount = $pdo->prepare($queryCount);
+$stmtCount->execute([$_SESSION['user_id'], "Delivered"]);
+$countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
+
+//$totalDelivereds = $countResult['total_delivereds'];
+//echo "Total Pending Orders: " . $totalDelivered;
+
+
+?>
 
 
 
@@ -712,7 +755,7 @@ $groupedOrders[$order['order_status']][] = $order;
     <h2>Delivered Orders</h2>
     <details>
     <summary style="cursor: pointer; font-size: 1.2em; font-weight: bold;color:rgb(54, 71, 228);">
-        View Delivered Orders
+        View Delivered Orders (<?php echo $totalDeliveredss = $countResult['total_deliveredss']; ?>)
     </summary>
     <div style="margin-top: 10px;">
 
@@ -741,8 +784,11 @@ $groupedOrders[$order['order_status']][] = $order;
 
                 <!-- Check if the user has already provided feedback for this product -->
                 <?php
-                $feedbackQuery = "SELECT * FROM Feedback WHERE buyer_id = ? AND product_id = ?";
+                echo 'sample';
+                echo $order['product_id'], $_SESSION['user_id'];
+                $feedbackQuery = "SELECT * FROM Feedback WHERE buyer_id = ? AND product_id = ? and id = ?";
                 $stmt = $pdo->prepare($feedbackQuery);
+
                 $stmt->execute([$_SESSION['user_id'], $order['product_id']]);
                 $feedback = $stmt->fetch(PDO::FETCH_ASSOC);
                 ?>

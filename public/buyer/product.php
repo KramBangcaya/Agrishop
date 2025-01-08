@@ -304,25 +304,22 @@ if($success_message1 != '') {
     <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
 
 
-    <div class="p-quantity">
-    <?php echo LANG_VALUE_55; ?> <br>
     <div class="quantity-container">
-        <button type="button" class="qty-btn qty-minus">-</button>
-        <input
-            type="text"
-            class="input-text qty"
-            step="1"
-            min="1"
-            max="<?php echo $p_qty; ?>"
-            name="p_qty"
-            value="1"
-            title="Qty"
-            size="4"
-            pattern="[0-9]*"
-            inputmode="numeric"
-            id="quantityInput">
-        <button type="button" class="qty-btn qty-plus">+</button>
-    </div>
+    <button type="button" class="qty-btn qty-minus">-</button>
+    <input
+        type="text"
+        class="input-text qty"
+        step="1"
+        min="1"
+        max="<?php echo $p_qty; ?>"
+        name="p_qty"
+        value="1"
+        title="Qty"
+        size="4"
+        pattern="[0-9]*"
+        inputmode="numeric"
+        id="quantityInput">
+    <button type="button" class="qty-btn qty-plus">+</button>
 </div>
 
 <div id="stockErrorMessage" style="color: red; font-size: 14px; display: none;">
@@ -332,35 +329,92 @@ if($success_message1 != '') {
 <div class="btn-cart btn-cart1" id="addToCartDiv">
     <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart" id="addToCartBtn">
 </div>
-
 <div id="successModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <span class="close" style="cursor: pointer;">&times;</span>
-        <p style="font-size:18px; font-weight: bold">Item has been added to the cart!</p>
-    </div>
+  <div class="modal-content">
+    <span class="close" style="cursor: pointer;">&times;</span>
+    <p style="font-size: 18px; font-weight: bold;">Item successfully added!</p>
+  </div>
 </div>
+<style>
+  /* Modal Styles */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+    border-radius: 8px;
+  }
+
+  .close {
+    color: #aaa;
+    font-size: 24px;
+    font-weight: bold;
+    float: right;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+<script>
+  // Get elements
+  const modal = document.getElementById('successModal');
+  const showModalBtn = document.getElementById('addToCartBtn');
+  const closeBtn = document.querySelector('.close');
+
+  // Show the modal when the button is clicked
+  showModalBtn.addEventListener('click', () => {
+    modal.style.display = 'block';
+  });
+
+  // Close the modal when the close button is clicked
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  // Close the modal when clicking outside the modal content
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>
+
 
 <script>
     // Get elements
-    var addToCartBtn = document.getElementById('addToCartBtn');
-    var addToCartDiv = document.getElementById('addToCartDiv');
-    var modal = document.getElementById('successModal');
-    var closeBtn = document.getElementsByClassName('close')[0];
-    var stockErrorMessage = document.getElementById('stockErrorMessage');
-    var quantityInput = document.getElementById('quantityInput');
-    var qtyPlusBtn = document.querySelector('.qty-plus');
-    var qtyMinusBtn = document.querySelector('.qty-minus');
-    var availableStock = <?php echo $p_qty; ?>;
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const stockErrorMessage = document.getElementById('stockErrorMessage');
+    const quantityInput = document.getElementById('quantityInput');
+    const qtyPlusBtn = document.querySelector('.qty-plus');
+    const qtyMinusBtn = document.querySelector('.qty-minus');
+    const availableStock = <?php echo $p_qty; ?>;
 
     // Function to check stock and toggle UI
     function checkStock() {
-        var enteredQty = parseInt(quantityInput.value, 10);
+        let enteredQty = parseInt(quantityInput.value, 10);
 
-        // Restrict quantity to available stock
+        // Ensure quantity is within valid range
         if (enteredQty > availableStock) {
             stockErrorMessage.style.display = 'block'; // Show error message
-            addToCartBtn.disabled = true; // Disable Add to Cart button
             quantityInput.value = availableStock; // Reset to max stock
+            addToCartBtn.disabled = true; // Disable Add to Cart button
         } else if (enteredQty < 1 || isNaN(enteredQty)) {
             quantityInput.value = 1; // Reset to minimum
             stockErrorMessage.style.display = 'none';
@@ -373,22 +427,18 @@ if($success_message1 != '') {
 
     // Increment Quantity
     qtyPlusBtn.addEventListener('click', function () {
-        var currentQty = parseInt(quantityInput.value, 10);
-        if (isNaN(currentQty)) currentQty = 1;
-
+        let currentQty = parseInt(quantityInput.value, 10) || 1; // Default to 1 if NaN
         if (currentQty < availableStock) {
-            quantityInput.value = currentQty + 1;
-            checkStock();
+            quantityInput.value = currentQty + 1; // Increment by exactly 1
         }
+        checkStock();
     });
 
     // Decrement Quantity
     qtyMinusBtn.addEventListener('click', function () {
-        var currentQty = parseInt(quantityInput.value, 10);
-        if (isNaN(currentQty) || currentQty <= 1) {
-            quantityInput.value = 1;
-        } else {
-            quantityInput.value = currentQty - 1;
+        let currentQty = parseInt(quantityInput.value, 10) || 1; // Default to 1 if NaN
+        if (currentQty > 1) {
+            quantityInput.value = currentQty - 1; // Decrement by exactly 1
         }
         checkStock();
     });
@@ -398,23 +448,8 @@ if($success_message1 != '') {
         checkStock();
     });
 
-    // Show modal when Add to Cart button is clicked
-    addToCartBtn.addEventListener('click', function () {
-        modal.style.display = 'block';
-    });
-
-    // Close the modal when the close button is clicked
-    closeBtn.addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
-
-    // Close the modal if the user clicks outside the modal content
-    window.addEventListener('click', function (event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
 </script>
+
 
 
 </form>
@@ -436,7 +471,7 @@ if($success_message1 != '') {
         var input = document.getElementById('quantityInput');
         var value = parseInt(input.value, 10);
         if (!isNaN(value)) {
-            input.value = value + 1;
+            input.value = value + 1-1;
         } else {
             input.value = 1; // default to 1 if the input is empty or invalid
         }
@@ -447,7 +482,7 @@ if($success_message1 != '') {
         var input = document.getElementById('quantityInput');
         var value = parseInt(input.value, 10);
         if (!isNaN(value) && value > 1) {
-            input.value = value - 1;
+            input.value = value - 1+1;
         } else {
             input.value = 1; // prevent going below 1
         }

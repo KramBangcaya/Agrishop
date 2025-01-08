@@ -106,11 +106,92 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
   //  $error_message .= '\nOther items quantity are updated successfully!';
     ?>
 
-    <?php if($allow_update == 0): ?>
-    	<script>alert('<?php echo $error_message; ?>');</script>
-	<?php else: ?>
-		<script>alert('All Items Quantity Update is Successful!');</script>
-	<?php endif; ?>
+<?php if ($allow_update == 0): ?>
+    <div id="errorModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" style="cursor: pointer;">&times;</span>
+            <p style="color: red; font-size: 18px; font-weight: bold;"><?php echo htmlspecialchars($error_message, ENT_QUOTES, 'UTF-8'); ?></p>
+        </div>
+    </div>
+<?php else: ?>
+    <div id="successModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" style="cursor: pointer;">&times;</span>
+            <p style="color: green; font-size: 18px; font-weight: bold;">All Items Quantity Update is Successful!</p>
+        </div>
+    </div>
+<?php endif; ?>
+
+<style>
+    /* Modal styles */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 400px;
+    }
+
+    .close {
+        float: right;
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: -10px;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: red;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const errorModal = document.getElementById('errorModal');
+        const successModal = document.getElementById('successModal');
+        const closeButtons = document.querySelectorAll('.close');
+
+        // Show the appropriate modal
+        <?php if ($allow_update == 0): ?>
+            errorModal.style.display = 'flex';
+        <?php else: ?>
+            successModal.style.display = 'flex';
+        <?php endif; ?>
+
+        // Close modal on clicking the close button
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                if (errorModal) errorModal.style.display = 'none';
+                if (successModal) successModal.style.display = 'none';
+            });
+        });
+
+        // Close modal on clicking outside the modal content
+        window.addEventListener('click', function (event) {
+            if (event.target === errorModal) {
+                errorModal.style.display = 'none';
+            }
+            if (event.target === successModal) {
+                successModal.style.display = 'none';
+            }
+        });
+    });
+</script>
+
     <?php
 
 }
