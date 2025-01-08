@@ -48,10 +48,18 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'lastname' => ['required', 'string'],
-            'date_of_birth' => ['required', 'date'],
+            'date_of_birth' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) {
+                    if (Carbon::parse($value)->diffInYears(Carbon::now()) < 18) {
+                        $fail('The date of birth indicates the user is under 18 years old.');
+                    }
+                },
+            ],
             'contact_number' => ['required', 'string', 'digits:11'],
             'address' => ['required', 'string'],
-            'photos.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // validate each uploaded file
+            'photos.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // Validate each uploaded file
         ]);
     }
 
@@ -66,17 +74,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        $validator = Validator::make($data, [
-            'date_of_birth' => [
-                'required',
-                'date',
-                function ($attribute, $value, $fail) {
-                    if (Carbon::parse($value)->diffInYears(Carbon::now()) < 18) {
-                        $fail('The date of birth indicates the user is under 18 years old.');
-                    }
-                },
-            ],
-        ]);
+
 
         // if ($validator->fails()) {
         //     return back()->withErrors($validator)->withInput();
@@ -105,7 +103,6 @@ class RegisterController extends Controller
                 $qrcodes[] = $path; // Add path to the array
             }
         }
-        // dd(Hash::make($data['password']));
         // Create the user in the database
         $user = User::create([
             'name' => $data['name'],
