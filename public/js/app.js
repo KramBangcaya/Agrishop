@@ -9039,10 +9039,42 @@ __webpack_require__.r(__webpack_exports__);
       }),
       error: '',
       showImageModal: false,
-      zoomedImage: ''
+      zoomedImage: '',
+      pin: '',
+      correctPin: '12345',
+      // Define the required PIN
+      showPinModal: false,
+      pinAction: null,
+      // Stores the action to perform after PIN validation
+      userId: null
     };
   },
   methods: {
+    openPinModal: function openPinModal(action, id) {
+      this.pinAction = action;
+      this.userId = id;
+      this.showPinModal = true;
+      this.pin = '';
+    },
+    closePinModal: function closePinModal() {
+      this.showPinModal = false;
+      this.pin = '';
+    },
+    validatePin: function validatePin() {
+      if (this.pin === this.correctPin) {
+        this.showPinModal = false;
+        if (this.pinAction === 'activate') {
+          this.activateUser(this.userId);
+        } else if (this.pinAction === 'deactivate') {
+          this.deactivateUser(this.userId);
+        }
+      } else {
+        toast.fire({
+          icon: 'error',
+          text: 'Invalid PIN!'
+        });
+      }
+    },
     openImageModal: function openImageModal(imageSrc) {
       this.zoomedImage = imageSrc;
       this.showImageModal = true;
@@ -9102,8 +9134,9 @@ __webpack_require__.r(__webpack_exports__);
         });
       }, 500);
     },
-    remove: function remove(id) {
+    deactivateUser: function deactivateUser(id) {
       var _this2 = this;
+      // Existing logic for deactivation
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -9115,7 +9148,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.isConfirmed) {
           axios["delete"]('/api/user/delete/' + id).then(function (response) {
-            Swal.fire('Disable!', 'Your Account has been Deactivated.', 'success');
+            Swal.fire('Disabled!', 'Your Account has been Deactivated.', 'success');
             _this2.getData();
           });
         }
@@ -9126,8 +9159,9 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     },
-    activate: function activate(id) {
+    activateUser: function activateUser(id) {
       var _this3 = this;
+      // Existing logic for activation
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -16047,7 +16081,7 @@ var render = function render() {
       staticClass: "badge badge-danger"
     }, [_vm._v("This user is denied")])]) : data.approved_at == _vm.NULL ? _c("td", [_c("span", {
       staticClass: "badge badge-danger"
-    }, [_vm._v("Not Validated")])]) : _c("td", [_vm._v(_vm._s(data.approved_at))]), _vm._v(" "), _c("td", {
+    }, [_vm._v("Not Validated")]), _vm._v(" "), _vm._v(_vm._s(data.approved_at))]) : _vm._e(), _vm._v(" "), _c("td", {
       staticClass: "text-right"
     }, [data.approved_at === null && data.reason_of_disapproval === null ? _c("button", {
       staticClass: "btn btn-success btn-sm",
@@ -16080,7 +16114,7 @@ var render = function render() {
       },
       on: {
         click: function click($event) {
-          return _vm.remove(data.id);
+          return _vm.openPinModal("deactivate", data.id);
         }
       }
     }, [_c("i", {
@@ -16092,7 +16126,7 @@ var render = function render() {
       },
       on: {
         click: function click($event) {
-          return _vm.activate(data.id);
+          return _vm.openPinModal("activate", data.id);
         }
       }
     }, [_c("i", {
@@ -16153,7 +16187,48 @@ var render = function render() {
       src: _vm.zoomedImage,
       alt: "Zoomed Image"
     }
-  })])]) : _vm._e()]);
+  })])]) : _vm._e(), _vm._v(" "), _vm.showPinModal ? _c("div", {
+    staticClass: "modal-overlay"
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.pin,
+      expression: "pin"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "password",
+      placeholder: "Enter PIN"
+    },
+    domProps: {
+      value: _vm.pin
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.pin = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "card-footer d-flex justify-content-end"
+  }, [_c("button", {
+    staticClass: "btn btn-secondary mr-2",
+    on: {
+      click: _vm.closePinModal
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary",
+    on: {
+      click: _vm.validatePin
+    }
+  }, [_vm._v("Submit")])])])])]) : _vm._e()]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -16183,6 +16258,12 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("thead", [_c("tr", [_c("th", [_vm._v("Id")]), _vm._v(" "), _c("th", [_vm._v("Document")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Email")]), _vm._v(" "), _c("th", [_vm._v("Contact Number")]), _vm._v(" "), _c("th", [_vm._v("Type of User")]), _vm._v(" "), _c("th", [_vm._v("Date of Validation")]), _vm._v(" "), _c("th")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h5", [_vm._v("Enter PIN")])]);
 }];
 render._withStripped = true;
 
