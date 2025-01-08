@@ -94,7 +94,7 @@
                                             </td>
                                             <td v-else-if="data.approved_at == NULL">
                                                 <span class="badge badge-danger">Not Validated</span>
-                                            </td>
+                                            </t
                                             <td v-else>{{ data.approved_at }}</td>
                                             <td class="text-right">
                                                 <button
@@ -110,11 +110,13 @@
                                                     Assign Permission</button>
                                                 <button v-if="data.deleted_at === null && can('delete user')"
                                                     type="button" class="btn btn-danger btn-sm"
-                                                    @click="remove(data.id)"><i class="fas fa-ban"></i> Deactivate
+                                                    @click="openPinModal('deactivate', data.id)"><i class="fas fa-ban"></i> Deactivate
                                                 </button>
                                                 <button v-if="data.deleted_at != null && can('delete user')"
-                                                    type="button" class="btn btn-success btn-sm"
-                                                    @click="activate(data.id)"><i class="fas fa-check"></i> Activate
+                                                    type="button"
+                                                    class="btn btn-success btn-sm"
+                                                    @click="openPinModal('activate', data.id)">
+                                                    <i class="fas fa-check"></i> Activate
                                                 </button>
                                             </td>
                                         </tr>
@@ -150,6 +152,28 @@
                 <img :src="zoomedImage" alt="Zoomed Image" />
             </div>
         </div>
+
+        <div v-if="showPinModal" class="modal-overlay">
+            <div class="modal-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Enter PIN</h5>
+                    </div>
+                    <div class="card-body">
+                        <input
+                            type="password"
+                            v-model="pin"
+                            class="form-control"
+                            placeholder="Enter PIN"
+                        />
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button class="btn btn-secondary mr-2" @click="closePinModal">Cancel</button>
+                        <button class="btn btn-primary" @click="validatePin">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -182,9 +206,39 @@ export default {
             error: '',
             showImageModal: false,
             zoomedImage: '',
+            pin: '',
+            correctPin: '12345', // Define the required PIN
+            showPinModal: false,
+            pinAction: null, // Stores the action to perform after PIN validation
+            userId: null,
         }
     },
     methods: {
+        openPinModal(action, id) {
+            this.pinAction = action;
+            this.userId = id;
+            this.showPinModal = true;
+            this.pin = '';
+        },
+        closePinModal() {
+            this.showPinModal = false;
+            this.pin = '';
+        },
+        validatePin() {
+            if (this.pin === this.correctPin) {
+                this.showPinModal = false;
+                if (this.pinAction === 'activate') {
+                    this.activateUser(this.userId);
+                } else if (this.pinAction === 'deactivate') {
+                    this.deactivateUser(this.userId);
+                }
+            } else {
+                toast.fire({
+                    icon: 'error',
+                    text: 'Invalid PIN!',
+                });
+            }
+        },
         openImageModal(imageSrc) {
             this.zoomedImage = imageSrc;
             this.showImageModal = true;
@@ -244,7 +298,8 @@ export default {
                     });
             }, 500);
         },
-        remove(id) {
+        deactivateUser(id) {
+            // Existing logic for deactivation
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -258,21 +313,22 @@ export default {
                     axios.delete('/api/user/delete/' + id)
                         .then(response => {
                             Swal.fire(
-                                'Disable!',
+                                'Disabled!',
                                 'Your Account has been Deactivated.',
                                 'success'
-                            )
+                            );
                             this.getData();
-                        })
+                        });
                 }
             }).catch(() => {
                 toast.fire({
                     icon: 'error',
                     text: 'Something went wrong!',
-                })
+                });
             });
         },
-        activate(id) {
+        activateUser(id) {
+            // Existing logic for activation
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -289,15 +345,15 @@ export default {
                                 'Enabled!',
                                 'Your file has been Activated.',
                                 'success'
-                            )
+                            );
                             this.getData();
-                        })
+                        });
                 }
             }).catch(() => {
                 toast.fire({
                     icon: 'error',
                     text: 'Something went wrong!',
-                })
+                });
             });
         },
     },
