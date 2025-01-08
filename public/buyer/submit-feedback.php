@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // $buyerName = 'N/A';
     $feedback = $_POST['feedback'];
     $rating = $_POST['rating'];
+    $orderId = $_POST['orderId'];
 
     // Validate inputs
     // if (empty($buyerId) || empty($buyerName) || empty($productId) || empty($productName) || empty($feedback) || empty($rating)) {
@@ -23,14 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // echo $dateSubmitted;
 
     // Insert feedback into the database
-    $query = "INSERT INTO feedback (buyer_id, buyer_name, product_id, product_name, feedback, rating, date)
-                  VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO feedback (buyer_id, buyer_name, product_id, product_name, feedback, rating, date, order_id)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $pdo->prepare($query);
 
     //
     // $buyerName,  $productName,
     try {
-        $stmt->execute([$buyerId, $buyerName, $productId, $productName, $feedback, $rating, $dateSubmitted]);
+        $stmt->execute([$buyerId, $buyerName, $productId, $productName, $feedback, $rating, $dateSubmitted, $orderId]);
         echo json_encode(['success' => true, 'message' => 'Feedback submitted successfully.']);
     } catch (Exception $e) {
         echo $e;
