@@ -275,26 +275,19 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                         <!-- Quantity and Total -->
                         <div style="margin-top: 10px; font-size: medium;">
                             <label>Quantity: </label>
-                            <div class="quantity-container">
-                                <button type="button" class="qty-btn qty-minus" data-index="<?php echo $i; ?>">-</button>
-                                <input type="text" class="input-text qty text" name="quantity[]"
-                                       value="<?php echo  $arr_cart_p_qty[$i]; ?>"
-                                       title="Qty" size="4" pattern="[0-9]*" inputmode="numeric"
-                                       id="quantityInput<?php echo $i; ?>"
-                                       style="width: 60px; margin-right: 10px;">
-                                <button type="button" class="qty-btn qty-plus" data-index="<?php echo $i; ?>">+</button>
-                            </div>
+
+
 
 
                             <div class="quantity-container">
     <button type="button" class="qty-btn qty-minus" data-index="<?php echo $i; ?>">-</button>
     <input
         type="text"
-        class="input-text qty"
+        class="input-text qty text"
         step="1"
         min="1"
         max="<?php echo $p_qty; ?>"
-        name="p_qty"
+       name="quantity[]"
          value="<?php echo  $arr_cart_p_qty[$i]; ?>"
         title="Qty"
         size="4"
