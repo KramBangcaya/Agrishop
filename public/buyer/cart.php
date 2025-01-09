@@ -278,7 +278,6 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
 
 
 
-
                             <div class="quantity-container">
     <button type="button" class="qty-btn qty-minus" data-index="<?php echo $i; ?>">-</button>
     <input
@@ -293,10 +292,13 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
         size="4"
         pattern="[0-9]*"
         inputmode="numeric"
-        id="quantityInput">
+        id="quantityInput<?php echo $i; ?>">
     <button type="button" class="qty-btn qty-plus" data-index="<?php echo $i; ?>">+</button>
 </div>
 
+<div id="stockErrorMessage" style="color: red; font-size: 14px; display: none;">
+    Item is over the available stocks.
+</div>
 
                             <script>
     // Get elements
@@ -475,6 +477,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                 value="<?php echo LANG_VALUE_20; ?>"
                 class="btn btn-secondary"
                 name="form1"
+                id="addToCartBtn"
                 style="width:250px; height:50px; text-align:center; display:inline-block;" onclick="checkQuantityAndSubmit(event)">
         </li>
     </ul>
