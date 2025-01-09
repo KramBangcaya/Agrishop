@@ -87,18 +87,7 @@ if (!empty($min_price) || !empty($max_price)) {
                     </select>
                 </div>
 
-                <div class="sidebar-category">
-                    <label for="category"><h3>Rating <i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></i></h3></label><br>
-                    <select name="rating" class="btn btn-primary category-button" id="category" style="font-size: 18px;">
-                        <option value="" style="text-align: left;" selected>Select a Rating</option>
-                        <option value="5" style="text-align: left;">5 Star</option>
-                        <option value="4" style="text-align: left;">4 Star</option>
-                        <option value="3" style="text-align: left;">3 Star</option>
-                        <option value="2" style="text-align: left;">2 Star</option>
-                        <option value="1" style="text-align: left;">1 Star</option>
-                        <option value="all" style="text-align: left;">All</option>
-                    </select>
-                </div>
+
 
                 <!-- Sidebar Price Range Filter -->
                 <div class="sidebar-category">

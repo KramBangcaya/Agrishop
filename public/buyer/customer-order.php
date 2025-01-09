@@ -63,7 +63,7 @@ $stmtCount = $pdo->prepare($queryCount);
 $stmtCount->execute([$_SESSION['user_id'], "Pending"]);
 $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
 
-$totalDelivered = $countResult['total_delivered'];
+//$totalDelivered = $countResult['total_delivered'];
 //echo "Total Pending Orders: " . $totalDelivered;
 
 
@@ -1067,6 +1067,19 @@ $groupedOrders[$order['order_status']][] = $order;
 
 
 
+<?php
+
+// Fetch orders from the database
+$queryCount = "SELECT COUNT(*) AS total_delivered1s FROM Orders WHERE buyer_id = ? AND order_status=?";
+$stmtCount = $pdo->prepare($queryCount);
+$stmtCount->execute([$_SESSION['user_id'], "Cancelled Order"]);
+$countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
+
+//$totalDelivered = $countResult['total_delivered'];
+//echo "Total Pending Orders: " . $totalDelivered;
+
+
+?>
 
 
 
@@ -1075,7 +1088,7 @@ $groupedOrders[$order['order_status']][] = $order;
     <h2>Cancelled Orders</h2>
 <details>
     <summary style="cursor: pointer; font-size: 1.2em; font-weight: bold;color:rgb(54, 71, 228);">
-        View Cancelled Orders
+        View Cancelled Orders (<?php echo $totalDelivered1s = $countResult['total_delivered1s']; ?>)
     </summary>
     <div style="margin-top: 10px;">
 
