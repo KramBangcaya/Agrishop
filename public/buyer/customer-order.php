@@ -233,10 +233,7 @@ foreach ($orders as $order) {
                                                 <button onclick="cancelFeedback(<?php echo $order['id']; ?>)">Cancel</button>
                                                                                                 </div>
                                                                     </div>
-
-
                                 <?php endif; ?>
-
                             <?php endforeach; ?>
 
                             </div>
@@ -930,6 +927,7 @@ function showToast(message) {
                                                 if (data.success) {
                                                     showToast('Feedback submitted successfully!');  // alert('Feedback submitted successfully!');
                                                     document.getElementById('feedback-form-' + orderId).style.display = 'none';
+                                                    location.reload();
                                                 } else {
                                                     showToast('Error: ' + data.message);a//alert('Error: ' + data.message);
                                                 }
