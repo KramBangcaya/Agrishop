@@ -275,84 +275,15 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                         <!-- Quantity and Total -->
                         <div style="margin-top: 10px; font-size: medium;">
                             <label>Quantity: </label>
-
-
-
                             <div class="quantity-container">
-    <button type="button" class="qty-btn qty-minus" data-index="<?php echo $i; ?>">-</button>
-    <input
-        type="text"
-        class="input-text qty text"
-        step="1"
-        min="1"
-        max="<?php echo $p_qty; ?>"
-       name="quantity[]"
-         value="<?php echo  $arr_cart_p_qty[$i]; ?>"
-        title="Qty"
-        size="4"
-        pattern="[0-9]*"
-        inputmode="numeric"
-        id="quantityInput<?php echo $i; ?>">
-    <button type="button" class="qty-btn qty-plus" data-index="<?php echo $i; ?>">+</button>
-</div>
-
-<div id="stockErrorMessage" style="color: red; font-size: 14px; display: none;">
-    Item is over the available stocks.
-</div>
-
-                            <script>
-    // Get elements
-    const addToCartBtn = document.getElementById('addToCartBtn');
-    const stockErrorMessage = document.getElementById('stockErrorMessage');
-    const quantityInput = document.getElementById('quantityInput');
-    const qtyPlusBtn = document.querySelector('.qty-plus');
-    const qtyMinusBtn = document.querySelector('.qty-minus');
-    const availableStock = <?php echo $p_qty; ?>;
-
-    // Function to check stock and toggle UI
-    function checkStock() {
-        let enteredQty = parseInt(quantityInput.value, 10);
-
-        // Ensure quantity is within valid range
-        if (enteredQty > availableStock) {
-            stockErrorMessage.style.display = 'block'; // Show error message
-            quantityInput.value = availableStock; // Reset to max stock
-            addToCartBtn.disabled = true; // Disable Add to Cart button
-        } else if (enteredQty < 1 || isNaN(enteredQty)) {
-            quantityInput.value = 1; // Reset to minimum
-            stockErrorMessage.style.display = 'none';
-            addToCartBtn.disabled = false;
-        } else {
-            stockErrorMessage.style.display = 'none'; // Hide error message
-            addToCartBtn.disabled = false; // Enable Add to Cart button
-        }
-    }
-
-    // Increment Quantity
-    qtyPlusBtn.addEventListener('click', function () {
-        let currentQty = parseInt(quantityInput.value, 10) || 1; // Default to 1 if NaN
-        if (currentQty < availableStock) {
-            quantityInput.value = currentQty + 1; // Increment by exactly 1
-        }
-        checkStock();
-    });
-
-    // Decrement Quantity
-    qtyMinusBtn.addEventListener('click', function () {
-        let currentQty = parseInt(quantityInput.value, 10) || 1; // Default to 1 if NaN
-        if (currentQty > 1) {
-            quantityInput.value = currentQty - 1; // Decrement by exactly 1
-        }
-        checkStock();
-    });
-
-    // Validate manually entered quantity
-    quantityInput.addEventListener('input', function () {
-        checkStock();
-    });
-
-</script>
-
+                                <button type="button" class="qty-btn qty-minus" data-index="<?php echo $i; ?>">-</button>
+                                <input type="text" class="input-text qty text" name="quantity[]"
+                                       value="<?php echo  $arr_cart_p_qty[$i]; ?>"
+                                       title="Qty" size="4" pattern="[0-9]*" inputmode="numeric"
+                                       id="quantityInput<?php echo $i; ?>"
+                                       style="width: 60px; margin-right: 10px;">
+                                <button type="button" class="qty-btn qty-plus" data-index="<?php echo $i; ?>">+</button>
+                            </div>
 
                             <label>Total: </label>
                             <?php
@@ -477,7 +408,6 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                 value="<?php echo LANG_VALUE_20; ?>"
                 class="btn btn-secondary"
                 name="form1"
-                id="addToCartBtn"
                 style="width:250px; height:50px; text-align:center; display:inline-block;" onclick="checkQuantityAndSubmit(event)">
         </li>
     </ul>
