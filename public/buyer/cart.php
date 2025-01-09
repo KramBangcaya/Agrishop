@@ -257,17 +257,17 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                         <h2>
                             <?php echo htmlspecialchars($arr_cart_p_name[$i]); ?>&nbsp;
                             ₱<?php echo htmlspecialchars($arr_cart_p_current_price[$i]); ?>&nbsp;
-                            <!-- <a
+                            <a
                                href="cart-item-delete.php?id=<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>"
                                class="trash">
                                 <i class="fa fa-trash" style="color:red;"></i>
-                            </a> -->
+                            </a>
                         </h2>
 
 
 
                         <!-- Product Image -->
-                        <img src="http://192.168.1.10:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+                        <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
                              alt="Product Image"
                              style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
                         <input type="hidden" name="product_id[]" value="<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>">
