@@ -5904,7 +5904,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 3:
               _context2.prev = 3;
               _context2.next = 6;
-              return fetch("http://192.168.1.129:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
+              return fetch("http://192.168.1.11:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
             case 6:
               response = _context2.sent;
               _context2.next = 9;
@@ -7490,7 +7490,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 3:
               _context2.prev = 3;
               _context2.next = 6;
-              return fetch("http://192.168.1.129:8080/buyer/get-orders.php?seller_id=".concat(_this2.userID));
+              return fetch("http://192.168.1.11:8080/buyer/get-orders.php?seller_id=".concat(_this2.userID));
             case 6:
               response = _context2.sent;
               _context2.next = 9;
@@ -7567,7 +7567,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }()).then(function (data) {
         if (data.status === 'success') {
           // If product stock is updated successfully, proceed to confirm the order status
-          fetch('http://192.168.1.129:8080/buyer/update-order-status.php', {
+          fetch('http://192.168.1.11:8080/buyer/update-order-status.php', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -7637,7 +7637,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               console.log(cancelPayload);
               _context5.prev = 5;
               _context5.next = 8;
-              return fetch('http://192.168.1.129:8080/buyer/order-cancelled.php', {
+              return fetch('http://192.168.1.11:8080/buyer/order-cancelled.php', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
@@ -9832,7 +9832,7 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "http://192.168.1.129:8080/buyer/" + order.photo,
+        src: "http://192.168.1.11:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
@@ -12845,12 +12845,12 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "http://192.168.1.129:8080/buyer/" + order.photo,
+        src: "http://192.168.1.11:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
         click: function click($event) {
-          return _vm.openImageModal("http://192.168.1.129:8080/buyer/" + order.photo);
+          return _vm.openImageModal("http://192.168.1.11:8080/buyer/" + order.photo);
         }
       }
     }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.reason_cancel))]), _vm._v(" "), order.order_status !== "Cancelled Order" ? _c("td", {

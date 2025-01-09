@@ -245,6 +245,63 @@ foreach ($orders as $order) {
 </details>
 
 <h3 class="special"> </h3>
+<!-- Success Modal -->
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('successModal')">&times;</span>
+        <h2 id="successMessage"></h2>
+        <button onclick="closeModal('successModal')">OK</button>
+    </div>
+</div>
+
+<!-- Error Modal -->
+<div id="errorModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('errorModal')">&times;</span>
+        <h2 id="errorMessage"></h2>
+        <button onclick="closeModal('errorModal')">OK</button>
+    </div>
+</div>
+
+<!-- Modal styles -->
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+        padding-top: 60px;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
 
                             <script>
                             function showCancelReasonForm(orderId) {
@@ -318,41 +375,55 @@ foreach ($orders as $order) {
                                     feedbackForm.style.display = 'none';
                                 }
                             }
+                            function cancelOrderWithReason(orderId) {
+    const reason_cancel = document.getElementById('cancel-reason-' + orderId).value.trim();
 
-                        function cancelOrderWithReason(orderId) {
-                            const reason_cancel = document.getElementById('cancel-reason-' + orderId).value.trim();
+    if (reason_cancel) {
+        if (confirm('Are you sure you want to cancel this order?')) {
+            fetch('cancel-order.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    order_id: orderId,
+                    status: 'Cancelled Order',
+                    reason: reason_cancel
+                }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    showSuccessModal('Order has been cancelled with reason: ' + reason_cancel);
+                    location.reload(); // Reload the page to reflect changes
+                } else {
+                    showErrorModal('Error: ' + data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                showErrorModal('Failed to cancel order.');
+            });
+        }
+    } else {
+        showErrorModal('Please provide a reason for the cancellation.');
+    }
+}
 
-                            if (reason_cancel) {
-                                if (confirm('Are you sure you want to cancel this order?')) {
-                                    fetch('cancel-order.php', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/x-www-form-urlencoded',
-                                        },
-                                        body: new URLSearchParams({
-                                            order_id: orderId,
-                                            status: 'Cancelled Order',
-                                            reason: reason_cancel
-                                        }),
-                                    })
-                                    .then((response) => response.json())
-                                    .then((data) => {
-                                        if (data.success) {
-                                            alert('Order has been cancelled with reason: ' + reason_cancel);
-                                            location.reload(); // Reload the page to reflect changes
-                                        } else {
-                                            alert('Error: ' + data.message);
-                                        }
-                                    })
-                                    .catch((error) => {
-                                        console.error('Error:', error);
-                                        alert('Failed to cancel order.');
-                                    });
-                                }
-                            } else {
-                                alert('Please provide a reason for the cancellation.');
-                            }
-                        }
+function showSuccessModal(message) {
+    document.getElementById('successMessage').innerText = message;
+    document.getElementById('successModal').style.display = 'block';
+}
+
+function showErrorModal(message) {
+    document.getElementById('errorMessage').innerText = message;
+    document.getElementById('errorModal').style.display = 'block';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
                         function markAsDelivered(orderId) {
                             if (confirm('Are you sure you want to mark this order as delivered?')) {
                                 fetch('update-order.php', {

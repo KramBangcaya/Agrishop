@@ -214,7 +214,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                     <?php echo '<h4 class="text-center">Add products to the cart in order to view it here.</h4>'; ?>
                 <?php else: ?>
 
-                <form action="" method="post">
+                <form action="" method="post" id="cartForm">
                     <?php $csrf->echoInputField(); ?>
 
                     <div class="table-responsive">
@@ -257,15 +257,17 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                         <h2>
                             <?php echo htmlspecialchars($arr_cart_p_name[$i]); ?>&nbsp;
                             ₱<?php echo htmlspecialchars($arr_cart_p_current_price[$i]); ?>&nbsp;
-                            <a onclick="return confirmDelete();"
+                            <!-- <a
                                href="cart-item-delete.php?id=<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>"
                                class="trash">
                                 <i class="fa fa-trash" style="color:red;"></i>
-                            </a>
+                            </a> -->
                         </h2>
 
+
+
                         <!-- Product Image -->
-                        <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+                        <img src="http://192.168.1.10:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
                              alt="Product Image"
                              style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
                         <input type="hidden" name="product_id[]" value="<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>">
@@ -289,6 +291,8 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                             echo '₱' . htmlspecialchars($row_total_price);
                             ?>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -297,13 +301,15 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
         <h3 class="special"></h3>
     <?php endfor; ?>
 </div>
+<!-- Update Button (Submit Type) -->
+
 
 <script>
     // JavaScript to handle quantity updates
     document.addEventListener('DOMContentLoaded', function () {
-        // Attach event listeners for all quantity buttons
         const minusButtons = document.querySelectorAll('.qty-minus');
         const plusButtons = document.querySelectorAll('.qty-plus');
+        const quantityInputs = document.querySelectorAll('.input-text.qty');
 
         minusButtons.forEach(button => {
             button.addEventListener('click', function () {
@@ -313,7 +319,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                 if (!isNaN(value) && value > 1) {
                     input.value = value - 1;
                 } else {
-                    input.value = 1; // Prevent going below 1
+                    input.value = 0; // Allow it to go to 0
                 }
             });
         });
@@ -332,14 +338,40 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
         });
 
         // Ensure input fields accept only numeric values
-        const quantityInputs = document.querySelectorAll('.input-text.qty');
         quantityInputs.forEach(input => {
-            input.addEventListener('input', function (e) {
+            input.addEventListener('input', function () {
                 this.value = this.value.replace(/[^0-9]/g, ''); // Strip non-numeric characters
             });
         });
     });
+
+    // Submit button logic
+    function checkQuantityAndSubmit(event) {
+        const quantityInputs = document.querySelectorAll('.input-text.qty');
+        const cartIds = <?php echo json_encode($arr_cart_p_id); ?>; // Pass cart IDs from PHP to JS
+
+        // Loop through each quantity input to check if any are zero
+        for (let i = 0; i < quantityInputs.length; i++) {
+            const quantityInput = quantityInputs[i];
+            const quantity = parseInt(quantityInput.value, 10);
+
+            if (quantity === 0) {
+                // Prevent form submission
+                event.preventDefault(); // Prevent the default submit action
+
+                // Redirect to cart-item-delete.php if quantity is zero
+                const cartId = cartIds[i]; // Get the corresponding cart ID
+                window.location.href = `cart-item-delete.php?id=${cartId}`;
+                return; // Exit function after redirect
+
+
+            }
+        }
+
+        // If no quantity is zero, proceed with form submission
+    }
 </script>
+
 
 <style>
     .quantity-container {
@@ -376,7 +408,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                 value="<?php echo LANG_VALUE_20; ?>"
                 class="btn btn-secondary"
                 name="form1"
-                style="width:250px; height:50px; text-align:center; display:inline-block;">
+                style="width:250px; height:50px; text-align:center; display:inline-block;" onclick="checkQuantityAndSubmit(event)">
         </li>
     </ul>
     <ul style="list-style:none; padding:0; display:inline-block; margin:5px;">
