@@ -29,7 +29,6 @@ try {
     $query = "
     SELECT
         o.*,
-        f.id,
         f.feedback,
         f.rating
     FROM
