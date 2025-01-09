@@ -24,7 +24,42 @@ $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 foreach ($result as $row) {
     $banner_cart = $row['banner_cart'];
 }
-?>
+?> <div id="toast" class="toast"></div>
+
+<style>
+    .toast {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 15px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+        opacity: 0;
+        transition: opacity 0.5s, bottom 0.5s;
+    }
+
+    .toast.show {
+        visibility: visible;
+        opacity: 1;
+        bottom: 50px;
+    }
+</style>
+<script>
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.innerText = message;
+    toast.className = 'toast show';
+    setTimeout(() => {
+        toast.className = 'toast';
+    }, 3000); // Toast disappears after 3 seconds
+}</script>
 <?php
 $error_message = '';
 if(isset($_POST['form1'])) {
@@ -107,9 +142,9 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
     ?>
 
     <?php if($allow_update == 0): ?>
-    	<script>alert('<?php echo $error_message; ?>');</script>
+    	<script> showToast('<?php echo $error_message; ?>');</script>
 	<?php else: ?>
-		<script>alert('All Items Quantity Update is Successful!');</script>
+		<script> showToast('All Items Quantity Update is Successful!');</script>
 	<?php endif; ?>
     <?php
 
@@ -176,15 +211,68 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                         <h2>
                             <?php echo htmlspecialchars($arr_cart_p_name[$i]); ?>&nbsp;
                             ₱<?php echo htmlspecialchars($arr_cart_p_current_price[$i]); ?>&nbsp;
-                            <a onclick="return confirmDelete();"
-                               href="cart-item-delete.php?id=<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>"
-                               class="trash">
-                                <i class="fa fa-trash" style="color:red;"></i>
-                            </a>
+                            <a href="cart-item-delete.php?id=<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>"
+   class="trash"
+   onclick="showToastAndRedirect(event, 'Product Removed!')">
+    <i class="fa fa-trash" style="color:red;"></i>
+</a>
+
+<script>
+    function showToastAndRedirect(event, message) {
+        // Prevent the default behavior of the link
+        event.preventDefault();
+
+        // Show the toast notification
+        showToast(message);
+
+        // Delay the redirection to allow the toast to be visible
+        setTimeout(() => {
+            window.location.href = event.target.closest('a').href;
+        }, 1500); // Adjust the delay if necessary
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.innerText = message;
+        toast.className = 'toast show';
+        setTimeout(() => {
+            toast.className = 'toast';
+        }, 3000); // Toast disappears after 3 seconds
+    }
+</script>
+
+<!-- Add the toast container if it's not already included -->
+<div id="toast" class="toast"></div>
+<style>
+    .toast {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 15px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+        opacity: 0;
+        transition: opacity 0.5s, bottom 0.5s;
+    }
+
+    .toast.show {
+        visibility: visible;
+        opacity: 1;
+        bottom: 50px;
+    }
+</style>
+
                         </h2>
 
                         <!-- Product Image -->
-                        <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+                        <img src="http://192.168.1.10:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
                              alt="Product Image"
                              style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
                         <input type="hidden" name="product_id[]" value="<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>">
@@ -213,11 +301,21 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
             </div>
         </div>
 
+
         <h3 class="special"></h3>
     <?php endfor; ?>
 </div>
 
 <script>
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.innerText = message;
+    toast.className = 'toast show';
+    setTimeout(() => {
+        toast.className = 'toast';
+    }, 3000); // Toast disappears after 3 seconds
+}
+
     // JavaScript to handle quantity updates
     document.addEventListener('DOMContentLoaded', function () {
         // Attach event listeners for all quantity buttons
