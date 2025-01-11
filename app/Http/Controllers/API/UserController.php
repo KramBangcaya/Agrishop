@@ -226,10 +226,11 @@ class UserController extends Controller
     public function deactivate_user(Request $request)
     {
         // Load reports with the associated user data
-     $data = User::whereNotNull('deleted_at')
+     $data = User::withTrashed()->whereNotNull('deleted_at')
      ->whereIn('user_type', ['buyer', 'seller'])
      ->get();
 
+    //  dd($data);
 
     return response()->json([
         'data' => $data,
