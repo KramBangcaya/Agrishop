@@ -31,6 +31,49 @@
                             class="fas fa-bars"></i></a>
                 </li>
             </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge badge-warning navbar-badge">3</span> <!-- Add the number of notifications here -->
+                    </a>
+                    @if (Auth::check() && strtoupper(Auth::user()->getRoleNames()->first()) === 'SELLER')
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <!-- Dropdown Header -->
+                        <span class="dropdown-item dropdown-header">You have new notifications</span>
+                        <!-- Notification Items -->
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> New order (2)
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> Product for Replenishment
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-check-circle mr-2"></i> Order #123 completed
+                        </a>
+                    </div>
+                    @endif
+                    @if (Auth::check() && strtoupper(Auth::user()->getRoleNames()->first()) === 'ADMIN')
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <!-- Dropdown Header -->
+                        <span class="dropdown-item dropdown-header">You have new notifications</span>
+                        <!-- Notification Items -->
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> Buyer (2)
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> Seller
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-check-circle mr-2"></i> Delinquency
+                        </a>
+                    </div>
+                    @endif
+                </li>
+            </ul>
         </nav>
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <div class="container ">
@@ -173,12 +216,6 @@
                                         </router-link>
                                     </li>
                                 </ul>
-                                {{-- <router-link to="/users" class="nav-link">
-                                    <i class="nav-icon fas fa-users"></i>
-                                    <p>
-                                        Users
-                                    </p>
-                                </router-link> --}}
                             </li>
                         @endcan
                         @can('access user')
@@ -268,6 +305,9 @@
     @endauth
     {{-- <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script> --}}
     <script src="{{ asset('/js/app.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
     {{-- <script>
         window.Laravel = {!! json_encode([
            'csrfToken' => csrf_token(),
