@@ -158,6 +158,7 @@ class UserController extends Controller
 
         // Load reports with the associated user data
         $data = user::where('user_type','seller')
+        ->whereNotNull('approved_at')
         ->get();
 
 
@@ -186,6 +187,7 @@ class UserController extends Controller
     {
         // Load reports with the associated user data
     $data = user::where('user_type','buyer')
+    ->whereNotNull('approved_at')
     ->get();
 
 
@@ -211,6 +213,7 @@ class UserController extends Controller
     {
         // Load reports with the associated user data
     $data = user::where('deleted_at',null)
+    ->whereIn('user_type', ['buyer', 'seller'])
     ->get();
 
 
@@ -222,7 +225,9 @@ class UserController extends Controller
     public function deactivate_user(Request $request)
     {
         // Load reports with the associated user data
-     $data = User::whereNotNull('deleted_at')->get();
+     $data = User::whereNotNull('deleted_at')
+     ->whereIn('user_type', ['buyer', 'seller'])
+     ->get();
 
 
     return response()->json([
