@@ -62,7 +62,7 @@ if(!isset($_SESSION['customer'])) {
 
                                                 <label>Reply: </label>
                                                 <span><?php echo htmlspecialchars($order['reply'] ?? 'No reply'); ?></span><br>
-                                            </div>
+                                            </div> <h3 class="special"> </h3>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>

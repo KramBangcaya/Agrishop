@@ -45,6 +45,41 @@ class UserController extends Controller
         // dd($data);
         return response(['data' => $data], 200);
     }
+    public function index_seller(Request $request)
+    {
+        abort_if(Gate::denies('list user'), 403, 'You do not have the required authorization.');
+        $data = User::withTrashed()->with('roles', 'permissions')->where('user_type', 'seller')->latest();
+        if ($request->search) {
+            $data = $data->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+        if ($request->filter == 'Deactivate') {
+            $data = $data->where('deleted_at', null);
+        }
+        if ($request->filter == 'Activate') {
+            $data = $data->whereNotNull('deleted_at');
+        }
+        $data = $data->paginate($request->length);
+        // dd($data);
+        return response(['data' => $data], 200);
+    }
+
+    public function index_buyer(Request $request)
+    {
+        abort_if(Gate::denies('list user'), 403, 'You do not have the required authorization.');
+        $data = User::withTrashed()->with('roles', 'permissions')->where('user_type', 'buyer')->latest();
+        if ($request->search) {
+            $data = $data->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+        if ($request->filter == 'Deactivate') {
+            $data = $data->where('deleted_at', null);
+        }
+        if ($request->filter == 'Activate') {
+            $data = $data->whereNotNull('deleted_at');
+        }
+        $data = $data->paginate($request->length);
+        // dd($data);
+        return response(['data' => $data], 200);
+    }
 
     public function register(Request $request){
 
@@ -264,9 +299,11 @@ class UserController extends Controller
         if ($request->selectedOption == 'approve') {
             $user = User::findOrFail($id);
 
+            $otp = random_int(100000, 999999);
             $user->update([
                 'approved_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'otp' => $otp,
             ]);
             // dd($user);
 

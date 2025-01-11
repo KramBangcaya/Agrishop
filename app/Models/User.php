@@ -42,7 +42,11 @@ class User extends Authenticatable
         'latitude',
         'longitude',
         'qrcode',
-        'address'
+        'address',
+        'otp',
+        'user_type',
+        'date_login',
+        'device',
     ];
 
     /**

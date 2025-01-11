@@ -59,6 +59,14 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
+                        <li class="nav-item">
+                            <router-link to="/home" class="nav-link">
+                                <i class="nav-icon fa-solid fa-house"></i>
+                                <p>
+                                    Dashboard
+                                </p>
+                            </router-link>
+                        </li>
                         @if (Auth::check() && strtoupper(Auth::user()->getRoleNames()->first()) === 'SELLER')
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
@@ -144,12 +152,33 @@
                             @endif
                         @can('access user')
                             <li class="nav-item">
-                                <router-link to="/users" class="nav-link">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Users
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview ml-3">
+                                    <li class="nav-item">
+                                        <router-link to="/users_buyer" class="nav-link">
+                                            <i class="nav-icon fa-solid fa-b"></i>
+                                            <p>Buyer</p>
+                                        </router-link>
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link to="/users_seller" class="nav-link">
+                                            <i class="far fa-solid fa-s nav-icon"></i>
+                                            <p>Seller</p>
+                                        </router-link>
+                                    </li>
+                                </ul>
+                                {{-- <router-link to="/users" class="nav-link">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>
                                         Users
                                     </p>
-                                </router-link>
+                                </router-link> --}}
                             </li>
                         @endcan
                         @can('access user')

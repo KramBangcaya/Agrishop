@@ -106,11 +106,92 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
   //  $error_message .= '\nOther items quantity are updated successfully!';
     ?>
 
-    <?php if($allow_update == 0): ?>
-    	<script>alert('<?php echo $error_message; ?>');</script>
-	<?php else: ?>
-		<script>alert('All Items Quantity Update is Successful!');</script>
-	<?php endif; ?>
+<?php if ($allow_update == 0): ?>
+    <div id="errorModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" style="cursor: pointer;">&times;</span>
+            <p style="color: red; font-size: 18px; font-weight: bold;"><?php echo htmlspecialchars($error_message, ENT_QUOTES, 'UTF-8'); ?></p>
+        </div>
+    </div>
+<?php else: ?>
+    <div id="successModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" style="cursor: pointer;">&times;</span>
+            <p style="color: green; font-size: 18px; font-weight: bold;">All Items Quantity Update is Successful!</p>
+        </div>
+    </div>
+<?php endif; ?>
+
+<style>
+    /* Modal styles */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 400px;
+    }
+
+    .close {
+        float: right;
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: -10px;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: red;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const errorModal = document.getElementById('errorModal');
+        const successModal = document.getElementById('successModal');
+        const closeButtons = document.querySelectorAll('.close');
+
+        // Show the appropriate modal
+        <?php if ($allow_update == 0): ?>
+            errorModal.style.display = 'flex';
+        <?php else: ?>
+            successModal.style.display = 'flex';
+        <?php endif; ?>
+
+        // Close modal on clicking the close button
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                if (errorModal) errorModal.style.display = 'none';
+                if (successModal) successModal.style.display = 'none';
+            });
+        });
+
+        // Close modal on clicking outside the modal content
+        window.addEventListener('click', function (event) {
+            if (event.target === errorModal) {
+                errorModal.style.display = 'none';
+            }
+            if (event.target === successModal) {
+                successModal.style.display = 'none';
+            }
+        });
+    });
+</script>
+
     <?php
 
 }
@@ -133,7 +214,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                     <?php echo '<h4 class="text-center">Add products to the cart in order to view it here.</h4>'; ?>
                 <?php else: ?>
 
-                <form action="" method="post">
+                <form action="" method="post" id="cartForm">
                     <?php $csrf->echoInputField(); ?>
 
                     <div class="table-responsive">
@@ -176,15 +257,21 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                         <h2>
                             <?php echo htmlspecialchars($arr_cart_p_name[$i]); ?>&nbsp;
                             ₱<?php echo htmlspecialchars($arr_cart_p_current_price[$i]); ?>&nbsp;
-                            <a onclick="return confirmDelete();"
+                            <a
                                href="cart-item-delete.php?id=<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>"
                                class="trash">
                                 <i class="fa fa-trash" style="color:red;"></i>
                             </a>
                         </h2>
 
+
+
                         <!-- Product Image -->
+<<<<<<< HEAD
                         <img src="http://192.168.68.60:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+=======
+                        <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+>>>>>>> 0f071ecaf682a34474855e75ec22ae0fae37f196
                              alt="Product Image"
                              style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
                         <input type="hidden" name="product_id[]" value="<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>">
@@ -208,6 +295,8 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                             echo '₱' . htmlspecialchars($row_total_price);
                             ?>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -216,13 +305,15 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
         <h3 class="special"></h3>
     <?php endfor; ?>
 </div>
+<!-- Update Button (Submit Type) -->
+
 
 <script>
     // JavaScript to handle quantity updates
     document.addEventListener('DOMContentLoaded', function () {
-        // Attach event listeners for all quantity buttons
         const minusButtons = document.querySelectorAll('.qty-minus');
         const plusButtons = document.querySelectorAll('.qty-plus');
+        const quantityInputs = document.querySelectorAll('.input-text.qty');
 
         minusButtons.forEach(button => {
             button.addEventListener('click', function () {
@@ -232,7 +323,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                 if (!isNaN(value) && value > 1) {
                     input.value = value - 1;
                 } else {
-                    input.value = 1; // Prevent going below 1
+                    input.value = 0; // Allow it to go to 0
                 }
             });
         });
@@ -251,14 +342,40 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
         });
 
         // Ensure input fields accept only numeric values
-        const quantityInputs = document.querySelectorAll('.input-text.qty');
         quantityInputs.forEach(input => {
-            input.addEventListener('input', function (e) {
+            input.addEventListener('input', function () {
                 this.value = this.value.replace(/[^0-9]/g, ''); // Strip non-numeric characters
             });
         });
     });
+
+    // Submit button logic
+    function checkQuantityAndSubmit(event) {
+        const quantityInputs = document.querySelectorAll('.input-text.qty');
+        const cartIds = <?php echo json_encode($arr_cart_p_id); ?>; // Pass cart IDs from PHP to JS
+
+        // Loop through each quantity input to check if any are zero
+        for (let i = 0; i < quantityInputs.length; i++) {
+            const quantityInput = quantityInputs[i];
+            const quantity = parseInt(quantityInput.value, 10);
+
+            if (quantity === 0) {
+                // Prevent form submission
+                event.preventDefault(); // Prevent the default submit action
+
+                // Redirect to cart-item-delete.php if quantity is zero
+                const cartId = cartIds[i]; // Get the corresponding cart ID
+                window.location.href = `cart-item-delete.php?id=${cartId}`;
+                return; // Exit function after redirect
+
+
+            }
+        }
+
+        // If no quantity is zero, proceed with form submission
+    }
 </script>
+
 
 <style>
     .quantity-container {
@@ -295,7 +412,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                 value="<?php echo LANG_VALUE_20; ?>"
                 class="btn btn-secondary"
                 name="form1"
-                style="width:250px; height:50px; text-align:center; display:inline-block;">
+                style="width:250px; height:50px; text-align:center; display:inline-block;" onclick="checkQuantityAndSubmit(event)">
         </li>
     </ul>
     <ul style="list-style:none; padding:0; display:inline-block; margin:5px;">

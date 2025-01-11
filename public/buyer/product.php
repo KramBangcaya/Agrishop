@@ -261,6 +261,8 @@ if($success_message1 != '') {
                                 </div>
 							</div> -->
                             <form action="" method="post" onsubmit="return checkStock();">
+
+
     <div class="p-price"><br><br><br><br>
 
         <h1><?php echo $p_name; ?></h1>
@@ -272,44 +274,190 @@ if($success_message1 != '') {
             </p>
         </div>
 
-                                <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
-                                <span>
-                                        <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
-                                </span>
-                            </div>
-                            <div class="p-price">
-                                <span style="font-size:14px;">Measurement</span><br>
-                                <span>
-                                        <?php echo $p_measurement; ?>
-                                </span>
-                            </div>
-                            <div class="p-price">
-                                <span style="font-size:14px;">Stock</span><br>
-                                <span>
-                                        <?php echo $p_qty; ?>
-                                </span>
-                            </div>
-                            <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
-                            <input type="hidden" name="p_name" value="<?php echo $p_name; ?>">
-                            <input type="hidden" name="p_featured_photo" value="<?php echo $p_featured_photo; ?>">
-                            <input type="hidden" name="s_name" value="<?php echo $s_name; ?>">
-                            <input type="hidden" name="s_lastname" value="<?php echo $s_last; ?>">
-                            <input type="hidden" name="qrcode" value="<?php echo $qrcode; ?>">
-                            <input type="hidden" name="s_id" value="<?php echo $s_id; ?>">
-                            <input type="hidden" name="s_contact_number" value="<?php echo $s_contact_number; ?>">
-                            <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
-                            <div class="p-quantity">
-    <?php echo LANG_VALUE_55; ?> <br>
-    <div class="quantity-container">
-        <button type="button" class="qty-btn qty-minus">-</button>
-        <input type="number" class="input-text qty" step="1" min="1" max="<?php echo $p_qty; ?>" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" id="quantityInput">
-        <button type="button" class="qty-btn qty-plus">+</button>
+        <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
+        <span>
+            <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
+        </span>
     </div>
 
-    <div id="stockErrorMessage" style="color: red; font-size: 14px; display: none;">
-        Item is over the available stocks.
+
+    <div class="p-price">
+        <span style="font-size:14px;">Measurement</span><br>
+        <span>
+            <?php echo $p_measurement; ?>
+        </span>
     </div>
+    <div class="p-price">
+        <span style="font-size:14px;">Stock</span><br>
+        <span>
+            <?php echo $p_qty; ?>
+        </span>
+    </div>
+    <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
+    <input type="hidden" name="p_name" value="<?php echo $p_name; ?>">
+    <input type="hidden" name="p_featured_photo" value="<?php echo $p_featured_photo; ?>">
+    <input type="hidden" name="s_name" value="<?php echo $s_name; ?>">
+    <input type="hidden" name="s_lastname" value="<?php echo $s_last; ?>">
+    <input type="hidden" name="qrcode" value="<?php echo $qrcode; ?>">
+    <input type="hidden" name="s_id" value="<?php echo $s_id; ?>">
+    <input type="hidden" name="s_contact_number" value="<?php echo $s_contact_number; ?>">
+    <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
+
+
+    <div class="quantity-container">
+    <button type="button" class="qty-btn qty-minus">-</button>
+    <input
+        type="text"
+        class="input-text qty"
+        step="1"
+        min="1"
+        max="<?php echo $p_qty; ?>"
+        name="p_qty"
+        value="1"
+        title="Qty"
+        size="4"
+        pattern="[0-9]*"
+        inputmode="numeric"
+        id="quantityInput">
+    <button type="button" class="qty-btn qty-plus">+</button>
 </div>
+
+<div id="stockErrorMessage" style="color: red; font-size: 14px; display: none;">
+    Item is over the available stocks.
+</div>
+
+<div class="btn-cart btn-cart1" id="addToCartDiv">
+    <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart" id="addToCartBtn">
+</div>
+<div id="successModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close" style="cursor: pointer;">&times;</span>
+    <p style="font-size: 18px; font-weight: bold;">Item successfully added!</p>
+  </div>
+</div>
+<style>
+  /* Modal Styles */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+    border-radius: 8px;
+  }
+
+  .close {
+    color: #aaa;
+    font-size: 24px;
+    font-weight: bold;
+    float: right;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+<script>
+  // Get elements
+  const modal = document.getElementById('successModal');
+  const showModalBtn = document.getElementById('addToCartBtn');
+  const closeBtn = document.querySelector('.close');
+
+  // Show the modal when the button is clicked
+  showModalBtn.addEventListener('click', () => {
+    modal.style.display = 'block';
+  });
+
+  // Close the modal when the close button is clicked
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  // Close the modal when clicking outside the modal content
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>
+
+
+<script>
+    // Get elements
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const stockErrorMessage = document.getElementById('stockErrorMessage');
+    const quantityInput = document.getElementById('quantityInput');
+    const qtyPlusBtn = document.querySelector('.qty-plus');
+    const qtyMinusBtn = document.querySelector('.qty-minus');
+    const availableStock = <?php echo $p_qty; ?>;
+
+    // Function to check stock and toggle UI
+    function checkStock() {
+        let enteredQty = parseInt(quantityInput.value, 10);
+
+        // Ensure quantity is within valid range
+        if (enteredQty > availableStock) {
+            stockErrorMessage.style.display = 'block'; // Show error message
+            quantityInput.value = availableStock; // Reset to max stock
+            addToCartBtn.disabled = true; // Disable Add to Cart button
+        } else if (enteredQty < 1 || isNaN(enteredQty)) {
+            quantityInput.value = 1; // Reset to minimum
+            stockErrorMessage.style.display = 'none';
+            addToCartBtn.disabled = false;
+        } else {
+            stockErrorMessage.style.display = 'none'; // Hide error message
+            addToCartBtn.disabled = false; // Enable Add to Cart button
+        }
+    }
+
+    // Increment Quantity
+    qtyPlusBtn.addEventListener('click', function () {
+        let currentQty = parseInt(quantityInput.value, 10) || 1; // Default to 1 if NaN
+        if (currentQty < availableStock) {
+            quantityInput.value = currentQty + 1; // Increment by exactly 1
+        }
+        checkStock();
+    });
+
+    // Decrement Quantity
+    qtyMinusBtn.addEventListener('click', function () {
+        let currentQty = parseInt(quantityInput.value, 10) || 1; // Default to 1 if NaN
+        if (currentQty > 1) {
+            quantityInput.value = currentQty - 1; // Decrement by exactly 1
+        }
+        checkStock();
+    });
+
+    // Validate manually entered quantity
+    quantityInput.addEventListener('input', function () {
+        checkStock();
+    });
+
+</script>
+
+
+
+</form>
+
+
+
+
+
 
 <script>
     document.getElementById('quantityInput').addEventListener('input', function (e) {
@@ -323,7 +471,7 @@ if($success_message1 != '') {
         var input = document.getElementById('quantityInput');
         var value = parseInt(input.value, 10);
         if (!isNaN(value)) {
-            input.value = value + 1;
+            input.value = value + 1-1;
         } else {
             input.value = 1; // default to 1 if the input is empty or invalid
         }
@@ -334,7 +482,7 @@ if($success_message1 != '') {
         var input = document.getElementById('quantityInput');
         var value = parseInt(input.value, 10);
         if (!isNaN(value) && value > 1) {
-            input.value = value - 1;
+            input.value = value - 1+1;
         } else {
             input.value = 1; // prevent going below 1
         }
@@ -368,105 +516,7 @@ if($success_message1 != '') {
 </style>
 
 <!-- Modal -->
-        <div id="failedModal" class="modal" style="color: red; font-size: 14px; display: none;">
-                    <div class="modal-content">
-                        <span class="close" style="cursor: pointer;">&times;</span>
-                        <p style="font-size:18px; font-weight: bold">Item is over the available stocks!</p>
-                    </div>
-                </div>
 
-        <div id="successModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="close" style="cursor: pointer;">&times;</span>
-                <p style="font-size:18px; font-weight: bold">Item has been added to the cart!</p>
-            </div>
-        </div>
-
-<!-- Add to Cart Button -->
-<div class="btn-cart btn-cart1">
-    <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
-</div>
-
-<!-- JavaScript -->
-<script>
-
-function checkStock() {
-        var enteredQty = document.getElementById('quantityInput').value;
-        var availableStock = <?php echo $p_qty; ?>;
-        var errorMessage = document.getElementById('stockErrorMessage');
-        // var addToCartBtn = document.getElementById('addToCartBtn');
-        // Check if entered quantity is greater than available stock
-        if (enteredQty > availableStock) {
-            // errorMessage.style.display = 'block'; // Show the error message
-
-            // var addToCartBtn = document.getElementById('addToCartBtn');
-            var modal = document.getElementById('failedModal');
-            var closeBtn = document.getElementsByClassName('close')[0];
-
-            addToCartBtn.addEventListener('click', function() {
-                modal.style.display = 'block';
-            });
-
-            // Close the modal when the close button is clicked
-            closeBtn.addEventListener('click', function() {
-                modal.style.display = 'none';
-            });
-
-            // Close the modal if the user clicks outside the modal content
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-
-            return false; // Prevent form submission
-        } else {
-            // var addToCartBtn = document.getElementById('addToCartBtn');
-            var modal = document.getElementById('successModal');
-            var closeBtn = document.getElementsByClassName('close')[0];
-
-            addToCartBtn.addEventListener('click', function() {
-                modal.style.display = 'block';
-            });
-
-            // Close the modal when the close button is clicked
-            closeBtn.addEventListener('click', function() {
-                modal.style.display = 'none';
-            });
-
-            // Close the modal if the user clicks outside the modal content
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-            // errorMessage.style.display = 'none'; // Hide the error message
-        }
-
-        return true; // Allow form submission
-    }
-    // Get modal and button elements
-    // var addToCartBtn = document.getElementById('addToCartBtn');
-    // var modal = document.getElementById('successModal');
-    // var closeBtn = document.getElementsByClassName('close')[0];
-
-    // // Show the modal when the Add to Cart button is clicked
-    // addToCartBtn.addEventListener('click', function() {
-    //     modal.style.display = 'block';
-    // });
-
-    // // Close the modal when the close button is clicked
-    // closeBtn.addEventListener('click', function() {
-    //     modal.style.display = 'none';
-    // });
-
-    // // Close the modal if the user clicks outside the modal content
-    // window.addEventListener('click', function(event) {
-    //     if (event.target === modal) {
-    //         modal.style.display = 'none';
-    //     }
-    // });
-</script>
 
 <!-- Optional Styling -->
 <style>

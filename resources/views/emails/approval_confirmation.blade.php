@@ -90,6 +90,7 @@
             <h2>Hello {{ $user->name . " " . $user->lastname }}</h2>
             <p>Your account has been approved successfully!</p>
             <p class="approved-date">Approval Date: {{ $user->approved_at }}</p>
+            <p class="approved-date">One Time Pin for 1st Login:  {{ $user->otp }}</p>
 
             <p>Thank you for joining us! We're excited to have you on board.</p>
 

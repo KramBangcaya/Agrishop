@@ -107,12 +107,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (ob_get_level()) {
         ob_end_clean();
     }
-    unset($_SESSION['cart_p_id']);
-    unset($_SESSION['cart_p_qty']);
-    unset($_SESSION['cart_p_name']);
+    // unset($_SESSION['cart_p_id']);
+    // unset($_SESSION['cart_p_qty']);
+    // unset($_SESSION['cart_p_name']);
     unset($_SESSION['cart_s_name']);
     unset($_SESSION['cart_p_current_price']);
     unset($_SESSION['cart_s_last']);
+
+
+
+    unset($_SESSION['cart_p_id']);
+    unset($_SESSION['cart_p_qty']);
+    unset($_SESSION['cart_p_current_price']);
+    unset($_SESSION['cart_p_name']);
+    unset($_SESSION['cart_p_featured_photo']);
+
+
     header('Location: customer-order.php');
     exit;
 }

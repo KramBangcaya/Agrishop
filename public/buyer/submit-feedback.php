@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // $buyerName = 'N/A';
     $feedback = $_POST['feedback'];
     $rating = $_POST['rating'];
-    $orderId = $_POST['orderId'];
+    $orderId = $_POST['order_id'];
 
     // Validate inputs
     // if (empty($buyerId) || empty($buyerName) || empty($productId) || empty($productName) || empty($feedback) || empty($rating)) {
