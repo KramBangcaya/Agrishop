@@ -52,7 +52,7 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Measurement</th>
+                                            <th>Category</th>
                                         </tr>
                                     </thead>
                                     <tbody>

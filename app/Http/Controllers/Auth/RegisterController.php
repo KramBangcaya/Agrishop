@@ -103,6 +103,11 @@ class RegisterController extends Controller
                 $qrcodes[] = $path; // Add path to the array
             }
         }
+
+        $user_type = 'seller';
+        // $otp = 'otp';
+
+
         // Create the user in the database
         $user = User::create([
             'name' => $data['name'],
@@ -116,6 +121,7 @@ class RegisterController extends Controller
             'address' => $data['address'],
             'photos' => json_encode($paths), // Store photo paths as JSON
             'qrcode' => json_encode($qrcodes),
+            'user_type' => $user_type,
         ]);
 
         // Send the account registration email

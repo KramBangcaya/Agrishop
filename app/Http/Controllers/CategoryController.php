@@ -18,6 +18,9 @@ class CategoryController extends Controller
         // dd('sample');
         // dd("");
         $data = Category::latest();
+        if ($request->search) {
+            $data = $data->where('category', 'LIKE', '%' . $request->search . '%');
+        }
         $data = $data->paginate($request->length);
         return response(['data' => $data], 200);
     }

@@ -84,6 +84,18 @@ const routes = [
         component: require('./components/Users/IndexUser.vue').default,
         props: true,
     },
+    {
+        path: '/users_seller',
+        name: 'users_seller',
+        component: require('./components/Users/UserSeller.vue').default,
+        props: true,
+    },
+    {
+        path: '/users_buyer',
+        name: 'users_buyer',
+        component: require('./components/Users/UserBuyer.vue').default,
+        props: true,
+    },
     //---------------------------------------------------------END USER
     //---------------------------------------------------------USER
     {
