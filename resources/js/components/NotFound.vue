@@ -28,7 +28,7 @@
                     <h5 class="card-title">Total Number of Complaints</h5>
                 </div>
                 <div class="card-body">
-                    <h1></h1>
+                    <h1>{{ complaints }}</h1>
                 </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                     <h5 class="card-title">For Approval</h5>
                 </div>
                 <div class="card-body">
-                    <h1></h1>
+                    <h1>{{  approval }}</h1>
                 </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     <h5 class="card-title">Account Activated</h5>
                 </div>
                 <div class="card-body">
-                    <h1></h1>
+                    <h1>{{ activated }}</h1>
                 </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                     <h5 class="card-title">Account Deactivated</h5>
                 </div>
                 <div class="card-body">
-                    <h1></h1>
+                    <h1>{{ deactivated }}</h1>
                 </div>
                 </div>
             </div>
@@ -292,6 +292,10 @@
       this.fetchTopProducts();
       this.getSellerData();
       this.getBuyerData();
+      this.getReportData();
+      this.getApproveData();
+      this.getActivatedData();
+      this.getDeactivatedData();
     },
 
     methods: {
@@ -359,8 +363,8 @@
                 // Store the count of sellers
                 this.sellerCount = this.user.length;
 
-                console.log('Sellers:', this.user);
-                console.log('Total Sellers:', this.sellerCount);
+                // console.log('Sellers:', this.user);
+                // console.log('Total Sellers:', this.sellerCount);
             }
         })
         .catch(error => {
@@ -381,8 +385,97 @@
 
                     this.buyerCount = this.user.length;
 
-                console.log('Buyer:', this.user);
-                console.log('Total Sellers:', this.buyerCount);
+                // console.log('Buyer:', this.user);
+                // console.log('Total Sellers:', this.buyerCount);
+
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                toast.fire({
+                    icon: 'error',
+                    text: error.response?.data?.message || 'An error occurred',
+                });
+            });
+        },
+
+        getReportData() {
+        axios.get('/report/all_reports')
+            .then(response => {
+                if (response.data.data && Array.isArray(response.data.data)) {
+                    // Assign the returned sellers array
+                    this.user = response.data.data;
+
+                    this.complaints = this.user.length;
+
+                // console.log('complaints:', this.user);
+                // console.log('Total Complaints:', this.complaints);
+
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                toast.fire({
+                    icon: 'error',
+                    text: error.response?.data?.message || 'An error occurred',
+                });
+            });
+        },
+        getApproveData() {
+        axios.get('/notif/approval')
+            .then(response => {
+                if (response.data.data && Array.isArray(response.data.data)) {
+                    // Assign the returned sellers array
+                    this.user = response.data.data;
+
+                    this.approval = this.user.length;
+
+                // console.log('approval:', this.user);
+                // console.log('Total Approval:', this.approval);
+
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                toast.fire({
+                    icon: 'error',
+                    text: error.response?.data?.message || 'An error occurred',
+                });
+            });
+        },
+        getActivatedData() {
+        axios.get('/notif/activate')
+            .then(response => {
+                if (response.data.data && Array.isArray(response.data.data)) {
+                    // Assign the returned sellers array
+                    this.user = response.data.data;
+
+                    this.activated = this.user.length;
+
+                // console.log('Activated:', this.user);
+                // console.log('Total Activated:', this.activated);
+
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                toast.fire({
+                    icon: 'error',
+                    text: error.response?.data?.message || 'An error occurred',
+                });
+            });
+        },
+        getDeactivatedData() {
+        axios.get('/notif/deactivate')
+            .then(response => {
+                if (response.data.data && Array.isArray(response.data.data)) {
+                    // Assign the returned sellers array
+                    this.user = response.data.data;
+
+                    this.deactivated = this.user.length;
+
+                console.log('Deactivated:', this.user);
+                console.log('Total Deactivated:', this.deactivated);
 
                 }
             })

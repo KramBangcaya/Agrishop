@@ -46,6 +46,18 @@ class ReportController extends Controller
         ], 200);
     }
 
+    public function report_all(Request $request){
+        // dd($request->all());
+        // dd($userID);
+        $data = report::get();
+
+        // $data = $data->paginate($request->length);
+
+        return response()->json([
+            'data' => $data,
+        ], 200);
+    }
+
     public function index_all(Request $request){
         $data = report::all();
 

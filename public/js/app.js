@@ -6834,6 +6834,10 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
     this.fetchTopProducts();
     this.getSellerData();
     this.getBuyerData();
+    this.getReportData();
+    this.getApproveData();
+    this.getActivatedData();
+    this.getDeactivatedData();
   },
   methods: {
     // Fetch categories and update pie chart
@@ -6949,9 +6953,8 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
           // Assign the returned sellers array
           _this4.user = response.data.data; // Store the count of sellers
 
-          _this4.sellerCount = _this4.user.length;
-          console.log('Sellers:', _this4.user);
-          console.log('Total Sellers:', _this4.sellerCount);
+          _this4.sellerCount = _this4.user.length; // console.log('Sellers:', this.user);
+          // console.log('Total Sellers:', this.sellerCount);
         }
       })["catch"](function (error) {
         var _error$response, _error$response$data;
@@ -6970,9 +6973,8 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
           _this5.user = response.data.data;
-          _this5.buyerCount = _this5.user.length;
-          console.log('Buyer:', _this5.user);
-          console.log('Total Sellers:', _this5.buyerCount);
+          _this5.buyerCount = _this5.user.length; // console.log('Buyer:', this.user);
+          // console.log('Total Sellers:', this.buyerCount);
         }
       })["catch"](function (error) {
         var _error$response2, _error$response2$data;
@@ -6981,6 +6983,87 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
         toast.fire({
           icon: 'error',
           text: ((_error$response2 = error.response) === null || _error$response2 === void 0 ? void 0 : (_error$response2$data = _error$response2.data) === null || _error$response2$data === void 0 ? void 0 : _error$response2$data.message) || 'An error occurred'
+        });
+      });
+    },
+    getReportData: function getReportData() {
+      var _this6 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/report/all_reports').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this6.user = response.data.data;
+          _this6.complaints = _this6.user.length; // console.log('complaints:', this.user);
+          // console.log('Total Complaints:', this.complaints);
+        }
+      })["catch"](function (error) {
+        var _error$response3, _error$response3$data;
+
+        _this6.error = error;
+        toast.fire({
+          icon: 'error',
+          text: ((_error$response3 = error.response) === null || _error$response3 === void 0 ? void 0 : (_error$response3$data = _error$response3.data) === null || _error$response3$data === void 0 ? void 0 : _error$response3$data.message) || 'An error occurred'
+        });
+      });
+    },
+    getApproveData: function getApproveData() {
+      var _this7 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/approval').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this7.user = response.data.data;
+          _this7.approval = _this7.user.length; // console.log('approval:', this.user);
+          // console.log('Total Approval:', this.approval);
+        }
+      })["catch"](function (error) {
+        var _error$response4, _error$response4$data;
+
+        _this7.error = error;
+        toast.fire({
+          icon: 'error',
+          text: ((_error$response4 = error.response) === null || _error$response4 === void 0 ? void 0 : (_error$response4$data = _error$response4.data) === null || _error$response4$data === void 0 ? void 0 : _error$response4$data.message) || 'An error occurred'
+        });
+      });
+    },
+    getActivatedData: function getActivatedData() {
+      var _this8 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/activate').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this8.user = response.data.data;
+          _this8.activated = _this8.user.length; // console.log('Activated:', this.user);
+          // console.log('Total Activated:', this.activated);
+        }
+      })["catch"](function (error) {
+        var _error$response5, _error$response5$data;
+
+        _this8.error = error;
+        toast.fire({
+          icon: 'error',
+          text: ((_error$response5 = error.response) === null || _error$response5 === void 0 ? void 0 : (_error$response5$data = _error$response5.data) === null || _error$response5$data === void 0 ? void 0 : _error$response5$data.message) || 'An error occurred'
+        });
+      });
+    },
+    getDeactivatedData: function getDeactivatedData() {
+      var _this9 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/deactivate').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this9.user = response.data.data;
+          _this9.deactivated = _this9.user.length;
+          console.log('Deactivated:', _this9.user);
+          console.log('Total Deactivated:', _this9.deactivated);
+        }
+      })["catch"](function (error) {
+        var _error$response6, _error$response6$data;
+
+        _this9.error = error;
+        toast.fire({
+          icon: 'error',
+          text: ((_error$response6 = error.response) === null || _error$response6 === void 0 ? void 0 : (_error$response6$data = _error$response6.data) === null || _error$response6$data === void 0 ? void 0 : _error$response6$data.message) || 'An error occurred'
         });
       });
     }
@@ -11860,12 +11943,34 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "card m-3",
     style: _vm.cardStyle
-  }, [_vm._m(2), _vm._v(" "), _vm._m(3)])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("h1", [_vm._v(_vm._s(_vm.complaints))])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card m-3",
     style: _vm.cardStyle
-  }, [_vm._m(4), _vm._v(" "), _vm._m(5)])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(3), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("h1", [_vm._v(_vm._s(_vm.approval))])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "card m-3",
+    style: _vm.cardStyle
+  }, [_vm._m(4), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("h1", [_vm._v(_vm._s(_vm.activated))])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "card m-3",
+    style: _vm.cardStyle
+  }, [_vm._m(5), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("h1", [_vm._v(_vm._s(_vm.deactivated))])])])])]) : _vm._e(), _vm._v(" "), _vm.user_type === "seller" ? _c("div", {
+    staticClass: "row justify-content-center"
+  }, [_c("div", {
+    staticClass: "row justify-content-center"
+  }, [_c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card m-3",
@@ -11875,32 +11980,18 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "card m-3",
     style: _vm.cardStyle
-  }, [_vm._m(8), _vm._v(" "), _vm._m(9)])])]) : _vm._e(), _vm._v(" "), _vm.user_type === "seller" ? _c("div", {
-    staticClass: "row justify-content-center"
-  }, [_c("div", {
-    staticClass: "row justify-content-center"
-  }, [_c("div", {
-    staticClass: "col-md-6"
-  }, [_c("div", {
-    staticClass: "card m-3",
-    style: _vm.cardStyle
-  }, [_vm._m(10), _vm._v(" "), _vm._m(11)])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-6"
-  }, [_c("div", {
-    staticClass: "card m-3",
-    style: _vm.cardStyle
-  }, [_vm._m(12), _vm._v(" "), _vm._m(13)])])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(8), _vm._v(" "), _vm._m(9)])])]), _vm._v(" "), _c("div", {
     staticClass: "row justify-content-center"
   }, [_c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card m-3",
     style: _vm.cardStyle
-  }, [_vm._m(14), _vm._v(" "), _c("div", {
+  }, [_vm._m(10), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("table", {
     staticClass: "table border table-bordered"
-  }, [_vm._m(15), _vm._v(" "), _c("tbody", {
+  }, [_vm._m(11), _vm._v(" "), _c("tbody", {
     staticClass: "border-black"
   }, _vm._l(_vm.topProducts, function (product, index) {
     return _c("tr", {
@@ -11918,7 +12009,7 @@ var render = function render() {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card m-3"
-  }, [_vm._m(16), _vm._v(" "), _c("div", {
+  }, [_vm._m(12), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("bar-chart", {
     attrs: {
@@ -11929,7 +12020,7 @@ var render = function render() {
     staticClass: "col-md-8"
   }, [_c("div", {
     staticClass: "card m-3"
-  }, [_vm._m(17), _vm._v(" "), _c("div", {
+  }, [_vm._m(13), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_vm.isLoading ? _c("div", [_vm._v("Loading Revenue Data...")]) : _c("pie-chart", {
     attrs: {
@@ -11971,24 +12062,10 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "card-body"
-  }, [_c("h1")]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
     staticClass: "card-header"
   }, [_c("h5", {
     staticClass: "card-title"
   }, [_vm._v("For Approval")])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "card-body"
-  }, [_c("h1")]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -12003,24 +12080,10 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "card-body"
-  }, [_c("h1")]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
     staticClass: "card-header"
   }, [_c("h5", {
     staticClass: "card-title"
   }, [_vm._v("Account Deactivated")])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "card-body"
-  }, [_c("h1")]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;

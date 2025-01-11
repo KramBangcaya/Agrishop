@@ -195,6 +195,41 @@ class UserController extends Controller
 
     }
 
+    public function approval(Request $request)
+    {
+        // Load reports with the associated user data
+    $data = user::where('approved_at',null)
+    ->get();
+
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
+    }
+
+    public function activate_user(Request $request)
+    {
+        // Load reports with the associated user data
+    $data = user::where('deleted_at',null)
+    ->get();
+
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
+    }
+
+    public function deactivate_user(Request $request)
+    {
+        // Load reports with the associated user data
+     $data = User::whereNotNull('deleted_at')->get();
+
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
+    }
+
     public function index_all(Request $request){
         $users = User::join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
                 ->join('roles', 'model_has_roles.role_id', '=', 'roles.id') // Join with the roles table

@@ -48,6 +48,7 @@ Route::prefix('products')->group(function () {
 
 Route::prefix('report')->group(function () {
     Route::get('/all_user', [ReportController::class, 'report_user']);
+    Route::get('/all_reports', [ReportController::class, 'report_all']);
 });
 
 Route::prefix('categories')->group(function () {
@@ -71,6 +72,9 @@ Route::prefix('notif')->group(function () {
     Route::get('/all_seller2', [UserController::class, 'seller_all2']);
     Route::get('/all_buyer', [UserController::class, 'buyer_all']);
     Route::get('/all_buyer2', [UserController::class, 'buyer_all2']);
+    Route::get('/approval', [UserController::class, 'approval']);
+    Route::get('/activate', [UserController::class, 'activate_user']);
+    Route::get('/deactivate', [UserController::class, 'deactivate_user']);
 });
 Route::prefix('register')->group(function () {
     Route::get('/submit', [MobileController::class, 'Registration']);
