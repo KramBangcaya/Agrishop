@@ -37,12 +37,29 @@ class DeliquencyController extends Controller
         return $item;
     });
 
+
     return response([
         'data' => $data,
         'buyerCounts' => $buyerCounts,
     ], 200);
 
     }
+
+
+
+    public function index_all(Request $request)
+    {
+
+        // Load reports with the associated user data
+    $data = Report::where('reply',null)->get();
+
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
+
+    }
+
 
     /**
      * Store a newly created resource in storage.

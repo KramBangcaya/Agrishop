@@ -32,6 +32,10 @@ Route::get('/public/buyer/index.php', function () {
     return view('index');
 });
 
+Route::prefix('deliquency')->group(function () {
+Route::get('list_all', [App\Http\Controllers\API\DeliquencyController::class, 'index_all']);
+});
+
 Route::prefix('products')->group(function () {
     Route::get('/all', [ProductsController::class, 'index_all']);
     Route::get('/all_product', [ProductsController::class, 'all_product']);
@@ -39,6 +43,7 @@ Route::prefix('products')->group(function () {
     Route::get('/product/{id}', [App\Http\Controllers\ProductsController::class, 'product']);
     Route::get('/product/seller/{id}', [App\Http\Controllers\ProductsController::class, 'seller']);
     Route::get('/price-range', [App\Http\Controllers\ProductsController::class, 'getPrice']);
+    Route::get('/replenishment_all', [ProductsController::class, 'replenishment_all']);
 });
 
 Route::prefix('report')->group(function () {
@@ -59,6 +64,11 @@ Route::prefix('login')->group(function () {
 Route::prefix('seller')->group(function () {
     Route::get('/all', [UserController::class, 'all']);
     Route::get('/all_buyer', [UserController::class, 'all_buyer']);
+});
+
+Route::prefix('notif')->group(function () {
+    Route::get('/all_seller', [UserController::class, 'seller_all']);
+    Route::get('/all_buyer', [UserController::class, 'buyer_all']);
 });
 Route::prefix('register')->group(function () {
     Route::get('/submit', [MobileController::class, 'Registration']);

@@ -260,6 +260,23 @@ class ProductsController extends Controller
         ], 200);
     }
 
+    public function replenishment_all(Request $request)
+    {
+        $userID = auth()->user()->id;
+
+        // dd($emp_code);
+        $data = Products::with('Category', 'Measurement')
+            ->OrderBy('Quantity', 'desc')
+            ->where('userID', $userID)
+            ->where('Quantity', '<=', 10)
+            ->get();
+
+        return response()->json([
+            'data' => $data,
+            'userID' => $userID,
+        ], 200);
+    }
+
 
     public function store(Request $request)
     {

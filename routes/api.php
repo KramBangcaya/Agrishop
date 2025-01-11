@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
     Route::group(['prefix' => 'deliquency'], function () {
         Route::get('list', [App\Http\Controllers\API\DeliquencyController::class, 'index']);
+        // Route::get('list_all', [App\Http\Controllers\API\DeliquencyController::class, 'index_all']);
         Route::get('show', [App\Http\Controllers\API\UserController::class, 'show']);
         Route::post('create', [App\Http\Controllers\API\UserController::class, 'store']);
         Route::put('validate/{id}', [App\Http\Controllers\API\UserController::class, 'validated']);
