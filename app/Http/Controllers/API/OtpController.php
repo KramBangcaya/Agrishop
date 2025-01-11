@@ -51,7 +51,7 @@ class OtpController extends Controller
         // Log in the user
         auth()->login($user);
 
-        dd(auth()->login($user));
+        // dd(auth()->login($user));
         // Redirect the user
         return redirect()->intended('/home')->with('message', 'Your account has been successfully verified.');
     }
