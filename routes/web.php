@@ -68,7 +68,9 @@ Route::prefix('seller')->group(function () {
 
 Route::prefix('notif')->group(function () {
     Route::get('/all_seller', [UserController::class, 'seller_all']);
+    Route::get('/all_seller2', [UserController::class, 'seller_all2']);
     Route::get('/all_buyer', [UserController::class, 'buyer_all']);
+    Route::get('/all_buyer2', [UserController::class, 'buyer_all2']);
 });
 Route::prefix('register')->group(function () {
     Route::get('/submit', [MobileController::class, 'Registration']);

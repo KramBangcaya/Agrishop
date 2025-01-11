@@ -142,9 +142,23 @@ class UserController extends Controller
     {
 
         // Load reports with the associated user data
-    $data = user::where('user_type','seller')
-    ->where('approved_at',null)
-    ->get();
+        $data = user::where('user_type','seller')
+        ->where('approved_at',null)
+        ->get();
+
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
+
+    }
+
+    public function seller_all2(Request $request)
+    {
+
+        // Load reports with the associated user data
+        $data = user::where('user_type','seller')
+        ->get();
 
 
     return response()->json([
@@ -159,6 +173,19 @@ class UserController extends Controller
         // Load reports with the associated user data
     $data = user::where('user_type','buyer')
     ->where('approved_at',null)
+    ->get();
+
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
+
+    }
+
+    public function buyer_all2(Request $request)
+    {
+        // Load reports with the associated user data
+    $data = user::where('user_type','buyer')
     ->get();
 
 
