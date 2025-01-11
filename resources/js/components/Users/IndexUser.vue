@@ -94,7 +94,7 @@
                                             </td>
                                             <td v-else-if="data.approved_at == NULL">
                                                 <span class="badge badge-danger">Not Validated</span>
-                                            </t
+                                            </td>
                                             <td v-else>{{ data.approved_at }}</td>
                                             <td class="text-right">
                                                 <button

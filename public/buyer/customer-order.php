@@ -693,6 +693,7 @@ $groupedOrders[$order['order_status']][] = $order;
                                         orderStatusElement.innerHTML = 'Delivered <i class="fa fa-check" style="color: green;"></i>';
                                         orderStatusElement.style.color = 'gray'; // Change the text color
                                     }
+                                    Location.reload()
                                 } else {
                                     alert('Error: ' + data.message);
                                 }

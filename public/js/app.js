@@ -5904,7 +5904,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 3:
               _context2.prev = 3;
               _context2.next = 6;
-              return fetch("http://192.168.1.129:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
+              return fetch("http://192.168.68.67:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
             case 6:
               response = _context2.sent;
               _context2.next = 9;
@@ -7490,7 +7490,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 3:
               _context2.prev = 3;
               _context2.next = 6;
-              return fetch("http://192.168.1.129:8080/buyer/get-orders.php?seller_id=".concat(_this2.userID));
+              return fetch("http://192.168.68.67:8080/buyer/get-orders.php?seller_id=".concat(_this2.userID));
             case 6:
               response = _context2.sent;
               _context2.next = 9;
@@ -7554,8 +7554,9 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               case 2:
                 text = _context3.sent;
                 console.log('Raw response:', text);
+                console.log(productPayload);
                 return _context3.abrupt("return", JSON.parse(text));
-              case 5:
+              case 6:
               case "end":
                 return _context3.stop();
             }
@@ -7567,7 +7568,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }()).then(function (data) {
         if (data.status === 'success') {
           // If product stock is updated successfully, proceed to confirm the order status
-          fetch('http://192.168.1.129:8080/buyer/update-order-status.php', {
+          fetch('http://192.168.68.67:8080/buyer/update-order-status.php', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -7584,8 +7585,9 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   case 2:
                     text = _context4.sent;
                     console.log('Raw response:', text);
+                    console.log(confirmPayload);
                     return _context4.abrupt("return", JSON.parse(text));
-                  case 5:
+                  case 6:
                   case "end":
                     return _context4.stop();
                 }
@@ -7637,7 +7639,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               console.log(cancelPayload);
               _context5.prev = 5;
               _context5.next = 8;
-              return fetch('http://192.168.1.129:8080/buyer/order-cancelled.php', {
+              return fetch('http://192.168.68.67:8080/buyer/order-cancelled.php', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
@@ -9063,7 +9065,6 @@ __webpack_require__.r(__webpack_exports__);
     validatePin: function validatePin() {
       if (this.pin === this.correctPin) {
         this.showPinModal = false;
-
         if (this.pinAction === 'activate') {
           this.activateUser(this.userId);
         } else if (this.pinAction === 'deactivate') {
@@ -9137,11 +9138,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     deactivateUser: function deactivateUser(id) {
       var _this2 = this;
-<<<<<<< HEAD
-=======
-
       // Existing logic for deactivation
->>>>>>> 3e638b76348f335b7eeb5e3bf0f0f1fae19063d5
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -9153,12 +9150,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.isConfirmed) {
           axios["delete"]('/api/user/delete/' + id).then(function (response) {
-<<<<<<< HEAD
-            Swal.fire('Disable!', 'Your Account has been Deactivated.', 'success');
-=======
             Swal.fire('Disabled!', 'Your Account has been Deactivated.', 'success');
-
->>>>>>> 3e638b76348f335b7eeb5e3bf0f0f1fae19063d5
             _this2.getData();
           });
         }
@@ -9171,11 +9163,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     activateUser: function activateUser(id) {
       var _this3 = this;
-<<<<<<< HEAD
-=======
-
       // Existing logic for activation
->>>>>>> 3e638b76348f335b7eeb5e3bf0f0f1fae19063d5
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -9846,7 +9834,7 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "http://192.168.1.129:8080/buyer/" + order.photo,
+        src: "http://192.168.68.67:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
@@ -9854,7 +9842,7 @@ var render = function render() {
           return _vm.openImageModal("/buyer/" + order.photo);
         }
       }
-    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))])]);
+    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))])]);
   }), 0)])])])])])])]), _vm._v(" "), _vm.showImageModal ? _c("div", {
     staticClass: "modal-overlay",
     on: {
@@ -9894,7 +9882,7 @@ var staticRenderFns = [function () {
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("thead", [_c("tr", [_c("th", [_vm._v("Proof")]), _vm._v(" "), _c("th", [_vm._v("Buyer's Name")]), _vm._v(" "), _c("th", [_vm._v("Buyer Address")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Ordered Quantity")]), _vm._v(" "), _c("th", [_vm._v("Total Price")]), _vm._v(" "), _c("th", [_vm._v("Status")])])]);
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Proof")]), _vm._v(" "), _c("th", [_vm._v("Buyer's Name")]), _vm._v(" "), _c("th", [_vm._v("Buyer Address")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Ordered Quantity")]), _vm._v(" "), _c("th", [_vm._v("Total Price")]), _vm._v(" "), _c("th", [_vm._v("Status")]), _vm._v(" "), _c("th", [_vm._v("Feedback")]), _vm._v(" "), _c("th", [_vm._v("Rating")])])]);
 }];
 render._withStripped = true;
 
@@ -10293,7 +10281,7 @@ var render = function render() {
           _vm.openImageModal("/storage/" + _vm.formatPhotoPath(data.proof));
         }
       }
-    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.buyer_name))]), _vm._v(" "), _c("td"), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.reason))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.user_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.reply))]), _vm._v(" "), _c("td", {
+    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.reason))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.user_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.reply))]), _vm._v(" "), _c("td", {
       staticClass: "text-right"
     }, [_c("button", {
       staticClass: "btn btn-primary btn-sm",
@@ -10379,10 +10367,6 @@ var staticRenderFns = [function () {
       width: "10%"
     }
   }, [_vm._v("Complainee's Name")]), _vm._v(" "), _c("th", {
-    staticStyle: {
-      width: "10%"
-    }
-  }, [_vm._v("Number of Reports")]), _vm._v(" "), _c("th", {
     staticStyle: {
       width: "30%"
     }
@@ -12859,15 +12843,15 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "http://192.168.1.129:8080/buyer/" + order.photo,
+        src: "http://192.168.68.67:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
         click: function click($event) {
-          return _vm.openImageModal("http://192.168.1.129:8080/buyer/" + order.photo);
+          return _vm.openImageModal("http://192.168.68.67:8080/buyer/" + order.photo);
         }
       }
-    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.reason_cancel))]), _vm._v(" "), order.order_status !== "Cancelled Order" ? _c("td", {
+    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.reason_cancel))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))]), _vm._v(" "), order.order_status !== "Cancelled Order" ? _c("td", {
       staticClass: "text-left"
     }, [order.order_status !== "For Delivery" ? _c("button", {
       staticClass: "btn btn-primary btn-sm",
@@ -12970,7 +12954,7 @@ var staticRenderFns = [function () {
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("thead", [_c("tr", [_c("th", [_vm._v("Proof")]), _vm._v(" "), _c("th", [_vm._v("Buyer's Name")]), _vm._v(" "), _c("th", [_vm._v("Buyer Address")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Ordered Quantity")]), _vm._v(" "), _c("th", [_vm._v("Total Price")]), _vm._v(" "), _c("th", [_vm._v("Status")]), _vm._v(" "), _c("th", [_vm._v("Reason")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]);
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Proof")]), _vm._v(" "), _c("th", [_vm._v("Buyer's Name")]), _vm._v(" "), _c("th", [_vm._v("Buyer Address")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Ordered Quantity")]), _vm._v(" "), _c("th", [_vm._v("Total Price")]), _vm._v(" "), _c("th", [_vm._v("Status")]), _vm._v(" "), _c("th", [_vm._v("Reason")]), _vm._v(" "), _c("th", [_vm._v("Feedback")]), _vm._v(" "), _c("th", [_vm._v("Rating")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]);
 }];
 render._withStripped = true;
 
@@ -16095,7 +16079,7 @@ var render = function render() {
       staticClass: "badge badge-danger"
     }, [_vm._v("This user is denied")])]) : data.approved_at == _vm.NULL ? _c("td", [_c("span", {
       staticClass: "badge badge-danger"
-    }, [_vm._v("Not Validated")]), _vm._v(" "), _vm._v(_vm._s(data.approved_at))]) : _vm._e(), _vm._v(" "), _c("td", {
+    }, [_vm._v("Not Validated")])]) : _c("td", [_vm._v(_vm._s(data.approved_at))]), _vm._v(" "), _c("td", {
       staticClass: "text-right"
     }, [data.approved_at === null && data.reason_of_disapproval === null ? _c("button", {
       staticClass: "btn btn-success btn-sm",
@@ -16274,8 +16258,7 @@ var staticRenderFns = [function () {
   return _c("thead", [_c("tr", [_c("th", [_vm._v("Id")]), _vm._v(" "), _c("th", [_vm._v("Document")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Email")]), _vm._v(" "), _c("th", [_vm._v("Contact Number")]), _vm._v(" "), _c("th", [_vm._v("Type of User")]), _vm._v(" "), _c("th", [_vm._v("Date of Validation")]), _vm._v(" "), _c("th")])]);
 }, function () {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _c("div", {
     staticClass: "card-header"
   }, [_c("h5", [_vm._v("Enter PIN")])]);
@@ -34075,7 +34058,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-overlay {\r\n    position: fixed;\r\n    top: 50%; /* Center vertically */\r\n    left: 60%; /* Center horizontally */\r\n    transform: translate(-50%, -50%); /* Center horizontally */\r\n    width: 70%;\r\n    height: 70%;\r\n    background: white;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    z-index: 500;\n}\n.modal-content {\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\n}\n.modal-content img {\r\n    max-width: 50%;\r\n    max-height: 50%;\r\n    border: 2px solid white;\r\n    border-radius: 10px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-overlay {\n    position: fixed;\n    top: 50%; /* Center vertically */\n    left: 60%; /* Center horizontally */\n    transform: translate(-50%, -50%); /* Center horizontally */\n    width: 70%;\n    height: 70%;\n    background: white;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    z-index: 500;\n}\n.modal-content {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n.modal-content img {\n    max-width: 50%;\n    max-height: 50%;\n    border: 2px solid white;\n    border-radius: 10px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -34267,7 +34250,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-overlay {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background: white;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    z-index: 1000;\n}\n.modal-content {\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\n}\n.modal-content img {\r\n    max-width: 100%;\r\n    max-height: 100%;\r\n    border: 2px solid white;\r\n    border-radius: 10px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-overlay {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background: white;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    z-index: 1000;\n}\n.modal-content {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n.modal-content img {\n    max-width: 100%;\n    max-height: 100%;\n    border: 2px solid white;\n    border-radius: 10px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
