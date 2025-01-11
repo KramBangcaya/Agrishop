@@ -526,6 +526,157 @@ $groupedOrders[$order['order_status']][] = $order;
 
 
 
+<<<<<<< HEAD
+                        <script>
+                        function showCancelReasonForm(orderId) {
+                            // Show the cancellation reason form
+                            const cancelForm = document.getElementById('cancel-form-' + orderId);
+                            if (cancelForm) {
+                                cancelForm.style.display = 'block';
+                            }
+                        }
+                        function cancelCancellationForm(orderId) {
+                            // Hide the cancellation reason form without submitting
+                            const cancelForm = document.getElementById('cancel-form-' + orderId);
+                            if (cancelForm) {
+                                cancelForm.style.display = 'none';
+                            }
+                        }
+                        function toggleFeedbackForm(event) {
+                            event.preventDefault();
+                            const feedbackForm = event.target.nextElementSibling;
+                            if (feedbackForm) {
+                                feedbackForm.style.display = feedbackForm.style.display === 'none' ? 'block' : 'none';
+                            }
+                        }
+
+                        function submitFeedback(orderId, buyerId, buyerName, productId, productName) {
+                            const feedbackTextarea = document.getElementById('feedback-text-' + orderId);
+                            const ratingSelect = document.getElementById('rating-' + orderId);
+
+                            if (feedbackTextarea && ratingSelect) {
+                                const feedback = feedbackTextarea.value.trim();
+                                const rating = ratingSelect.value;
+
+                                if (feedback && rating) {
+                                    fetch('submit-feedback.php', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: new URLSearchParams({
+                                            buyer_id: buyerId,
+                                            buyer_name: buyerName,
+                                            product_id: productId,
+                                            product_name: productName,
+                                            feedback: feedback,
+                                            rating: rating,
+                                            orderId: orderId,
+                                        }),
+                                    })
+                                        .then((response) => response.json())
+                                        .then((data) => {
+                                            if (data.success) {
+                                                alert('Feedback submitted successfully!');
+                                                document.getElementById('feedback-form-' + orderId).style.display = 'none';
+                                            } else {
+                                                alert('Error: ' + data.message);
+                                            }
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            alert('Failed to submit feedback.');
+                                        });
+                                } else {
+                                    alert('Please complete all fields before submitting.');
+                                }
+                            }
+                        }
+
+                        function cancelFeedback(orderId) {
+                            const feedbackForm = document.getElementById('feedback-form-' + orderId);
+                            if (feedbackForm) {
+                                feedbackForm.style.display = 'none';
+                            }
+                        }
+
+                    function cancelOrderWithReason(orderId) {
+                        const reason_cancel = document.getElementById('cancel-reason-' + orderId).value.trim();
+
+                        if (reason_cancel) {
+                            if (confirm('Are you sure you want to cancel this order?')) {
+                                fetch('cancel-order.php', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                    },
+                                    body: new URLSearchParams({
+                                        order_id: orderId,
+                                        status: 'Cancelled Order',
+                                        reason: reason_cancel
+                                    }),
+                                })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data.success) {
+                                        alert('Order has been cancelled with reason: ' + reason_cancel);
+                                        location.reload(); // Reload the page to reflect changes
+                                    } else {
+                                        alert('Error: ' + data.message);
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error('Error:', error);
+                                    alert('Failed to cancel order.');
+                                });
+                            }
+                        } else {
+                            alert('Please provide a reason for the cancellation.');
+                        }
+                    }
+                    function markAsDelivered(orderId) {
+                        if (confirm('Are you sure you want to mark this order as delivered?')) {
+                            fetch('update-order.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: new URLSearchParams({
+                                    order_id: orderId,
+                                    status: 'Delivered'
+                                }),
+                            })
+                            .then((response) => response.json())
+                            .then((data) => {
+                                if (data.success) {
+                                    alert('Order marked as delivered.');
+
+                                    // Hide the "Mark as Delivered" button
+                                    const markAsDeliveredLink = document.querySelector(`a[onclick="markAsDelivered(${orderId});"]`);
+                                    if (markAsDeliveredLink) {
+                                        markAsDeliveredLink.style.display = 'none'; // Hides the button
+                                    }
+
+                                    // Optionally update the displayed order status text
+                                    const orderStatusElement = document.querySelector(`#order-status-${orderId}`);
+                                    if (orderStatusElement) {
+                                        orderStatusElement.innerHTML = 'Delivered <i class="fa fa-check" style="color: green;"></i>';
+                                        orderStatusElement.style.color = 'gray'; // Change the text color
+                                    }
+                                    Location.reload()
+                                } else {
+                                    alert('Error: ' + data.message);
+                                }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                alert('Failed to update order status.');
+                            });
+                        }
+                    }
+                    </script>
+=======
+>>>>>>> 0f071ecaf682a34474855e75ec22ae0fae37f196
 
 
 <?php

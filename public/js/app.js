@@ -6177,7 +6177,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _context2.prev = 3;
                 _context2.next = 6;
-                return fetch("http://192.168.1.129:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
+                return fetch("http://192.168.68.67:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
 
               case 6:
                 response = _context2.sent;
@@ -7866,7 +7866,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _context2.prev = 3;
                 _context2.next = 6;
-                return fetch("http://192.168.1.129:8080/buyer/get-orders.php?seller_id=".concat(_this2.userID));
+                return fetch("http://192.168.68.67:8080/buyer/get-orders.php?seller_id=".concat(_this2.userID));
 
               case 6:
                 response = _context2.sent;
@@ -7940,9 +7940,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 case 2:
                   text = _context3.sent;
                   console.log('Raw response:', text);
+                  console.log(productPayload);
                   return _context3.abrupt("return", JSON.parse(text));
 
-                case 5:
+                case 6:
                 case "end":
                   return _context3.stop();
               }
@@ -7956,7 +7957,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }()).then(function (data) {
         if (data.status === 'success') {
           // If product stock is updated successfully, proceed to confirm the order status
-          fetch('http://192.168.1.129:8080/buyer/update-order-status.php', {
+          fetch('http://192.168.68.67:8080/buyer/update-order-status.php', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -7975,9 +7976,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     case 2:
                       text = _context4.sent;
                       console.log('Raw response:', text);
+                      console.log(confirmPayload);
                       return _context4.abrupt("return", JSON.parse(text));
 
-                    case 5:
+                    case 6:
                     case "end":
                       return _context4.stop();
                   }
@@ -8037,7 +8039,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log(cancelPayload);
                 _context5.prev = 5;
                 _context5.next = 8;
-                return fetch('http://192.168.1.129:8080/buyer/order-cancelled.php', {
+                return fetch('http://192.168.68.67:8080/buyer/order-cancelled.php', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
@@ -10739,7 +10741,7 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "http://192.168.1.129:8080/buyer/" + order.photo,
+        src: "http://192.168.68.67:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
@@ -10747,7 +10749,7 @@ var render = function render() {
           return _vm.openImageModal("/buyer/" + order.photo);
         }
       }
-    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))])]);
+    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))])]);
   }), 0)])])])])])])]), _vm._v(" "), _vm.showImageModal ? _c("div", {
     staticClass: "modal-overlay",
     on: {
@@ -10791,7 +10793,7 @@ var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("thead", [_c("tr", [_c("th", [_vm._v("Proof")]), _vm._v(" "), _c("th", [_vm._v("Buyer's Name")]), _vm._v(" "), _c("th", [_vm._v("Buyer Address")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Ordered Quantity")]), _vm._v(" "), _c("th", [_vm._v("Total Price")]), _vm._v(" "), _c("th", [_vm._v("Status")])])]);
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Proof")]), _vm._v(" "), _c("th", [_vm._v("Buyer's Name")]), _vm._v(" "), _c("th", [_vm._v("Buyer Address")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Ordered Quantity")]), _vm._v(" "), _c("th", [_vm._v("Total Price")]), _vm._v(" "), _c("th", [_vm._v("Status")]), _vm._v(" "), _c("th", [_vm._v("Feedback")]), _vm._v(" "), _c("th", [_vm._v("Rating")])])]);
 }];
 render._withStripped = true;
 
@@ -11202,7 +11204,7 @@ var render = function render() {
           _vm.openImageModal("/storage/" + _vm.formatPhotoPath(data.proof));
         }
       }
-    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.buyer_name))]), _vm._v(" "), _c("td"), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.reason))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.user_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.reply))]), _vm._v(" "), _c("td", {
+    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.reason))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.user_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.reply))]), _vm._v(" "), _c("td", {
       staticClass: "text-right"
     }, [_c("button", {
       staticClass: "btn btn-primary btn-sm",
@@ -11291,10 +11293,6 @@ var staticRenderFns = [function () {
       width: "10%"
     }
   }, [_vm._v("Complainee's Name")]), _vm._v(" "), _c("th", {
-    staticStyle: {
-      width: "10%"
-    }
-  }, [_vm._v("Number of Reports")]), _vm._v(" "), _c("th", {
     staticStyle: {
       width: "30%"
     }
@@ -13846,15 +13844,15 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "http://192.168.1.129:8080/buyer/" + order.photo,
+        src: "http://192.168.68.67:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
         click: function click($event) {
-          return _vm.openImageModal("http://192.168.1.129:8080/buyer/" + order.photo);
+          return _vm.openImageModal("http://192.168.68.67:8080/buyer/" + order.photo);
         }
       }
-    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.reason_cancel))]), _vm._v(" "), order.order_status !== "Cancelled Order" ? _c("td", {
+    }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.reason_cancel))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))]), _vm._v(" "), order.order_status !== "Cancelled Order" ? _c("td", {
       staticClass: "text-left"
     }, [order.order_status !== "For Delivery" ? _c("button", {
       staticClass: "btn btn-primary btn-sm",
@@ -13961,7 +13959,7 @@ var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("thead", [_c("tr", [_c("th", [_vm._v("Proof")]), _vm._v(" "), _c("th", [_vm._v("Buyer's Name")]), _vm._v(" "), _c("th", [_vm._v("Buyer Address")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Ordered Quantity")]), _vm._v(" "), _c("th", [_vm._v("Total Price")]), _vm._v(" "), _c("th", [_vm._v("Status")]), _vm._v(" "), _c("th", [_vm._v("Reason")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]);
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Proof")]), _vm._v(" "), _c("th", [_vm._v("Buyer's Name")]), _vm._v(" "), _c("th", [_vm._v("Buyer Address")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Ordered Quantity")]), _vm._v(" "), _c("th", [_vm._v("Total Price")]), _vm._v(" "), _c("th", [_vm._v("Status")]), _vm._v(" "), _c("th", [_vm._v("Reason")]), _vm._v(" "), _c("th", [_vm._v("Feedback")]), _vm._v(" "), _c("th", [_vm._v("Rating")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]);
 }];
 render._withStripped = true;
 
