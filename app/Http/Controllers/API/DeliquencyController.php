@@ -18,7 +18,11 @@ class DeliquencyController extends Controller
     {
 
         // Load reports with the associated user data
-    $data = Report::latest()->with('user')->paginate($request->length);
+    $data = Report::latest()->with('user');
+    if ($request->search) {
+        $data = $data->where('buyer_name', 'LIKE', '%' . $request->search . '%');
+    }
+    $data = $data->paginate($request->length);
 
     // Optionally, you can loop through the reports and get the user name
 

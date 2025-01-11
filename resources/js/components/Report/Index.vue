@@ -52,7 +52,7 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 10%;">Proof</th>
-                                            <th style="width: 15%;">Reported Name</th>
+                                            <th style="width: 15%;">Complainee's Name</th>
                                             <th style="width: 30%;">Reason</th>
                                             <th style="width: 30%;">Reply</th>
                                             <th style="width: 10%;"></th>

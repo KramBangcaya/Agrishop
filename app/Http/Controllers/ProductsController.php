@@ -29,6 +29,9 @@ class ProductsController extends Controller
             ->where('userID', $userID)
             ->where('Quantity', '>', 10)
             ->latest();
+            if ($request->search) {
+                $data = $data->where('Product_Name', 'LIKE', '%' . $request->search . '%');
+            }
 
         $data = $data->paginate($request->length);
 
@@ -238,6 +241,9 @@ class ProductsController extends Controller
             ->where('userID', $userID)
             ->where('Quantity', '<=', 10)
             ->latest();
+            if ($request->search) {
+                $data = $data->where('Product_Name', 'LIKE', '%' . $request->search . '%');
+            }
 
         $data = $data->paginate($request->length);
 

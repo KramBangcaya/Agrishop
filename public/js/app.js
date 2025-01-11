@@ -5893,7 +5893,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         var response, data;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-<<<<<<< HEAD
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               if (_this2.userID) {
@@ -5924,48 +5923,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 16:
             case "end":
               return _context2.stop();
-=======
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (_this2.userID) {
-                  _context2.next = 3;
-                  break;
-                }
-
-                console.error("UserID is missing");
-                return _context2.abrupt("return");
-
-              case 3:
-                _context2.prev = 3;
-                _context2.next = 6;
-                return fetch("http://192.168.68.67:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
-
-              case 6:
-                response = _context2.sent;
-                _context2.next = 9;
-                return response.json();
-
-              case 9:
-                data = _context2.sent;
-
-                if (data.status === 'success') {
-                  _this2.orders = data.data;
-                }
-
-                _context2.next = 16;
-                break;
-
-              case 13:
-                _context2.prev = 13;
-                _context2.t0 = _context2["catch"](3);
-                console.error('Error fetching orders:', _context2.t0);
-
-              case 16:
-              case "end":
-                return _context2.stop();
-            }
->>>>>>> d9abe289d431312d57a4db04156f177c9bf34cb5
           }
         }, _callee2, null, [[3, 13]]);
       }))();
@@ -7522,7 +7479,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         var response, data;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-<<<<<<< HEAD
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               if (_this2.userID) {
@@ -7554,49 +7510,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 16:
             case "end":
               return _context2.stop();
-=======
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (_this2.userID) {
-                  _context2.next = 3;
-                  break;
-                }
-
-                console.error("UserID is missing");
-                return _context2.abrupt("return");
-
-              case 3:
-                _context2.prev = 3;
-                _context2.next = 6;
-                return fetch("http://192.168.68.67:8080/buyer/get-orders.php?seller_id=".concat(_this2.userID));
-
-              case 6:
-                response = _context2.sent;
-                _context2.next = 9;
-                return response.json();
-
-              case 9:
-                data = _context2.sent;
-
-                if (data.status === 'success') {
-                  _this2.orders = data.data;
-                  console.log(_this2.orders);
-                }
-
-                _context2.next = 16;
-                break;
-
-              case 13:
-                _context2.prev = 13;
-                _context2.t0 = _context2["catch"](3);
-                console.error('Error fetching orders:', _context2.t0);
-
-              case 16:
-              case "end":
-                return _context2.stop();
-            }
->>>>>>> d9abe289d431312d57a4db04156f177c9bf34cb5
           }
         }, _callee2, null, [[3, 13]]);
       }))();
@@ -7634,7 +7547,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(response) {
           var text;
           return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-<<<<<<< HEAD
             while (1) switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
@@ -7647,24 +7559,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               case 6:
               case "end":
                 return _context3.stop();
-=======
-            while (1) {
-              switch (_context3.prev = _context3.next) {
-                case 0:
-                  _context3.next = 2;
-                  return response.text();
-
-                case 2:
-                  text = _context3.sent;
-                  console.log('Raw response:', text);
-                  console.log(productPayload);
-                  return _context3.abrupt("return", JSON.parse(text));
-
-                case 6:
-                case "end":
-                  return _context3.stop();
-              }
->>>>>>> d9abe289d431312d57a4db04156f177c9bf34cb5
             }
           }, _callee3);
         }));
@@ -7684,7 +7578,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(response) {
               var text;
               return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-<<<<<<< HEAD
                 while (1) switch (_context4.prev = _context4.next) {
                   case 0:
                     _context4.next = 2;
@@ -7697,24 +7590,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   case 6:
                   case "end":
                     return _context4.stop();
-=======
-                while (1) {
-                  switch (_context4.prev = _context4.next) {
-                    case 0:
-                      _context4.next = 2;
-                      return response.text();
-
-                    case 2:
-                      text = _context4.sent;
-                      console.log('Raw response:', text);
-                      console.log(confirmPayload);
-                      return _context4.abrupt("return", JSON.parse(text));
-
-                    case 6:
-                    case "end":
-                      return _context4.stop();
-                  }
->>>>>>> d9abe289d431312d57a4db04156f177c9bf34cb5
                 }
               }, _callee4);
             }));
@@ -7747,7 +7622,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
         var cancelPayload, response, data;
         return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-<<<<<<< HEAD
           while (1) switch (_context5.prev = _context5.next) {
             case 0:
               if (_this4.reason_cancel.trim()) {
@@ -7799,75 +7673,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 23:
             case "end":
               return _context5.stop();
-=======
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                if (_this4.reason_cancel.trim()) {
-                  _context5.next = 3;
-                  break;
-                }
-
-                alert("Please provide a cancellation reason.");
-                return _context5.abrupt("return");
-
-              case 3:
-                cancelPayload = {
-                  order_id: _this4.cancelOrderId,
-                  reason_cancel: _this4.reason_cancel,
-                  order_status: "Cancelled Order"
-                };
-                console.log(cancelPayload);
-                _context5.prev = 5;
-                _context5.next = 8;
-                return fetch('http://192.168.68.67:8080/buyer/order-cancelled.php', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(cancelPayload)
-                });
-
-              case 8:
-                response = _context5.sent;
-                _context5.next = 11;
-                return response.json();
-
-              case 11:
-                data = _context5.sent;
-                console.log(data);
-
-                if (data.status === 'success') {
-                  alert("Order canceled successfully.");
-
-                  _this4.getData(); // Refresh orders list
-
-                } else {
-                  alert("Failed to cancel the order. Please try again.");
-                }
-
-                _context5.next = 20;
-                break;
-
-              case 16:
-                _context5.prev = 16;
-                _context5.t0 = _context5["catch"](5);
-                console.error('Error canceling order:', _context5.t0);
-                alert("An error occurred while canceling the order.");
-
-              case 20:
-                _context5.prev = 20;
-
-                _this4.closeCancelModal(); // Close the modal
-
-
-                return _context5.finish(20);
-
-              case 23:
-              case "end":
-                return _context5.stop();
-            }
->>>>>>> d9abe289d431312d57a4db04156f177c9bf34cb5
           }
         }, _callee5, null, [[5, 16, 20, 23]]);
       }))();
@@ -9260,7 +9065,6 @@ __webpack_require__.r(__webpack_exports__);
     validatePin: function validatePin() {
       if (this.pin === this.correctPin) {
         this.showPinModal = false;
-
         if (this.pinAction === 'activate') {
           this.activateUser(this.userId);
         } else if (this.pinAction === 'deactivate') {
@@ -9334,10 +9138,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     deactivateUser: function deactivateUser(id) {
       var _this2 = this;
-<<<<<<< HEAD
-=======
-
->>>>>>> d9abe289d431312d57a4db04156f177c9bf34cb5
       // Existing logic for deactivation
       Swal.fire({
         title: 'Are you sure?',
@@ -9351,10 +9151,6 @@ __webpack_require__.r(__webpack_exports__);
         if (result.isConfirmed) {
           axios["delete"]('/api/user/delete/' + id).then(function (response) {
             Swal.fire('Disabled!', 'Your Account has been Deactivated.', 'success');
-<<<<<<< HEAD
-=======
-
->>>>>>> d9abe289d431312d57a4db04156f177c9bf34cb5
             _this2.getData();
           });
         }
@@ -9367,10 +9163,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     activateUser: function activateUser(id) {
       var _this3 = this;
-<<<<<<< HEAD
-=======
-
->>>>>>> d9abe289d431312d57a4db04156f177c9bf34cb5
       // Existing logic for activation
       Swal.fire({
         title: 'Are you sure?',
@@ -10471,12 +10263,7 @@ var staticRenderFns = [function () {
   })]);
 }, function () {
   var _vm = this,
-<<<<<<< HEAD
     _c = _vm._self._c;
-=======
-      _c = _vm._self._c;
-
->>>>>>> d9abe289d431312d57a4db04156f177c9bf34cb5
   return _c("thead", [_c("tr", [_c("th", [_vm._v("Proof")]), _vm._v(" "), _c("th", [_vm._v("Buyer's Name")]), _vm._v(" "), _c("th", [_vm._v("Buyer Address")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Ordered Quantity")]), _vm._v(" "), _c("th", [_vm._v("Total Price")]), _vm._v(" "), _c("th", [_vm._v("Status")]), _vm._v(" "), _c("th", [_vm._v("Feedback")]), _vm._v(" "), _c("th", [_vm._v("Rating")])])]);
 }];
 render._withStripped = true;
@@ -13548,12 +13335,7 @@ var staticRenderFns = [function () {
   })]);
 }, function () {
   var _vm = this,
-<<<<<<< HEAD
     _c = _vm._self._c;
-=======
-      _c = _vm._self._c;
-
->>>>>>> d9abe289d431312d57a4db04156f177c9bf34cb5
   return _c("thead", [_c("tr", [_c("th", [_vm._v("Proof")]), _vm._v(" "), _c("th", [_vm._v("Buyer's Name")]), _vm._v(" "), _c("th", [_vm._v("Buyer Address")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Ordered Quantity")]), _vm._v(" "), _c("th", [_vm._v("Total Price")]), _vm._v(" "), _c("th", [_vm._v("Status")]), _vm._v(" "), _c("th", [_vm._v("Reason")]), _vm._v(" "), _c("th", [_vm._v("Feedback")]), _vm._v(" "), _c("th", [_vm._v("Rating")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]);
 }];
 render._withStripped = true;
@@ -14826,7 +14608,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       width: "15%"
     }
-  }, [_vm._v("Reported Name")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Complainee's Name")]), _vm._v(" "), _c("th", {
     staticStyle: {
       width: "30%"
     }
@@ -16858,8 +16640,7 @@ var staticRenderFns = [function () {
   return _c("thead", [_c("tr", [_c("th", [_vm._v("Id")]), _vm._v(" "), _c("th", [_vm._v("Document")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Email")]), _vm._v(" "), _c("th", [_vm._v("Contact Number")]), _vm._v(" "), _c("th", [_vm._v("Type of User")]), _vm._v(" "), _c("th", [_vm._v("Date of Validation")]), _vm._v(" "), _c("th")])]);
 }, function () {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _c("div", {
     staticClass: "card-header"
   }, [_c("h5", [_vm._v("Enter PIN")])]);
@@ -35507,7 +35288,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.nav-link.btn[data-v-da9ba6fc] {\r\n    background: none;\r\n    border: 1px solid #ccc;\r\n    /* Adjust border color as needed */\r\n    padding: 5px 10px;\r\n    /* Adjust padding as needed */\r\n    font: inherit;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    display: flex;\r\n    align-items: center;\r\n    border-radius: 4px;\r\n    /* Optional: for rounded corners */\r\n    text-align: left;\r\n    /* Ensure text is left-aligned */\n}\n.nav-link.btn p[data-v-da9ba6fc] {\r\n    margin: 0;\r\n    /* Remove default margin from <p> */\r\n    padding-left: 5px;\r\n    /* Add some space between icon and text */\n}\n.nav-link.btn[data-v-da9ba6fc]:hover {\r\n    background-color: #f0f0f0;\r\n    /* Optional: add a hover effect */\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.nav-link.btn[data-v-da9ba6fc] {\n    background: none;\n    border: 1px solid #ccc;\n    /* Adjust border color as needed */\n    padding: 5px 10px;\n    /* Adjust padding as needed */\n    font: inherit;\n    color: inherit;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    border-radius: 4px;\n    /* Optional: for rounded corners */\n    text-align: left;\n    /* Ensure text is left-aligned */\n}\n.nav-link.btn p[data-v-da9ba6fc] {\n    margin: 0;\n    /* Remove default margin from <p> */\n    padding-left: 5px;\n    /* Add some space between icon and text */\n}\n.nav-link.btn[data-v-da9ba6fc]:hover {\n    background-color: #f0f0f0;\n    /* Optional: add a hover effect */\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

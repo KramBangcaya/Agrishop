@@ -19,6 +19,9 @@ class ReportController extends Controller
         // dd($userID);
         $data = report::where('userID',$userID)
         ->latest();
+        if ($request->search) {
+            $data = $data->where('buyer_name', 'LIKE', '%' . $request->search . '%');
+        }
 
         $data = $data->paginate($request->length);
 

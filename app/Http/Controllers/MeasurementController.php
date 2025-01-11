@@ -17,6 +17,9 @@ class MeasurementController extends Controller
         // dd('sample');
         // dd("");
         $data = Measurement::latest();
+        if ($request->search) {
+            $data = $data->where('measurement', 'LIKE', '%' . $request->search . '%');
+        }
         $data = $data->paginate($request->length);
         return response(['data' => $data], 200);
     }
