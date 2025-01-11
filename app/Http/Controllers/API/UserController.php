@@ -201,6 +201,7 @@ class UserController extends Controller
     {
         // Load reports with the associated user data
     $data = user::where('approved_at',null)
+    ->whereIn('user_type', ['buyer', 'seller'])
     ->get();
 
 
