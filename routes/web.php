@@ -41,6 +41,7 @@ Route::prefix('products')->group(function () {
     Route::get('/all_product', [ProductsController::class, 'all_product']);
     Route::get('/category/{id}', [App\Http\Controllers\ProductsController::class, 'category_all']);
     Route::get('/product/{id}', [App\Http\Controllers\ProductsController::class, 'product']);
+    Route::get('/product_stock/{id}', [App\Http\Controllers\ProductsController::class, 'product_stock']);
     Route::get('/product/seller/{id}', [App\Http\Controllers\ProductsController::class, 'seller']);
     Route::get('/price-range', [App\Http\Controllers\ProductsController::class, 'getPrice']);
     Route::get('/replenishment_all', [ProductsController::class, 'replenishment_all']);
