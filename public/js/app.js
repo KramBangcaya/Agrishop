@@ -7799,65 +7799,121 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     checkAndCancelPendingOrders: function checkAndCancelPendingOrders() {
       var _this6 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-        var _iterator2, _step2, order, productId, stockResponse, stockData;
+        var pendingOrders, _iterator2, _step2, order, productId, stockResponse, stockData, availableStock, orderedQuantity;
         return _regeneratorRuntime().wrap(function _callee5$(_context5) {
           while (1) switch (_context5.prev = _context5.next) {
             case 0:
               console.log('Checking and canceling pending orders...');
-              if (!(_this6.orders.length === 0)) {
-                _context5.next = 4;
+
+              // Filter out only pending orders
+              pendingOrders = _this6.orders.filter(function (order) {
+                return order.order_status === 'Pending';
+              });
+              if (!(pendingOrders.length === 0)) {
+                _context5.next = 5;
                 break;
               }
-              console.log('No orders to check.');
+              console.log('No pending orders to check.');
               return _context5.abrupt("return");
-            case 4:
-              console.log("Orders data:", _this6.orders);
-              _iterator2 = _createForOfIteratorHelper(_this6.orders);
-              _context5.prev = 6;
+            case 5:
+              console.log("Pending Orders:", pendingOrders);
+              _iterator2 = _createForOfIteratorHelper(pendingOrders);
+              _context5.prev = 7;
               _iterator2.s();
-            case 8:
+            case 9:
               if ((_step2 = _iterator2.n()).done) {
-                _context5.next = 23;
+                _context5.next = 44;
                 break;
               }
               order = _step2.value;
-              productId = order.product_id; // Fetch the stock for this product
-              _context5.next = 13;
+              productId = order.product_id;
+              _context5.prev = 12;
+              _context5.next = 15;
               return fetch("/products/product_stock/".concat(productId));
-            case 13:
+            case 15:
               stockResponse = _context5.sent;
-              _context5.next = 16;
+              _context5.next = 18;
               return stockResponse.json();
-            case 16:
+            case 18:
               stockData = _context5.sent;
-              if (!(stockData.data.Quantity <= 0)) {
-                _context5.next = 21;
+              if (!(!stockData || !stockData.data || stockData.data.Quantity === undefined)) {
+                _context5.next = 22;
                 break;
               }
-              console.log("Stock for product ".concat(productId, " is out. Cancelling pending orders..."));
-              _context5.next = 21;
-              return _this6.cancelPendingOrders(productId);
-            case 21:
-              _context5.next = 8;
-              break;
-            case 23:
+              console.error("Invalid stock data for product ".concat(productId, "."));
+              return _context5.abrupt("continue", 42);
+            case 22:
+              availableStock = stockData.data.Quantity;
+              orderedQuantity = order.product_quantity; // Cancel the order if stock is zero or if the ordered quantity exceeds available stock
+              if (!(availableStock <= 0)) {
+                _context5.next = 30;
+                break;
+              }
+              console.log("Stock for product ".concat(productId, " is out. Cancelling order ").concat(order.id, "..."));
               _context5.next = 28;
-              break;
-            case 25:
-              _context5.prev = 25;
-              _context5.t0 = _context5["catch"](6);
-              _iterator2.e(_context5.t0);
+              return _this6.cancelPendingOrders(productId);
             case 28:
-              _context5.prev = 28;
+              _context5.next = 37;
+              break;
+            case 30:
+              if (!(orderedQuantity > availableStock)) {
+                _context5.next = 36;
+                break;
+              }
+              console.log("Ordered quantity for product ".concat(productId, " is greater than available stock. Cancelling order ").concat(order.id, "..."));
+              _context5.next = 34;
+              return _this6.cancelPendingOrders(productId);
+            case 34:
+              _context5.next = 37;
+              break;
+            case 36:
+              console.log("Stock for product ".concat(productId, " is sufficient. Order ").concat(order.id, " remains active."));
+            case 37:
+              _context5.next = 42;
+              break;
+            case 39:
+              _context5.prev = 39;
+              _context5.t0 = _context5["catch"](12);
+              console.error("Error checking stock for product ".concat(productId, ":"), _context5.t0);
+            case 42:
+              _context5.next = 9;
+              break;
+            case 44:
+              _context5.next = 49;
+              break;
+            case 46:
+              _context5.prev = 46;
+              _context5.t1 = _context5["catch"](7);
+              _iterator2.e(_context5.t1);
+            case 49:
+              _context5.prev = 49;
               _iterator2.f();
-              return _context5.finish(28);
-            case 31:
+              return _context5.finish(49);
+            case 52:
             case "end":
               return _context5.stop();
           }
-        }, _callee5, null, [[6, 25, 28, 31]]);
+        }, _callee5, null, [[7, 46, 49, 52], [12, 39]]);
       }))();
     },
+    // async checkAndCancelPendingOrders() {
+    //     console.log('Checking and canceling pending orders...');
+    //     if (this.orders.length === 0) {
+    //         console.log('No orders to check.');
+    //         return;
+    //     }
+    //     console.log("Orders data:", this.orders);
+    //     for (const order of this.orders) {
+    //         const productId = order.product_id;
+    //         // Fetch the stock for this product
+    //         const stockResponse = await fetch(`/products/product_stock/${productId}`);
+    //         const stockData = await stockResponse.json();
+    //         if (stockData.data.Quantity <= 0) {
+    //             console.log(`Stock for product ${productId} is out. Cancelling pending orders...`);
+    //             await this.cancelPendingOrders(productId);
+    //         }
+    //     }
+    // },
     confirmOrder: function confirmOrder(id) {
       var _this7 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {

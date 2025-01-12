@@ -237,28 +237,74 @@ export default {
             }
         },
 
-async checkAndCancelPendingOrders() {
+
+        async checkAndCancelPendingOrders() {
     console.log('Checking and canceling pending orders...');
 
-    if (this.orders.length === 0) {
-        console.log('No orders to check.');
+    // Filter out only pending orders
+    const pendingOrders = this.orders.filter(order => order.order_status === 'Pending');
+
+    if (pendingOrders.length === 0) {
+        console.log('No pending orders to check.');
         return;
     }
 
-    console.log("Orders data:", this.orders);
-    for (const order of this.orders) {
+    console.log("Pending Orders:", pendingOrders);
+    for (const order of pendingOrders) {
         const productId = order.product_id;
 
-        // Fetch the stock for this product
-        const stockResponse = await fetch(`/products/product_stock/${productId}`);
-        const stockData = await stockResponse.json();
+        try {
+            // Fetch the stock for this product
+            const stockResponse = await fetch(`/products/product_stock/${productId}`);
+            const stockData = await stockResponse.json();
 
-        if (stockData.data.Quantity <= 0) {
-            console.log(`Stock for product ${productId} is out. Cancelling pending orders...`);
-            await this.cancelPendingOrders(productId);
+            if (!stockData || !stockData.data || stockData.data.Quantity === undefined) {
+                console.error(`Invalid stock data for product ${productId}.`);
+                continue;
+            }
+
+            const availableStock = stockData.data.Quantity;
+            const orderedQuantity = order.product_quantity;
+
+            // Cancel the order if stock is zero or if the ordered quantity exceeds available stock
+            if (availableStock <= 0) {
+                console.log(`Stock for product ${productId} is out. Cancelling order ${order.id}...`);
+                await this.cancelPendingOrders(productId); // Cancel the specific order
+            } else if (orderedQuantity > availableStock) {
+                console.log(`Ordered quantity for product ${productId} is greater than available stock. Cancelling order ${order.id}...`);
+                await this.cancelPendingOrders(productId); // Cancel the specific order
+            } else {
+                console.log(`Stock for product ${productId} is sufficient. Order ${order.id} remains active.`);
+            }
+        } catch (error) {
+            console.error(`Error checking stock for product ${productId}:`, error);
         }
     }
 },
+
+// async checkAndCancelPendingOrders() {
+//     console.log('Checking and canceling pending orders...');
+
+//     if (this.orders.length === 0) {
+//         console.log('No orders to check.');
+//         return;
+//     }
+
+//     console.log("Orders data:", this.orders);
+//     for (const order of this.orders) {
+//         const productId = order.product_id;
+
+
+//         // Fetch the stock for this product
+//         const stockResponse = await fetch(`/products/product_stock/${productId}`);
+//         const stockData = await stockResponse.json();
+
+//         if (stockData.data.Quantity <= 0) {
+//             console.log(`Stock for product ${productId} is out. Cancelling pending orders...`);
+//             await this.cancelPendingOrders(productId);
+//         }
+//     }
+// },
 
 
 async confirmOrder(id) {
