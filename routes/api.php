@@ -115,6 +115,7 @@ Route::post('receive-report', [App\Http\Controllers\ReportController::class, 're
 
 Route::group(['prefix' => 'user'], function () {
      Route::post('register', [App\Http\Controllers\API\UserController::class, 'register']);
+     Route::post('login_otp/{userID}', [App\Http\Controllers\API\UserController::class, 'login_otp']);
      Route::get('/otp/{userId}', [App\Http\Controllers\API\OtpController::class, 'show'])->name('otp.show');
      Route::post('/otp/{user_id}', [App\Http\Controllers\API\OtpController::class, 'verify'])->name('otp.verify');
     });

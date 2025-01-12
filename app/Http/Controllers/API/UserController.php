@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AccountRegistration;
 use App\Mail\Activation;
 use App\Mail\ApprovalConfirmation;
 use App\Mail\Deactivation;
@@ -98,6 +99,8 @@ class UserController extends Controller
             }
         }
 
+        $user_type = 'buyer';
+
         // Create the user
         $user = User::create([
             'name' => $request->name,
@@ -110,15 +113,36 @@ class UserController extends Controller
             'telephone_number' => $request->telephone_number ?? null,
             'address' => $request->address,
             'photos' => json_encode($photos),  // Store photo paths as JSON=
+            'user_type' => $user_type
         ]);
+
+        Mail::to($user->email)->send(new AccountRegistration($user));
 
         // Return response
         return response()->json([
             'status' => 'success',
             'message' => 'User successfully registered.',
             'user' => $user
+        ], 201);
+    }
+
+    public function login_otp(Request $request, $userID){
 
 
+        $user = User::find($userID);
+
+        // dd($user);
+
+        $user->update([
+            'date_login' => now(),
+        ]);
+
+
+        // Return response
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User successfully registered.',
+            'user' => $user
         ], 201);
     }
 
@@ -378,6 +402,8 @@ class UserController extends Controller
                     'users.password',
                     'users.contact_number',
                     'users.address',
+                    'users.otp',
+                    'date_login',
                     'model_has_roles.role_id as role_id',
                     'roles.name as role_name')
             ->get();
