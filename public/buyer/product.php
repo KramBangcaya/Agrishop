@@ -326,15 +326,21 @@ if($success_message1 != '') {
     Item is over the available stocks.
 </div>
 
+
+
+
 <div class="btn-cart btn-cart1" id="addToCartDiv">
     <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart" id="addToCartBtn">
 </div>
+
 <div id="successModal" class="modal" style="display: none;">
   <div class="modal-content">
     <span class="close" style="cursor: pointer;">&times;</span>
     <p style="font-size: 18px; font-weight: bold;">Item successfully added!</p>
   </div>
 </div>
+
+
 <style>
   /* Modal Styles */
   .modal {
@@ -372,6 +378,7 @@ if($success_message1 != '') {
     cursor: pointer;
   }
 </style>
+
 <script>
   // Get elements
   const modal = document.getElementById('successModal');
@@ -453,10 +460,6 @@ if($success_message1 != '') {
 
 
 </form>
-
-
-
-
 
 
 <script>

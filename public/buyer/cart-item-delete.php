@@ -2,11 +2,6 @@
 
 <?php
 
-// Check if the product is valid or not
-if( !isset($_REQUEST['id'])  ) {
-    header('location: cart.php');
-    exit;
-}
 
 $i=0;
 foreach($_SESSION['cart_p_id'] as $key => $value) {
