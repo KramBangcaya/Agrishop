@@ -13,52 +13,50 @@ foreach ($result as $row) {
 ?>
 <!-- login form -->
 <?php
-if(isset($_POST['form1'])) {
+if (isset($_POST['form1'])) {
 
-    if(empty($_POST['cust_email']) || empty($_POST['cust_password'])) {
-        $error_message = LANG_VALUE_132.'<br>';
+    if (empty($_POST['cust_email']) || empty($_POST['cust_password'])) {
+        $error_message = LANG_VALUE_132 . '<br>';
     } else {
 
         $cust_email = strip_tags($_POST['cust_email']);
         $cust_password = strip_tags($_POST['cust_password']);
-        // var_dump($cust_email);
-        // API URL with the email as a parameter
-        $api_url = API_BASE_URL ."/login/submit?email=" . urlencode($cust_email);
+        $api_url = API_BASE_URL . "/login/submit?email=" . urlencode($cust_email);
 
-        // Initialize cURL session
         $ch = curl_init($api_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Disable SSL verification if using a self-signed certificate
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $api_response = curl_exec($ch);
         curl_close($ch);
 
-        // Decode JSON response
         $response_data = json_decode($api_response, true);
 
         if ($response_data && isset($response_data['user'][0])) {
-            // Check if the user exists and the password matches
             $user = $response_data['user'][0];
             $hashed_password = $user['password'];
+            $date_login = $user['date_login'];
+            $otp = $user['otp'];
             $_SESSION['user_id'] = $user['user_id'];
 
-            // Verify password using password_verify (assuming the API uses bcrypt hash)
             if (!password_verify($cust_password, $hashed_password)) {
-                $error_message .= LANG_VALUE_139.'<br>';
+                $error_message .= LANG_VALUE_139 . '<br>';
             } else {
-
-
-                // Check if the role_name is 'buyer'
-                if ($user['role_name'] == 'buyer' || $user['role_name'] == 'Buyer' ) {
+                if (is_null($date_login)) {
+                    // Prompt for OTP
+                    $_SESSION['otp'] = $otp; // Save OTP in session for verification
+                    $_SESSION['temp_user'] = $user; // Save user data temporarily
+                    header("location: otp-verification.php");
+                    exit;
+                } else if ($user['role_name'] == 'buyer' || $user['role_name'] == 'Buyer') {
                     $_SESSION['customer'] = $user;
-
-                    header("location: ".BASE_URL."dashboard.php?id= ".$_SESSION['user_id']);
+                    header("location: " . BASE_URL . "dashboard.php?id=" . $_SESSION['user_id']);
                     exit;
                 } else {
                     $error_message .= "No buyer account found.<br>";
                 }
             }
         } else {
-            $error_message .= LANG_VALUE_133.'<br>';
+            $error_message .= LANG_VALUE_133 . '<br>';
         }
     }
 }
@@ -75,8 +73,6 @@ if(isset($_POST['form1'])) {
         <div class="row">
             <div class="col-md-12">
                 <div class="user-content">
-
-
                     <form action="" method="post">
                         <?php $csrf->echoInputField(); ?>
                         <div class="row">

@@ -33,6 +33,8 @@
                                             <th>Total Price</th>
                                             <th>Status</th>
                                             <th>Reason</th>
+                                            <th>Feedback</th>
+                                            <th>Rating</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -42,10 +44,17 @@
                                             <td>
                                                 <img
                                                 v-if="order.photo && order.photo.length"
+<<<<<<< HEAD
                                                 :src="'http://192.168.68.67:8080/buyer/'+order.photo"
                                                 alt="Product Photo"
                                                 style="max-width: 200px; max-height: 200px; cursor: pointer;"
                                                 @click="openImageModal('http://192.168.68.67:8080/buyer/' + order.photo)"
+=======
+                                                :src="'http://192.168.1.101:8080/buyer/'+order.photo"
+                                                alt="Product Photo"
+                                                style="max-width: 200px; max-height: 200px; cursor: pointer;"
+                                                @click="openImageModal('http://192.168.1.101:8080/buyer/' + order.photo)"
+>>>>>>> 3f0afeffd114ed173604f8f8e1850d42ef9c1e5f
                                                 />
                                             </td>
 
@@ -56,12 +65,15 @@
                                             <td>{{ order.totalPayment }}</td>
                                             <td>{{ order.order_status }}</td>
                                             <td>{{ order.reason_cancel }}</td>
+                                            <td>{{ order.feedback }}</td>
+                                            <td>{{ order.rating }}</td>
                                             <td v-if="order.order_status !== 'Cancelled Order'" class="text-left">
                                                 <button
                                                  v-if="order.order_status !== 'For Delivery'"
                                                     type="button"
                                                     class="btn btn-primary btn-sm"
                                                     @click="confirmOrder(order.id)">
+
                                                     <i class="fas fa-edit"></i> Confirm Order
                                                 </button>
                                                 <button
@@ -163,7 +175,11 @@ export default {
             return;
         }
             try {
+<<<<<<< HEAD
                 const response = await fetch(`http://192.168.68.67:8080/buyer/get-orders.php?seller_id=${this.userID}`);
+=======
+                const response = await fetch(`http://192.168.1.101:8080/buyer/get-orders.php?seller_id=${this.userID}`);
+>>>>>>> 3f0afeffd114ed173604f8f8e1850d42ef9c1e5f
                 const data = await response.json();
                 if (data.status === 'success') {
                     this.orders = data.data;
@@ -204,21 +220,28 @@ export default {
     .then(async (response) => {
         const text = await response.text();
         console.log('Raw response:', text);
+        console.log(productPayload);
         return JSON.parse(text); // Parse JSON response
     })
     .then(data => {
         if (data.status === 'success') {
             // If product stock is updated successfully, proceed to confirm the order status
+<<<<<<< HEAD
             fetch('http://192.168.68.67:8080/buyer/update-order-status.php', {
+=======
+            fetch('http://192.168.1.101:8080/buyer/update-order-status.php', {
+>>>>>>> 3f0afeffd114ed173604f8f8e1850d42ef9c1e5f
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(confirmPayload),
+
             })
             .then(async (response) => {
                 const text = await response.text();
                 console.log('Raw response:', text);
+                console.log(confirmPayload);
                 return JSON.parse(text);
             })
             .then(data => {
@@ -258,7 +281,11 @@ export default {
         };
         console.log(cancelPayload);
         try {
+<<<<<<< HEAD
             const response = await fetch('http://192.168.68.67:8080/buyer/order-cancelled.php', {
+=======
+            const response = await fetch('http://192.168.1.101:8080/buyer/order-cancelled.php', {
+>>>>>>> 3f0afeffd114ed173604f8f8e1850d42ef9c1e5f
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

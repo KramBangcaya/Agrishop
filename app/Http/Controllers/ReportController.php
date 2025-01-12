@@ -19,6 +19,9 @@ class ReportController extends Controller
         // dd($userID);
         $data = report::where('userID',$userID)
         ->latest();
+        if ($request->search) {
+            $data = $data->where('buyer_name', 'LIKE', '%' . $request->search . '%');
+        }
 
         $data = $data->paginate($request->length);
 
@@ -40,6 +43,18 @@ class ReportController extends Controller
         return response([
             'data' => $data,
             'userID' => $userID,
+        ], 200);
+    }
+
+    public function report_all(Request $request){
+        // dd($request->all());
+        // dd($userID);
+        $data = report::get();
+
+        // $data = $data->paginate($request->length);
+
+        return response()->json([
+            'data' => $data,
         ], 200);
     }
 

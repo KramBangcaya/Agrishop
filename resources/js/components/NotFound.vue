@@ -1,6 +1,74 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
+         <!-- First Container: For Admin -->
+      <div v-if="user_type === 'admin'" class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card m-3" :style="cardStyle">
+                <div class="card-header">
+                    <h5 class="card-title">Total Number of Buyers</h5>
+                </div>
+                <div class="card-body">
+                    <h1>{{ buyerCount }}</h1>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card m-3" :style="cardStyle">
+                <div class="card-header">
+                    <h5 class="card-title">Total Number of Sellers</h5>
+                </div>
+                <div class="card-body">
+                    <h1>{{ sellerCount }}</h1>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card m-3" :style="cardStyle">
+                <div class="card-header">
+                    <h5 class="card-title">Total Number of Complaints</h5>
+                </div>
+                <div class="card-body">
+                    <h1>{{ complaints }}</h1>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card m-3" :style="cardStyle">
+                <div class="card-header">
+                    <h5 class="card-title">For Approval</h5>
+                </div>
+                <div class="card-body">
+                    <h1>{{  approval }}</h1>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card m-3" :style="cardStyle">
+                <div class="card-header">
+                    <h5 class="card-title">Account Activated</h5>
+                </div>
+                <div class="card-body">
+                    <h1>{{ activated }}</h1>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card m-3" :style="cardStyle">
+                <div class="card-header">
+                    <h5 class="card-title">Account Deactivated</h5>
+                </div>
+                <div class="card-body">
+                    <h1>{{ deactivated }}</h1>
+                </div>
+                </div>
+            </div>
+            </div>
+
+
+
+  <!-- Second Container: For Seller -->
+            <div v-if="user_type === 'seller'" class="row justify-content-center">
+                <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card m-3" :style="cardStyle">
                     <div class="card-header">
@@ -85,7 +153,18 @@
           </div>
         </div>
       </div>
+            </div>
+
+
     </div>
+
+
+
+
+
+
+
+
   </template>
 
   <script>
@@ -103,6 +182,14 @@
     },
     data() {
       return {
+        sellerCount: 0,
+        buyerCount: 0,
+        approval: 0,
+        validated: 0,
+        deactivated: 0,
+        activated: 0,
+        complaints: 0,
+        user_type: '',
         isLoading: true,
         topProducts: [],
         // Bar chart for sales overview
@@ -202,7 +289,13 @@
     mounted() {
       console.log('Dashboard Component Mounted.');
       this.fetchCategories();
-      this.fetchTopProducts(); // Fetch top products when component is mounted
+      this.fetchTopProducts();
+      this.getSellerData();
+      this.getBuyerData();
+      this.getReportData();
+      this.getApproveData();
+      this.getActivatedData();
+      this.getDeactivatedData();
     },
 
     methods: {
@@ -239,8 +332,167 @@
         console.error('Error fetching top products:', error);
         this.isLoading = false; // Stop loading in case of error
       }
-    }
-    }
+    },
+      // Fetch user data
+      getUserData() {
+            this.timer = setTimeout(() => {
+                axios.get('/api/user/show/')
+                    .then(response => {
+                        if (response.data.data) {
+                            this.user = response.data.data[0];
+                            this.user_type = this.user.user_type;
+                            // console.log(this.user.user_type);
+                        }
+                    }).catch(error => {
+                        this.error = error;
+                        toast.fire({
+                            icon: 'error',
+                            text: error.response.data.message,
+                        })
+                    });
+            }, 500);
+        },
+
+        getSellerData() {
+    axios.get('/notif/all_seller2')
+        .then(response => {
+            if (response.data.data && Array.isArray(response.data.data)) {
+                // Assign the returned sellers array
+                this.user = response.data.data;
+
+                // Store the count of sellers
+                this.sellerCount = this.user.length;
+
+                // console.log('Sellers:', this.user);
+                // console.log('Total Sellers:', this.sellerCount);
+            }
+        })
+        .catch(error => {
+            this.error = error;
+            toast.fire({
+                icon: 'error',
+                text: error.response?.data?.message || 'An error occurred',
+            });
+        });
+},
+
+        getBuyerData() {
+        axios.get('/notif/all_buyer2')
+            .then(response => {
+                if (response.data.data && Array.isArray(response.data.data)) {
+                    // Assign the returned sellers array
+                    this.user = response.data.data;
+
+                    this.buyerCount = this.user.length;
+
+                // console.log('Buyer:', this.user);
+                // console.log('Total Sellers:', this.buyerCount);
+
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                toast.fire({
+                    icon: 'error',
+                    text: error.response?.data?.message || 'An error occurred',
+                });
+            });
+        },
+
+        getReportData() {
+        axios.get('/report/all_reports')
+            .then(response => {
+                if (response.data.data && Array.isArray(response.data.data)) {
+                    // Assign the returned sellers array
+                    this.user = response.data.data;
+
+                    this.complaints = this.user.length;
+
+                // console.log('complaints:', this.user);
+                // console.log('Total Complaints:', this.complaints);
+
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                toast.fire({
+                    icon: 'error',
+                    text: error.response?.data?.message || 'An error occurred',
+                });
+            });
+        },
+        getApproveData() {
+        axios.get('/notif/approval')
+            .then(response => {
+                if (response.data.data && Array.isArray(response.data.data)) {
+                    // Assign the returned sellers array
+                    this.user = response.data.data;
+
+                    this.approval = this.user.length;
+
+                // console.log('approval:', this.user);
+                // console.log('Total Approval:', this.approval);
+
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                toast.fire({
+                    icon: 'error',
+                    text: error.response?.data?.message || 'An error occurred',
+                });
+            });
+        },
+        getActivatedData() {
+        axios.get('/notif/activate')
+            .then(response => {
+                if (response.data.data && Array.isArray(response.data.data)) {
+                    // Assign the returned sellers array
+                    this.user = response.data.data;
+
+                    this.activated = this.user.length;
+
+                // console.log('Activated:', this.user);
+                // console.log('Total Activated:', this.activated);
+
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                toast.fire({
+                    icon: 'error',
+                    text: error.response?.data?.message || 'An error occurred',
+                });
+            });
+        },
+        getDeactivatedData() {
+        axios.get('/notif/deactivate')
+            .then(response => {
+                if (response.data.data && Array.isArray(response.data.data)) {
+                    // Assign the returned sellers array
+                    this.user = response.data.data;
+
+                    this.deactivated = this.user.length;
+
+                console.log('Deactivated:', this.user);
+                console.log('Total Deactivated:', this.deactivated);
+
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                toast.fire({
+                    icon: 'error',
+                    text: error.response?.data?.message || 'An error occurred',
+                });
+            });
+        },
+    },
+
+
+    created() {
+        this.getUserData();
+    },
   };
   </script>
 

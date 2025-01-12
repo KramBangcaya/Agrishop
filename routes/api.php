@@ -64,6 +64,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
     Route::group(['prefix' => 'user'], function () {
         Route::get('list', [App\Http\Controllers\API\UserController::class, 'index']);
+        Route::get('list_seller', [App\Http\Controllers\API\UserController::class, 'index_seller']);
+        Route::get('list_buyer', [App\Http\Controllers\API\UserController::class, 'index_buyer']);
         Route::get('all', [App\Http\Controllers\API\UserController::class, 'index_all']);
         Route::get('show', [App\Http\Controllers\API\UserController::class, 'show']);
         Route::post('create', [App\Http\Controllers\API\UserController::class, 'store']);
@@ -76,6 +78,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
     Route::group(['prefix' => 'deliquency'], function () {
         Route::get('list', [App\Http\Controllers\API\DeliquencyController::class, 'index']);
+        // Route::get('list_all', [App\Http\Controllers\API\DeliquencyController::class, 'index_all']);
         Route::get('show', [App\Http\Controllers\API\UserController::class, 'show']);
         Route::post('create', [App\Http\Controllers\API\UserController::class, 'store']);
         Route::put('validate/{id}', [App\Http\Controllers\API\UserController::class, 'validated']);
@@ -112,4 +115,7 @@ Route::post('receive-report', [App\Http\Controllers\ReportController::class, 're
 
 Route::group(['prefix' => 'user'], function () {
      Route::post('register', [App\Http\Controllers\API\UserController::class, 'register']);
+     Route::post('login_otp/{userID}', [App\Http\Controllers\API\UserController::class, 'login_otp']);
+     Route::get('/otp/{userId}', [App\Http\Controllers\API\OtpController::class, 'show'])->name('otp.show');
+     Route::post('/otp/{user_id}', [App\Http\Controllers\API\OtpController::class, 'verify'])->name('otp.verify');
     });

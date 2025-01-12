@@ -29,6 +29,9 @@ class ProductsController extends Controller
             ->where('userID', $userID)
             ->where('Quantity', '>', 10)
             ->latest();
+            if ($request->search) {
+                $data = $data->where('Product_Name', 'LIKE', '%' . $request->search . '%');
+            }
 
         $data = $data->paginate($request->length);
 
@@ -238,6 +241,9 @@ class ProductsController extends Controller
             ->where('userID', $userID)
             ->where('Quantity', '<=', 10)
             ->latest();
+            if ($request->search) {
+                $data = $data->where('Product_Name', 'LIKE', '%' . $request->search . '%');
+            }
 
         $data = $data->paginate($request->length);
 
@@ -249,6 +255,23 @@ class ProductsController extends Controller
             return $item;
         });
         return response([
+            'data' => $data,
+            'userID' => $userID,
+        ], 200);
+    }
+
+    public function replenishment_all(Request $request)
+    {
+        $userID = auth()->user()->id;
+
+        // dd($emp_code);
+        $data = Products::with('Category', 'Measurement')
+            ->OrderBy('Quantity', 'desc')
+            ->where('userID', $userID)
+            ->where('Quantity', '<=', 10)
+            ->get();
+
+        return response()->json([
             'data' => $data,
             'userID' => $userID,
         ], 200);

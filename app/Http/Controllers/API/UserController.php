@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AccountRegistration;
 use App\Mail\Activation;
 use App\Mail\ApprovalConfirmation;
 use App\Mail\Deactivation;
@@ -45,6 +46,41 @@ class UserController extends Controller
         // dd($data);
         return response(['data' => $data], 200);
     }
+    public function index_seller(Request $request)
+    {
+        abort_if(Gate::denies('list user'), 403, 'You do not have the required authorization.');
+        $data = User::withTrashed()->with('roles', 'permissions')->where('user_type', 'seller')->latest();
+        if ($request->search) {
+            $data = $data->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+        if ($request->filter == 'Deactivate') {
+            $data = $data->where('deleted_at', null);
+        }
+        if ($request->filter == 'Activate') {
+            $data = $data->whereNotNull('deleted_at');
+        }
+        $data = $data->paginate($request->length);
+        // dd($data);
+        return response(['data' => $data], 200);
+    }
+
+    public function index_buyer(Request $request)
+    {
+        abort_if(Gate::denies('list user'), 403, 'You do not have the required authorization.');
+        $data = User::withTrashed()->with('roles', 'permissions')->where('user_type', 'buyer')->latest();
+        if ($request->search) {
+            $data = $data->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+        if ($request->filter == 'Deactivate') {
+            $data = $data->where('deleted_at', null);
+        }
+        if ($request->filter == 'Activate') {
+            $data = $data->whereNotNull('deleted_at');
+        }
+        $data = $data->paginate($request->length);
+        // dd($data);
+        return response(['data' => $data], 200);
+    }
 
     public function register(Request $request){
 
@@ -63,6 +99,8 @@ class UserController extends Controller
             }
         }
 
+        $user_type = 'buyer';
+
         // Create the user
         $user = User::create([
             'name' => $request->name,
@@ -75,15 +113,36 @@ class UserController extends Controller
             'telephone_number' => $request->telephone_number ?? null,
             'address' => $request->address,
             'photos' => json_encode($photos),  // Store photo paths as JSON=
+            'user_type' => $user_type
         ]);
+
+        Mail::to($user->email)->send(new AccountRegistration($user));
 
         // Return response
         return response()->json([
             'status' => 'success',
             'message' => 'User successfully registered.',
             'user' => $user
+        ], 201);
+    }
+
+    public function login_otp(Request $request, $userID){
 
 
+        $user = User::find($userID);
+
+        // dd($user);
+
+        $user->update([
+            'date_login' => now(),
+        ]);
+
+
+        // Return response
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User successfully registered.',
+            'user' => $user
         ], 201);
     }
 
@@ -101,6 +160,105 @@ class UserController extends Controller
         }
 
         return null;
+    }
+
+    public function seller_all(Request $request)
+    {
+
+        // Load reports with the associated user data
+        $data = user::where('user_type','seller')
+        ->where('approved_at',null)
+        ->get();
+
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
+
+    }
+
+    public function seller_all2(Request $request)
+    {
+
+        // Load reports with the associated user data
+        $data = user::where('user_type','seller')
+        ->whereNotNull('approved_at')
+        ->get();
+
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
+
+    }
+
+    public function buyer_all(Request $request)
+    {
+
+        // Load reports with the associated user data
+    $data = user::where('user_type','buyer')
+    ->where('approved_at',null)
+    ->get();
+
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
+
+    }
+
+    public function buyer_all2(Request $request)
+    {
+        // Load reports with the associated user data
+    $data = user::where('user_type','buyer')
+    ->whereNotNull('approved_at')
+    ->get();
+
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
+
+    }
+
+    public function approval(Request $request)
+    {
+        // Load reports with the associated user data
+    $data = user::where('approved_at',null)
+    ->whereIn('user_type', ['buyer', 'seller'])
+    ->get();
+
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
+    }
+
+    public function activate_user(Request $request)
+    {
+        // Load reports with the associated user data
+    $data = user::where('deleted_at',null)
+    ->whereIn('user_type', ['buyer', 'seller'])
+    ->get();
+
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
+    }
+
+    public function deactivate_user(Request $request)
+    {
+        // Load reports with the associated user data
+     $data = User::withTrashed()->whereNotNull('deleted_at')
+     ->whereIn('user_type', ['buyer', 'seller'])
+     ->get();
+
+    //  dd($data);
+
+    return response()->json([
+        'data' => $data,
+    ], 200);
     }
 
     public function index_all(Request $request){
@@ -244,6 +402,8 @@ class UserController extends Controller
                     'users.password',
                     'users.contact_number',
                     'users.address',
+                    'users.otp',
+                    'date_login',
                     'model_has_roles.role_id as role_id',
                     'roles.name as role_name')
             ->get();
@@ -264,9 +424,11 @@ class UserController extends Controller
         if ($request->selectedOption == 'approve') {
             $user = User::findOrFail($id);
 
+            $otp = random_int(100000, 999999);
             $user->update([
                 'approved_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'otp' => $otp,
             ]);
             // dd($user);
 

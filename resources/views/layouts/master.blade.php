@@ -31,6 +31,63 @@
                             class="fas fa-bars"></i></a>
                 </li>
             </ul>
+            @if (Auth::check() && strtoupper(Auth::user()->getRoleNames()->first()) === 'SELLER')
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge badge-warning navbar-badge">3</span> <!-- Add the number of notifications here -->
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <!-- Dropdown Header -->
+                        <span class="dropdown-item dropdown-header">You have new notifications</span>
+                        <!-- Notification Items -->
+                        <div class="dropdown-divider"></div>
+
+
+                        <router-link to="/Purchase" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> New order
+                            <span id="order-count" class="badge badge-warning ml-2">0</span>
+                        </router-link>
+                        <router-link to="/Replenishment" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> Product Replenishment
+                            <span id="replenish-count" class="badge badge-warning ml-2">0</span>
+                        </router-link>
+                    </div>
+                </li>
+                @endif
+                @if (Auth::check() && strtoupper(Auth::user()->getRoleNames()->first()) === 'ADMIN')
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge badge-warning navbar-badge" id="total-notifications">0</span>  <!-- Add the number of notifications here -->
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <!-- Dropdown Header -->
+                            <span class="dropdown-item dropdown-header">You have new notifications</span>
+                            <!-- Notification Items -->
+                            <div class="dropdown-divider"></div>
+
+                            <router-link to="/users_buyer" class="dropdown-item">
+                                <i class="fas fa-user mr-2"></i> Buyer
+                                <span id="buyer-count" class="badge badge-warning ml-2">0</span>
+                            </router-link>
+                            <router-link to="/users_seller" class="dropdown-item">
+                                <i class="fas fa-user mr-2"></i> Seller
+                                <span id="seller-count" class="badge badge-warning ml-2">0</span>
+                            </router-link>
+                            <router-link to="/deliquency" class="dropdown-item">
+                                <i class="fas fa-check-circle mr-2"></i> Delinquency
+                                <span id="delinquency-count" class="badge badge-warning ml-2">0</span>
+                            </router-link>
+                        </div>
+
+                    </li>
+
+                    @endif
+            </ul>
         </nav>
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <div class="container ">
@@ -59,6 +116,14 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
+                        <li class="nav-item">
+                            <router-link to="/home" class="nav-link">
+                                <i class="nav-icon fa-solid fa-house"></i>
+                                <p>
+                                    Dashboard
+                                </p>
+                            </router-link>
+                        </li>
                         @if (Auth::check() && strtoupper(Auth::user()->getRoleNames()->first()) === 'SELLER')
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
@@ -144,12 +209,27 @@
                             @endif
                         @can('access user')
                             <li class="nav-item">
-                                <router-link to="/users" class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>
                                         Users
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
-                                </router-link>
+                                </a>
+                                <ul class="nav nav-treeview ml-3">
+                                    <li class="nav-item">
+                                        <router-link to="/users_buyer" class="nav-link">
+                                            <i class="nav-icon fa-solid fa-b"></i>
+                                            <p>Buyer</p>
+                                        </router-link>
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link to="/users_seller" class="nav-link">
+                                            <i class="far fa-solid fa-s nav-icon"></i>
+                                            <p>Seller</p>
+                                        </router-link>
+                                    </li>
+                                </ul>
                             </li>
                         @endcan
                         @can('access user')
@@ -239,6 +319,234 @@
     @endauth
     {{-- <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script> --}}
     <script src="{{ asset('/js/app.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to fetch delinquency count from the API
+        async function fetchDelinquencyCount() {
+            try {
+                // Call the API
+                const response = await fetch('/deliquency/list_all');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                // Parse the JSON response
+                const data = await response.json();
+                // console.log('Full Response:', data);  // Logs the entire response
+
+                // Check if 'data' exists and is an array
+                if (data && Array.isArray(data.data)) {
+                    // console.log('Array Length:', data.data.length); // Logs the length of the array
+                    const count = data.data.length;
+                    const countElement = document.getElementById('delinquency-count');
+                    if (countElement) {
+                        countElement.textContent = count;  // Dynamically update the count
+                    }
+                } else {
+                    console.log('Error: data.data is not an array');
+                }
+            } catch (error) {
+                console.error('Error fetching delinquency count:', error);
+            }
+        }
+
+        // Call the function on page load
+        fetchDelinquencyCount();
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to fetch Seller count from the API
+        async function fetchSellerCount() {
+            try {
+                // Call the API
+                const response = await fetch('/notif/all_seller');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                // Parse the JSON response
+                const data = await response.json();
+                // console.log('Full Response:', data);  // Logs the entire response
+
+                // Check if 'data' exists and is an array
+                if (data && Array.isArray(data.data)) {
+                    // console.log('Array Length:', data.data.length); // Logs the length of the array
+                    const count = data.data.length;
+                    const countElement = document.getElementById('seller-count');
+                    if (countElement) {
+                        countElement.textContent = count;  // Dynamically update the count
+                    }
+                } else {
+                    console.log('Error: data.data is not an array');
+                }
+            } catch (error) {
+                console.error('Error fetching delinquency count:', error);
+            }
+        }
+
+        // Call the function on page load
+        fetchSellerCount();
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to fetch Seller count from the API
+        async function fetchOrderCount() {
+            try {
+                // Call the API
+                const response = await fetch('/notif/all_seller');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                // Parse the JSON response
+                const data = await response.json();
+                // console.log('Full Response:', data);  // Logs the entire response
+
+                // Check if 'data' exists and is an array
+                if (data && Array.isArray(data.data)) {
+                    // console.log('Array Length:', data.data.length); // Logs the length of the array
+                    const count = data.data.length;
+                    const countElement = document.getElementById('order-count');
+                    if (countElement) {
+                        countElement.textContent = count;  // Dynamically update the count
+                    }
+                } else {
+                    console.log('Error: data.data is not an array');
+                }
+            } catch (error) {
+                console.error('Error fetching delinquency count:', error);
+            }
+        }
+
+        // Call the function on page load
+        fetchOrderCount();
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to fetch Seller count from the API
+        async function fetchReplenishCount() {
+            try {
+                // Call the API
+                const response = await fetch('/products/replenishment_all');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                // Parse the JSON response
+                const data = await response.json();
+                // console.log('Full Response:', data);  // Logs the entire response
+
+                // Check if 'data' exists and is an array
+                if (data && Array.isArray(data.data)) {
+                    // console.log('Array Length:', data.data.length); // Logs the length of the array
+                    const count = data.data.length;
+                    const countElement = document.getElementById('replenish-count');
+                    if (countElement) {
+                        countElement.textContent = count;  // Dynamically update the count
+                    }
+                } else {
+                    console.log('Error: data.data is not an array');
+                }
+            } catch (error) {
+                console.error('Error fetching delinquency count:', error);
+            }
+        }
+
+        // Call the function on page load
+        fetchReplenishCount();
+    });
+</script>
+<script>
+    // Declare the counts globally to make them accessible in the function
+    let buyerCount = 0;
+    let sellerCount = 0;
+    let delinquencyCount = 0;
+
+    // This function will update the notification bell with the total count
+    function updateTotalNotifications() {
+        // Log the counts to see the values (for debugging)
+
+
+        // Initialize a counter for the counts that are not equal to zero
+        let nonZeroCount = 0;
+
+        // Increment the counter if each count is greater than zero
+        if (buyerCount > 0) nonZeroCount++;
+        if (sellerCount > 0) nonZeroCount++;
+        if (delinquencyCount > 0) nonZeroCount++;
+
+        // Update the notification bell with the count of non-zero counts
+        document.getElementById('total-notifications').textContent = nonZeroCount;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to fetch delinquency count from the API
+        async function fetchDelinquencyCount() {
+            try {
+                const response = await fetch('/deliquency/list_all');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                if (data && Array.isArray(data.data)) {
+                    delinquencyCount = data.data.length;
+                    document.getElementById('delinquency-count').textContent = delinquencyCount;
+                    updateTotalNotifications(); // Update total notifications after setting the delinquency count
+                }
+            } catch (error) {
+                console.error('Error fetching delinquency count:', error);
+            }
+        }
+
+        // Function to fetch seller count from the API
+        async function fetchSellerCount() {
+            try {
+                const response = await fetch('/notif/all_seller');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                if (data && Array.isArray(data.data)) {
+                    sellerCount = data.data.length;
+                    document.getElementById('seller-count').textContent = sellerCount;
+                    updateTotalNotifications(); // Update total notifications after setting the seller count
+                }
+            } catch (error) {
+                console.error('Error fetching seller count:', error);
+            }
+        }
+
+        // Function to fetch buyer count from the API
+        async function fetchBuyerCount() {
+            try {
+                const response = await fetch('/notif/all_buyer');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                if (data && Array.isArray(data.data)) {
+                    buyerCount = data.data.length;
+                    document.getElementById('buyer-count').textContent = buyerCount;
+                    updateTotalNotifications(); // Update total notifications after setting the buyer count
+                }
+            } catch (error) {
+                console.error('Error fetching buyer count:', error);
+            }
+        }
+
+        // Fetch the counts for all categories
+        fetchBuyerCount();
+        fetchSellerCount();
+        fetchDelinquencyCount();
+    });
+</script>
+
+
     {{-- <script>
         window.Laravel = {!! json_encode([
            'csrfToken' => csrf_token(),
