@@ -132,11 +132,30 @@ export default {
             showCancelModal: false, // Tracks if the cancel modal is open
         reason_cancel: '',     // Stores the reason for cancellation
         cancelOrderId: null,
+        productStocks: {},
         };
     },
     created() {
         this.getUserID(); // Fetch data when component is created
+
+        this.getUserID().then(() => {
+        // Only proceed if userID is available
+        if (this.userID) {
+            this.getData().then(() => {
+                this.checkAndCancelPendingOrders();  // After fetching orders, check and cancel them
+            });
+        } else {
+            console.error("No userID available, cannot fetch orders.");
+        }
+    });
     },
+    async mounted() {
+        // console.log("Mounted called");
+        this.getData();
+    // Call checkAndCancelPendingOrders after the page loads
+    this.checkAndCancelPendingOrders();
+    },
+
     methods: {
         openCancelModal(orderId) {
         this.cancelOrderId = orderId; // Store the order ID
@@ -169,7 +188,6 @@ export default {
     },
         // Fetch Orders from APIs
         async getData() {
-
             if (!this.userID) {
             console.error("UserID is missing");
             return;
@@ -183,15 +201,124 @@ export default {
                 const data = await response.json();
                 if (data.status === 'success') {
                     this.orders = data.data;
-                    console.log(this.orders);
+                    await this.getProductStocks();
+                    // console.log("Fetched orders:", this.orders);
                 }
 
             } catch (error) {
                 console.error('Error fetching orders:', error);
             }
         },
-        // Handle Confirm Order
-        confirmOrder(id) {
+                async getProductStocks() {
+            // Create a Set to store unique product IDs
+            const uniqueProductIds = [...new Set(this.orders.map(order => order.product_id))];
+
+            for (const productId of uniqueProductIds) {
+                try {
+                    const response = await fetch(`/products/product_stock/${productId}`);
+
+
+                    // Check if the response is valid
+                    if (!response.ok) {
+                        console.error(`Error: HTTP ${response.status} for product ID: ${productId}`);
+                        continue;
+                    }
+
+                    // Check if the response is JSON
+                    const contentType = response.headers.get("Content-Type");
+                    if (!contentType || !contentType.includes("application/json")) {
+                        const text = await response.text(); // Read raw response text for debugging
+                        console.error(`Unexpected response for product ID: ${productId}:`, text);
+                        continue;
+                    }
+
+                    // Parse and log JSON response
+                    const data = await response.json();
+
+                    // Check if the data contains the expected structure
+                    if (data.data && data.data.Quantity !== undefined) {
+                        console.log(`Stock for product ID ${productId}: ${data.data.Quantity}`);
+                        this.$set(this.productStocks, productId, data.data.Quantity); // Update stock info
+                    } else {
+                        console.error(`Unexpected data format for product ID: ${productId}`, data);
+                    }
+                } catch (error) {
+                    console.error(`Error fetching stock for product ID: ${productId}`, error);
+                }
+            }
+        },
+
+
+        async checkAndCancelPendingOrders() {
+    console.log('Checking and canceling pending orders...');
+
+    // Filter out only pending orders
+    const pendingOrders = this.orders.filter(order => order.order_status === 'Pending');
+
+    if (pendingOrders.length === 0) {
+        console.log('No pending orders to check.');
+        return;
+    }
+
+    console.log("Pending Orders:", pendingOrders);
+    for (const order of pendingOrders) {
+        const productId = order.product_id;
+
+        try {
+            // Fetch the stock for this product
+            const stockResponse = await fetch(`/products/product_stock/${productId}`);
+            const stockData = await stockResponse.json();
+
+            if (!stockData || !stockData.data || stockData.data.Quantity === undefined) {
+                console.error(`Invalid stock data for product ${productId}.`);
+                continue;
+            }
+
+            const availableStock = stockData.data.Quantity;
+            const orderedQuantity = order.product_quantity;
+
+            // Cancel the order if stock is zero or if the ordered quantity exceeds available stock
+            if (availableStock <= 0) {
+                console.log(`Stock for product ${productId} is out. Cancelling order ${order.id}...`);
+                await this.cancelPendingOrders(productId); // Cancel the specific order
+            } else if (orderedQuantity > availableStock) {
+                console.log(`Ordered quantity for product ${productId} is greater than available stock. Cancelling order ${order.id}...`);
+                await this.cancelPendingOrders(productId); // Cancel the specific order
+            } else {
+                console.log(`Stock for product ${productId} is sufficient. Order ${order.id} remains active.`);
+            }
+        } catch (error) {
+            console.error(`Error checking stock for product ${productId}:`, error);
+        }
+    }
+},
+
+// async checkAndCancelPendingOrders() {
+//     console.log('Checking and canceling pending orders...');
+
+//     if (this.orders.length === 0) {
+//         console.log('No orders to check.');
+//         return;
+//     }
+
+//     console.log("Orders data:", this.orders);
+//     for (const order of this.orders) {
+//         const productId = order.product_id;
+
+
+//         // Fetch the stock for this product
+//         const stockResponse = await fetch(`/products/product_stock/${productId}`);
+//         const stockData = await stockResponse.json();
+
+//         if (stockData.data.Quantity <= 0) {
+//             console.log(`Stock for product ${productId} is out. Cancelling pending orders...`);
+//             await this.cancelPendingOrders(productId);
+//         }
+//     }
+// },
+
+
+async confirmOrder(id) {
     const confirmPayload = {
         order_id: id,
         order_status: "For Delivery",
@@ -203,6 +330,11 @@ export default {
         alert('Order not found');
         return;
     }
+
+    // Fetch stock for the product to check if it's out of stock
+    const stockResponse = await fetch(`/products/product_stock/${order.product_id}`);
+    const stockData = await stockResponse.json();
+    console.log(stockResponse);
 
     // Prepare the payload to decrease the product quantity
     const productPayload = {
@@ -220,7 +352,6 @@ export default {
     .then(async (response) => {
         const text = await response.text();
         console.log('Raw response:', text);
-        console.log(productPayload);
         return JSON.parse(text); // Parse JSON response
     })
     .then(data => {
@@ -236,21 +367,22 @@ export default {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(confirmPayload),
-
             })
             .then(async (response) => {
                 const text = await response.text();
                 console.log('Raw response:', text);
-                console.log(confirmPayload);
                 return JSON.parse(text);
             })
             .then(data => {
-                if (data.status === 'success') {
-                    alert('Order has been confirmed.');
-                    this.getData(); // Refresh the order list
-                } else {
-                    alert('Failed to confirm the order. Please try again.');
-                }
+                    if (data.status === 'success') {
+                        alert('Order has been confirmed.');
+                        location.reload();
+                        this.getData(); // Refresh the order list
+
+
+                    } else {
+                        alert('Failed to confirm the order. Please try again.');
+                    }
             })
             .catch(error => {
                 console.error('Error confirming order:', error);
@@ -261,25 +393,29 @@ export default {
         }
     })
     .catch(error => {
-        // console.log(data.status);
         console.error('Error updating product stock:', error);
         alert('An error occurred while updating the product stock.');
     });
 },
 
-        // Handle Cancel Order
-        async submitCancelOrder() {
-        if (!this.reason_cancel.trim()) {
-            alert("Please provide a cancellation reason.");
-            return;
-        }
 
+async cancelPendingOrders(productId) {
+    // Loop through all orders to find pending orders for the product
+    const pendingOrders = this.orders.filter(order => order.product_id === productId && order.order_status === 'Pending');
+
+    if (pendingOrders.length === 0) {
+        console.log('No pending orders to cancel.');
+        return;
+    }
+
+    // Loop through each pending order and cancel it
+    for (const order of pendingOrders) {
         const cancelPayload = {
-            order_id: this.cancelOrderId,
-            reason_cancel: this.reason_cancel,
+            order_id: order.id,
+            reason_cancel: "Stock is out of order",
             order_status: "Cancelled Order",
         };
-        console.log(cancelPayload);
+
         try {
 <<<<<<< HEAD
             const response = await fetch('http://192.168.68.67:8080/buyer/order-cancelled.php', {
@@ -293,22 +429,60 @@ export default {
                 body: JSON.stringify(cancelPayload),
             });
             const data = await response.json();
-            console.log(data);
             if (data.status === 'success') {
-                alert("Order canceled successfully.");
-                this.getData(); // Refresh orders list
+                console.log(`Order ${order.id} cancelled successfully due to stock being out.`);
             } else {
-                alert("Failed to cancel the order. Please try again.");
+                console.error(`Failed to cancel order ${order.id}.`);
             }
         } catch (error) {
             console.error('Error canceling order:', error);
             alert("An error occurred while canceling the order.");
-        } finally {
-            this.closeCancelModal(); // Close the modal
         }
-    },
+    }
 
-    },
+    alert('All pending orders for this product have been canceled due to stock being out.');
+    this.getData(); // Refresh the order list
+},
+
+        // Handle Cancel Order
+            async submitCancelOrder() {
+            if (!this.reason_cancel.trim()) {
+                alert("Please provide a cancellation reason.");
+                return;
+            }
+
+            const cancelPayload = {
+                order_id: this.cancelOrderId,
+                reason_cancel: this.reason_cancel,
+                order_status: "Cancelled Order",
+            };
+            console.log(cancelPayload);
+            try {
+                const response = await fetch('http://192.168.1.101:8080/buyer/order-cancelled.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(cancelPayload),
+                });
+                const data = await response.json();
+                console.log(data);
+                if (data.status === 'success') {
+                    alert("Order canceled successfully.");
+                    location.reload();
+                    this.getData(); // Refresh orders list
+                } else {
+                    alert("Failed to cancel the order. Please try again.");
+                }
+            } catch (error) {
+                console.error('Error canceling order:', error);
+                alert("An error occurred while canceling the order.");
+            } finally {
+                this.closeCancelModal(); // Close the modal
+            }
+        },
+
+        },
 };
 </script>
 

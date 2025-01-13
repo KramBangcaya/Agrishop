@@ -273,6 +273,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
 
                         <!-- Product Image -->
 <<<<<<< HEAD
+<<<<<<< HEAD
                         <img src="http://192.168.68.60:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
 =======
 <<<<<<< HEAD
@@ -281,6 +282,9 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                         <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
 >>>>>>> 0f071ecaf682a34474855e75ec22ae0fae37f196
 >>>>>>> 3f0afeffd114ed173604f8f8e1850d42ef9c1e5f
+=======
+                        <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+>>>>>>> 9f89db4030dcdf4fad99b1eac79fb46837480296
                              alt="Product Image"
                              style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
                         <input type="hidden" name="product_id[]" value="<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>">
