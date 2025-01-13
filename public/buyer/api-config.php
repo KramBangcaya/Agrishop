@@ -6,6 +6,6 @@
  */
 
 // Define the API base URL
-define('API_BASE_URL', 'http://192.168.1.10:8080');
+define('API_BASE_URL', 'http://192.168.1.11:8080');
 ?>
 

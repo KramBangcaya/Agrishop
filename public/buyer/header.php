@@ -331,10 +331,7 @@ foreach ($result as $row) {
 </div>
 
 <div class="nav" style="background-color:#049261;">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12 pl_0 pr_0">
-				<div class="menu-container">
+<div class="menu-container">
 					<div class="menu"style="background-color:#049261;">
 						<ul>
 							<li><a href="index.php">Home</a></li>
@@ -360,6 +357,10 @@ foreach ($result as $row) {
 						</ul>
 					</div>
 				</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 pl_0 pr_0">
+
 			</div>
 		</div>
 	</div>

@@ -148,7 +148,7 @@ if($success_message1 != '') {
                         <li><?php echo $p_name; ?></li>
                     </ul>
                 </div>
-
+                <h3><button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button></h3>
 			<div class="product">
 				<div class="row">
                     <div class="col-md-5">

@@ -1,3 +1,5 @@
+
+
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
 $statement->execute();
@@ -28,11 +30,14 @@ foreach ($result as $row)
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
 $statement->execute();
-$result = $statement->fetchAll(PDO::FETCH_ASSOC);                            
+$result = $statement->fetchAll(PDO::FETCH_ASSOC);
 foreach ($result as $row) {
     $stripe_public_key = $row['stripe_public_key'];
     $stripe_secret_key = $row['stripe_secret_key'];
 }
+
+
+
 ?>
 
 <script src="assets/js/jquery-2.2.4.min.js"></script>
@@ -54,7 +59,7 @@ foreach ($result as $row) {
 	    return confirm("Sure you want to delete this data?");
 	}
 
-	
+
 	$(document).ready(function () {
 		advFieldsStatus = $('#advFieldsStatus').val();
 
