@@ -329,8 +329,10 @@ if (!empty($min_price) && !empty($max_price)) {
                         <input type="number" style="font-size: 18px;" name="max_price" value="<?php echo isset($_GET['max_price']) ? $_GET['max_price'] : ''; ?>"> <br><br>
                         <input type="hidden" name="category_id" value="<?php echo isset($category_id) ? $category_id : ''; ?>">
                         <button type="submit" style="font-size: 18px;" class="btn btn-success">Filter</button>
+
                     </form>
-                    <button onclick="window.location.href='/buyer/product-category.php';" style="font-size: 18px; margin-top: 20px;" class="btn btn-secondary">Clear Filter</button>
+ <button onclick="window.location.href='/buyer/product-category.php';"  style="font-size: 18px;" class="btn btn-success">Clear Filter</button>
+
 
                 </div>
 
@@ -377,8 +379,9 @@ if (!empty($min_price) && !empty($max_price)) {
                                             <div class="text">
                                                 <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['Product_Name']; ?></a></h3>
                                                 <h4>₱<?php echo $product['price']; ?>/Kilo</h4>
-                                                <h6>Stock: <?php echo $product['Quantity']; ?></h6>
 
+                                                <h6>Stock: <?php echo $product['Quantity']; ?></h6>
+                                                <h5><?php echo $product['last_name']; ?> <?php echo $product['first_name']; ?></h5>
                                                 <?php if (isset($product['Quantity']) && $product['Quantity'] == 0): ?>
                                                     <div class="out-of-stock">
                                                         <div class="inner">Out Of Stock</div>
