@@ -58,11 +58,11 @@ if ($category_id && $category_id !== '0') {
 // Apply price range filter if either min_price or max_price is set
 if (!empty($min_price) && !empty($max_price)) {
 
-    echo $min_price;
-    echo $max_price;
+    // echo $min_price;
+    // echo $max_price;
     // If min_price and max_price are both provided
     if (!empty($min_price) && !empty($max_price)) {
-        echo ' second';
+        // echo ' second';
         $price_range_api_url = API_BASE_URL . "/products/price-range?min={$min_price}&max={$max_price}";
         $price_range_response = file_get_contents($price_range_api_url);
         $products = json_decode($price_range_response, true);
