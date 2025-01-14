@@ -264,7 +264,28 @@ foreach ($result as $row) {
                         // var_dump($_SESSION);
 						?>
 						<li><i class="fa fa-user"></i> User: <?php echo $_SESSION['customer']['name']; ?></li>
-                        <li><a href="#"><i class="fa fa-bell" aria-hidden="true"></i> Notifications</a></li>
+
+
+
+                        <li >
+  <a href="#">
+    <i class="fa fa-bell" aria-hidden="true"></i> Notifications
+    <?php
+    // Fetch count of cancelled orders
+    $queryCount = "SELECT COUNT(*) AS total_cancelled FROM Orders WHERE buyer_id = ? AND order_status=? AND cancel_by=?";
+    $stmtCount = $pdo->prepare($queryCount);
+    $stmtCount->execute([$_SESSION['user_id'], "Cancelled Order", "seller"]);
+    $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
+
+    // Display the count as a badge if it's greater than 0
+    $totalCancelled = $countResult['total_cancelled'] ?? 0;
+    if ($totalCancelled > 0) {
+        echo "<span style='background: red; color: white; border-radius: 50%; padding: 3px 7px; margin-left: 5px;'>$totalCancelled</span>";
+    }
+    ?>
+  </a>
+</li>
+
 <li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
 						<!-- <li><a href="dashboard.php"><i class="fa fa-home"></i> <?php echo LANG_VALUE_89; ?></a></li> -->
 						<?php

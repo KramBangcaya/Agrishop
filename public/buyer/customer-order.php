@@ -799,6 +799,51 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
                     <h4 onclick="toggleFeedbackForm(event)" style="cursor: pointer;">
                         Feedback <i class="fa fa-comments" style="color:green;"></i>
                     </h4>
+
+                    <?php
+// Query to check if the order is canceled by the seller
+$queryCancelBy = "SELECT id, cancel_by FROM Orders WHERE buyer_id = ? AND order_status = ? AND cancel_by = ?";
+$stmtCancelBy = $pdo->prepare($queryCancelBy);
+$stmtCancelBy->execute([$_SESSION['user_id'], "Cancelled Order", "seller"]);
+$cancelByResult = $stmtCancelBy->fetch(PDO::FETCH_ASSOC);
+
+// Display the HTML code only if `cancel_by` is 'seller'
+if ($cancelByResult) {
+    echo '
+    <h4 onclick="markAsRead(' . $cancelByResult['id'] . ')" style="cursor: pointer;color:red;">
+        Mark as Read <i class="fa fa-commenting" aria-hidden="true"></i>
+    </h4>';
+}
+?>
+<script>
+function markAsRead(orderId) {
+    // Send AJAX request to update cancel_by
+    fetch('update_cancel_by.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ orderId: orderId }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Optionally, hide the Mark as Read button after the update
+            showToast('Marked as read successfully!');
+            location.reload(); // Reload the page to reflect the update
+        } else {
+            showToast('Failed to mark as read.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showToast('An error occurred.');
+    });
+}
+</script>
+
+
+
                     <div id="feedback-form-<?php echo $order['id']; ?>" style="display: none; margin-top: 10px;">
                         <textarea id="feedback-text-<?php echo $order['id']; ?>" placeholder="Enter your feedback here..." rows="4" cols="50"></textarea>
                         <br>
@@ -1010,7 +1055,7 @@ function confirmCancelOrder() {
         body: new URLSearchParams({
             order_id: currentOrderId,
             status: 'Cancelled Order',
-            reason: reasonCancel,
+            reason: reasonCancel
         }),
     })
         .then((response) => response.json())

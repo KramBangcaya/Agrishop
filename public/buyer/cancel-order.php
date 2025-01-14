@@ -7,12 +7,14 @@ if (isset($_POST['order_id']) && isset($_POST['status']) && isset($_POST['reason
     $status = $_POST['status'];
     $reason = $_POST['reason'];
 
+    $cancel = 'buyer';
+
     // Prepare the update query
-    $query = "UPDATE Orders SET order_status = ?, reason_cancel = ? WHERE id = ?";
+    $query = "UPDATE Orders SET order_status = ?, reason_cancel = ?, cancel_by = ? WHERE id = ?";
     $stmt = $pdo->prepare($query);
 
     // Execute the query
-    if ($stmt->execute([$status, $reason, $orderId])) {
+    if ($stmt->execute([$status, $reason, $cancel , $orderId])) {
         // Return success response
         echo json_encode(['success' => true]);
     } else {
