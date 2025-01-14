@@ -959,7 +959,6 @@ function showToast(message) {
                                             order_id: orderId,
                                             status: 'Cancelled Order',
                                             reason: reason_cancel,
-                                            cancel_by: 'buyer'
                                         }),
                                     })
                                     .then((response) => response.json())
