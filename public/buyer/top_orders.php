@@ -20,7 +20,7 @@ header('Content-Type: application/json');
 if (isset($_GET['seller_id']) && is_numeric($_GET['seller_id'])) {
     $seller_id = $_GET['seller_id']; // Get the seller_id from the query string
 } else {
-    echo json_encode(["error" => "Seller ID is required and must be a number."]);
+    echo json_encode(["status" => "error", "message" => "Seller ID is required and must be a number."]);
     exit();
 }
 
@@ -46,15 +46,15 @@ try {
 
     // Check if result is fetched
     if ($result) {
-        // Output the result as JSON
-        echo json_encode(["data" => $result]);
+        // Output the result as JSON with status "success"
+        echo json_encode(["status" => "success", "data" => $result]);
     } else {
-        echo json_encode(["data" => [], "message" => "No orders found."]);
+        echo json_encode(["status" => "success", "data" => [], "message" => "No orders found."]);
     }
 
 } catch (PDOException $e) {
     // Handle any connection or query errors
-    echo json_encode(["data" => [], "error" => "Error: " . $e->getMessage()]);
+    echo json_encode(["status" => "error", "data" => [], "error" => "Error: " . $e->getMessage()]);
 }
 
 // Close the PDO connection (optional, as it's already handled in config.php)
