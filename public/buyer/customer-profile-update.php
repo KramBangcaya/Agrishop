@@ -69,7 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form1'])) {
     $result = json_decode($response, true);
     if ($result['status'] === 'success') {
         $success_message = $result['message'];
-        header("Refresh:0");
+
+        header("Location: " . $_SERVER['PHP_SELF']);
+$_SESSION['customer']['name']=$_POST['name'];
+
     } else {
         $error_message = $result['message'];
     }
@@ -81,7 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form1'])) {
         <div class="row">
             <div class="col-md-12">
                 <div class="user-content">
-                    <h3>Update Profile</h3>
+
+                    <h3><button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button> Update Profile</h3>
                     <?php
                     if (!empty($error_message)) {
                         echo "<div class='error' style='padding: 10px;background:#f1f1f1;margin-bottom:20px;'>" . $error_message . "</div>";
@@ -93,6 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form1'])) {
                     <form id="profile-form" method="post" enctype="multipart/form-data">
                         <?php $csrf->echoInputField();
                             // var_dump($userData);
+
+
                         ?>
                         <div class="row">
                             <input type="hidden" name="user_id" value="<?php echo $userData['user_id'] ?? ''; ?>">
@@ -100,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form1'])) {
 
                             <div class="col-md-6 form-group">
                                 <label for="">First Name *</label>
-                                <input type="text" class="form-control" name="name" value="<?php echo htmlspecialchars($userData['name'] ?? ''); ?>">
+                                <input type="text" class="form-control" name="name" value="<?php echo htmlspecialchars($userData['name'] ?? '');  ?>">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="">Last Name</label>

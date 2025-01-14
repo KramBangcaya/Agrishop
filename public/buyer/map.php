@@ -48,6 +48,7 @@ foreach ($result as $row) {
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+            <h3><button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button></h3>
                 <div class="search-container" style="position: absolute; z-index: 1; width: 100%; margin-top: 10px; text-align: center;">
                     <form id="search-form" onsubmit="handleSearch(event)">
                         <input type="text" id="search-input" placeholder="Search for a product..." style="width: 50%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;" value="<?php echo htmlspecialchars($searchTerm); ?>" />
@@ -142,10 +143,10 @@ foreach ($result as $row) {
                         const searchTerm = document.getElementById('search-input').value.trim();
                         if (searchTerm) {
                             // Redirect with the search query
-                            window.location.href = `map.php?search=${encodeURIComponent(searchTerm)}`;
+                            window.location.href = `product-category.php?search=${encodeURIComponent(searchTerm)}`;
                         } else {
                             // If no search term, reload without the search query
-                            window.location.href = `map.php`;
+                            window.location.href = `product-category.php`;
                         }
                     }
 

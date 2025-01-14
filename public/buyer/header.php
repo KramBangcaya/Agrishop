@@ -263,8 +263,10 @@ foreach ($result as $row) {
 					if(isset($_SESSION['customer'])) {
                         // var_dump($_SESSION);
 						?>
-						<li><i class="fa fa-user"></i> <?php echo LANG_VALUE_13; ?> <?php echo $_SESSION['customer']['name']; ?></li>
-						<li><a href="dashboard.php"><i class="fa fa-home"></i> <?php echo LANG_VALUE_89; ?></a></li>
+						<li><i class="fa fa-user"></i> User: <?php echo $_SESSION['customer']['name']; ?></li>
+                        <li><a href="#"><i class="fa fa-bell" aria-hidden="true"></i> Notifications</a></li>
+<li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+						<!-- <li><a href="dashboard.php"><i class="fa fa-home"></i> <?php echo LANG_VALUE_89; ?></a></li> -->
 						<?php
 					} else {
 						?>
@@ -318,6 +320,7 @@ foreach ($result as $row) {
         ?></b>)
     </a>
 </li>
+
 				</ul>
 			</div>
 			<div class="col-md-3 search-area">
@@ -330,39 +333,5 @@ foreach ($result as $row) {
 	</div>
 </div>
 
-<div class="nav" style="background-color:#049261;">
-<div class="menu-container">
-					<div class="menu"style="background-color:#049261;">
-						<ul>
-							<li><a href="index.php">Home</a></li>
 
-
-
-							<?php
-							$statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
-							$statement->execute();
-							$result = $statement->fetchAll(PDO::FETCH_ASSOC);
-							foreach ($result as $row) {
-								$about_title = $row['about_title'];
-								$faq_title = $row['faq_title'];
-								$blog_title = $row['blog_title'];
-								$contact_title = $row['contact_title'];
-								$pgallery_title = $row['pgallery_title'];
-								$vgallery_title = $row['vgallery_title'];
-							}
-							?>
-
-
-                            <li><a href="map.php"><i class="fas fa-map-marker-alt"></i> Near Me</a></li>
-						</ul>
-					</div>
-				</div>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12 pl_0 pr_0">
-
-			</div>
-		</div>
-	</div>
-</div>
 

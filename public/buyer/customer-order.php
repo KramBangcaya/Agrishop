@@ -32,7 +32,8 @@ if(!isset($_SESSION['customer'])) {
         <div class="row">
             <div class="col-md-12">
                 <div class="user-content">
-                    <h1><?php echo LANG_VALUE_25; ?></h1>
+
+                <h1><button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button> <?php echo LANG_VALUE_25; ?></h1>
                     <h3 class="special"> </h3>
                     <div class="table-responsive">
 
@@ -526,157 +527,6 @@ $groupedOrders[$order['order_status']][] = $order;
 
 
 
-<<<<<<< HEAD
-                        <script>
-                        function showCancelReasonForm(orderId) {
-                            // Show the cancellation reason form
-                            const cancelForm = document.getElementById('cancel-form-' + orderId);
-                            if (cancelForm) {
-                                cancelForm.style.display = 'block';
-                            }
-                        }
-                        function cancelCancellationForm(orderId) {
-                            // Hide the cancellation reason form without submitting
-                            const cancelForm = document.getElementById('cancel-form-' + orderId);
-                            if (cancelForm) {
-                                cancelForm.style.display = 'none';
-                            }
-                        }
-                        function toggleFeedbackForm(event) {
-                            event.preventDefault();
-                            const feedbackForm = event.target.nextElementSibling;
-                            if (feedbackForm) {
-                                feedbackForm.style.display = feedbackForm.style.display === 'none' ? 'block' : 'none';
-                            }
-                        }
-
-                        function submitFeedback(orderId, buyerId, buyerName, productId, productName) {
-                            const feedbackTextarea = document.getElementById('feedback-text-' + orderId);
-                            const ratingSelect = document.getElementById('rating-' + orderId);
-
-                            if (feedbackTextarea && ratingSelect) {
-                                const feedback = feedbackTextarea.value.trim();
-                                const rating = ratingSelect.value;
-
-                                if (feedback && rating) {
-                                    fetch('submit-feedback.php', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/x-www-form-urlencoded',
-                                        },
-                                        body: new URLSearchParams({
-                                            buyer_id: buyerId,
-                                            buyer_name: buyerName,
-                                            product_id: productId,
-                                            product_name: productName,
-                                            feedback: feedback,
-                                            rating: rating,
-                                            orderId: orderId,
-                                        }),
-                                    })
-                                        .then((response) => response.json())
-                                        .then((data) => {
-                                            if (data.success) {
-                                                alert('Feedback submitted successfully!');
-                                                document.getElementById('feedback-form-' + orderId).style.display = 'none';
-                                            } else {
-                                                alert('Error: ' + data.message);
-                                            }
-                                        })
-                                        .catch((error) => {
-                                            console.error('Error:', error);
-                                            alert('Failed to submit feedback.');
-                                        });
-                                } else {
-                                    alert('Please complete all fields before submitting.');
-                                }
-                            }
-                        }
-
-                        function cancelFeedback(orderId) {
-                            const feedbackForm = document.getElementById('feedback-form-' + orderId);
-                            if (feedbackForm) {
-                                feedbackForm.style.display = 'none';
-                            }
-                        }
-
-                    function cancelOrderWithReason(orderId) {
-                        const reason_cancel = document.getElementById('cancel-reason-' + orderId).value.trim();
-
-                        if (reason_cancel) {
-                            if (confirm('Are you sure you want to cancel this order?')) {
-                                fetch('cancel-order.php', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/x-www-form-urlencoded',
-                                    },
-                                    body: new URLSearchParams({
-                                        order_id: orderId,
-                                        status: 'Cancelled Order',
-                                        reason: reason_cancel
-                                    }),
-                                })
-                                .then((response) => response.json())
-                                .then((data) => {
-                                    if (data.success) {
-                                        alert('Order has been cancelled with reason: ' + reason_cancel);
-                                        location.reload(); // Reload the page to reflect changes
-                                    } else {
-                                        alert('Error: ' + data.message);
-                                    }
-                                })
-                                .catch((error) => {
-                                    console.error('Error:', error);
-                                    alert('Failed to cancel order.');
-                                });
-                            }
-                        } else {
-                            alert('Please provide a reason for the cancellation.');
-                        }
-                    }
-                    function markAsDelivered(orderId) {
-                        if (confirm('Are you sure you want to mark this order as delivered?')) {
-                            fetch('update-order.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                                body: new URLSearchParams({
-                                    order_id: orderId,
-                                    status: 'Delivered'
-                                }),
-                            })
-                            .then((response) => response.json())
-                            .then((data) => {
-                                if (data.success) {
-                                    alert('Order marked as delivered.');
-
-                                    // Hide the "Mark as Delivered" button
-                                    const markAsDeliveredLink = document.querySelector(`a[onclick="markAsDelivered(${orderId});"]`);
-                                    if (markAsDeliveredLink) {
-                                        markAsDeliveredLink.style.display = 'none'; // Hides the button
-                                    }
-
-                                    // Optionally update the displayed order status text
-                                    const orderStatusElement = document.querySelector(`#order-status-${orderId}`);
-                                    if (orderStatusElement) {
-                                        orderStatusElement.innerHTML = 'Delivered <i class="fa fa-check" style="color: green;"></i>';
-                                        orderStatusElement.style.color = 'gray'; // Change the text color
-                                    }
-                                    Location.reload()
-                                } else {
-                                    alert('Error: ' + data.message);
-                                }
-                            })
-                            .catch((error) => {
-                                console.error('Error:', error);
-                                alert('Failed to update order status.');
-                            });
-                        }
-                    }
-                    </script>
-=======
->>>>>>> 0f071ecaf682a34474855e75ec22ae0fae37f196
 
 
 <?php
@@ -1039,6 +889,8 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
+
+
     <script>
 
 function showToast(message) {
@@ -1258,4 +1110,70 @@ function showToast(message) {
 
                         }
                         </script>
+
+                <div class="page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                // Ensure the user_id is set in the session
+                if (isset($_SESSION['user_id'])) {
+                    $user_id = $_SESSION['user_id'];
+                } else {
+                    $user_id = null; // Handle this appropriately if user_id is not set
+                }
+
+                // Include the file without query string
+
+                ?>
+            </div>
+
+
+            <?php
+					if(isset($_SESSION['customer'])) {
+                        // var_dump($_SESSION);
+						?>
+
+            <div class="col-md-12">
+                <div class="user-content">
+                <div style="text-align:center; margin-right:10px; margin-bottom:10px;">
+<a href="index.php" class="btn btn-primary"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+							<?php
+							$statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
+							$statement->execute();
+							$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+							foreach ($result as $row) {
+								$about_title = $row['about_title'];
+								$faq_title = $row['faq_title'];
+								$blog_title = $row['blog_title'];
+								$contact_title = $row['contact_title'];
+								$pgallery_title = $row['pgallery_title'];
+								$vgallery_title = $row['vgallery_title'];
+							}
+							?>
+<!-- <a href="map.php" class="btn btn-primary"><i class="fas fa-map-marker-alt"></i></a> -->
+
+<a href="customer-profile-update.php?id=<?php echo $user_id; ?>" class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Profile</a>
+<a href="reportseller.php" class="btn btn-primary"><i class="fa fa-flag" aria-hidden="true"></i> Report</a>
+<a href="customer-order.php?id=<?php echo $user_id; ?>" class="btn btn-primary"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Orders</a>
+<!-- <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a> -->
+<!--    </a> -->
+<!-- <a href="logout.php" class="btn btn-primary"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a> -->
+
+</div>
+                </div>
+            </div>
+
+
+						<?php
+					} else {
+						?>
 <?php require_once('footer.php'); ?>
+
+						<?php
+					}
+					?>
+
+        </div>
+    </div>
+</div>

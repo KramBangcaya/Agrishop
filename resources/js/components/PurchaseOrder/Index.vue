@@ -44,17 +44,10 @@
                                             <td>
                                                 <img
                                                 v-if="order.photo && order.photo.length"
-<<<<<<< HEAD
-                                                :src="'http://192.168.68.67:8080/buyer/'+order.photo"
+                                                :src="'http://192.168.1.129:8080/buyer/'+order.photo"
                                                 alt="Product Photo"
                                                 style="max-width: 200px; max-height: 200px; cursor: pointer;"
-                                                @click="openImageModal('http://192.168.68.67:8080/buyer/' + order.photo)"
-=======
-                                                :src="'http://192.168.1.101:8080/buyer/'+order.photo"
-                                                alt="Product Photo"
-                                                style="max-width: 200px; max-height: 200px; cursor: pointer;"
-                                                @click="openImageModal('http://192.168.1.101:8080/buyer/' + order.photo)"
->>>>>>> 3f0afeffd114ed173604f8f8e1850d42ef9c1e5f
+                                                @click="openImageModal('http://192.168.1.129:8080/buyer/' + order.photo)"
                                                 />
                                             </td>
 
@@ -193,11 +186,7 @@ export default {
             return;
         }
             try {
-<<<<<<< HEAD
-                const response = await fetch(`http://192.168.68.67:8080/buyer/get-orders.php?seller_id=${this.userID}`);
-=======
-                const response = await fetch(`http://192.168.1.101:8080/buyer/get-orders.php?seller_id=${this.userID}`);
->>>>>>> 3f0afeffd114ed173604f8f8e1850d42ef9c1e5f
+                const response = await fetch(`http://192.168.1.129:8080/buyer/get-orders.php?seller_id=${this.userID}`);
                 const data = await response.json();
                 if (data.status === 'success') {
                     this.orders = data.data;
@@ -357,11 +346,7 @@ async confirmOrder(id) {
     .then(data => {
         if (data.status === 'success') {
             // If product stock is updated successfully, proceed to confirm the order status
-<<<<<<< HEAD
-            fetch('http://192.168.68.67:8080/buyer/update-order-status.php', {
-=======
-            fetch('http://192.168.1.101:8080/buyer/update-order-status.php', {
->>>>>>> 3f0afeffd114ed173604f8f8e1850d42ef9c1e5f
+            fetch('http://192.168.1.129:8080/buyer/update-order-status.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -417,11 +402,7 @@ async cancelPendingOrders(productId) {
         };
 
         try {
-<<<<<<< HEAD
-            const response = await fetch('http://192.168.68.67:8080/buyer/order-cancelled.php', {
-=======
-            const response = await fetch('http://192.168.1.101:8080/buyer/order-cancelled.php', {
->>>>>>> 3f0afeffd114ed173604f8f8e1850d42ef9c1e5f
+            const response = await fetch('http://192.168.1.129:8080/buyer/order-cancelled.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -458,7 +439,7 @@ async cancelPendingOrders(productId) {
             };
             console.log(cancelPayload);
             try {
-                const response = await fetch('http://192.168.1.101:8080/buyer/order-cancelled.php', {
+                const response = await fetch('http://192.168.1.129:8080/buyer/order-cancelled.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

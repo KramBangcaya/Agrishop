@@ -45,7 +45,8 @@ if(!isset($_SESSION['customer'])) {
         <div class="row">
             <div class="col-md-12">
                 <div class="user-content">
-                    <h1>Report History</h1><a style="float: right;" href="customer-billing-shipping-update.php"><button style="float: right;" class="btn btn-danger">Report Seller</button></a><br>
+
+                    <h1><button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button> Report History</h1><a style="float: right;" href="customer-billing-shipping-update.php"><button style="float: right;" class="btn btn-danger">Report Seller</button></a><br>
                     <h3 class="special"> </h3>
                     <div class="table-responsive">
                         <div class="row">
@@ -74,5 +75,47 @@ if(!isset($_SESSION['customer'])) {
         </div>
     </div>
 </div>
-
-<?php require_once('footer.php'); ?>
+<?php
+if (isset($_SESSION['customer'])) {
+    ?>
+    <div class="col-md-12">
+        <div class="user-content" style="
+            position: fixed; /* Keep it fixed in the viewport */
+            bottom: 0; /* Position at the bottom */
+            left: 0; /* Align to the left */
+            width: 100%; /* Full width */
+            z-index: 1000; /* Ensure it stays above other content */
+            background-color: #fff; /* White background for contrast */
+            padding: 10px; /* Add spacing inside */
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Add shadow above the bar */
+        ">
+            <div style="text-align: center; margin-right: 10px; margin-bottom: 10px;">
+                <a href="index.php" class="btn btn-primary"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                <?php
+                $statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($result as $row) {
+                    $about_title = $row['about_title'];
+                    $faq_title = $row['faq_title'];
+                    $blog_title = $row['blog_title'];
+                    $contact_title = $row['contact_title'];
+                    $pgallery_title = $row['pgallery_title'];
+                    $vgallery_title = $row['vgallery_title'];
+                }
+                ?>
+                <a href="customer-profile-update.php?id=<?php echo $user_id; ?>" class="btn btn-primary">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Profile
+                </a>
+                <a href="reportseller.php" class="btn btn-primary">
+                    <i class="fa fa-flag" aria-hidden="true"></i> Report
+                </a>
+                <a href="customer-order.php?id=<?php echo $user_id; ?>" class="btn btn-primary">
+                    <i class="fa fa-shopping-basket" aria-hidden="true"></i> Orders
+                </a>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>

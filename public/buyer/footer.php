@@ -1,5 +1,7 @@
 
 
+
+
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
 $statement->execute();
@@ -118,6 +120,32 @@ foreach ($result as $row) {
         }
     }
 </script>
-
+<!-- <div class="nav" style="background-color:#049261;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 pl_0 pr_0">
+				<div class="menu-container">
+                        <div class="menu"style="background-color:#049261;">
+                        <a href="index.php" class="btn btn-primary"><i class="fa fa-home" aria-hidden="true"></i></a>
+							<?php
+							$statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
+							$statement->execute();
+							$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+							foreach ($result as $row) {
+								$about_title = $row['about_title'];
+								$faq_title = $row['faq_title'];
+								$blog_title = $row['blog_title'];
+								$contact_title = $row['contact_title'];
+								$pgallery_title = $row['pgallery_title'];
+								$vgallery_title = $row['vgallery_title'];
+							}
+							?>
+<a href="map.php" class="btn btn-primary"><i class="fas fa-map-marker-alt"></i></a>
+                        </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> -->
 </body>
 </html>
