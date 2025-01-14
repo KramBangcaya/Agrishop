@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use phpseclib3\System\SSH\Agent;
 
 class LoginController extends Controller
 {
@@ -63,9 +65,23 @@ class LoginController extends Controller
             return redirect()->route('otp.show', ['userId' => $user->id])->with('message', 'Please verify your account using the OTP sent.');
         }
 
-
         // If `date_login` is not null, update it to the current timestamp
         $user->update(['date_login' => now()]);
+
+
+        // $agent = new Agent();
+        // $deviceName = $agent->device();
+        $deviceName = $request->header('User-Agent'); // Get the device or browser name
+        $macAddress = $request->input('mac_address');
+
+        // dd($macAddress);
+        DB::table('user__logs')->insert([
+            'user_id' => $user->id,
+            'device_name' => $deviceName,
+            'mac_address' => $macAddress,
+        'created_at' => now(),
+        'updated_at' => now(),
+        ]);
 
         // Allow the user to proceed
         return redirect()->intended($this->redirectTo);
