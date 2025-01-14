@@ -32,7 +32,8 @@ if(!isset($_SESSION['customer'])) {
         <div class="row">
             <div class="col-md-12">
                 <div class="user-content">
-                    <h1><?php echo LANG_VALUE_25; ?></h1>
+
+                <h1><button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button> <?php echo LANG_VALUE_25; ?></h1>
                     <h3 class="special"> </h3>
                     <div class="table-responsive">
 
@@ -195,8 +196,8 @@ foreach ($orders as $order) {
                             ?>
 
                             <div id="cancel-form-<?php echo $order['id']; ?>" style="display: none; margin-top: 10px;">
-                                    <textarea id="cancel-reason-<?php echo $order['id']; ?>" placeholder="Please provide a reason for cancelling..." rows="4" cols="50"></textarea><br>
-                                    <button onclick="cancelOrderWithReason(<?php echo $order['id']; ?>)">Submit Cancellation</button>
+
+                                    <button onclick="cancelOrderWithReason(<?php echo $order['id']; ?>)">Enter a Reason</button>
                                     <button onclick="cancelCancellationForm(<?php echo $order['id']; ?>)">Cancel</button>
                                 </div>
 
@@ -467,8 +468,8 @@ $groupedOrders[$order['order_status']][] = $order;
                         ?>
 
                         <div id="cancel-form-<?php echo $order['id']; ?>" style="display: none; margin-top: 10px;">
-                                <textarea id="cancel-reason-<?php echo $order['id']; ?>" placeholder="Please provide a reason for cancelling..." rows="4" cols="50"></textarea><br>
-                                <button onclick="cancelOrderWithReason(<?php echo $order['id']; ?>)">Submit Cancellation</button>
+
+                                <button onclick="cancelOrderWithReason(<?php echo $order['id']; ?>)">Enter a Reason</button>
                                 <button onclick="cancelCancellationForm(<?php echo $order['id']; ?>)">Cancel</button>
                             </div>
 
@@ -656,8 +657,8 @@ $groupedOrders[$order['order_status']][] = $order;
                         ?>
 
                         <div id="cancel-form-<?php echo $order['id']; ?>" style="display: none; margin-top: 10px;">
-                                <textarea id="cancel-reason-<?php echo $order['id']; ?>" placeholder="Please provide a reason for cancelling..." rows="4" cols="50"></textarea><br>
-                                <button onclick="cancelOrderWithReason(<?php echo $order['id']; ?>)">Submit Cancellation</button>
+
+                                <button onclick="cancelOrderWithReason(<?php echo $order['id']; ?>)">Enter a Reason</button>
                                 <button onclick="cancelCancellationForm(<?php echo $order['id']; ?>)">Cancel</button>
                             </div>
 
@@ -836,12 +837,36 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
 
 
 
+<!-- Mark As Delivered Modal -->
+<div id="markAsDeliveredModal" class="modal">
+    <div class="modal-content">
+        <h3>Mark Order as Delivered</h3>
+        <p>Are you sure you want to mark this order as delivered?</p>
+        <div class="modal-actions">
+            <button class="btn btn-success" onclick="confirmMarkAsDelivered()">Confirm</button>
+            <button class="btn btn-secondary" onclick="closeMarkAsDeliveredModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast"></div>
 
 
 
 
 
-
+<div id="cancelOrderModal" class="modal">
+    <div class="modal-content">
+        <h3>Cancel Order</h3>
+        <p>Are you sure you want to cancel this order?</p>
+        <textarea id="cancel-reason-input" placeholder="Enter cancellation reason" rows="3" style="width: 100%;"></textarea>
+        <div class="modal-actions">
+            <button class="btn btn-success" onclick="confirmCancelOrder()">Confirm</button>
+            <button class="btn btn-secondary" onclick="closeCancelOrderModal()">Close</button>
+        </div>
+    </div>
+</div>
 
 
 
@@ -860,6 +885,8 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
+
+
     <script>
 
 function showToast(message) {
@@ -946,77 +973,203 @@ function showToast(message) {
                             }
 
                         function cancelOrderWithReason(orderId) {
-                            const reason_cancel = document.getElementById('cancel-reason-' + orderId).value.trim();
-
-                            if (reason_cancel) {
-                                if (confirm('Are you sure you want to cancel this order?')) {
-                                    fetch('cancel-order.php', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/x-www-form-urlencoded',
-                                        },
-                                        body: new URLSearchParams({
-                                            order_id: orderId,
-                                            status: 'Cancelled Order',
-                                            reason: reason_cancel
-                                        }),
-                                    })
-                                    .then((response) => response.json())
-                                    .then((data) => {
-                                        if (data.success) {
-                                            showToast('Order has been cancelled with reason: ' + reason_cancel);
-                                            location.reload(); // Reload the page to reflect changes
-                                        } else {
-                                            showToast('Error: ' + data.message);
-                                        }
-                                    })
-                                    .catch((error) => {
-                                        console.error('Error:', error);
-                                        showToast('Failed to cancel order.');
-                                    });
-                                }
-                            } else {
-                                showToast('Please provide a reason for the cancellation.');
-                            }
+                            openCancelOrderModal(orderId);
                         }
+
+
+                        let currentOrderId = null; // Store the order ID globally
+let currentReasonCancel = null; // Store the cancellation reason globally
+
+function openCancelOrderModal(orderId) {
+    currentOrderId = orderId; // Set the current order ID
+    document.getElementById('cancelOrderModal').style.display = 'flex'; // Show the modal
+}
+
+function closeCancelOrderModal() {
+    document.getElementById('cancelOrderModal').style.display = 'none'; // Hide the modal
+}
+
+function confirmCancelOrder() {
+    const reasonCancel = document.getElementById('cancel-reason-input').value.trim();
+
+    if (!reasonCancel) {
+        showToast('Please provide a reason for the cancellation.');
+        return;
+    }
+
+    // Proceed with the cancellation
+    fetch('cancel-order.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            order_id: currentOrderId,
+            status: 'Cancelled Order',
+            reason: reasonCancel,
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                showToast('Order has been cancelled with reason: ' + reasonCancel);
+                location.reload(); // Reload the page to reflect changes
+            } else {
+                showToast('Error: ' + data.message);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            showToast('Failed to cancel order.');
+        });
+
+    closeCancelOrderModal(); // Close the modal after the action
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.innerText = message;
+    toast.className = 'toast show';
+    setTimeout(() => {
+        toast.className = 'toast';
+    }, 3000); // Toast disappears after 3 seconds
+}
+
+// Store the current order ID globally  let currentOrderId = null;
+
+function openMarkAsDeliveredModal(orderId) {
+    currentOrderId = orderId; // Set the current order ID
+    document.getElementById('markAsDeliveredModal').style.display = 'flex'; // Show the modal
+}
+
+function closeMarkAsDeliveredModal() {
+    document.getElementById('markAsDeliveredModal').style.display = 'none'; // Hide the modal
+}
+
+function confirmMarkAsDelivered() {
+    fetch('update-order.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            order_id: currentOrderId,
+            status: 'Delivered',
+
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                showToast('Order marked as delivered.');
+                location.reload();
+                // Hide the "Mark as Delivered" button
+                const markAsDeliveredLink = document.querySelector(
+                    `a[onclick="openMarkAsDeliveredModal(${currentOrderId});"]`
+                );
+                if (markAsDeliveredLink) {
+                    markAsDeliveredLink.style.display = 'none'; // Hides the button
+                }
+
+                // Update the displayed order status text
+                const orderStatusElement = document.querySelector(`#order-status-${currentOrderId}`);
+                if (orderStatusElement) {
+                    orderStatusElement.innerHTML =
+                        'Delivered <i class="fa fa-check" style="color: green;"></i>';
+                    orderStatusElement.style.color = 'gray'; // Change the text color
+                }
+
+
+            } else {
+                showToast('Error: ' + data.message);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            showToast('Failed to update order status.');
+        });
+
+    closeMarkAsDeliveredModal(); // Close the modal after confirmation
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.innerText = message;
+    toast.className = 'toast show';
+    setTimeout(() => {
+        toast.className = 'toast';
+    }, 3000); // Toast disappears after 3 seconds
+}
+
                         function markAsDelivered(orderId) {
-                            if (confirm('Are you sure you want to mark this order as delivered?')) {
-                                fetch('update-order.php', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/x-www-form-urlencoded',
-                                    },
-                                    body: new URLSearchParams({
-                                        order_id: orderId,
-                                        status: 'Delivered'
-                                    }),
-                                })
-                                .then((response) => response.json())
-                                .then((data) => {
-                                    if (data.success) {
-                                        showToast('Order marked as delivered.');
+                          openMarkAsDeliveredModal(orderId); // Open the modal when the button/link is clicked
 
-                                        // Hide the "Mark as Delivered" button
-                                        const markAsDeliveredLink = document.querySelector(`a[onclick="markAsDelivered(${orderId});"]`);
-                                        if (markAsDeliveredLink) {
-                                            markAsDeliveredLink.style.display = 'none'; // Hides the button
-                                        }
-
-                                        // Optionally update the displayed order status text
-                                        const orderStatusElement = document.querySelector(`#order-status-${orderId}`);
-                                        if (orderStatusElement) {
-                                            orderStatusElement.innerHTML = 'Delivered <i class="fa fa-check" style="color: green;"></i>';
-                                            orderStatusElement.style.color = 'gray'; // Change the text color
-                                        }
-                                    } else {
-                                        showToast('Error: ' + data.message);
-                                    }
-                                })
-                                .catch((error) => {
-                                    console.error('Error:', error);
-                                    showToast('Failed to update order status.');
-                                });
-                            }
                         }
                         </script>
+
+                <div class="page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                // Ensure the user_id is set in the session
+                if (isset($_SESSION['user_id'])) {
+                    $user_id = $_SESSION['user_id'];
+                } else {
+                    $user_id = null; // Handle this appropriately if user_id is not set
+                }
+
+                // Include the file without query string
+
+                ?>
+            </div>
+
+
+            <?php
+					if(isset($_SESSION['customer'])) {
+                        // var_dump($_SESSION);
+						?>
+
+            <div class="col-md-12">
+                <div class="user-content">
+                <div style="text-align:center; margin-right:10px; margin-bottom:10px;">
+<a href="index.php" class="btn btn-primary"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+							<?php
+							$statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
+							$statement->execute();
+							$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+							foreach ($result as $row) {
+								$about_title = $row['about_title'];
+								$faq_title = $row['faq_title'];
+								$blog_title = $row['blog_title'];
+								$contact_title = $row['contact_title'];
+								$pgallery_title = $row['pgallery_title'];
+								$vgallery_title = $row['vgallery_title'];
+							}
+							?>
+<!-- <a href="map.php" class="btn btn-primary"><i class="fas fa-map-marker-alt"></i></a> -->
+
+<a href="customer-profile-update.php?id=<?php echo $user_id; ?>" class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Profile</a>
+<a href="reportseller.php" class="btn btn-primary"><i class="fa fa-flag" aria-hidden="true"></i> Report</a>
+<a href="customer-order.php?id=<?php echo $user_id; ?>" class="btn btn-primary"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Orders</a>
+<!-- <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a> -->
+<!--    </a> -->
+<!-- <a href="logout.php" class="btn btn-primary"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a> -->
+
+</div>
+                </div>
+            </div>
+
+
+						<?php
+					} else {
+						?>
 <?php require_once('footer.php'); ?>
+
+						<?php
+					}
+					?>
+
+        </div>
+    </div>
+</div>

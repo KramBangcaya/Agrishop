@@ -6177,7 +6177,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _context2.prev = 3;
                 _context2.next = 6;
-                return fetch("http://192.168.68.67:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
+                return fetch("http://192.168.1.129:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
 
               case 6:
                 response = _context2.sent;
@@ -7912,6 +7912,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return generator._invoke = function (innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; }(innerFn, self, context), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; this._invoke = function (method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); }; } function maybeInvokeDelegate(delegate, context) { var method = delegate.iterator[context.method]; if (undefined === method) { if (context.delegate = null, "throw" === context.method) { if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel; context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method"); } return ContinueSentinel; } var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (object) { var keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -7932,11 +7946,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // Tracks if the cancel modal is open
       reason_cancel: '',
       // Stores the reason for cancellation
-      cancelOrderId: null
+      cancelOrderId: null,
+      productStocks: {}
     };
   },
   created: function created() {
+    var _this = this;
+
     this.getUserID(); // Fetch data when component is created
+
+    this.getUserID().then(function () {
+      // Only proceed if userID is available
+      if (_this.userID) {
+        _this.getData().then(function () {
+          _this.checkAndCancelPendingOrders(); // After fetching orders, check and cancel them
+
+        });
+      } else {
+        console.error("No userID available, cannot fetch orders.");
+      }
+    });
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              // console.log("Mounted called");
+              _this2.getData(); // Call checkAndCancelPendingOrders after the page loads
+
+
+              _this2.checkAndCancelPendingOrders();
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
   methods: {
     openCancelModal: function openCancelModal(orderId) {
@@ -7958,54 +8009,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.showImageModal = false;
     },
     getUserID: function getUserID() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var response, data;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return fetch('/user', {
-                  method: 'GET'
-                });
-
-              case 3:
-                response = _context.sent;
-                _context.next = 6;
-                return response.json();
-
-              case 6:
-                data = _context.sent;
-
-                if (data.userID) {
-                  _this.userID = data.userID; // Store the userID
-
-                  _this.getData(); // console.log(this.userID); // Now fetch orders after userID is fetched
-
-                }
-
-                _context.next = 13;
-                break;
-
-              case 10:
-                _context.prev = 10;
-                _context.t0 = _context["catch"](0);
-                console.error('Error fetching userID:', _context.t0);
-
-              case 13:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 10]]);
-      }))();
-    },
-    // Fetch Orders from APIs
-    getData: function getData() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         var response, data;
@@ -8013,191 +8017,641 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (_this2.userID) {
-                  _context2.next = 3;
-                  break;
-                }
-
-                console.error("UserID is missing");
-                return _context2.abrupt("return");
+                _context2.prev = 0;
+                _context2.next = 3;
+                return fetch('/user', {
+                  method: 'GET'
+                });
 
               case 3:
-                _context2.prev = 3;
-                _context2.next = 6;
-                return fetch("http://192.168.68.67:8080/buyer/get-orders.php?seller_id=".concat(_this2.userID));
-
-              case 6:
                 response = _context2.sent;
-                _context2.next = 9;
+                _context2.next = 6;
                 return response.json();
 
-              case 9:
+              case 6:
                 data = _context2.sent;
 
-                if (data.status === 'success') {
-                  _this2.orders = data.data;
-                  console.log(_this2.orders);
+                if (data.userID) {
+                  _this3.userID = data.userID; // Store the userID
+
+                  _this3.getData(); // console.log(this.userID); // Now fetch orders after userID is fetched
+
                 }
 
-                _context2.next = 16;
+                _context2.next = 13;
                 break;
 
-              case 13:
-                _context2.prev = 13;
-                _context2.t0 = _context2["catch"](3);
-                console.error('Error fetching orders:', _context2.t0);
+              case 10:
+                _context2.prev = 10;
+                _context2.t0 = _context2["catch"](0);
+                console.error('Error fetching userID:', _context2.t0);
 
-              case 16:
+              case 13:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[3, 13]]);
+        }, _callee2, null, [[0, 10]]);
       }))();
     },
-    // Handle Confirm Order
-    confirmOrder: function confirmOrder(id) {
-      var _this3 = this;
-
-      var confirmPayload = {
-        order_id: id,
-        order_status: "For Delivery"
-      }; // Find the order to get the product details
-
-      var order = this.orders.find(function (order) {
-        return order.id === id;
-      });
-
-      if (!order) {
-        alert('Order not found');
-        return;
-      } // Prepare the payload to decrease the product quantity
-
-
-      var productPayload = {
-        quantity_to_decrease: order.product_quantity // Decrease the quantity based on the order
-
-      }; // Call the 'minus_product' API to update the product stock
-
-      fetch("api/product1/minus_product/".concat(order.product_id), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(productPayload)
-      }).then( /*#__PURE__*/function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(response) {
-          var text;
-          return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-            while (1) {
-              switch (_context3.prev = _context3.next) {
-                case 0:
-                  _context3.next = 2;
-                  return response.text();
-
-                case 2:
-                  text = _context3.sent;
-                  console.log('Raw response:', text);
-                  console.log(productPayload);
-                  return _context3.abrupt("return", JSON.parse(text));
-
-                case 6:
-                case "end":
-                  return _context3.stop();
-              }
-            }
-          }, _callee3);
-        }));
-
-        return function (_x) {
-          return _ref.apply(this, arguments);
-        };
-      }()).then(function (data) {
-        if (data.status === 'success') {
-          // If product stock is updated successfully, proceed to confirm the order status
-          fetch('http://192.168.68.67:8080/buyer/update-order-status.php', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(confirmPayload)
-          }).then( /*#__PURE__*/function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(response) {
-              var text;
-              return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-                while (1) {
-                  switch (_context4.prev = _context4.next) {
-                    case 0:
-                      _context4.next = 2;
-                      return response.text();
-
-                    case 2:
-                      text = _context4.sent;
-                      console.log('Raw response:', text);
-                      console.log(confirmPayload);
-                      return _context4.abrupt("return", JSON.parse(text));
-
-                    case 6:
-                    case "end":
-                      return _context4.stop();
-                  }
-                }
-              }, _callee4);
-            }));
-
-            return function (_x2) {
-              return _ref2.apply(this, arguments);
-            };
-          }()).then(function (data) {
-            if (data.status === 'success') {
-              alert('Order has been confirmed.');
-
-              _this3.getData(); // Refresh the order list
-
-            } else {
-              alert('Failed to confirm the order. Please try again.');
-            }
-          })["catch"](function (error) {
-            console.error('Error confirming order:', error);
-            alert('An error occurred while confirming the order.');
-          });
-        } else {
-          alert('Failed to update product stock. Please try again.');
-        }
-      })["catch"](function (error) {
-        // console.log(data.status);
-        console.error('Error updating product stock:', error);
-        alert('An error occurred while updating the product stock.');
-      });
-    },
-    // Handle Cancel Order
-    submitCancelOrder: function submitCancelOrder() {
+    // Fetch Orders from APIs
+    getData: function getData() {
       var _this4 = this;
 
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var response, data;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (_this4.userID) {
+                  _context3.next = 3;
+                  break;
+                }
+
+                console.error("UserID is missing");
+                return _context3.abrupt("return");
+
+              case 3:
+                _context3.prev = 3;
+                _context3.next = 6;
+                return fetch("http://192.168.1.129:8080/buyer/get-orders.php?seller_id=".concat(_this4.userID));
+
+              case 6:
+                response = _context3.sent;
+                _context3.next = 9;
+                return response.json();
+
+              case 9:
+                data = _context3.sent;
+
+                if (!(data.status === 'success')) {
+                  _context3.next = 14;
+                  break;
+                }
+
+                _this4.orders = data.data;
+                _context3.next = 14;
+                return _this4.getProductStocks();
+
+              case 14:
+                _context3.next = 19;
+                break;
+
+              case 16:
+                _context3.prev = 16;
+                _context3.t0 = _context3["catch"](3);
+                console.error('Error fetching orders:', _context3.t0);
+
+              case 19:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[3, 16]]);
+      }))();
+    },
+    getProductStocks: function getProductStocks() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var uniqueProductIds, _iterator, _step, productId, response, contentType, text, data;
+
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                // Create a Set to store unique product IDs
+                uniqueProductIds = _toConsumableArray(new Set(_this5.orders.map(function (order) {
+                  return order.product_id;
+                })));
+                _iterator = _createForOfIteratorHelper(uniqueProductIds);
+                _context4.prev = 2;
+
+                _iterator.s();
+
+              case 4:
+                if ((_step = _iterator.n()).done) {
+                  _context4.next = 31;
+                  break;
+                }
+
+                productId = _step.value;
+                _context4.prev = 6;
+                _context4.next = 9;
+                return fetch("/products/product_stock/".concat(productId));
+
+              case 9:
+                response = _context4.sent;
+
+                if (response.ok) {
+                  _context4.next = 13;
+                  break;
+                }
+
+                console.error("Error: HTTP ".concat(response.status, " for product ID: ").concat(productId));
+                return _context4.abrupt("continue", 29);
+
+              case 13:
+                // Check if the response is JSON
+                contentType = response.headers.get("Content-Type");
+
+                if (!(!contentType || !contentType.includes("application/json"))) {
+                  _context4.next = 20;
+                  break;
+                }
+
+                _context4.next = 17;
+                return response.text();
+
+              case 17:
+                text = _context4.sent;
+                // Read raw response text for debugging
+                console.error("Unexpected response for product ID: ".concat(productId, ":"), text);
+                return _context4.abrupt("continue", 29);
+
+              case 20:
+                _context4.next = 22;
+                return response.json();
+
+              case 22:
+                data = _context4.sent;
+
+                // Check if the data contains the expected structure
+                if (data.data && data.data.Quantity !== undefined) {
+                  console.log("Stock for product ID ".concat(productId, ": ").concat(data.data.Quantity));
+
+                  _this5.$set(_this5.productStocks, productId, data.data.Quantity); // Update stock info
+
+                } else {
+                  console.error("Unexpected data format for product ID: ".concat(productId), data);
+                }
+
+                _context4.next = 29;
+                break;
+
+              case 26:
+                _context4.prev = 26;
+                _context4.t0 = _context4["catch"](6);
+                console.error("Error fetching stock for product ID: ".concat(productId), _context4.t0);
+
+              case 29:
+                _context4.next = 4;
+                break;
+
+              case 31:
+                _context4.next = 36;
+                break;
+
+              case 33:
+                _context4.prev = 33;
+                _context4.t1 = _context4["catch"](2);
+
+                _iterator.e(_context4.t1);
+
+              case 36:
+                _context4.prev = 36;
+
+                _iterator.f();
+
+                return _context4.finish(36);
+
+              case 39:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[2, 33, 36, 39], [6, 26]]);
+      }))();
+    },
+    checkAndCancelPendingOrders: function checkAndCancelPendingOrders() {
+      var _this6 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-        var cancelPayload, response, data;
+        var pendingOrders, _iterator2, _step2, order, productId, stockResponse, stockData, availableStock, orderedQuantity;
+
         return _regeneratorRuntime().wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                if (_this4.reason_cancel.trim()) {
-                  _context5.next = 3;
+                console.log('Checking and canceling pending orders...'); // Filter out only pending orders
+
+                pendingOrders = _this6.orders.filter(function (order) {
+                  return order.order_status === 'Pending';
+                });
+
+                if (!(pendingOrders.length === 0)) {
+                  _context5.next = 5;
+                  break;
+                }
+
+                console.log('No pending orders to check.');
+                return _context5.abrupt("return");
+
+              case 5:
+                console.log("Pending Orders:", pendingOrders);
+                _iterator2 = _createForOfIteratorHelper(pendingOrders);
+                _context5.prev = 7;
+
+                _iterator2.s();
+
+              case 9:
+                if ((_step2 = _iterator2.n()).done) {
+                  _context5.next = 44;
+                  break;
+                }
+
+                order = _step2.value;
+                productId = order.product_id;
+                _context5.prev = 12;
+                _context5.next = 15;
+                return fetch("/products/product_stock/".concat(productId));
+
+              case 15:
+                stockResponse = _context5.sent;
+                _context5.next = 18;
+                return stockResponse.json();
+
+              case 18:
+                stockData = _context5.sent;
+
+                if (!(!stockData || !stockData.data || stockData.data.Quantity === undefined)) {
+                  _context5.next = 22;
+                  break;
+                }
+
+                console.error("Invalid stock data for product ".concat(productId, "."));
+                return _context5.abrupt("continue", 42);
+
+              case 22:
+                availableStock = stockData.data.Quantity;
+                orderedQuantity = order.product_quantity; // Cancel the order if stock is zero or if the ordered quantity exceeds available stock
+
+                if (!(availableStock <= 0)) {
+                  _context5.next = 30;
+                  break;
+                }
+
+                console.log("Stock for product ".concat(productId, " is out. Cancelling order ").concat(order.id, "..."));
+                _context5.next = 28;
+                return _this6.cancelPendingOrders(productId);
+
+              case 28:
+                _context5.next = 37;
+                break;
+
+              case 30:
+                if (!(orderedQuantity > availableStock)) {
+                  _context5.next = 36;
+                  break;
+                }
+
+                console.log("Ordered quantity for product ".concat(productId, " is greater than available stock. Cancelling order ").concat(order.id, "..."));
+                _context5.next = 34;
+                return _this6.cancelPendingOrders(productId);
+
+              case 34:
+                _context5.next = 37;
+                break;
+
+              case 36:
+                console.log("Stock for product ".concat(productId, " is sufficient. Order ").concat(order.id, " remains active."));
+
+              case 37:
+                _context5.next = 42;
+                break;
+
+              case 39:
+                _context5.prev = 39;
+                _context5.t0 = _context5["catch"](12);
+                console.error("Error checking stock for product ".concat(productId, ":"), _context5.t0);
+
+              case 42:
+                _context5.next = 9;
+                break;
+
+              case 44:
+                _context5.next = 49;
+                break;
+
+              case 46:
+                _context5.prev = 46;
+                _context5.t1 = _context5["catch"](7);
+
+                _iterator2.e(_context5.t1);
+
+              case 49:
+                _context5.prev = 49;
+
+                _iterator2.f();
+
+                return _context5.finish(49);
+
+              case 52:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, null, [[7, 46, 49, 52], [12, 39]]);
+      }))();
+    },
+    // async checkAndCancelPendingOrders() {
+    //     console.log('Checking and canceling pending orders...');
+    //     if (this.orders.length === 0) {
+    //         console.log('No orders to check.');
+    //         return;
+    //     }
+    //     console.log("Orders data:", this.orders);
+    //     for (const order of this.orders) {
+    //         const productId = order.product_id;
+    //         // Fetch the stock for this product
+    //         const stockResponse = await fetch(`/products/product_stock/${productId}`);
+    //         const stockData = await stockResponse.json();
+    //         if (stockData.data.Quantity <= 0) {
+    //             console.log(`Stock for product ${productId} is out. Cancelling pending orders...`);
+    //             await this.cancelPendingOrders(productId);
+    //         }
+    //     }
+    // },
+    confirmOrder: function confirmOrder(id) {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
+        var confirmPayload, order, stockResponse, stockData, productPayload;
+        return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                confirmPayload = {
+                  order_id: id,
+                  order_status: "For Delivery"
+                }; // Find the order to get the product details
+
+                order = _this7.orders.find(function (order) {
+                  return order.id === id;
+                });
+
+                if (order) {
+                  _context8.next = 5;
+                  break;
+                }
+
+                alert('Order not found');
+                return _context8.abrupt("return");
+
+              case 5:
+                _context8.next = 7;
+                return fetch("/products/product_stock/".concat(order.product_id));
+
+              case 7:
+                stockResponse = _context8.sent;
+                _context8.next = 10;
+                return stockResponse.json();
+
+              case 10:
+                stockData = _context8.sent;
+                console.log(stockResponse); // Prepare the payload to decrease the product quantity
+
+                productPayload = {
+                  quantity_to_decrease: order.product_quantity // Decrease the quantity based on the order
+
+                }; // Call the 'minus_product' API to update the product stock
+
+                fetch("api/product1/minus_product/".concat(order.product_id), {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(productPayload)
+                }).then( /*#__PURE__*/function () {
+                  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(response) {
+                    var text;
+                    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+                      while (1) {
+                        switch (_context6.prev = _context6.next) {
+                          case 0:
+                            _context6.next = 2;
+                            return response.text();
+
+                          case 2:
+                            text = _context6.sent;
+                            console.log('Raw response:', text);
+                            return _context6.abrupt("return", JSON.parse(text));
+
+                          case 5:
+                          case "end":
+                            return _context6.stop();
+                        }
+                      }
+                    }, _callee6);
+                  }));
+
+                  return function (_x) {
+                    return _ref.apply(this, arguments);
+                  };
+                }()).then(function (data) {
+                  if (data.status === 'success') {
+                    // If product stock is updated successfully, proceed to confirm the order status
+                    fetch('http://192.168.1.129:8080/buyer/update-order-status.php', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify(confirmPayload)
+                    }).then( /*#__PURE__*/function () {
+                      var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(response) {
+                        var text;
+                        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+                          while (1) {
+                            switch (_context7.prev = _context7.next) {
+                              case 0:
+                                _context7.next = 2;
+                                return response.text();
+
+                              case 2:
+                                text = _context7.sent;
+                                console.log('Raw response:', text);
+                                return _context7.abrupt("return", JSON.parse(text));
+
+                              case 5:
+                              case "end":
+                                return _context7.stop();
+                            }
+                          }
+                        }, _callee7);
+                      }));
+
+                      return function (_x2) {
+                        return _ref2.apply(this, arguments);
+                      };
+                    }()).then(function (data) {
+                      if (data.status === 'success') {
+                        alert('Order has been confirmed.');
+                        location.reload();
+
+                        _this7.getData(); // Refresh the order list
+
+                      } else {
+                        alert('Failed to confirm the order. Please try again.');
+                      }
+                    })["catch"](function (error) {
+                      console.error('Error confirming order:', error);
+                      alert('An error occurred while confirming the order.');
+                    });
+                  } else {
+                    alert('Failed to update product stock. Please try again.');
+                  }
+                })["catch"](function (error) {
+                  console.error('Error updating product stock:', error);
+                  alert('An error occurred while updating the product stock.');
+                });
+
+              case 14:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }))();
+    },
+    cancelPendingOrders: function cancelPendingOrders(productId) {
+      var _this8 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
+        var pendingOrders, _iterator3, _step3, order, cancelPayload, response, data;
+
+        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                // Loop through all orders to find pending orders for the product
+                pendingOrders = _this8.orders.filter(function (order) {
+                  return order.product_id === productId && order.order_status === 'Pending';
+                });
+
+                if (!(pendingOrders.length === 0)) {
+                  _context9.next = 4;
+                  break;
+                }
+
+                console.log('No pending orders to cancel.');
+                return _context9.abrupt("return");
+
+              case 4:
+                // Loop through each pending order and cancel it
+                _iterator3 = _createForOfIteratorHelper(pendingOrders);
+                _context9.prev = 5;
+
+                _iterator3.s();
+
+              case 7:
+                if ((_step3 = _iterator3.n()).done) {
+                  _context9.next = 26;
+                  break;
+                }
+
+                order = _step3.value;
+                cancelPayload = {
+                  order_id: order.id,
+                  reason_cancel: "Stock is out of order",
+                  order_status: "Cancelled Order"
+                };
+                _context9.prev = 10;
+                _context9.next = 13;
+                return fetch('http://192.168.1.129:8080/buyer/order-cancelled.php', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(cancelPayload)
+                });
+
+              case 13:
+                response = _context9.sent;
+                _context9.next = 16;
+                return response.json();
+
+              case 16:
+                data = _context9.sent;
+
+                if (data.status === 'success') {
+                  console.log("Order ".concat(order.id, " cancelled successfully due to stock being out."));
+                } else {
+                  console.error("Failed to cancel order ".concat(order.id, "."));
+                }
+
+                _context9.next = 24;
+                break;
+
+              case 20:
+                _context9.prev = 20;
+                _context9.t0 = _context9["catch"](10);
+                console.error('Error canceling order:', _context9.t0);
+                alert("An error occurred while canceling the order.");
+
+              case 24:
+                _context9.next = 7;
+                break;
+
+              case 26:
+                _context9.next = 31;
+                break;
+
+              case 28:
+                _context9.prev = 28;
+                _context9.t1 = _context9["catch"](5);
+
+                _iterator3.e(_context9.t1);
+
+              case 31:
+                _context9.prev = 31;
+
+                _iterator3.f();
+
+                return _context9.finish(31);
+
+              case 34:
+                alert('All pending orders for this product have been canceled due to stock being out.');
+
+                _this8.getData(); // Refresh the order list
+
+
+              case 36:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, null, [[5, 28, 31, 34], [10, 20]]);
+      }))();
+    },
+    // Handle Cancel Order
+    submitCancelOrder: function submitCancelOrder() {
+      var _this9 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
+        var cancelPayload, response, data;
+        return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                if (_this9.reason_cancel.trim()) {
+                  _context10.next = 3;
                   break;
                 }
 
                 alert("Please provide a cancellation reason.");
-                return _context5.abrupt("return");
+                return _context10.abrupt("return");
 
               case 3:
                 cancelPayload = {
-                  order_id: _this4.cancelOrderId,
-                  reason_cancel: _this4.reason_cancel,
+                  order_id: _this9.cancelOrderId,
+                  reason_cancel: _this9.reason_cancel,
                   order_status: "Cancelled Order"
                 };
                 console.log(cancelPayload);
-                _context5.prev = 5;
-                _context5.next = 8;
-                return fetch('http://192.168.68.67:8080/buyer/order-cancelled.php', {
+                _context10.prev = 5;
+                _context10.next = 8;
+                return fetch('http://192.168.1.129:8080/buyer/order-cancelled.php', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
@@ -8206,46 +8660,47 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 8:
-                response = _context5.sent;
-                _context5.next = 11;
+                response = _context10.sent;
+                _context10.next = 11;
                 return response.json();
 
               case 11:
-                data = _context5.sent;
+                data = _context10.sent;
                 console.log(data);
 
                 if (data.status === 'success') {
                   alert("Order canceled successfully.");
+                  location.reload();
 
-                  _this4.getData(); // Refresh orders list
+                  _this9.getData(); // Refresh orders list
 
                 } else {
                   alert("Failed to cancel the order. Please try again.");
                 }
 
-                _context5.next = 20;
+                _context10.next = 20;
                 break;
 
               case 16:
-                _context5.prev = 16;
-                _context5.t0 = _context5["catch"](5);
-                console.error('Error canceling order:', _context5.t0);
+                _context10.prev = 16;
+                _context10.t0 = _context10["catch"](5);
+                console.error('Error canceling order:', _context10.t0);
                 alert("An error occurred while canceling the order.");
 
               case 20:
-                _context5.prev = 20;
+                _context10.prev = 20;
 
-                _this4.closeCancelModal(); // Close the modal
+                _this9.closeCancelModal(); // Close the modal
 
 
-                return _context5.finish(20);
+                return _context10.finish(20);
 
               case 23:
               case "end":
-                return _context5.stop();
+                return _context10.stop();
             }
           }
-        }, _callee5, null, [[5, 16, 20, 23]]);
+        }, _callee10, null, [[5, 16, 20, 23]]);
       }))();
     }
   }
@@ -10899,7 +11354,7 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "http://192.168.68.67:8080/buyer/" + order.photo,
+        src: "http://192.168.1.129:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
@@ -14102,12 +14557,12 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "http://192.168.68.67:8080/buyer/" + order.photo,
+        src: "http://192.168.1.129:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
         click: function click($event) {
-          return _vm.openImageModal("http://192.168.68.67:8080/buyer/" + order.photo);
+          return _vm.openImageModal("http://192.168.1.129:8080/buyer/" + order.photo);
         }
       }
     }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.reason_cancel))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))]), _vm._v(" "), order.order_status !== "Cancelled Order" ? _c("td", {

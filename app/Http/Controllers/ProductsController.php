@@ -206,6 +206,26 @@ class ProductsController extends Controller
     return response()->json(['data' => $formattedData], 200);
     }
 
+
+    public function product_stock($id){
+        // Fetch the product by ID with the associated User
+   $product = Products::with('User', 'measurement')->find($id);
+
+   // Check if product exists
+   if (!$product) {
+       return response()->json(['message' => 'Product not found'], 404);
+   }
+   // Format the data
+   $formattedData = [
+       'id' => $product->id,
+       'Product_Name' => $product->Product_Name,
+       'Quantity' => $product->Quantity,
+       'userID' => $product->userID,
+       'measurement' => $product->measurement->measurement ?? null,
+   ];
+
+   return response()->json(['data' => $formattedData], 200);
+   }
     public function seller (Request $request, $id){
 
         $seller = User::find($id);
