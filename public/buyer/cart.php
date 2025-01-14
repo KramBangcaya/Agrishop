@@ -153,7 +153,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
 
 
     <div class="page-banner-inner" style="font-size:50px;">
-    <h1 style="font-size:50px;text-align: center"><button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button> CART</h1>
+    <h1 style="font-size:50px;text-align: center"> CART</h1>
 </div>
 
 
@@ -201,7 +201,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
     }
     ?>
 
-    <h2 class="special" style="margin-left:10px;">Order Details</h2>
+    <h2 class="special" style="margin-left:10px;"><button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button> Order Details</h2>
     <h3 class="special"></h3>
     <?php for ($i = 0; $i < count($arr_cart_p_id); $i++): ?>
         <div class="row">
@@ -272,15 +272,11 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                         </h2>
 
                         <!-- Product Image -->
-<<<<<<< HEAD
-                        <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
-=======
 
                         <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
 
 
 
->>>>>>> 019ee08deac8bb99e330f07ee5cbe2e0dac9dca3
                              alt="Product Image"
                              style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
                         <input type="hidden" name="product_id[]" value="<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>">
