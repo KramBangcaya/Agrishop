@@ -376,15 +376,9 @@ if (!empty($min_price) && !empty($max_price)) {
                                             </div>
                                             <div class="text">
                                                 <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['Product_Name']; ?></a></h3>
-                                                <h4>₱<?php echo $product['price']; ?></h4>
-                                                <div class="rating">
-                                                    <?php
-                                                    $rating = isset($product['rating']) ? $product['rating'] : 0;
-                                                    for ($i = 1; $i <= 5; $i++) {
-                                                        echo $i <= $rating ? '<i class="fa fa-star"></i>' : '<i class="fa fa-star-o"></i>';
-                                                    }
-                                                    ?>
-                                                </div>
+                                                <h4>₱<?php echo $product['price']; ?>/Kilo</h4>
+                                                <h6>Stock: <?php echo $product['Quantity']; ?></h6>
+
                                                 <?php if (isset($product['Quantity']) && $product['Quantity'] == 0): ?>
                                                     <div class="out-of-stock">
                                                         <div class="inner">Out Of Stock</div>
