@@ -32,6 +32,7 @@ try {
         MONTH(timedate) AS month
     FROM orders
     WHERE seller_id = :seller_id
+    AND order_status = 'delivered'
     GROUP BY MONTH(timedate)
     ORDER BY month;
     ";
