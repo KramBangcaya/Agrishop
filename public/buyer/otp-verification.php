@@ -29,7 +29,7 @@ if (isset($_POST['verify_otp'])) {
             unset($_SESSION['otp']); // Clear OTP from session
             unset($_SESSION['temp_user']); // Clear temporary user data from session
 
-            header("location: " . BASE_URL . "dashboard.php?id=" . $user_id);
+            header("location: " . BASE_URL . "index.php?id=" . $user_id);
             exit;
         } else {
             $error_message = "Failed to update login information. Please try again later.";

@@ -75,6 +75,19 @@ if(!isset($_SESSION['customer'])) {
         </div>
     </div>
 </div>
+<div class="col-md-12">
+                <?php
+                // Ensure the user_id is set in the session
+                if (isset($_SESSION['user_id'])) {
+                    $user_id = $_SESSION['user_id'];
+                } else {
+                    $user_id = null; // Handle this appropriately if user_id is not set
+                }
+
+                // Include the file without query string
+
+                ?>
+            </div>
 <?php
 if (isset($_SESSION['customer'])) {
     ?>
