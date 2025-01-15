@@ -45,7 +45,7 @@ if (isset($data['data']) && is_array($data['data'])) {
             <div class="col-md-12">
                 <div class="user-content">
                     <h3>
-                        Report Seller
+                    <button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>  Report Seller
                     </h3>
                     <?php
 
@@ -77,7 +77,7 @@ if (isset($data['data']) && is_array($data['data'])) {
                             </div>
                         </div>
                         <input type="submit" class="btn btn-primary" value="Report">
-                        <a href="reportseller.php" class="btn btn-primary">Cancel Report</a>
+                        <a href="reportseller.php" class="btn btn-primary">Cancel</a>
                     </form>
                     <div id="response-message"></div>
                 </div>

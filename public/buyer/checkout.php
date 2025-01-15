@@ -37,7 +37,7 @@ if(!isset($_SESSION['cart_p_id'])) {
 
                     // var_dump($_SESSION);?>
 
-                    <h3 class="special"><?php echo LANG_VALUE_26; ?></h3>
+                    <h3 class="special"><button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button> <?php echo LANG_VALUE_26; ?></h3>
                     <div class="cart">
 
 
@@ -158,17 +158,203 @@ if(!isset($_SESSION['cart_p_id'])) {
 </script>
                             <div class="cart-buttons">
                                 <ul>
-                                    <li><a href="cart.php" class="btn btn-primary"><?php echo LANG_VALUE_21; ?></a></li>
-                                    <li><button type="submit"><a  class="btn btn-primary">Place Order</a></button></li>
+
+                                    <li>
+                                    <!-- Place Order Button -->
+<button
+    type="button"
+    class="btn btn-primary"
+    style="background-color:#0d1452;"
+    onclick="openConfirmationModal()">
+    Place Order
+</button>
+
+<!-- Modal HTML -->
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <h3>Confirm Your Order</h3>
+        <p>Are you sure you want to place the order?</p>
+        <div class="modal-actions">
+            <button class="btn btn-success" onclick="placeOrder()">Yes</button>
+            <button class="btn btn-secondary" onclick="closeConfirmationModal()">No</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Styles -->
+<style>
+    /* Modal container */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        z-index: 1000; /* Ensure it appears above other content */
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Modal content box */
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        width: 300px;
+    }
+
+    /* Modal actions */
+    .modal-actions button {
+        margin: 10px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+    }
+</style>
+
+<!-- Modal Script -->
+<script>
+    function openConfirmationModal() {
+        // Show the modal
+        document.getElementById('confirmationModal').style.display = 'flex';
+    }
+
+    function closeConfirmationModal() {
+        // Hide the modal
+        document.getElementById('confirmationModal').style.display = 'none';
+    }
+
+    function placeOrder() {
+        // Show toast notification (optional)
+        showToast('Order placed successfully!');
+
+        // Submit the form or trigger any other action
+        document.querySelector('form').submit();
+
+        // Close the modal
+        closeConfirmationModal();
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.innerText = message;
+        toast.className = 'toast show';
+        setTimeout(() => {
+            toast.className = 'toast';
+        }, 3000); // Toast disappears after 3 seconds
+    }
+</script>
+
+<!-- Toast Notification Container -->
+<div id="toast" class="toast"></div>
+<style>
+    .toast {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 15px;
+        position: fixed;
+        z-index: 1001;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+        opacity: 0;
+        transition: opacity 0.5s, bottom 0.5s;
+    }
+
+    .toast.show {
+        visibility: visible;
+        opacity: 1;
+        bottom: 50px;
+    }
+</style>
+
+
+</li>
+
                                 </ul>
                             </div>
+
+                            <script>
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.innerText = message;
+        toast.className = 'toast show';
+        setTimeout(() => {
+            toast.className = 'toast';
+        }, 3000); // Toast disappears after 3 seconds
+    }
+</script>
+
+<!-- Toast Notification Container -->
+<div id="toast" class="toast"></div>
+<style>
+    .toast {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 15px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+        opacity: 0;
+        transition: opacity 0.5s, bottom 0.5s;
+    }
+
+    .toast.show {
+        visibility: visible;
+        opacity: 1;
+        bottom: 50px;
+    }
+</style>
+
                         </form>
                     </div>
 
                 <?php endif; ?>
             </div>
+
         </div>
+
     </div>
+
 </div>
 
-<?php require_once('footer.php'); ?>

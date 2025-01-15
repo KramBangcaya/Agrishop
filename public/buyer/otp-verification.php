@@ -1,5 +1,6 @@
 <?php
 require_once('header.php');
+require_once('api-config.php');
 
 if (isset($_POST['verify_otp'])) {
     $entered_otp = $_POST['otp'];
@@ -10,7 +11,7 @@ if (isset($_POST['verify_otp'])) {
         $user_id = $user['user_id'];
 
         // Call the API to update date_login
-        $api_url = "http://192.168.1.9:8080/api/user/login_otp/$user_id";
+        $api_url = API_BASE_URL . "/api/user/login_otp/$user_id";
 
         // echo $api_url;
         $ch = curl_init($api_url);
@@ -28,7 +29,7 @@ if (isset($_POST['verify_otp'])) {
             unset($_SESSION['otp']); // Clear OTP from session
             unset($_SESSION['temp_user']); // Clear temporary user data from session
 
-            header("location: " . BASE_URL . "dashboard.php?id=" . $user_id);
+            header("location: " . BASE_URL . "index.php?id=" . $user_id);
             exit;
         } else {
             $error_message = "Failed to update login information. Please try again later.";

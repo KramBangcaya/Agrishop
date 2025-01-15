@@ -49,7 +49,7 @@ if (isset($_POST['form1'])) {
                     exit;
                 } else if ($user['role_name'] == 'buyer' || $user['role_name'] == 'Buyer') {
                     $_SESSION['customer'] = $user;
-                    header("location: " . BASE_URL . "dashboard.php?id=" . $_SESSION['user_id']);
+                    header("location: " . BASE_URL . "index.php?id=" . $_SESSION['user_id']);
                     exit;
                 } else {
                     $error_message .= "No buyer account found.<br>";

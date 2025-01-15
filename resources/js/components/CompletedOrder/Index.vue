@@ -42,7 +42,11 @@
                                             <td>
                                                 <img
                                                 v-if="order.photo && order.photo.length"
+<<<<<<< HEAD
                                                 :src="'http://192.168.68.67:8080/buyer/'+order.photo"
+=======
+                                                :src="'http://192.168.1.129:8080/buyer/'+order.photo"
+>>>>>>> 5b5ac45837df20d327638404d651261756c71efd
                                                 alt="Product Photo"
                                                 style="max-width: 200px; max-height: 200px; cursor: pointer;"
                                                 @click="openImageModal('http://192.168.68.67:8080/buyer/' + order.photo)"
@@ -119,7 +123,11 @@ export default {
             return;
         }
             try {
+<<<<<<< HEAD
                 const response = await fetch(this.API_BASE + `/buyer/delivered-orders.php?seller_id=${this.userID}`);
+=======
+                const response = await fetch(`http://192.168.1.129:8080/buyer/delivered-orders.php?seller_id=${this.userID}`);
+>>>>>>> 5b5ac45837df20d327638404d651261756c71efd
                 const data = await response.json();
                 if (data.status === 'success') {
                     this.orders = data.data;

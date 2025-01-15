@@ -24,7 +24,42 @@ $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 foreach ($result as $row) {
     $banner_cart = $row['banner_cart'];
 }
-?>
+?> <div id="toast" class="toast"></div>
+
+<style>
+    .toast {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 15px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+        opacity: 0;
+        transition: opacity 0.5s, bottom 0.5s;
+    }
+
+    .toast.show {
+        visibility: visible;
+        opacity: 1;
+        bottom: 50px;
+    }
+</style>
+<script>
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.innerText = message;
+    toast.className = 'toast show';
+    setTimeout(() => {
+        toast.className = 'toast';
+    }, 3000); // Toast disappears after 3 seconds
+}</script>
 <?php
 $error_message = '';
 if(isset($_POST['form1'])) {
@@ -106,92 +141,11 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
   //  $error_message .= '\nOther items quantity are updated successfully!';
     ?>
 
-<?php if ($allow_update == 0): ?>
-    <div id="errorModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close" style="cursor: pointer;">&times;</span>
-            <p style="color: red; font-size: 18px; font-weight: bold;"><?php echo htmlspecialchars($error_message, ENT_QUOTES, 'UTF-8'); ?></p>
-        </div>
-    </div>
-<?php else: ?>
-    <div id="successModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close" style="cursor: pointer;">&times;</span>
-            <p style="color: green; font-size: 18px; font-weight: bold;">All Items Quantity Update is Successful!</p>
-        </div>
-    </div>
-<?php endif; ?>
-
-<style>
-    /* Modal styles */
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .modal-content {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        text-align: center;
-        width: 400px;
-    }
-
-    .close {
-        float: right;
-        font-size: 24px;
-        font-weight: bold;
-        margin-top: -10px;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: red;
-        cursor: pointer;
-    }
-</style>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const errorModal = document.getElementById('errorModal');
-        const successModal = document.getElementById('successModal');
-        const closeButtons = document.querySelectorAll('.close');
-
-        // Show the appropriate modal
-        <?php if ($allow_update == 0): ?>
-            errorModal.style.display = 'flex';
-        <?php else: ?>
-            successModal.style.display = 'flex';
-        <?php endif; ?>
-
-        // Close modal on clicking the close button
-        closeButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                if (errorModal) errorModal.style.display = 'none';
-                if (successModal) successModal.style.display = 'none';
-            });
-        });
-
-        // Close modal on clicking outside the modal content
-        window.addEventListener('click', function (event) {
-            if (event.target === errorModal) {
-                errorModal.style.display = 'none';
-            }
-            if (event.target === successModal) {
-                successModal.style.display = 'none';
-            }
-        });
-    });
-</script>
-
+    <?php if($allow_update == 0): ?>
+    	<script> showToast('<?php echo $error_message; ?>');</script>
+	<?php else: ?>
+		<script> showToast('All Items Quantity Update is Successful!');</script>
+	<?php endif; ?>
     <?php
 
 }
@@ -199,7 +153,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
 
 
     <div class="page-banner-inner" style="font-size:50px;">
-    <h1 style="font-size:50px;text-align: center">CART</h1>
+    <h1 style="font-size:50px;text-align: center"><button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button> CART</h1>
 </div>
 
 
@@ -214,7 +168,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                     <?php echo '<h4 class="text-center">Add products to the cart in order to view it here.</h4>'; ?>
                 <?php else: ?>
 
-                <form action="" method="post" id="cartForm">
+                <form action="" method="post">
                     <?php $csrf->echoInputField(); ?>
 
                     <div class="table-responsive">
@@ -257,17 +211,76 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                         <h2>
                             <?php echo htmlspecialchars($arr_cart_p_name[$i]); ?>&nbsp;
                             ₱<?php echo htmlspecialchars($arr_cart_p_current_price[$i]); ?>&nbsp;
-                            <a
-                               href="cart-item-delete.php?id=<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>"
-                               class="trash">
-                                <i class="fa fa-trash" style="color:red;"></i>
-                            </a>
+                            <a href="cart-item-delete.php?id=<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>"
+   class="trash"
+   onclick="showToastAndRedirect(event, 'Product Removed!')">
+    <i class="fa fa-trash" style="color:red;"></i>
+</a>
+
+<script>
+    function showToastAndRedirect(event, message) {
+        // Prevent the default behavior of the link
+        event.preventDefault();
+
+        // Show the toast notification
+        showToast(message);
+
+        // Delay the redirection to allow the toast to be visible
+        setTimeout(() => {
+            window.location.href = event.target.closest('a').href;
+        }, 1500); // Adjust the delay if necessary
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.innerText = message;
+        toast.className = 'toast show';
+        setTimeout(() => {
+            toast.className = 'toast';
+        }, 3000); // Toast disappears after 3 seconds
+    }
+</script>
+
+<!-- Add the toast container if it's not already included -->
+<div id="toast" class="toast"></div>
+<style>
+    .toast {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 15px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+        opacity: 0;
+        transition: opacity 0.5s, bottom 0.5s;
+    }
+
+    .toast.show {
+        visibility: visible;
+        opacity: 1;
+        bottom: 50px;
+    }
+</style>
+
                         </h2>
 
-
-
                         <!-- Product Image -->
+<<<<<<< HEAD
                         <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+=======
+
+                        <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+
+
+
+>>>>>>> 019ee08deac8bb99e330f07ee5cbe2e0dac9dca3
                              alt="Product Image"
                              style="width: 100%; max-width: 250px; margin-top: 10px;"> <!-- Responsive and spaced -->
                         <input type="hidden" name="product_id[]" value="<?php echo htmlspecialchars($arr_cart_p_id[$i]); ?>">
@@ -291,25 +304,31 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                             echo '₱' . htmlspecialchars($row_total_price);
                             ?>
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
 
+
         <h3 class="special"></h3>
     <?php endfor; ?>
 </div>
-<!-- Update Button (Submit Type) -->
-
 
 <script>
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.innerText = message;
+    toast.className = 'toast show';
+    setTimeout(() => {
+        toast.className = 'toast';
+    }, 3000); // Toast disappears after 3 seconds
+}
+
     // JavaScript to handle quantity updates
     document.addEventListener('DOMContentLoaded', function () {
+        // Attach event listeners for all quantity buttons
         const minusButtons = document.querySelectorAll('.qty-minus');
         const plusButtons = document.querySelectorAll('.qty-plus');
-        const quantityInputs = document.querySelectorAll('.input-text.qty');
 
         minusButtons.forEach(button => {
             button.addEventListener('click', function () {
@@ -319,7 +338,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                 if (!isNaN(value) && value > 1) {
                     input.value = value - 1;
                 } else {
-                    input.value = 0; // Allow it to go to 0
+                    input.value = 1; // Prevent going below 1
                 }
             });
         });
@@ -338,40 +357,14 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
         });
 
         // Ensure input fields accept only numeric values
+        const quantityInputs = document.querySelectorAll('.input-text.qty');
         quantityInputs.forEach(input => {
-            input.addEventListener('input', function () {
+            input.addEventListener('input', function (e) {
                 this.value = this.value.replace(/[^0-9]/g, ''); // Strip non-numeric characters
             });
         });
     });
-
-    // Submit button logic
-    function checkQuantityAndSubmit(event) {
-        const quantityInputs = document.querySelectorAll('.input-text.qty');
-        const cartIds = <?php echo json_encode($arr_cart_p_id); ?>; // Pass cart IDs from PHP to JS
-
-        // Loop through each quantity input to check if any are zero
-        for (let i = 0; i < quantityInputs.length; i++) {
-            const quantityInput = quantityInputs[i];
-            const quantity = parseInt(quantityInput.value, 10);
-
-            if (quantity === 0) {
-                // Prevent form submission
-                event.preventDefault(); // Prevent the default submit action
-
-                // Redirect to cart-item-delete.php if quantity is zero
-                const cartId = cartIds[i]; // Get the corresponding cart ID
-                window.location.href = `cart-item-delete.php?id=${cartId}`;
-                return; // Exit function after redirect
-
-
-            }
-        }
-
-        // If no quantity is zero, proceed with form submission
-    }
 </script>
-
 
 <style>
     .quantity-container {
@@ -408,7 +401,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
                 value="<?php echo LANG_VALUE_20; ?>"
                 class="btn btn-secondary"
                 name="form1"
-                style="width:250px; height:50px; text-align:center; display:inline-block;" onclick="checkQuantityAndSubmit(event)">
+                style="width:250px; height:50px; text-align:center; display:inline-block;">
         </li>
     </ul>
     <ul style="list-style:none; padding:0; display:inline-block; margin:5px;">
@@ -441,9 +434,77 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
 
 
 			</div>
+
 		</div>
+
 	</div>
+
+    <div class="page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                // Ensure the user_id is set in the session
+                if (isset($_SESSION['user_id'])) {
+                    $user_id = $_SESSION['user_id'];
+                } else {
+                    $user_id = null; // Handle this appropriately if user_id is not set
+                }
+
+                // Include the file without query string
+
+                ?>
+            </div>
+
+
+            <?php
+if (isset($_SESSION['customer'])) {
+    ?>
+    <div class="col-md-12">
+        <div class="user-content" style="
+            position: fixed; /* Keep it fixed in the viewport */
+            bottom: 0; /* Position at the bottom */
+            left: 0; /* Align to the left */
+            width: 100%; /* Full width */
+            z-index: 1000; /* Ensure it stays above other content */
+            background-color: #fff; /* White background for contrast */
+            padding: 10px; /* Add spacing inside */
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Add shadow above the bar */
+        ">
+            <div style="text-align: center; margin-right: 10px; margin-bottom: 10px;">
+                <a href="index.php" class="btn btn-primary"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                <?php
+                $statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($result as $row) {
+                    $about_title = $row['about_title'];
+                    $faq_title = $row['faq_title'];
+                    $blog_title = $row['blog_title'];
+                    $contact_title = $row['contact_title'];
+                    $pgallery_title = $row['pgallery_title'];
+                    $vgallery_title = $row['vgallery_title'];
+                }
+                ?>
+                <a href="customer-profile-update.php?id=<?php echo $user_id; ?>" class="btn btn-primary">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Profile
+                </a>
+                <a href="reportseller.php" class="btn btn-primary">
+                    <i class="fa fa-flag" aria-hidden="true"></i> Report
+                </a>
+                <a href="customer-order.php?id=<?php echo $user_id; ?>" class="btn btn-primary">
+                    <i class="fa fa-shopping-basket" aria-hidden="true"></i> Orders
+                </a>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>
+
+
+        </div>
+    </div>
+</div>
 </div>
 
-
-<?php require_once('footer.php'); ?>

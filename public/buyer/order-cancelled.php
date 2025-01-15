@@ -18,6 +18,8 @@ if (isset($input['order_id']) && isset($input['order_status']) && isset($input['
     $order_status = $input['order_status'];
     $reason_cancel = $input['reason_cancel'];
 
+
+    $cancel_by = 'seller';
     // Include the config file to get the PDO database connection
     require_once('admin/inc/config.php');  // Adjust the path if needed
 
@@ -29,9 +31,10 @@ if (isset($input['order_id']) && isset($input['order_status']) && isset($input['
 
     // Prepare the SQL statement using PDO
     try {
-        $stmt = $pdo->prepare("UPDATE Orders SET order_status = :order_status, reason_cancel = :reason_cancel WHERE id = :order_id");
+        $stmt = $pdo->prepare("UPDATE Orders SET order_status = :order_status, reason_cancel = :reason_cancel, cancel_by = :cancel_by WHERE id = :order_id");
         $stmt->bindParam(':order_status', $order_status, PDO::PARAM_STR);
         $stmt->bindParam(':reason_cancel', $reason_cancel, PDO::PARAM_STR);
+        $stmt->bindParam(':cancel_by', $cancel_by, PDO::PARAM_STR);
         $stmt->bindParam(':order_id', $order_id, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
