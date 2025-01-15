@@ -234,7 +234,12 @@ foreach ($orders as $order) {
                                                 <button onclick="cancelFeedback(<?php echo $order['id']; ?>)">Cancel</button>
                                                                                                 </div>
                                                                     </div>
-                                <?php endif; ?>
+                                <?php endif; ?><hr style="
+    border: none;
+    border-top: 2px solid #ccc;
+    margin: 20px 0;
+    width: 100%;
+">
                             <?php endforeach; ?>
 
                             </div>
@@ -513,7 +518,12 @@ $groupedOrders[$order['order_status']][] = $order;
 
 
                             <?php endif; ?>
-
+                            <hr style="
+    border: none;
+    border-top: 2px solid #ccc;
+    margin: 20px 0;
+    width: 100%;
+">
                         <?php endforeach; ?>
 
                 </div>
@@ -521,7 +531,7 @@ $groupedOrders[$order['order_status']][] = $order;
 
 </details>
 
-<h3 class="special"> </h3>
+
 
 
 
@@ -917,7 +927,12 @@ function markAsRead(orderId) {
 }
 </script>
             </div>
-
+            <hr style="
+    border: none;
+    border-top: 2px solid #ccc;
+    margin: 20px 0;
+    width: 100%;
+">
         <?php endforeach; ?>
     </div>
 </details>
