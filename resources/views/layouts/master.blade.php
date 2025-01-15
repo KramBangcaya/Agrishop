@@ -36,7 +36,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">3</span> <!-- Add the number of notifications here -->
+                        <span class="badge badge-warning navbar-badge" id="total-notifications2">0</span> <!-- Add the number of notifications here -->
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -44,8 +44,6 @@
                         <span class="dropdown-item dropdown-header">You have new notifications</span>
                         <!-- Notification Items -->
                         <div class="dropdown-divider"></div>
-
-
                         <router-link to="/Purchase" class="dropdown-item">
                             <i class="fas fa-envelope mr-2"></i> New order
                             <span id="new-order-count" class="badge badge-warning ml-2">0</span>
@@ -322,39 +320,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
 
-        // Function to fetch the new orders count from the API
-        async function fetchOrderCount() {
-            try {
-                // Call the API
-                const response = await fetch('http://192.168.1.101:8080/buyer/new_orders.php?seller_id=51');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                // Parse the JSON response
-                const data = await response.json();
-                // console.log('Full Response:', data);  // Logs the entire response
-
-                // Check if the response structure matches the expected format
-                if (data && data.status === 'success' && data.data && typeof data.data.new_orders === 'number') {
-                    const count = data.data.new_orders;
-                    const countElement = document.getElementById('new-order-count');
-                    if (countElement) {
-                        countElement.textContent = count;  // Dynamically update the count
-                    }
-                } else {
-                    console.log('Error: Unexpected response structure', data);
-                }
-            } catch (error) {
-                console.error('Error fetching new orders count:', error);
-            }
-        }
-
-        // Call the function on page load
-        fetchOrderCount();
-    });
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -497,6 +463,32 @@
     });
 </script>
 <script>
+
+</script>
+<script>
+const userId = window.user.id;
+
+    let new_order = 0;
+    let newOrder = 0;
+    let Replenishment = 0;
+
+
+    function updateTotalNotifications1() {
+        // Log the counts to see the values (for debugging)
+
+
+        // Initialize a counter for the counts that are not equal to zero
+        let nonZeroCount = 0;
+
+        // Increment the counter if each count is greater than zero
+        if (newOrder > 0) nonZeroCount++;
+        if (Replenishment > 0) nonZeroCount++;
+
+
+        // Update the notification bell with the count of non-zero counts
+        document.getElementById('total-notifications2').textContent = nonZeroCount;
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         // Function to fetch Seller count from the API
         async function fetchReplenishCount() {
@@ -513,8 +505,13 @@
 
                 // Check if 'data' exists and is an array
                 if (data && Array.isArray(data.data)) {
+
+                    Replenishment = data.data.length;
                     // console.log('Array Length:', data.data.length); // Logs the length of the array
                     const count = data.data.length;
+
+                    document.getElementById('replenish-count').textContent = Replenishment;
+                    updateTotalNotifications1();
                     const countElement = document.getElementById('replenish-count');
                     if (countElement) {
                         countElement.textContent = count;  // Dynamically update the count
@@ -527,9 +524,43 @@
             }
         }
 
+            // Function to fetch the new orders count from the API
+            async function fetchOrderCount() {
+                try {
+                    // Call the API
+                    const response = await fetch(`http://192.168.1.129:8080/buyer/new_orders.php?seller_id=${userId}`);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+
+                    // Parse the JSON response
+                    const data = await response.json();
+                    // console.log('Full Response:', data);  // Logs the entire response
+                    // Check if the response structure matches the expected format
+                    if (data && data.status === 'success' && data.data && typeof data.data.new_orders === 'number') {
+                        const count = data.data.new_orders;
+                        new_order = data.data.length;
+                        document.getElementById('new-order-count').textContent = new_order;
+                        updateTotalNotifications1();
+                        const countElement = document.getElementById('new-order-count');
+                        if (countElement) {
+                            countElement.textContent = count;  // Dynamically update the count
+                        }
+                    } else {
+                        console.log('Error: Unexpected response structure', data);
+                    }
+                } catch (error) {
+                    console.error('Error fetching new orders count:', error);
+                }
+            }
+
+
         // Call the function on page load
         fetchReplenishCount();
+        fetchOrderCount();
     });
+
 </script>
 <script>
     // Declare the counts globally to make them accessible in the function
@@ -617,6 +648,8 @@
 </script>
 
 
+
+
     {{-- <script>
         window.Laravel = {!! json_encode([
            'csrfToken' => csrf_token(),
@@ -624,5 +657,22 @@
     </script> --}}
 
 </body>
+
+<style>
+.fas.fa-bell {
+    margin-right: 10px; /* Add some space between the bell icon and the badge */
+}
+
+.navbar-badge {
+    position: relative; /* Ensure the badge stays in position */
+}
+#total-notifications2 {
+    background-color: red !important;
+}
+.badge-warning {
+    background-color: red !important;
+}
+
+</style>
 
 </html>

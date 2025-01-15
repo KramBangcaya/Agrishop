@@ -86,6 +86,8 @@ class ProductsController extends Controller
 
         $data = Products::where('idCategory', $id)->get();
 
+        // dd($data);
+
         $formattedData = $data->map(function ($product) {
             return [
                 'id' => $product->id,
@@ -106,9 +108,9 @@ class ProductsController extends Controller
                 'contact_number' => $product->user->contact_number ?? null,
                 'latitude' => $product->user->latitude ?? null,
                 'longitude' => $product->user->longitude ?? null,
+                'measurement' => $product->measurement->measurement ?? null,
             ];
         });
-
         return response()->json(['data' => $formattedData], 200);
     }
 
@@ -148,6 +150,7 @@ class ProductsController extends Controller
             'contact_number' => $product->user->contact_number ?? null,
             'latitude' => $product->user->latitude ?? null,
             'longitude' => $product->user->longitude ?? null,
+            'measurement' => $product->measurement->measurement ?? null,
         ];
     });
 
@@ -217,6 +220,7 @@ class ProductsController extends Controller
                 'contact_number' => $product->user->contact_number ?? null,
                 'latitude' => $product->user->latitude ?? null,
                 'longitude' => $product->user->longitude ?? null,
+                'measurement' => $product->measurement->measurement ?? null,
             ];
         });
 

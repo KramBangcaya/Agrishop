@@ -89,6 +89,26 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="card m-3" :style="cardStyle">
+                    <div class="card-header">
+                        <h5 class="card-title">Pending Orders</h5>
+                    </div>
+                    <div class="card-body">
+                        <h1>{{ total_pending }}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card m-3" :style="cardStyle">
+                    <div class="card-header">
+                        <h5 class="card-title">For Delivery</h5>
+                    </div>
+                    <div class="card-body">
+                        <h1>{{ total_for_delivery }}</h1>
+                    </div>
+                </div>
+            </div>
         </div>
       <div class="row justify-content-center">
         <!-- Left side: Top Most Sold Products Chart -->
@@ -174,6 +194,8 @@
         API_BASE : 'http://192.168.1.129:8080',
         apiBaseUrl: process.env.VUE_APP_API_BASE_URL,
         totalSales: 0,
+        total_pending: 0,
+        total_for_delivery: 0,
         top_orders: 0,
         sellerCount: 0,
         buyerCount: 0,
@@ -188,7 +210,7 @@
         topProducts: [],
         // Bar chart for sales overview
         barChartData: {
-        labels: ['January', 'February', 'March', 'April', 'May'], // Placeholder labels
+        labels: ['January', 'February', 'March', 'April', 'May', 'June'], // Placeholder labels
         datasets: [
             {
             label: 'Sales',
@@ -253,6 +275,8 @@
       console.log('Dashboard Component Mounted.');
       this.fetchSalesData(this.userId);
       this.getUserData();
+      this.getTotalPending(this.userId);
+      this.getTotalDelivery(this.total_for_delivery);
       this.fetchTopProducts(this.userId);
       this.getSellerData();
       this.getBuyerData();
@@ -266,23 +290,25 @@
 
     methods: {
         async fetchSalesData() {
-            if (!this.userId) {  // Ensure userId is available
-                console.error("UserID is missingssssss");
+
+            const userId = window.user.id;
+
+
+            if (!userId) {  // Ensure userId is available
+                console.error("UserID is missing");
                 return;
             }
-
+            // console.log('legit' + userId)
             try {
                 console.log(userId)
-            const response = await fetch(this.API_BASE + `/buyer/month_sales.php?seller_id=${this.userId}`);
+            const response = await fetch(this.API_BASE + `/buyer/month_sales.php?seller_id=${userId}`);
             const data = await response.json();
-                console.log(data);
 
             if (data.status === 'success' && data.data) {
                 // console.log('data.data');
                 const salesData = data.data;
                 // Prepare the data for the bar chart
                 const labels = salesData.map(item => {
-                    console.log(item.month)
                 switch (item.month) {
                     case 1: return 'January';
                     case 2: return 'February';
@@ -294,27 +320,23 @@
                 }
                 });
                 const sales = salesData.map(item => item.total_payment_per_month);
-                console.log(sales);
                 // Update chart data
                 this.barChartData.labels = labels;
                 this.barChartData.datasets[0].data = sales;
-                console.log(this.barChartData.labels);
-                console.log(this.barChartData.datasets[0].data);
             }
             } catch (error) {
             console.error('Error fetching sales data:', error);
             }
         },
         async fetchTopProducts() {
-            if (!this.userId) {  // Ensure userId is available
+            const userId = window.user.id;
+            if (!userId) {  // Ensure userId is available
       console.error("UserID is missingssssss");
       return;
     }
-
-
             // console.log('sample');
       try {
-        const response = await fetch(this.API_BASE + `/buyer/top_products.php?seller_id=${this.userId}`);
+        const response = await fetch(this.API_BASE + `/buyer/top_products.php?seller_id=${userId}`);
         const data = await response.json();
         if (data && data.data) {
           this.topProducts = data.data;
@@ -342,6 +364,8 @@
                             this.getTotalOrders();
                             this.fetchTopProducts();
                             this.fetchSalesData();
+                            this.getTotalPending();
+                            this.getTotalDelivery();
                         }
                     }).catch(error => {
                         this.error = error;
@@ -353,13 +377,14 @@
             }, 500);
         },
         async getTotalOrders() {
-    if (!this.userId) {  // Ensure userId is available
+            const userId = window.user.id;
+    if (!userId) {  // Ensure userId is available
       console.error("UserID is missing");
       return;
     }
 
     try {
-      const response = await fetch(this.API_BASE + `/buyer/top_orders.php?seller_id=${this.userId}`);
+      const response = await fetch(this.API_BASE + `/buyer/top_orders.php?seller_id=${userId}`);
       const data = await response.json();  // Parse JSON response
         // console.log(response);
       // Check if the status is 'success' and update totalSales
@@ -373,14 +398,59 @@
     }
   },
 
-        async getTotalSales() {
-    if (!this.userId) {  // Ensure userId is available
+  async getTotalDelivery() {
+    const userId = window.user.id;
+    if (!userId) {  // Ensure userId is available
       console.error("UserID is missing");
       return;
     }
 
     try {
-      const response = await fetch(this.API_BASE +`/buyer/total_sales.php?seller_id=${this.userId}`);
+      const response = await fetch(this.API_BASE +`/buyer/total_delivery.php?seller_id=${userId}`);
+      const data = await response.json();  // Parse JSON response
+
+      // Check if the status is 'success' and update totalSales
+      if (data.status === 'success') {
+        this.total_for_delivery = data.data.total_for_delivery;  // Update total sales value
+      } else {
+        console.error('Failed to fetch total sales');
+      }
+    } catch (error) {
+      console.error('Error fetching total sales:', error);
+    }
+  },
+
+  async getTotalPending() {
+    const userId = window.user.id;
+    if (!userId) {  // Ensure userId is available
+      console.error("UserID is missing");
+      return;
+    }
+
+    try {
+      const response = await fetch(this.API_BASE +`/buyer/total_pending.php?seller_id=${userId}`);
+      const data = await response.json();  // Parse JSON response
+
+      // Check if the status is 'success' and update totalSales
+      if (data.status === 'success') {
+        this.total_pending = data.data.total_pending;  // Update total sales value
+      } else {
+        console.error('Failed to fetch total sales');
+      }
+    } catch (error) {
+      console.error('Error fetching total sales:', error);
+    }
+  },
+
+    async getTotalSales() {
+        const userId = window.user.id;
+    if (!userId) {  // Ensure userId is available
+      console.error("UserID is missing");
+      return;
+    }
+
+    try {
+      const response = await fetch(this.API_BASE +`/buyer/total_sales.php?seller_id=${userId}`);
       const data = await response.json();  // Parse JSON response
 
       // Check if the status is 'success' and update totalSales
