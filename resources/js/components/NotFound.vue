@@ -72,20 +72,20 @@
             <div class="col-md-6">
                 <div class="card m-3" :style="cardStyle">
                     <div class="card-header">
-                        <h5 class="card-title">Total Order</h5>
+                        <h5 class="card-title">Total Completed Order</h5>
                     </div>
                     <div class="card-body">
-                        <h1>Sample Order</h1>
+                        <h1>{{ top_orders }}</h1>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="card m-3" :style="cardStyle">
                     <div class="card-header">
-                        <h5 class="card-title">Total Sale</h5>
+                        <h5 class="card-title">Total Sales</h5>
                     </div>
                     <div class="card-body">
-                        <h1>Sample Sale</h1>
+                        <h1>{{ "₱ "+ totalSales+".00" }}</h1>
                     </div>
                 </div>
             </div>
@@ -93,40 +93,40 @@
       <div class="row justify-content-center">
         <!-- Left side: Top Most Sold Products Chart -->
         <div class="col-md-6">
-        <div class="card m-3" :style="cardStyle">
-          <div class="card-header">
-            <h5 class="card-title">Top Most Sold Products</h5>
-          </div>
-          <div class="card-body">
-            <!-- Display the list of Top Most Sold Products in a table -->
-            <table class="table border table-bordered">
-              <thead class="table-dark">
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Product Name</th>
-                  <th scope="col">Quantity Sold</th>
-                </tr>
-              </thead>
-              <tbody class="border-black">
-                <!-- Loop through topProducts and display them in table rows -->
-                <tr v-for="(product, index) in topProducts" :key="index">
-                  <th scope="row">{{ index + 1 }}</th>
-                  <td>{{ product.Product_Name }}</td>
-                  <td>{{ product.Quantity }}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="card m-3" :style="cardStyle">
+                <div class="card-header">
+                <h5 class="card-title">Top Most Sold Products</h5>
+                </div>
+                <div class="card-body">
+                <!-- Display the list of Top Most Sold Products in a table -->
+                <table class="table border table-bordered">
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Quantity Sold</th>
+                    </tr>
+                    </thead>
+                    <tbody class="border-black">
+                    <!-- Loop through topProducts and display them in table rows -->
+                    <tr v-for="(product, index) in topProducts" :key="index">
+                        <th scope="row">{{ product.rank }}</th>
+                        <td>{{ product.product_name }}</td>
+                        <td>{{ product.total_quantity }}</td>
+                    </tr>
+                    </tbody>
+                </table>
 
-            <!-- If no products are fetched yet, show a loading message -->
-            <div v-if="!topProducts.length && !isLoading" class="text-center">
-              No products available.
+                <!-- If no products are fetched yet, show a loading message -->
+                <div v-if="!topProducts.length && !isLoading" class="text-center">
+                    No products available.
+                </div>
+                <div v-if="isLoading" class="text-center">
+                    Loading top products...
+                </div>
+                </div>
             </div>
-            <div v-if="isLoading" class="text-center">
-              Loading top products...
             </div>
-          </div>
-        </div>
-      </div>
 
         <!-- Sales Overview Chart -->
         <div class="col-md-6">
@@ -140,18 +140,7 @@
           </div>
         </div>
 
-        <!-- Revenue by Category Chart -->
-        <div class="col-md-8">
-          <div class="card m-3">
-            <div class="card-header">
-              <h5 class="card-title">Revenue by Category</h5>
-            </div>
-            <div class="card-body">
-              <div v-if="isLoading">Loading Revenue Data...</div>
-              <pie-chart v-else :data="pieChartData" :options="pieChartOptions" />
-            </div>
-          </div>
-        </div>
+
       </div>
             </div>
 
@@ -182,6 +171,10 @@
     },
     data() {
       return {
+        API_BASE : 'http://192.168.1.129:8080',
+        apiBaseUrl: process.env.VUE_APP_API_BASE_URL,
+        totalSales: 0,
+        top_orders: 0,
         sellerCount: 0,
         buyerCount: 0,
         approval: 0,
@@ -190,70 +183,40 @@
         activated: 0,
         complaints: 0,
         user_type: '',
+        userId: null,
         isLoading: true,
         topProducts: [],
         // Bar chart for sales overview
         barChartData: {
-          labels: ['January', 'February', 'March', 'April', 'May'],
-          datasets: [
+        labels: ['January', 'February', 'March', 'April', 'May'], // Placeholder labels
+        datasets: [
             {
-              label: 'Sales',
-              data: [40, 55, 70, 65, 90],
-              backgroundColor: 'rgba(75, 192, 192, 0.6)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1
+            label: 'Sales',
+            data: [], // Initially empty
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
             }
-          ]
+            ]
         },
 
-        barChartOptions: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          },
-          plugins: {
-            title: {
-              display: true,
-              text: 'Monthly Sales'
-            }
-          }
+                barChartOptions: {
+            responsive: true,
+            scales: {
+                y: {
+                beginAtZero: true
+                }
+            },
+            plugins: {
+        title: {
+          display: true,
+          text: 'Monthly Sales'
+        }
+      }
         },
 
-        // Pie chart data for revenue by category
-        pieChartData: {
-          labels: [],
-          datasets: [
-            {
-              label: 'Revenue by Category',
-              data: [],
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)'
-              ],
-              borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 205, 86, 1)',
-                'rgba(75, 192, 192, 1)'
-              ],
-              borderWidth: 1
-            }
-          ]
-        },
 
-        pieChartOptions: {
-          responsive: true,
-          plugins: {
-            title: {
-              display: true,
-              text: 'Revenue Distribution by Category'
-            }
-          }
-        },
+
 
         // New chart data for Top Most Sold Products
         topProductsChartData: {
@@ -288,51 +251,83 @@
 
     mounted() {
       console.log('Dashboard Component Mounted.');
-      this.fetchCategories();
-      this.fetchTopProducts();
+      this.fetchSalesData(this.userId);
+      this.getUserData();
+      this.fetchTopProducts(this.userId);
       this.getSellerData();
       this.getBuyerData();
       this.getReportData();
       this.getApproveData();
       this.getActivatedData();
       this.getDeactivatedData();
+      this.getTotalSales(this.userId);
+      this.getTotalOrders(this.userId);
     },
 
     methods: {
-      // Fetch categories and update pie chart
-      async fetchCategories() {
-        try {
-          const response = await axios.get('/categories/all');
-          const categories = response.data.data;
-          const categoryNames = categories.map(category => category.category);
-          const categoryRevenue = categories.map(() => Math.floor(Math.random() * 500) + 100);
-          this.pieChartData.labels = categoryNames;
-          this.pieChartData.datasets[0].data = categoryRevenue;
-          this.isLoading = false;
-        } catch (error) {
-          console.error('Error fetching categories:', error);
-        }
-      },
+        async fetchSalesData() {
+            if (!this.userId) {  // Ensure userId is available
+                console.error("UserID is missingssssss");
+                return;
+            }
 
-      // Fetch top products and update top products chart
-      async fetchTopProducts() {
+            try {
+                console.log(userId)
+            const response = await fetch(this.API_BASE + `/buyer/month_sales.php?seller_id=${this.userId}`);
+            const data = await response.json();
+                console.log(data);
+
+            if (data.status === 'success' && data.data) {
+                // console.log('data.data');
+                const salesData = data.data;
+                // Prepare the data for the bar chart
+                const labels = salesData.map(item => {
+                    console.log(item.month)
+                switch (item.month) {
+                    case 1: return 'January';
+                    case 2: return 'February';
+                    case 3: return 'March';
+                    case 4: return 'April';
+                    case 5: return 'May';
+                    // Add other months as necessary
+                    default: return `Month ${item.month}`;
+                }
+                });
+                const sales = salesData.map(item => item.total_payment_per_month);
+                console.log(sales);
+                // Update chart data
+                this.barChartData.labels = labels;
+                this.barChartData.datasets[0].data = sales;
+                console.log(this.barChartData.labels);
+                console.log(this.barChartData.datasets[0].data);
+            }
+            } catch (error) {
+            console.error('Error fetching sales data:', error);
+            }
+        },
+        async fetchTopProducts() {
+            if (!this.userId) {  // Ensure userId is available
+      console.error("UserID is missingssssss");
+      return;
+    }
+
+
+            // console.log('sample');
       try {
-        const response = await axios.get('/products/all'); // API endpoint to fetch all products
-        const products = response.data.data;
-
-        // Sort products by quantity in descending order and pick the top 5
-        const topProducts = products
-          .sort((a, b) => b.Quantity - a.Quantity)
-          .slice(0, 5); // Get the top 5 products
-
-        // Store the top 5 products in the topProducts array
-        this.topProducts = topProducts;
-        this.isLoading = false; // Stop loading after fetching data
+        const response = await fetch(this.API_BASE + `/buyer/top_products.php?seller_id=${this.userId}`);
+        const data = await response.json();
+        if (data && data.data) {
+          this.topProducts = data.data;
+        }
       } catch (error) {
         console.error('Error fetching top products:', error);
-        this.isLoading = false; // Stop loading in case of error
+      } finally {
+        this.isLoading = false;  // Hide the loading spinner once data is fetched
       }
     },
+      // Fetch categories and update pie chart
+
+
       // Fetch user data
       getUserData() {
             this.timer = setTimeout(() => {
@@ -341,7 +336,12 @@
                         if (response.data.data) {
                             this.user = response.data.data[0];
                             this.user_type = this.user.user_type;
-                            // console.log(this.user.user_type);
+                            this.userId = this.user.id;
+                            console.log("userID: " + this.userId);
+                            this.getTotalSales();
+                            this.getTotalOrders();
+                            this.fetchTopProducts();
+                            this.fetchSalesData();
                         }
                     }).catch(error => {
                         this.error = error;
@@ -352,6 +352,48 @@
                     });
             }, 500);
         },
+        async getTotalOrders() {
+    if (!this.userId) {  // Ensure userId is available
+      console.error("UserID is missing");
+      return;
+    }
+
+    try {
+      const response = await fetch(this.API_BASE + `/buyer/top_orders.php?seller_id=${this.userId}`);
+      const data = await response.json();  // Parse JSON response
+        // console.log(response);
+      // Check if the status is 'success' and update totalSales
+      if (data.status === 'success') {
+        this.top_orders = data.data.Total_orders;  // Update total sales value
+      } else {
+        console.error('Failed to fetch top orders');
+      }
+    } catch (error) {
+      console.error('Error fetching total top orders:', error);
+    }
+  },
+
+        async getTotalSales() {
+    if (!this.userId) {  // Ensure userId is available
+      console.error("UserID is missing");
+      return;
+    }
+
+    try {
+      const response = await fetch(this.API_BASE +`/buyer/total_sales.php?seller_id=${this.userId}`);
+      const data = await response.json();  // Parse JSON response
+
+      // Check if the status is 'success' and update totalSales
+      if (data.status === 'success') {
+        this.totalSales = data.data.total_sales;  // Update total sales value
+      } else {
+        console.error('Failed to fetch total sales');
+      }
+    } catch (error) {
+      console.error('Error fetching total sales:', error);
+    }
+  },
+
 
         getSellerData() {
     axios.get('/notif/all_seller2')

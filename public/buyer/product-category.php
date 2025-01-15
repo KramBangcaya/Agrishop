@@ -56,25 +56,32 @@ if ($category_id && $category_id !== '0') {
 }
 
 // Apply price range filter if either min_price or max_price is set
-if (!empty($min_price) && !empty($max_price)) {
-
-    // echo $min_price;
-    // echo $max_price;
-    // If min_price and max_price are both provided
+if (!empty($min_price) || !empty($max_price)) {
     if (!empty($min_price) && !empty($max_price)) {
-        // echo ' second';
-        $price_range_api_url = API_BASE_URL . "/products/price-range?min={$min_price}&max={$max_price}";
+        // Remove any spaces around the min and max prices
+        $price_range_api_url = API_BASE_URL . "/products/price-range?min=" . urlencode($min_price) . "&max=" . urlencode($max_price);
         $price_range_response = file_get_contents($price_range_api_url);
         $products = json_decode($price_range_response, true);
     } else {
         // If only min_price or max_price is set
+        if (!empty($min_price)) {
+            $query_params['min_price'] = $min_price;
+        }
+        if (!empty($max_price)) {
+            $query_params['max_price'] = $max_price;
+        }
 
-        $price_range_api_url = API_BASE_URL . "/products/all";
+        // Build product API URL with price range filter
+        $product_api_url = API_BASE_URL . "/products?";
+        $product_api_url .= http_build_query($query_params);
 
-    }
+        // Fetch the filtered products
+        $product_response = file_get_contents($product_api_url);
+        $products = json_decode($product_response, true);
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $price_range_api_url);
+
+        $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $product_api_url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 
@@ -92,15 +99,17 @@ if (!empty($min_price) && !empty($max_price)) {
         curl_close($ch);
 
         $data = json_decode($response, true);
+    }
 
-            // Build product API URL with price range filter
-            // $product_api_url = API_BASE_URL . "/products?";
-            // $product_api_url .= http_build_query($query_params);
+        // If only min_price or max_price is set
+
+
+
 
             // echo $product_api_url;
             // Fetch the filtered products
-            $product_response = file_get_contents($price_range_api_url);
-            $products = json_decode($product_response, true);
+            // $product_response = file_get_contents($price_range_api_url);
+            // $products = json_decode($product_response, true);
 
             // echo $product_response;
 
@@ -297,6 +306,7 @@ if (!empty($min_price) && !empty($max_price)) {
         <div class="row">
             <div class="col-md-3">
                 <!-- Sidebar Category Display -->
+
                 <div class="sidebar-category">
                     <label for="category"><h3>Categories <i class="fa fa-sort"></i></h3></><br>
                     <select name="category" class="btn btn-primary category-button" id="category" onchange="location = this.value;" style="font-size: 18px; text-align: left;">
@@ -318,6 +328,28 @@ if (!empty($min_price) && !empty($max_price)) {
                     </select>
                 </div>
 
+                <!-- <div class="sidebar-category">
+
+                    <label for="category"><h3>Categories <i class="fa fa-sort"></i></h3></><br>
+                    <select name="category" class="btn btn-primary category-button" id="category" onchange="location = this.value;" style="font-size: 18px; text-align: left;">
+                        <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
+                            <option value="" selected>Select a Category</option>
+                            <?php foreach ($categories['data'] as $category): ?>
+                                <option value="<?php echo isset($_GET[$category['id']]) ? $_GET[$category['id']] : ''; ?>
+                                    <?php echo !empty($min_price) ? '&min_price=' . $min_price : ''; ?>
+                                    <?php echo !empty($max_price) ? '&max_price=' . $max_price : ''; ?>">
+                                    <?php echo $category['category']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                            <option value="product-category.php?category_id=0
+                                <?php echo !empty($min_price) ? '&min_price=' . $min_price : ''; ?>
+                                <?php echo !empty($max_price) ? '&max_price=' . $max_price : ''; ?>">All</option>
+                        <?php else: ?>
+                            <p>No categories available.</p>
+                        <?php endif; ?>
+                    </select>
+                </div> -->
+
 
                 <!-- Sidebar Price Range Filter -->
                 <div class="sidebar-category">
@@ -329,13 +361,17 @@ if (!empty($min_price) && !empty($max_price)) {
                         <input type="number" style="font-size: 18px;" name="max_price" value="<?php echo isset($_GET['max_price']) ? $_GET['max_price'] : ''; ?>"> <br><br>
                         <input type="hidden" name="category_id" value="<?php echo isset($category_id) ? $category_id : ''; ?>">
                         <button type="submit" style="font-size: 18px;" class="btn btn-success">Filter</button>
+<<<<<<< HEAD
 
                     </form><br>
  <button onclick="window.location.href='/buyer/product-category.php';"  style="font-size: 18px;" class="btn btn-success">Clear Filter</button>
 
 
+=======
+                    </form>
+                    <button onclick="window.location.href='/buyer/product-category.php';" style="font-size: 18px; margin-top: 20px;" class="btn btn-secondary">Clear Filter</button>
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
                 </div>
-
             </div>
 <br>
             <div class="col-md-9"><h3>Products</h3>

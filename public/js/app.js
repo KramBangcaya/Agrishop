@@ -5814,6 +5814,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CompletedOrder/Index.vue?vue&type=script&lang=js":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CompletedOrder/Index.vue?vue&type=script&lang=js ***!
@@ -5933,6 +5934,15 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     }
   }
 });
+=======
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CompletedOrder/Index.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CompletedOrder/Index.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ (() => {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Applications/XAMPP/xamppfiles/htdocs/Agrishop/resources/js/components/CompletedOrder/Index.vue: Unexpected token (45:0)\n\n\u001b[0m \u001b[90m 43 |\u001b[39m         }\u001b[0m\n\u001b[0m \u001b[90m 44 |\u001b[39m             \u001b[36mtry\u001b[39m {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 45 |\u001b[39m \u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 46 |\u001b[39m                 \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m fetch(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39m\u001b[33mAPI_BASE\u001b[39m \u001b[33m+\u001b[39m \u001b[32m`/buyer/delivered-orders.php?seller_id=${this.userID}`\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 47 |\u001b[39m \u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 48 |\u001b[39m                 \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m fetch(\u001b[32m`http://192.168.1.129:8080/buyer/delivered-orders.php?seller_id=${this.userID}`\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n    at instantiate (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:72:32)\n    at constructor (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:367:12)\n    at Parser.raise (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:3684:19)\n    at Parser.unexpected (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:3722:16)\n    at Parser.parseExprAtom (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13327:22)\n    at Parser.parseExprSubscripts (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12852:23)\n    at Parser.parseUpdate (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12831:21)\n    at Parser.parseMaybeUnary (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12801:23)\n    at Parser.parseMaybeUnaryOrPrivate (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12592:61)\n    at Parser.parseExprOps (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12599:23)\n    at Parser.parseMaybeConditional (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12569:23)\n    at Parser.parseMaybeAssign (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12521:21)\n    at Parser.parseExpressionBase (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12457:23)\n    at /Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12451:39\n    at Parser.allowInAnd (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14547:16)\n    at Parser.parseExpression (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12451:17)\n    at Parser.parseStatementContent (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14987:23)\n    at Parser.parseStatement (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14844:17)\n    at Parser.parseBlockOrModuleBlockBody (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15503:25)\n    at Parser.parseBlockBody (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15494:10)\n    at Parser.parseBlock (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15478:10)\n    at Parser.parseTryStatement (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15359:23)\n    at Parser.parseStatementContent (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14907:21)\n    at Parser.parseStatement (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14844:17)\n    at Parser.parseBlockOrModuleBlockBody (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15503:25)\n    at Parser.parseBlockBody (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15494:10)\n    at Parser.parseBlock (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15478:10)\n    at Parser.parseFunctionBody (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14152:24)\n    at Parser.parseFunctionBodyAndFinish (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14136:10)\n    at Parser.parseMethod (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14085:31)\n    at Parser.parseObjectMethod (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13961:19)\n    at Parser.parseObjPropValue (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14002:23)\n    at Parser.parsePropertyDefinition (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13920:17)\n    at Parser.parseObjectLike (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13810:21)\n    at Parser.parseExprAtom (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13202:23)\n    at Parser.parseExprSubscripts (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12852:23)\n    at Parser.parseUpdate (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12831:21)\n    at Parser.parseMaybeUnary (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12801:23)\n    at Parser.parseMaybeUnaryOrPrivate (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12592:61)\n    at Parser.parseExprOps (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12599:23)\n    at Parser.parseMaybeConditional (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12569:23)\n    at Parser.parseMaybeAssign (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12521:21)\n    at /Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12479:39\n    at Parser.allowInAnd (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14553:12)\n    at Parser.parseMaybeAssignAllowIn (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12479:17)\n    at Parser.parseObjectProperty (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13969:101)\n    at Parser.parseObjPropValue (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14002:100)\n    at Parser.parsePropertyDefinition (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13920:17)\n    at Parser.parseObjectLike (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13810:21)\n    at Parser.parseExprAtom (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13202:23)");
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
 
 /***/ }),
 
@@ -6420,10 +6430,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+<<<<<<< HEAD
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+=======
+/* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return generator._invoke = function (innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; }(innerFn, self, context), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; this._invoke = function (method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); }; } function maybeInvokeDelegate(delegate, context) { var method = delegate.iterator[context.method]; if (undefined === method) { if (context.delegate = null, "throw" === context.method) { if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel; context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method"); } return ContinueSentinel; } var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (object) { var keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
 
 
 
@@ -6437,6 +6458,10 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
   },
   data: function data() {
     return {
+      API_BASE: 'http://192.168.1.129:8080',
+      apiBaseUrl: process.env.VUE_APP_API_BASE_URL,
+      totalSales: 0,
+      top_orders: 0,
       sellerCount: 0,
       buyerCount: 0,
       approval: 0,
@@ -6445,14 +6470,17 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       activated: 0,
       complaints: 0,
       user_type: '',
+      userId: null,
       isLoading: true,
       topProducts: [],
       // Bar chart for sales overview
       barChartData: {
         labels: ['January', 'February', 'March', 'April', 'May'],
+        // Placeholder labels
         datasets: [{
           label: 'Sales',
-          data: [40, 55, 70, 65, 90],
+          data: [],
+          // Initially empty
           backgroundColor: 'rgba(75, 192, 192, 0.6)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1
@@ -6469,26 +6497,6 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
           title: {
             display: true,
             text: 'Monthly Sales'
-          }
-        }
-      },
-      // Pie chart data for revenue by category
-      pieChartData: {
-        labels: [],
-        datasets: [{
-          label: 'Revenue by Category',
-          data: [],
-          backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 205, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
-          borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 205, 86, 1)', 'rgba(75, 192, 192, 1)'],
-          borderWidth: 1
-        }]
-      },
-      pieChartOptions: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Revenue Distribution by Category'
           }
         }
       },
@@ -6523,19 +6531,22 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
   },
   mounted: function mounted() {
     console.log('Dashboard Component Mounted.');
-    this.fetchCategories();
-    this.fetchTopProducts();
+    this.fetchSalesData(this.userId);
+    this.getUserData();
+    this.fetchTopProducts(this.userId);
     this.getSellerData();
     this.getBuyerData();
     this.getReportData();
     this.getApproveData();
     this.getActivatedData();
     this.getDeactivatedData();
+    this.getTotalSales(this.userId);
+    this.getTotalOrders(this.userId);
   },
   methods: {
-    // Fetch categories and update pie chart
-    fetchCategories: function fetchCategories() {
+    fetchSalesData: function fetchSalesData() {
       var _this = this;
+<<<<<<< HEAD
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var response, categories, categoryNames, categoryRevenue;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -6565,13 +6576,97 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
             case 15:
             case "end":
               return _context.stop();
+=======
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response, data, salesData, labels, sales;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (_this.userId) {
+                  _context.next = 3;
+                  break;
+                }
+
+                // Ensure userId is available
+                console.error("UserID is missingssssss");
+                return _context.abrupt("return");
+
+              case 3:
+                _context.prev = 3;
+                console.log(userId);
+                _context.next = 7;
+                return fetch(_this.API_BASE + "/buyer/month_sales.php?seller_id=".concat(_this.userId));
+
+              case 7:
+                response = _context.sent;
+                _context.next = 10;
+                return response.json();
+
+              case 10:
+                data = _context.sent;
+                console.log(data);
+
+                if (data.status === 'success' && data.data) {
+                  // console.log('data.data');
+                  salesData = data.data; // Prepare the data for the bar chart
+
+                  labels = salesData.map(function (item) {
+                    console.log(item.month);
+
+                    switch (item.month) {
+                      case 1:
+                        return 'January';
+
+                      case 2:
+                        return 'February';
+
+                      case 3:
+                        return 'March';
+
+                      case 4:
+                        return 'April';
+
+                      case 5:
+                        return 'May';
+                      // Add other months as necessary
+
+                      default:
+                        return "Month ".concat(item.month);
+                    }
+                  });
+                  sales = salesData.map(function (item) {
+                    return item.total_payment_per_month;
+                  });
+                  console.log(sales); // Update chart data
+
+                  _this.barChartData.labels = labels;
+                  _this.barChartData.datasets[0].data = sales;
+                  console.log(_this.barChartData.labels);
+                  console.log(_this.barChartData.datasets[0].data);
+                }
+
+                _context.next = 18;
+                break;
+
+              case 15:
+                _context.prev = 15;
+                _context.t0 = _context["catch"](3);
+                console.error('Error fetching sales data:', _context.t0);
+
+              case 18:
+              case "end":
+                return _context.stop();
+            }
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
           }
-        }, _callee, null, [[0, 12]]);
+        }, _callee, null, [[3, 15]]);
       }))();
     },
-    // Fetch top products and update top products chart
     fetchTopProducts: function fetchTopProducts() {
       var _this2 = this;
+<<<<<<< HEAD
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         var response, products, topProducts;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
@@ -6600,10 +6695,64 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
             case 14:
             case "end":
               return _context2.stop();
+=======
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response, data;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (_this2.userId) {
+                  _context2.next = 3;
+                  break;
+                }
+
+                // Ensure userId is available
+                console.error("UserID is missingssssss");
+                return _context2.abrupt("return");
+
+              case 3:
+                _context2.prev = 3;
+                _context2.next = 6;
+                return fetch(_this2.API_BASE + "/buyer/top_products.php?seller_id=".concat(_this2.userId));
+
+              case 6:
+                response = _context2.sent;
+                _context2.next = 9;
+                return response.json();
+
+              case 9:
+                data = _context2.sent;
+
+                if (data && data.data) {
+                  _this2.topProducts = data.data;
+                }
+
+                _context2.next = 16;
+                break;
+
+              case 13:
+                _context2.prev = 13;
+                _context2.t0 = _context2["catch"](3);
+                console.error('Error fetching top products:', _context2.t0);
+
+              case 16:
+                _context2.prev = 16;
+                _this2.isLoading = false; // Hide the loading spinner once data is fetched
+
+                return _context2.finish(16);
+
+              case 19:
+              case "end":
+                return _context2.stop();
+            }
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
           }
-        }, _callee2, null, [[0, 10]]);
+        }, _callee2, null, [[3, 13, 16, 19]]);
       }))();
     },
+    // Fetch categories and update pie chart
     // Fetch user data
     getUserData: function getUserData() {
       var _this3 = this;
@@ -6612,7 +6761,20 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
           if (response.data.data) {
             _this3.user = response.data.data[0];
             _this3.user_type = _this3.user.user_type;
+<<<<<<< HEAD
             // console.log(this.user.user_type);
+=======
+            _this3.userId = _this3.user.id;
+            console.log("userID: " + _this3.userId);
+
+            _this3.getTotalSales();
+
+            _this3.getTotalOrders();
+
+            _this3.fetchTopProducts();
+
+            _this3.fetchSalesData();
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
           }
         })["catch"](function (error) {
           _this3.error = error;
@@ -6623,8 +6785,9 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
         });
       }, 500);
     },
-    getSellerData: function getSellerData() {
+    getTotalOrders: function getTotalOrders() {
       var _this4 = this;
+<<<<<<< HEAD
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/all_seller2').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
@@ -6639,6 +6802,132 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       })["catch"](function (error) {
         var _error$response;
         _this4.error = error;
+=======
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var response, data;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (_this4.userId) {
+                  _context3.next = 3;
+                  break;
+                }
+
+                // Ensure userId is available
+                console.error("UserID is missing");
+                return _context3.abrupt("return");
+
+              case 3:
+                _context3.prev = 3;
+                _context3.next = 6;
+                return fetch(_this4.API_BASE + "/buyer/top_orders.php?seller_id=".concat(_this4.userId));
+
+              case 6:
+                response = _context3.sent;
+                _context3.next = 9;
+                return response.json();
+
+              case 9:
+                data = _context3.sent;
+
+                // Parse JSON response
+                // console.log(response);
+                // Check if the status is 'success' and update totalSales
+                if (data.status === 'success') {
+                  _this4.top_orders = data.data.Total_orders; // Update total sales value
+                } else {
+                  console.error('Failed to fetch top orders');
+                }
+
+                _context3.next = 16;
+                break;
+
+              case 13:
+                _context3.prev = 13;
+                _context3.t0 = _context3["catch"](3);
+                console.error('Error fetching total top orders:', _context3.t0);
+
+              case 16:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[3, 13]]);
+      }))();
+    },
+    getTotalSales: function getTotalSales() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var response, data;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                if (_this5.userId) {
+                  _context4.next = 3;
+                  break;
+                }
+
+                // Ensure userId is available
+                console.error("UserID is missing");
+                return _context4.abrupt("return");
+
+              case 3:
+                _context4.prev = 3;
+                _context4.next = 6;
+                return fetch(_this5.API_BASE + "/buyer/total_sales.php?seller_id=".concat(_this5.userId));
+
+              case 6:
+                response = _context4.sent;
+                _context4.next = 9;
+                return response.json();
+
+              case 9:
+                data = _context4.sent;
+
+                // Parse JSON response
+                // Check if the status is 'success' and update totalSales
+                if (data.status === 'success') {
+                  _this5.totalSales = data.data.total_sales; // Update total sales value
+                } else {
+                  console.error('Failed to fetch total sales');
+                }
+
+                _context4.next = 16;
+                break;
+
+              case 13:
+                _context4.prev = 13;
+                _context4.t0 = _context4["catch"](3);
+                console.error('Error fetching total sales:', _context4.t0);
+
+              case 16:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[3, 13]]);
+      }))();
+    },
+    getSellerData: function getSellerData() {
+      var _this6 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/all_seller2').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this6.user = response.data.data; // Store the count of sellers
+
+          _this6.sellerCount = _this6.user.length; // console.log('Sellers:', this.user);
+          // console.log('Total Sellers:', this.sellerCount);
+        }
+      })["catch"](function (error) {
+        var _error$response, _error$response$data;
+
+        _this6.error = error;
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
         toast.fire({
           icon: 'error',
           text: ((_error$response = error.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 ? void 0 : _error$response.message) || 'An error occurred'
@@ -6646,6 +6935,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getBuyerData: function getBuyerData() {
+<<<<<<< HEAD
       var _this5 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/all_buyer2').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
@@ -6659,6 +6949,21 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       })["catch"](function (error) {
         var _error$response2;
         _this5.error = error;
+=======
+      var _this7 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/all_buyer2').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this7.user = response.data.data;
+          _this7.buyerCount = _this7.user.length; // console.log('Buyer:', this.user);
+          // console.log('Total Sellers:', this.buyerCount);
+        }
+      })["catch"](function (error) {
+        var _error$response2, _error$response2$data;
+
+        _this7.error = error;
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
         toast.fire({
           icon: 'error',
           text: ((_error$response2 = error.response) === null || _error$response2 === void 0 || (_error$response2 = _error$response2.data) === null || _error$response2 === void 0 ? void 0 : _error$response2.message) || 'An error occurred'
@@ -6666,6 +6971,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getReportData: function getReportData() {
+<<<<<<< HEAD
       var _this6 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/report/all_reports').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
@@ -6679,6 +6985,21 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       })["catch"](function (error) {
         var _error$response3;
         _this6.error = error;
+=======
+      var _this8 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/report/all_reports').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this8.user = response.data.data;
+          _this8.complaints = _this8.user.length; // console.log('complaints:', this.user);
+          // console.log('Total Complaints:', this.complaints);
+        }
+      })["catch"](function (error) {
+        var _error$response3, _error$response3$data;
+
+        _this8.error = error;
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
         toast.fire({
           icon: 'error',
           text: ((_error$response3 = error.response) === null || _error$response3 === void 0 || (_error$response3 = _error$response3.data) === null || _error$response3 === void 0 ? void 0 : _error$response3.message) || 'An error occurred'
@@ -6686,6 +7007,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getApproveData: function getApproveData() {
+<<<<<<< HEAD
       var _this7 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/approval').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
@@ -6699,6 +7021,21 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       })["catch"](function (error) {
         var _error$response4;
         _this7.error = error;
+=======
+      var _this9 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/approval').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this9.user = response.data.data;
+          _this9.approval = _this9.user.length; // console.log('approval:', this.user);
+          // console.log('Total Approval:', this.approval);
+        }
+      })["catch"](function (error) {
+        var _error$response4, _error$response4$data;
+
+        _this9.error = error;
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
         toast.fire({
           icon: 'error',
           text: ((_error$response4 = error.response) === null || _error$response4 === void 0 || (_error$response4 = _error$response4.data) === null || _error$response4 === void 0 ? void 0 : _error$response4.message) || 'An error occurred'
@@ -6706,6 +7043,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getActivatedData: function getActivatedData() {
+<<<<<<< HEAD
       var _this8 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/activate').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
@@ -6719,6 +7057,21 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       })["catch"](function (error) {
         var _error$response5;
         _this8.error = error;
+=======
+      var _this10 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/activate').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this10.user = response.data.data;
+          _this10.activated = _this10.user.length; // console.log('Activated:', this.user);
+          // console.log('Total Activated:', this.activated);
+        }
+      })["catch"](function (error) {
+        var _error$response5, _error$response5$data;
+
+        _this10.error = error;
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
         toast.fire({
           icon: 'error',
           text: ((_error$response5 = error.response) === null || _error$response5 === void 0 || (_error$response5 = _error$response5.data) === null || _error$response5 === void 0 ? void 0 : _error$response5.message) || 'An error occurred'
@@ -6726,18 +7079,29 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getDeactivatedData: function getDeactivatedData() {
+<<<<<<< HEAD
       var _this9 = this;
+=======
+      var _this11 = this;
+
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/deactivate').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this9.user = response.data.data;
-          _this9.deactivated = _this9.user.length;
-          console.log('Deactivated:', _this9.user);
-          console.log('Total Deactivated:', _this9.deactivated);
+          _this11.user = response.data.data;
+          _this11.deactivated = _this11.user.length;
+          console.log('Deactivated:', _this11.user);
+          console.log('Total Deactivated:', _this11.deactivated);
         }
       })["catch"](function (error) {
+<<<<<<< HEAD
         var _error$response6;
         _this9.error = error;
+=======
+        var _error$response6, _error$response6$data;
+
+        _this11.error = error;
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
         toast.fire({
           icon: 'error',
           text: ((_error$response6 = error.response) === null || _error$response6 === void 0 || (_error$response6 = _error$response6.data) === null || _error$response6 === void 0 ? void 0 : _error$response6.message) || 'An error occurred'
@@ -7542,6 +7906,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PurchaseOrder/Index.vue?vue&type=script&lang=js":
 /*!*************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PurchaseOrder/Index.vue?vue&type=script&lang=js ***!
@@ -8181,6 +8546,15 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     }
   }
 });
+=======
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PurchaseOrder/Index.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PurchaseOrder/Index.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/***/ (() => {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Applications/XAMPP/xamppfiles/htdocs/Agrishop/resources/js/components/PurchaseOrder/Index.vue: Unexpected token (77:0)\n\n\u001b[0m \u001b[90m 75 |\u001b[39m         \u001b[90m// console.log(this.API_BASE);\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 76 |\u001b[39m             \u001b[36mtry\u001b[39m {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 77 |\u001b[39m \u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 78 |\u001b[39m                 \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m fetch(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39m\u001b[33mAPI_BASE\u001b[39m \u001b[33m+\u001b[39m \u001b[32m`/buyer/get-orders.php?seller_id=${this.userID}`\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 79 |\u001b[39m \u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 80 |\u001b[39m                 \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m fetch(\u001b[32m`http://192.168.1.129:8080/buyer/get-orders.php?seller_id=${this.userID}`\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n    at instantiate (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:72:32)\n    at constructor (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:367:12)\n    at Parser.raise (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:3684:19)\n    at Parser.unexpected (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:3722:16)\n    at Parser.parseExprAtom (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13327:22)\n    at Parser.parseExprSubscripts (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12852:23)\n    at Parser.parseUpdate (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12831:21)\n    at Parser.parseMaybeUnary (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12801:23)\n    at Parser.parseMaybeUnaryOrPrivate (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12592:61)\n    at Parser.parseExprOps (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12599:23)\n    at Parser.parseMaybeConditional (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12569:23)\n    at Parser.parseMaybeAssign (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12521:21)\n    at Parser.parseExpressionBase (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12457:23)\n    at /Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12451:39\n    at Parser.allowInAnd (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14547:16)\n    at Parser.parseExpression (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12451:17)\n    at Parser.parseStatementContent (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14987:23)\n    at Parser.parseStatement (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14844:17)\n    at Parser.parseBlockOrModuleBlockBody (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15503:25)\n    at Parser.parseBlockBody (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15494:10)\n    at Parser.parseBlock (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15478:10)\n    at Parser.parseTryStatement (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15359:23)\n    at Parser.parseStatementContent (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14907:21)\n    at Parser.parseStatement (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14844:17)\n    at Parser.parseBlockOrModuleBlockBody (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15503:25)\n    at Parser.parseBlockBody (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15494:10)\n    at Parser.parseBlock (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:15478:10)\n    at Parser.parseFunctionBody (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14152:24)\n    at Parser.parseFunctionBodyAndFinish (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14136:10)\n    at Parser.parseMethod (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14085:31)\n    at Parser.parseObjectMethod (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13961:19)\n    at Parser.parseObjPropValue (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14002:23)\n    at Parser.parsePropertyDefinition (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13920:17)\n    at Parser.parseObjectLike (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13810:21)\n    at Parser.parseExprAtom (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13202:23)\n    at Parser.parseExprSubscripts (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12852:23)\n    at Parser.parseUpdate (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12831:21)\n    at Parser.parseMaybeUnary (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12801:23)\n    at Parser.parseMaybeUnaryOrPrivate (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12592:61)\n    at Parser.parseExprOps (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12599:23)\n    at Parser.parseMaybeConditional (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12569:23)\n    at Parser.parseMaybeAssign (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12521:21)\n    at /Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12479:39\n    at Parser.allowInAnd (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14553:12)\n    at Parser.parseMaybeAssignAllowIn (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:12479:17)\n    at Parser.parseObjectProperty (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13969:101)\n    at Parser.parseObjPropValue (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:14002:100)\n    at Parser.parsePropertyDefinition (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13920:17)\n    at Parser.parseObjectLike (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13810:21)\n    at Parser.parseExprAtom (/Applications/XAMPP/xamppfiles/htdocs/Agrishop/node_modules/@babel/parser/lib/index.js:13202:23)");
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
 
 /***/ }),
 
@@ -10711,6 +11085,7 @@ var render = function render() {
   }, [_vm._m(2), _vm._v(" "), _c("tbody", _vm._l(_vm.orders, function (order, index) {
     return _c("tr", {
       key: index
+<<<<<<< HEAD
     }, [_c("td", [order.photo && order.photo.length ? _c("img", {
       staticStyle: {
         "max-width": "200px",
@@ -10727,6 +11102,9 @@ var render = function render() {
         }
       }
     }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))])]);
+=======
+    }, [_c("td", [_vm._v('\n<<<<<<< HEAD\n                                                :src="\'http://192.168.68.67:8080/buyer/\'+order.photo"\n=======\n                                                :src="\'http://192.168.1.129:8080/buyer/\'+order.photo"\n>>>>>>> 5b5ac45837df20d327638404d651261756c71efd\n                                                alt="Product Photo"\n                                                style="max-width: 200px; max-height: 200px; cursor: pointer;"\n                                                @click="openImageModal(\'http://192.168.68.67:8080/buyer/\' + order.photo)"\n                                                />\n                                            ')]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))])]);
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
   }), 0)])])])])])])]), _vm._v(" "), _vm.showImageModal ? _c("div", {
     staticClass: "modal-overlay",
     on: {
@@ -11760,23 +12138,27 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "card m-3",
     style: _vm.cardStyle
-  }, [_vm._m(6), _vm._v(" "), _vm._m(7)])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(6), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("h1", [_vm._v(_vm._s(_vm.top_orders))])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card m-3",
     style: _vm.cardStyle
-  }, [_vm._m(8), _vm._v(" "), _vm._m(9)])])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(7), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("h1", [_vm._v(_vm._s("₱ " + _vm.totalSales + ".00"))])])])])]), _vm._v(" "), _c("div", {
     staticClass: "row justify-content-center"
   }, [_c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card m-3",
     style: _vm.cardStyle
-  }, [_vm._m(10), _vm._v(" "), _c("div", {
+  }, [_vm._m(8), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("table", {
     staticClass: "table border table-bordered"
-  }, [_vm._m(11), _vm._v(" "), _c("tbody", {
+  }, [_vm._m(9), _vm._v(" "), _c("tbody", {
     staticClass: "border-black"
   }, _vm._l(_vm.topProducts, function (product, index) {
     return _c("tr", {
@@ -11785,32 +12167,21 @@ var render = function render() {
       attrs: {
         scope: "row"
       }
-    }, [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(product.Product_Name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(product.Quantity))])]);
+    }, [_vm._v(_vm._s(product.rank))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(product.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(product.total_quantity))])]);
   }), 0)]), _vm._v(" "), !_vm.topProducts.length && !_vm.isLoading ? _c("div", {
     staticClass: "text-center"
-  }, [_vm._v("\n            No products available.\n          ")]) : _vm._e(), _vm._v(" "), _vm.isLoading ? _c("div", {
+  }, [_vm._v("\n                  No products available.\n              ")]) : _vm._e(), _vm._v(" "), _vm.isLoading ? _c("div", {
     staticClass: "text-center"
-  }, [_vm._v("\n            Loading top products...\n          ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                  Loading top products...\n              ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card m-3"
-  }, [_vm._m(12), _vm._v(" "), _c("div", {
+  }, [_vm._m(10), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("bar-chart", {
     attrs: {
       data: _vm.barChartData,
       options: _vm.barChartOptions
-    }
-  })], 1)])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-8"
-  }, [_c("div", {
-    staticClass: "card m-3"
-  }, [_vm._m(13), _vm._v(" "), _c("div", {
-    staticClass: "card-body"
-  }, [_vm.isLoading ? _c("div", [_vm._v("Loading Revenue Data...")]) : _c("pie-chart", {
-    attrs: {
-      data: _vm.pieChartData,
-      options: _vm.pieChartOptions
     }
   })], 1)])])])]) : _vm._e()]);
 };
@@ -11869,6 +12240,7 @@ var staticRenderFns = [function () {
     staticClass: "card-header"
   }, [_c("h5", {
     staticClass: "card-title"
+<<<<<<< HEAD
   }, [_vm._v("Total Order")])]);
 }, function () {
   var _vm = this,
@@ -11876,6 +12248,9 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "card-body"
   }, [_c("h1", [_vm._v("Sample Order")])]);
+=======
+  }, [_vm._v("Total Completed Order")])]);
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -11883,6 +12258,7 @@ var staticRenderFns = [function () {
     staticClass: "card-header"
   }, [_c("h5", {
     staticClass: "card-title"
+<<<<<<< HEAD
   }, [_vm._v("Total Sale")])]);
 }, function () {
   var _vm = this,
@@ -11890,6 +12266,9 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "card-body"
   }, [_c("h1", [_vm._v("Sample Sale")])]);
+=======
+  }, [_vm._v("Total Sales")])]);
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -11924,6 +12303,7 @@ var staticRenderFns = [function () {
   }, [_c("h5", {
     staticClass: "card-title"
   }, [_vm._v("Sales Overview")])]);
+<<<<<<< HEAD
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -11932,6 +12312,8 @@ var staticRenderFns = [function () {
   }, [_c("h5", {
     staticClass: "card-title"
   }, [_vm._v("Revenue by Category")])]);
+=======
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
 }];
 render._withStripped = true;
 
@@ -13814,6 +14196,7 @@ var render = function render() {
   }, [_vm._m(2), _vm._v(" "), _c("tbody", _vm._l(_vm.orders, function (order, index) {
     return _c("tr", {
       key: index
+<<<<<<< HEAD
     }, [_c("td", [order.photo && order.photo.length ? _c("img", {
       staticStyle: {
         "max-width": "200px",
@@ -13830,6 +14213,9 @@ var render = function render() {
         }
       }
     }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.reason_cancel))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))]), _vm._v(" "), order.order_status !== "Cancelled Order" ? _c("td", {
+=======
+    }, [_c("td", [_vm._v('\n<<<<<<< HEAD\n                                                :src="\'http://192.168.68.67:8080/buyer/\'+order.photo"\n                                                alt="Product Photo"\n                                                style="max-width: 200px; max-height: 200px; cursor: pointer;"\n                                                @click="openImageModal(\'http://192.168.68.67:8080/buyer/\' + order.photo)"\n=======\n                                                :src="\'http://192.168.1.129:8080/buyer/\'+order.photo"\n                                                alt="Product Photo"\n                                                style="max-width: 200px; max-height: 200px; cursor: pointer;"\n                                                @click="openImageModal(\'http://192.168.1.129:8080/buyer/\' + order.photo)"\n>>>>>>> 5b5ac45837df20d327638404d651261756c71efd\n                                                />\n                                            ')]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.reason_cancel))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))]), _vm._v(" "), order.order_status !== "Cancelled Order" ? _c("td", {
+>>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
       staticClass: "text-left"
     }, [order.order_status !== "For Delivery" ? _c("button", {
       staticClass: "btn btn-primary btn-sm",

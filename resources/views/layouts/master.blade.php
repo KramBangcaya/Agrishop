@@ -48,7 +48,7 @@
 
                         <router-link to="/Purchase" class="dropdown-item">
                             <i class="fas fa-envelope mr-2"></i> New order
-                            <span id="order-count" class="badge badge-warning ml-2">0</span>
+                            <span id="new-order-count" class="badge badge-warning ml-2">0</span>
                         </router-link>
                         <router-link to="/Replenishment" class="dropdown-item">
                             <i class="fas fa-envelope mr-2"></i> Product Replenishment
@@ -321,6 +321,76 @@
     <script src="{{ asset('/js/app.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // Function to fetch the new orders count from the API
+        async function fetchOrderCount() {
+            try {
+                // Call the API
+                const response = await fetch('http://192.168.1.101:8080/buyer/new_orders.php?seller_id=51');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                // Parse the JSON response
+                const data = await response.json();
+                // console.log('Full Response:', data);  // Logs the entire response
+
+                // Check if the response structure matches the expected format
+                if (data && data.status === 'success' && data.data && typeof data.data.new_orders === 'number') {
+                    const count = data.data.new_orders;
+                    const countElement = document.getElementById('new-order-count');
+                    if (countElement) {
+                        countElement.textContent = count;  // Dynamically update the count
+                    }
+                } else {
+                    console.log('Error: Unexpected response structure', data);
+                }
+            } catch (error) {
+                console.error('Error fetching new orders count:', error);
+            }
+        }
+
+        // Call the function on page load
+        fetchOrderCount();
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to fetch delinquency count from the API
+        async function fetchDelinquencyCount() {
+            try {
+                // Call the API
+                const response = await fetch('/deliquency/list_all');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                // Parse the JSON response
+                const data = await response.json();
+                // console.log('Full Response:', data);  // Logs the entire response
+
+                // Check if 'data' exists and is an array
+                if (data && Array.isArray(data.data)) {
+                    // console.log('Array Length:', data.data.length); // Logs the length of the array
+                    const count = data.data.length;
+                    const countElement = document.getElementById('delinquency-count');
+                    if (countElement) {
+                        countElement.textContent = count;  // Dynamically update the count
+                    }
+                } else {
+                    console.log('Error: data.data is not an array');
+                }
+            } catch (error) {
+                console.error('Error fetching delinquency count:', error);
+            }
+        }
+
+        // Call the function on page load
+        fetchDelinquencyCount();
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Function to fetch delinquency count from the API

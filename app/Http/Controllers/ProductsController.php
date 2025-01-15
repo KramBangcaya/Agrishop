@@ -82,9 +82,34 @@ class ProductsController extends Controller
 
 
     public function category_all(Request $request, $id){
+
+
         $data = Products::where('idCategory', $id)->get();
 
-        return response()->json(['data' => $data], 200);
+        $formattedData = $data->map(function ($product) {
+            return [
+                'id' => $product->id,
+                'Product_Name' => $product->Product_Name,
+                'idCategory' => $product->idCategory,
+                'price' => $product->price,
+                'idMeasurement' => $product->idMeasurement,
+                'Quantity' => $product->Quantity,
+                'Description' => $product->Description,
+                'created_at' => $product->created_at,
+                'updated_at' => $product->updated_at,
+                'photos' => json_decode($product->photos),
+                'photos1' => json_decode($product->photos1),
+                'photos2' => json_decode($product->photos2),
+                'userID' => $product->userID,
+                'first_name' => $product->user->name ?? null,
+                'last_name' => $product->user->lastname ?? null,
+                'contact_number' => $product->user->contact_number ?? null,
+                'latitude' => $product->user->latitude ?? null,
+                'longitude' => $product->user->longitude ?? null,
+            ];
+        });
+
+        return response()->json(['data' => $formattedData], 200);
     }
 
     public function getPrice(Request $request){
@@ -98,9 +123,36 @@ class ProductsController extends Controller
         $minPrice = $request->input('min');
         $maxPrice = $request->input('max');
 
-        $products = Products::whereBetween('price', [$minPrice, $maxPrice])->get();
+        $data = Products::with('User')
+        ->whereBetween('price', [$minPrice, $maxPrice])
+        ->get();
 
-        return response()->json(['data' => $products], 200);
+    // Format the data
+    $formattedData = $data->map(function ($product) {
+        return [
+            'id' => $product->id,
+            'Product_Name' => $product->Product_Name,
+            'idCategory' => $product->idCategory,
+            'price' => $product->price,
+            'idMeasurement' => $product->idMeasurement,
+            'Quantity' => $product->Quantity,
+            'Description' => $product->Description,
+            'created_at' => $product->created_at,
+            'updated_at' => $product->updated_at,
+            'photos' => json_decode($product->photos),
+            'photos1' => json_decode($product->photos1),
+            'photos2' => json_decode($product->photos2),
+            'userID' => $product->userID,
+            'first_name' => $product->user->name ?? null,
+            'last_name' => $product->user->lastname ?? null,
+            'contact_number' => $product->user->contact_number ?? null,
+            'latitude' => $product->user->latitude ?? null,
+            'longitude' => $product->user->longitude ?? null,
+        ];
+    });
+
+    // Return the formatted data as a JSON response
+    return response()->json(['data' => $formattedData], 200);
     }
 
     public function index_all()
