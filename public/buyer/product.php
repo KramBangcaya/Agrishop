@@ -38,7 +38,7 @@ if(!isset($_REQUEST['id'])) {
      // Extract product details from the "data" key
      $product = $result['data'];
 
-    //  var_dump($product);
+    var_dump($product);
      $p_name = $product['Product_Name'] ?? 'N/A';
      $p_current_price = $product['price'] ?? 'N/A';
      $p_qty = $product['Quantity'] ?? 'N/A';
@@ -53,6 +53,7 @@ if(!isset($_REQUEST['id'])) {
      $s_id = $product['userID'] ?? 'N/A';
      $qrcode = $product['qrcode'][0] ?? 'N/A';
      $s_contact_number = $product['contact_number'] ?? 'N/A';
+     $s_idCategory = $product['idCategory'] ?? 'N/A';
 
  }
 
@@ -97,7 +98,7 @@ if(isset($_POST['form_add_to_cart'])) {
             $_SESSION['s_address'][$new_key] = $_POST['s_address'];
             // $_SESSION['f_name'][$new_key] = $_REQUEST['fname'];
             // $_SESSION['l_name'][$new_key] = $_REQUEST['lname'];
-
+            $_SESSION['s_idCategory'][$new_key] = $_POST['s_idCategory'];
             $_SESSION['cart_p_featured_photo'][$new_key] = $_POST['p_featured_photo'];
 
             $success_message1 = 'Product is added to the cart successfully!';
@@ -118,6 +119,7 @@ if(isset($_POST['form_add_to_cart'])) {
         $_SESSION['s_contact_number'][1] = $_POST['s_contact_number'];
         $_SESSION['s_address'][1] = $_POST['s_address'];
         $_SESSION['cart_qr'][1] = $_POST['qrcode'];
+        $_SESSION['s_idCategory'][1] = $_POST['s_idCategory'];
         // $_SESSION['f_name'][1] = $_REQUEST['fname'];
         // $_SESSION['l_name'][1] = $_REQUEST['lname'];
 
@@ -302,7 +304,7 @@ if($success_message1 != '') {
     <input type="hidden" name="s_id" value="<?php echo $s_id; ?>">
     <input type="hidden" name="s_contact_number" value="<?php echo $s_contact_number; ?>">
     <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
-
+    <input type="hidden" name="s_idCategory" value="<?php echo $s_idCategory; ?>">
 
     <div class="quantity-container">
     <button type="button" class="qty-btn qty-minus">-</button>

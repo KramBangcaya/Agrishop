@@ -267,20 +267,34 @@ foreach ($result as $row) {
 
 
 
-                        <li >
-  <a href="#">
-    <i class="fa fa-bell" aria-hidden="true"></i> Notifications
+
+
+
+                        <li>
+  <a href="customer-order.php">
+    <i class="fa fa-bell" aria-hidden="true"></i>
+
     <?php
     // Fetch count of cancelled orders
-    $queryCount = "SELECT COUNT(*) AS total_cancelled FROM Orders WHERE buyer_id = ? AND order_status=? AND cancel_by=?";
-    $stmtCount = $pdo->prepare($queryCount);
-    $stmtCount->execute([$_SESSION['user_id'], "Cancelled Order", "seller"]);
-    $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
+    $queryCountCancelled = "SELECT COUNT(*) AS total_cancelled FROM Orders WHERE buyer_id = ? AND order_status=? AND cancel_by=?";
+    $stmtCountCancelled = $pdo->prepare($queryCountCancelled);
+    $stmtCountCancelled->execute([$_SESSION['user_id'], "Cancelled Order", "seller"]);
+    $countResultCancelled = $stmtCountCancelled->fetch(PDO::FETCH_ASSOC);
+    $totalCancelled = $countResultCancelled['total_cancelled'] ?? 0;
 
-    // Display the count as a badge if it's greater than 0
-    $totalCancelled = $countResult['total_cancelled'] ?? 0;
-    if ($totalCancelled > 0) {
-        echo "<span style='background: red; color: white; border-radius: 50%; padding: 3px 7px; margin-left: 5px;'>$totalCancelled</span>";
+    // Fetch count of orders for delivery
+    $queryCountForDelivery = "SELECT COUNT(*) AS total_for_delivery FROM Orders WHERE buyer_id = ? AND order_status=?";
+    $stmtCountForDelivery = $pdo->prepare($queryCountForDelivery);
+    $stmtCountForDelivery->execute([$_SESSION['user_id'], "For Delivery"]);
+    $countResultForDelivery = $stmtCountForDelivery->fetch(PDO::FETCH_ASSOC);
+    $totalForDelivery = $countResultForDelivery['total_for_delivery'] ?? 0;
+
+    // Combine both counts
+    $totalNotifications = $totalCancelled + $totalForDelivery;
+
+    // Display the combined count if it's greater than 0
+    if ($totalNotifications > 0) {
+        echo "<span style='background: red; color: white; border-radius: 50%; padding: 3px 7px; margin-left: 5px;'>$totalNotifications</span>";
     }
     ?>
   </a>
@@ -341,6 +355,7 @@ foreach ($result as $row) {
         ?></b>)
     </a>
 </li>
+
 
 				</ul>
 			</div>
