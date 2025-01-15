@@ -361,16 +361,8 @@ if (!empty($min_price) || !empty($max_price)) {
                         <input type="number" style="font-size: 18px;" name="max_price" value="<?php echo isset($_GET['max_price']) ? $_GET['max_price'] : ''; ?>"> <br><br>
                         <input type="hidden" name="category_id" value="<?php echo isset($category_id) ? $category_id : ''; ?>">
                         <button type="submit" style="font-size: 18px;" class="btn btn-success">Filter</button>
-<<<<<<< HEAD
-
-                    </form><br>
- <button onclick="window.location.href='/buyer/product-category.php';"  style="font-size: 18px;" class="btn btn-success">Clear Filter</button>
-
-
-=======
                     </form>
                     <button onclick="window.location.href='/buyer/product-category.php';" style="font-size: 18px; margin-top: 20px;" class="btn btn-secondary">Clear Filter</button>
->>>>>>> ca3efbaeb66f06e0ae91d1f118ffcef73e283389
                 </div>
             </div>
 <br>
