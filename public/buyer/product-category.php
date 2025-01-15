@@ -405,17 +405,22 @@ if (!empty($min_price) || !empty($max_price)) {
                                                 <div class="photo" style="background-image:url(<?php echo API_BASE_URL . '/storage/' . $photoPath; ?>); width: 100%; height: 200px; background-size: cover;"></div>
                                                 <div class="overlay"></div>
                                             </div>
+
+<?php
+
+$queryCountCancelled = "SELECT COUNT(*) AS total_cancelled FROM Orders WHERE buyer_id = ? AND order_status=? AND cancel_by=?";
+$stmtCountCancelled = $pdo->prepare($queryCountCancelled);
+$stmtCountCancelled->execute([$_SESSION['user_id'], "Cancelled Order", "seller"]);
+$countResultCancelled = $stmtCountCancelled->fetch(PDO::FETCH_ASSOC);
+$totalCancelled = $countResultCancelled['total_cancelled'] ?? 0;
+?>
+
                                             <div class="text">
                                                 <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['Product_Name']; ?></a></h3>
                                                 <h4>₱<?php echo $product['price']; ?></h4>
-                                                <div class="rating">
-                                                    <?php
-                                                    $rating = isset($product['rating']) ? $product['rating'] : 0;
-                                                    for ($i = 1; $i <= 5; $i++) {
-                                                        echo $i <= $rating ? '<i class="fa fa-star"></i>' : '<i class="fa fa-star-o"></i>';
-                                                    }
-                                                    ?>
-                                                </div>
+
+                                                <h6>Stock: <?php echo $product['Quantity']; ?></h6>
+                                                <h5><?php echo $product['last_name']; ?> <?php echo $product['first_name']; ?></h5>
                                                 <?php if (isset($product['Quantity']) && $product['Quantity'] == 0): ?>
                                                     <div class="out-of-stock">
                                                         <div class="inner">Out Of Stock</div>

@@ -22,6 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $seller_number = $_POST['seller_contact'][$key];
         $seller_address = $_POST['seller_address'][$key];
         $seller_id = $_POST['seller_id'][$key];
+        $seller_idcategory = $_POST['seller_idcategory'][$key];
+
+
         $order_status = "Pending";
 
         $total_price = $product_quantity * $product_price;
@@ -54,7 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 product_quantity,
                 seller_id,
                 buyer_address,
-                product_id
+                product_id,
+                category_id
             )
             VALUES (
                 :buyer_name,
@@ -70,7 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 :product_quantity,
                 :seller_id,
                 :buyer_address,
-                :product_id
+                :product_id,
+                :category_id
             )";
 
         $stmt = $pdo->prepare($query);
@@ -92,6 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':seller_id', $seller_id);
         $stmt->bindParam(':buyer_address', $_SESSION['customer']['address']);
         $stmt->bindParam(':product_id', $product_id);
+        $stmt->bindParam(':category_id', $seller_idcategory);
+
 
         try {
             if (!$stmt->execute()) {

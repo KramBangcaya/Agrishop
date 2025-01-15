@@ -35,9 +35,12 @@ if(!isset($_SESSION['cart_p_id'])) {
                     </p>
                 <?php else:
 
-                    // var_dump($_SESSION);?>
+                     var_dump($_SESSION);?>
 
-                    <h3 class="special"><button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button> <?php echo LANG_VALUE_26; ?></h3>
+                    <h3 class="special">
+                        <a href="cart.php"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+
+                   <?php echo LANG_VALUE_26; ?></h3>
                     <div class="cart">
 
 
@@ -47,61 +50,97 @@ if(!isset($_SESSION['cart_p_id'])) {
                         <form action="place-order.php" method="post" enctype="multipart/form-data" id="order_form">
 
 
-                       <?php
-                    $table_total_price = 0;
+                        <?php
+$table_total_price = 0;
+$processed_sellers = [];  // Array to keep track of processed sellers
+$seller_totals = [];  // Array to accumulate total cost per seller
 
+// First loop to calculate total cost for each seller
+for ($i = 1; $i <= count($_SESSION['cart_p_id']); $i++) {
+    // Calculate the total price for the current product
+    $row_total_price = $_SESSION['cart_p_current_price'][$i] * $_SESSION['cart_p_qty'][$i];
 
-                    for ($i = 1; $i <= count($_SESSION['cart_p_id']); $i++) {
-                        $row_total_price = $_SESSION['cart_p_current_price'][$i] * $_SESSION['cart_p_qty'][$i];
-                        $table_total_price += $row_total_price;
-                    ?>
-                        <h3 class="special">
-                            Payment Section for <?php echo $_SESSION['cart_p_name'][$i]; ?>
-                            Total Cost: <?php echo LANG_VALUE_1; ?><?php echo $row_total_price; ?>
-                        </h3>
+    $seller_id = $_SESSION['s_id'][$i];  // Seller's ID
+    if (!isset($seller_totals[$seller_id])) {
+        $seller_totals[$seller_id] = 0;  // Initialize the total for this seller if not set
+    }
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label><?php echo LANG_VALUE_34; ?> *</label>
-                                <select required name="payment_method[<?php echo $i; ?>]" placeholder="Select Payment Method" class="form-control payment-method" data-index="<?php echo $i; ?>">
+    // Add the product's total price to the seller's total
+    $seller_totals[$seller_id] += $row_total_price;
 
-                                    <option value="1">CASH ON DELIVERY (COD)</option>
-                                    <option value="2">QR CODE</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+    // Also accumulate the grand total for all products
+    $table_total_price += $row_total_price;
+}
+
+// Second loop to display each seller's total and payment method dropdown
+foreach ($seller_totals as $seller_id => $total_cost) {
+    // Find the first product for this seller (to get the name and other details)
+    $seller_name = '';
+    foreach ($_SESSION['cart_p_id'] as $index => $product_id) {
+        if ($_SESSION['s_id'][$index] == $seller_id) {
+            $seller_name = $_SESSION['cart_s_name'][$index];
+            break; // Stop once we find the first product from this seller
+        }
+    }
+
+    // Display the payment section for this seller
+    ?>
+    <h3 class="special">
+        Payment Section for <?php echo $seller_name; ?>
+        Total Cost: <?php echo LANG_VALUE_1; ?><?php echo number_format($total_cost, 2); ?>
+    </h3>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label><?php echo LANG_VALUE_34; ?> *</label>
+                <select required name="payment_method[<?php echo $seller_id; ?>]" placeholder="Select Payment Method" class="form-control payment-method" data-index="<?php echo $seller_id; ?>">
+                    <option value="1">CASH ON DELIVERY (COD)</option>
+                    <option value="2">QR CODE</option>
+                </select>
+            </div>
+        </div>
+    </div>
 
     <!-- QR Code and Proof of Payment Section -->
-    <div id="payment-details-<?php echo $i; ?>" class="payment-details" style="display:none;">
-    <div class="col-md-12 form-groupser" >
+    <div id="payment-details-<?php echo $seller_id; ?>" class="payment-details" style="display:none;">
+        <div class="col-md-12 form-groupser">
+            <img src="<?php echo API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($_SESSION['cart_qr'][$index])); ?>"
+                 alt="QR Code" class="qr-code-img" style="padding: 0; margin: -90;">
+        </div>
 
-        <img src="<?php echo API_BASE_URL . '/storage/' . str_replace('\/', '/', trim($_SESSION['cart_qr'][$i])); ?>"
-             alt="QR Code" class="qr-code-img" style="padding: 0; margin: -90;">
+        <div class="col-md-12 form-groups" style="padding: 0; margin: 0;">
+            <br><label>Upload Proof of Payment</label><br>
+            <p>- Must Downloaded QR Code</p>
+            <p>- Must Clear Image & Not Screenshot</p>
+            <input type="file" name="photo[<?php echo $seller_id; ?>]" class="form-control">
+
+        </div>
     </div>
 
-    <div class="col-md-12 form-groups" style="padding: 0; margin: 0;">
-    <!-- <?php echo $_SESSION['cart_p_name'][$i]; ?> -->
-    <br><label>Upload Proof of Payment</label><br>
-        <p>- Must Downloaded QR Code</p>
-        <p>- Must Clear Image & Not Screenshot</p>
-        <input type="file" name="photo[<?php echo $i; ?>]" class="form-control">
+    <!-- Include hidden inputs to pass product data for all products from this seller -->
+    <?php
+    foreach ($_SESSION['cart_p_id'] as $index => $product_id) {
+        if ($_SESSION['s_id'][$index] == $seller_id) {
+            ?>
+            <input type="hidden" name="product_name[<?php echo $index + 1; ?>]" value="<?php echo $_SESSION['cart_p_name'][$index]; ?>">
+            <input type="hidden" name="product_quantity[<?php echo $index + 1; ?>]" value="<?php echo $_SESSION['cart_p_qty'][$index]; ?>">
+            <input type="hidden" name="product_price[<?php echo $index + 1; ?>]" value="<?php echo $_SESSION['cart_p_current_price'][$index]; ?>">
+            <input type="hidden" name="product_id[<?php echo $index + 1; ?>]" value="<?php echo $product_id; ?>">
+            <input type="hidden" name="seller_name[<?php echo $index + 1; ?>]" value="<?php echo $_SESSION['cart_s_name'][$index]; ?>">
+            <input type="hidden" name="seller_last[<?php echo $index + 1; ?>]" value="<?php echo $_SESSION['cart_s_last'][$index]; ?>">
+            <input type="hidden" name="seller_contact[<?php echo $index + 1; ?>]" value="<?php echo $_SESSION['s_contact_number'][$index]; ?>">
+            <input type="hidden" name="seller_address[<?php echo $index + 1; ?>]" value="<?php echo $_SESSION['s_address'][$index]; ?>">
+            <input type="hidden" name="seller_id[<?php echo $index + 1; ?>]" value="<?php echo $_SESSION['s_id'][$index]; ?>">
 
-    </div>
-</div>
+            <input type="hidden" name="seller_idcategory[<?php echo $index + 1; ?>]" value="<?php echo $_SESSION['s_idCategory'][$index]; ?>">
+            <?php
+        }
+    }
+}
+?>
 
-    <!-- Include hidden inputs to pass product data -->
-    <input type="hidden" name="product_name[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_name'][$i]; ?>">
-    <input type="hidden" name="product_quantity[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_qty'][$i]; ?>">
-    <input type="hidden" name="product_price[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_current_price'][$i]; ?>">
-    <input type="hidden" name="product_id[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_p_id'][$i]; ?>">
-    <input type="hidden" name="seller_name[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_s_name'][$i]; ?>">
-    <input type="hidden" name="seller_last[<?php echo $i; ?>]" value="<?php echo $_SESSION['cart_s_last'][$i]; ?>">
-    <input type="hidden" name="seller_contact[<?php echo $i; ?>]" value="<?php echo $_SESSION['s_contact_number'][$i]; ?>">
-    <input type="hidden" name="seller_address[<?php echo $i; ?>]" value="<?php echo $_SESSION['s_address'][$i]; ?>">
-    <input type="hidden" name="seller_id[<?php echo $i; ?>]" value="<?php echo $_SESSION['s_id'][$i]; ?>">
-<?php } ?>
+
 
 <!-- Add CSS for Fixed Size and Responsive Design -->
 <style>
