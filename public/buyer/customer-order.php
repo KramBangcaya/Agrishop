@@ -89,7 +89,7 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
     <?php
 
 // Query for the data rows
-$queryData = "SELECT * FROM Orders WHERE buyer_id = ? AND order_status=? ORDER BY order_status ASC";
+$queryData = "SELECT * FROM Orders WHERE buyer_id = ? AND order_status=? ORDER BY `orders`.`timedate` DESC";
 $stmtData = $pdo->prepare($queryData);
 $stmtData->execute([$_SESSION['user_id'], "Pending"]);
 $orders = $stmtData->fetchAll(PDO::FETCH_ASSOC);
@@ -368,7 +368,7 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
 
 <?php
 // Fetch orders from the database
-$query = "SELECT * FROM Orders WHERE buyer_id = ? AND order_status=? ORDER BY order_status ASC";
+$query = "SELECT * FROM Orders WHERE buyer_id = ? AND order_status=? ORDER BY `orders`.`timedate` DESC";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$_SESSION['user_id'],"For Delivery"]);
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -557,7 +557,7 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
 
 <?php
 // Fetch orders from the database
-$query = "SELECT * FROM Orders WHERE buyer_id = ? AND order_status=? ORDER BY order_status ASC";
+$query = "SELECT * FROM Orders WHERE buyer_id = ? AND order_status=? ORDER BY `orders`.`timedate` DESC";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$_SESSION['user_id'],"Delivered"]);
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -730,9 +730,16 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
 
 
 
+<!-- Cancelled Orders -->
+<h2>
+    Cancelled Orders
 
-    <!-- Cancelled Orders -->
-    <h2>Cancelled Orders</h2>
+</h2>
+
+
+
+
+
 <details>
     <summary style="cursor: pointer; font-size: 1.2em; font-weight: bold;color:rgb(54, 71, 228);">
         View Cancelled Orders (<?php echo $totalDelivered1s = $countResult['total_delivered1s']; ?>)
@@ -741,14 +748,46 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
 
         <?php
         // Fetch orders from the database
-        $query = "SELECT * FROM Orders WHERE buyer_id = ? AND order_status=? ORDER BY order_status ASC";
+        $query = "SELECT * FROM Orders WHERE buyer_id = ? AND order_status=? ORDER BY `orders`.`timedate` DESC";
         $stmt = $pdo->prepare($query);
         $stmt->execute([$_SESSION['user_id'], "Cancelled Order"]);
         $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($orders as $order): ?>
 
-            <h3> <span>Product Name: <?php echo htmlspecialchars($order['product_name']); ?></span></h3>
+<h3>
+    <span>Product Name: <?php echo htmlspecialchars($order['product_name']); ?></span>
+    <?php
+    // Query to check if this product is canceled by the seller
+    $queryCancelBy = "SELECT id FROM Orders WHERE buyer_id = ? AND order_status = ? AND cancel_by = ? AND id = ?";
+    $stmtCancelBy = $pdo->prepare($queryCancelBy);
+    $stmtCancelBy->execute([$_SESSION['user_id'], "Cancelled Order", "seller", $order['id']]);
+
+    // Fetch the result
+    $cancelByResult = $stmtCancelBy->fetch(PDO::FETCH_ASSOC);
+
+    // Display the red circle notification only if `cancel_by = 'seller'`
+    if ($cancelByResult) {
+        echo '
+        <span style="
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px;
+            margin-left: 5px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 34px;
+            height: 34px;
+            font-size: 16px;
+            text-align: center;
+        ">
+            1
+        </span>';
+    }
+    ?>
+</h3>
 
             <div style="margin-top: 10px; font-size: medium;">
                 <label>Quantity: </label>
@@ -800,47 +839,7 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
                         Feedback <i class="fa fa-comments" style="color:green;"></i>
                     </h4>
 
-                    <?php
-// Query to check if the order is canceled by the seller
-$queryCancelBy = "SELECT id, cancel_by FROM Orders WHERE buyer_id = ? AND order_status = ? AND cancel_by = ?";
-$stmtCancelBy = $pdo->prepare($queryCancelBy);
-$stmtCancelBy->execute([$_SESSION['user_id'], "Cancelled Order", "seller"]);
-$cancelByResult = $stmtCancelBy->fetch(PDO::FETCH_ASSOC);
 
-// Display the HTML code only if `cancel_by` is 'seller'
-if ($cancelByResult) {
-    echo '
-    <h4 onclick="markAsRead(' . $cancelByResult['id'] . ')" style="cursor: pointer;color:red;">
-        Mark as Read <i class="fa fa-commenting" aria-hidden="true"></i>
-    </h4>';
-}
-?>
-<script>
-function markAsRead(orderId) {
-    // Send AJAX request to update cancel_by
-    fetch('update_cancel_by.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ orderId: orderId }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Optionally, hide the Mark as Read button after the update
-            showToast('Marked as read successfully!');
-            location.reload(); // Reload the page to reflect the update
-        } else {
-            showToast('Failed to mark as read.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showToast('An error occurred.');
-    });
-}
-</script>
 
 
 
@@ -866,7 +865,57 @@ function markAsRead(orderId) {
                         <button onclick="cancelFeedback(<?php echo $order['id']; ?>)">Cancel</button>
                     </div>
                 <?php endif; ?>
+                <?php
+// Query to check if there are any orders canceled by the seller
+$queryCancelBy = "SELECT id, cancel_by FROM Orders WHERE id = ? AND order_status = ?";
+$stmtCancelBy = $pdo->prepare($queryCancelBy);
+$stmtCancelBy->execute([$order['id'], "Cancelled Order"]);
+$cancelByResult = $stmtCancelBy->fetchAll(PDO::FETCH_ASSOC);
 
+// Display the "Mark as Read" button only if `cancel_by = 'seller'`
+if (!empty($cancelByResult)) {
+    foreach ($cancelByResult as $order) {
+        if ($order['cancel_by'] === 'seller') {
+            echo '
+            <h4 onclick="markAsRead(' . $order['id'] . ')" style="cursor: pointer; color: red;">
+                Mark as Read <i class="fa fa-commenting" aria-hidden="true"></i>
+            </h4>';
+        }
+    }
+}
+?>
+<hr style="
+    border: none;
+    border-top: 2px solid #ccc;
+    margin: 20px 0;
+    width: 100%;
+">
+<script>
+function markAsRead(orderId) {
+    // Send AJAX request to update cancel_by
+    fetch('update_cancel_by.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ orderId: orderId }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Show success notification and reload the page
+            showToast('Marked as read successfully!');
+            location.reload(); // Reload the page to reflect the update
+        } else {
+            showToast('Failed to mark as read.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showToast('An error occurred.');
+    });
+}
+</script>
             </div>
 
         <?php endforeach; ?>
@@ -1070,6 +1119,7 @@ function confirmCancelOrder() {
         .catch((error) => {
             console.error('Error:', error);
             showToast('Failed to cancel order.');
+            location.reload();
         });
 
     closeCancelOrderModal(); // Close the modal after the action
@@ -1081,7 +1131,7 @@ function showToast(message) {
     toast.className = 'toast show';
     setTimeout(() => {
         toast.className = 'toast';
-    }, 3000); // Toast disappears after 3 seconds
+    }, 13000); // Toast disappears after 3 seconds
 }
 
 // Store the current order ID globally  let currentOrderId = null;
@@ -1174,7 +1224,7 @@ function showToast(message) {
             </div>
 
 
-         
+
 
         </div>
     </div>

@@ -267,9 +267,12 @@ foreach ($result as $row) {
 
 
 
+
+
+
                         <li>
-  <a href="#">
-    <i class="fa fa-bell" aria-hidden="true"></i> Notifications
+  <a href="customer-order.php">
+    <i class="fa fa-bell" aria-hidden="true"></i>
 
     <?php
     // Fetch count of cancelled orders
@@ -296,10 +299,6 @@ foreach ($result as $row) {
     ?>
   </a>
 </li>
-
-
-
-
 
 <li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
 						<!-- <li><a href="dashboard.php"><i class="fa fa-home"></i> <?php echo LANG_VALUE_89; ?></a></li> -->
@@ -356,6 +355,7 @@ foreach ($result as $row) {
         ?></b>)
     </a>
 </li>
+
 
 				</ul>
 			</div>
