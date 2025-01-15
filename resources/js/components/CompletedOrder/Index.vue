@@ -123,11 +123,7 @@ export default {
             return;
         }
             try {
-<<<<<<< HEAD
                 const response = await fetch(this.API_BASE + `/buyer/delivered-orders.php?seller_id=${this.userID}`);
-=======
-                const response = await fetch(`http://192.168.1.129:8080/buyer/delivered-orders.php?seller_id=${this.userID}`);
->>>>>>> 5b5ac45837df20d327638404d651261756c71efd
                 const data = await response.json();
                 if (data.status === 'success') {
                     this.orders = data.data;

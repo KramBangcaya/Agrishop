@@ -80,6 +80,7 @@ if (!empty($min_price) || !empty($max_price)) {
         $products = json_decode($product_response, true);
 
 
+
         $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $product_api_url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -369,7 +370,7 @@ if (!empty($min_price) || !empty($max_price)) {
             <div class="col-md-9"><h3>Products</h3>
                 <div class="product-list">
                     <?php
-                    // var_dump($products['data']);
+                    var_dump($products['data']);
                     if (isset($products['data']) && count($products['data']) > 0): ?>
                         <div class="row">
                             <?php foreach ($products['data'] as $product): ?>
