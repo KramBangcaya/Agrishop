@@ -44,10 +44,17 @@
                                             <td>
                                                 <img
                                                 v-if="order.photo && order.photo.length"
+<<<<<<< HEAD
+                                                :src="'http://192.168.68.67:8080/buyer/'+order.photo"
+                                                alt="Product Photo"
+                                                style="max-width: 200px; max-height: 200px; cursor: pointer;"
+                                                @click="openImageModal('http://192.168.68.67:8080/buyer/' + order.photo)"
+=======
                                                 :src="'http://192.168.1.129:8080/buyer/'+order.photo"
                                                 alt="Product Photo"
                                                 style="max-width: 200px; max-height: 200px; cursor: pointer;"
                                                 @click="openImageModal('http://192.168.1.129:8080/buyer/' + order.photo)"
+>>>>>>> 5b5ac45837df20d327638404d651261756c71efd
                                                 />
                                             </td>
 
@@ -117,6 +124,7 @@
 export default {
     data() {
         return {
+            API_BASE : 'http://192.168.68.67:8080',
             orders: [],       // Holds fetched orders data
             search: '',       // Search input field
             userID: null,
@@ -185,9 +193,15 @@ export default {
             console.error("UserID is missing");
             return;
         }
+        // console.log(this.API_BASE);
             try {
+<<<<<<< HEAD
+                const response = await fetch(this.API_BASE + `/buyer/get-orders.php?seller_id=${this.userID}`);
+=======
                 const response = await fetch(`http://192.168.1.129:8080/buyer/get-orders.php?seller_id=${this.userID}`);
+>>>>>>> 5b5ac45837df20d327638404d651261756c71efd
                 const data = await response.json();
+                console.log(response);
                 if (data.status === 'success') {
                     this.orders = data.data;
                     await this.getProductStocks();
@@ -346,7 +360,11 @@ async confirmOrder(id) {
     .then(data => {
         if (data.status === 'success') {
             // If product stock is updated successfully, proceed to confirm the order status
+<<<<<<< HEAD
+            fetch(this.API_BASE + '/buyer/update-order-status.php', {
+=======
             fetch('http://192.168.1.129:8080/buyer/update-order-status.php', {
+>>>>>>> 5b5ac45837df20d327638404d651261756c71efd
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -402,7 +420,11 @@ async cancelPendingOrders(productId) {
         };
 
         try {
+<<<<<<< HEAD
+            const response = await fetch(this.API_BASE + '/buyer/order-cancelled.php', {
+=======
             const response = await fetch('http://192.168.1.129:8080/buyer/order-cancelled.php', {
+>>>>>>> 5b5ac45837df20d327638404d651261756c71efd
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -439,7 +461,11 @@ async cancelPendingOrders(productId) {
             };
             console.log(cancelPayload);
             try {
+<<<<<<< HEAD
+                const response = await fetch(this.API_BASE + '/buyer/order-cancelled.php', {
+=======
                 const response = await fetch('http://192.168.1.129:8080/buyer/order-cancelled.php', {
+>>>>>>> 5b5ac45837df20d327638404d651261756c71efd
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
