@@ -44,10 +44,10 @@
                                             <td>
                                                 <img
                                                 v-if="order.photo && order.photo.length"
-                                                :src="'http://192.168.1.101:8080/buyer/'+order.photo"
+                                                :src="'http://192.168.68.67:8080/buyer/'+order.photo"
                                                 alt="Product Photo"
                                                 style="max-width: 200px; max-height: 200px; cursor: pointer;"
-                                                @click="openImageModal('http://192.168.1.101:8080/buyer/' + order.photo)"
+                                                @click="openImageModal('http://192.168.68.67:8080/buyer/' + order.photo)"
                                                 />
                                             </td>
 
@@ -117,6 +117,7 @@
 export default {
     data() {
         return {
+            API_BASE : 'http://192.168.68.67:8080',
             orders: [],       // Holds fetched orders data
             search: '',       // Search input field
             userID: null,
@@ -185,9 +186,11 @@ export default {
             console.error("UserID is missing");
             return;
         }
+        // console.log(this.API_BASE);
             try {
-                const response = await fetch(`http://192.168.1.101:8080/buyer/get-orders.php?seller_id=${this.userID}`);
+                const response = await fetch(this.API_BASE + `/buyer/get-orders.php?seller_id=${this.userID}`);
                 const data = await response.json();
+                console.log(response);
                 if (data.status === 'success') {
                     this.orders = data.data;
                     await this.getProductStocks();
@@ -346,7 +349,7 @@ async confirmOrder(id) {
     .then(data => {
         if (data.status === 'success') {
             // If product stock is updated successfully, proceed to confirm the order status
-            fetch('http://192.168.1.101:8080/buyer/update-order-status.php', {
+            fetch(this.API_BASE + '/buyer/update-order-status.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -402,7 +405,7 @@ async cancelPendingOrders(productId) {
         };
 
         try {
-            const response = await fetch('http://192.168.1.101:8080/buyer/order-cancelled.php', {
+            const response = await fetch(this.API_BASE + '/buyer/order-cancelled.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -439,7 +442,7 @@ async cancelPendingOrders(productId) {
             };
             console.log(cancelPayload);
             try {
-                const response = await fetch('http://192.168.1.101:8080/buyer/order-cancelled.php', {
+                const response = await fetch(this.API_BASE + '/buyer/order-cancelled.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

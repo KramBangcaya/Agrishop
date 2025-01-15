@@ -5832,6 +5832,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      API_BASE: 'http://192.168.1.129:8080',
       orders: [],
       // Holds fetched orders data
       search: '',
@@ -5904,7 +5905,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 3:
               _context2.prev = 3;
               _context2.next = 6;
-              return fetch("http://192.168.1.101:8080/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
+              return fetch(_this2.API_BASE + "/buyer/delivered-orders.php?seller_id=".concat(_this2.userID));
             case 6:
               response = _context2.sent;
               _context2.next = 9;
@@ -6420,6 +6421,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -6437,6 +6439,10 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
   },
   data: function data() {
     return {
+      API_BASE: 'http://192.168.1.129:8080',
+      apiBaseUrl: process.env.VUE_APP_API_BASE_URL,
+      totalSales: 0,
+      top_orders: 0,
       sellerCount: 0,
       buyerCount: 0,
       approval: 0,
@@ -6445,14 +6451,17 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       activated: 0,
       complaints: 0,
       user_type: '',
+      userId: null,
       isLoading: true,
       topProducts: [],
       // Bar chart for sales overview
       barChartData: {
         labels: ['January', 'February', 'March', 'April', 'May'],
+        // Placeholder labels
         datasets: [{
           label: 'Sales',
-          data: [40, 55, 70, 65, 90],
+          data: [],
+          // Initially empty
           backgroundColor: 'rgba(75, 192, 192, 0.6)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1
@@ -6469,26 +6478,6 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
           title: {
             display: true,
             text: 'Monthly Sales'
-          }
-        }
-      },
-      // Pie chart data for revenue by category
-      pieChartData: {
-        labels: [],
-        datasets: [{
-          label: 'Revenue by Category',
-          data: [],
-          backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 205, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
-          borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 205, 86, 1)', 'rgba(75, 192, 192, 1)'],
-          borderWidth: 1
-        }]
-      },
-      pieChartOptions: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Revenue Distribution by Category'
           }
         }
       },
@@ -6523,87 +6512,134 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
   },
   mounted: function mounted() {
     console.log('Dashboard Component Mounted.');
-    this.fetchCategories();
-    this.fetchTopProducts();
+    this.fetchSalesData(this.userId);
+    this.getUserData();
+    this.fetchTopProducts(this.userId);
     this.getSellerData();
     this.getBuyerData();
     this.getReportData();
     this.getApproveData();
     this.getActivatedData();
     this.getDeactivatedData();
+    this.getTotalSales(this.userId);
+    this.getTotalOrders(this.userId);
   },
   methods: {
-    // Fetch categories and update pie chart
-    fetchCategories: function fetchCategories() {
+    fetchSalesData: function fetchSalesData() {
       var _this = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var response, categories, categoryNames, categoryRevenue;
+        var response, data, salesData, labels, sales;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/categories/all');
+              if (_this.userId) {
+                _context.next = 3;
+                break;
+              }
+              // Ensure userId is available
+              console.error("UserID is missingssssss");
+              return _context.abrupt("return");
             case 3:
+              _context.prev = 3;
+              console.log(userId);
+              _context.next = 7;
+              return fetch(_this.API_BASE + "/buyer/month_sales.php?seller_id=".concat(_this.userId));
+            case 7:
               response = _context.sent;
-              categories = response.data.data;
-              categoryNames = categories.map(function (category) {
-                return category.category;
-              });
-              categoryRevenue = categories.map(function () {
-                return Math.floor(Math.random() * 500) + 100;
-              });
-              _this.pieChartData.labels = categoryNames;
-              _this.pieChartData.datasets[0].data = categoryRevenue;
-              _this.isLoading = false;
-              _context.next = 15;
+              _context.next = 10;
+              return response.json();
+            case 10:
+              data = _context.sent;
+              console.log(data);
+              if (data.status === 'success' && data.data) {
+                // console.log('data.data');
+                salesData = data.data; // Prepare the data for the bar chart
+                labels = salesData.map(function (item) {
+                  console.log(item.month);
+                  switch (item.month) {
+                    case 1:
+                      return 'January';
+                    case 2:
+                      return 'February';
+                    case 3:
+                      return 'March';
+                    case 4:
+                      return 'April';
+                    case 5:
+                      return 'May';
+                    // Add other months as necessary
+                    default:
+                      return "Month ".concat(item.month);
+                  }
+                });
+                sales = salesData.map(function (item) {
+                  return item.total_payment_per_month;
+                });
+                console.log(sales);
+                // Update chart data
+                _this.barChartData.labels = labels;
+                _this.barChartData.datasets[0].data = sales;
+                console.log(_this.barChartData.labels);
+                console.log(_this.barChartData.datasets[0].data);
+              }
+              _context.next = 18;
               break;
-            case 12:
-              _context.prev = 12;
-              _context.t0 = _context["catch"](0);
-              console.error('Error fetching categories:', _context.t0);
             case 15:
+              _context.prev = 15;
+              _context.t0 = _context["catch"](3);
+              console.error('Error fetching sales data:', _context.t0);
+            case 18:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 12]]);
+        }, _callee, null, [[3, 15]]);
       }))();
     },
-    // Fetch top products and update top products chart
     fetchTopProducts: function fetchTopProducts() {
       var _this2 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var response, products, topProducts;
+        var response, data;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.prev = 0;
-              _context2.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/products/all');
+              if (_this2.userId) {
+                _context2.next = 3;
+                break;
+              }
+              // Ensure userId is available
+              console.error("UserID is missingssssss");
+              return _context2.abrupt("return");
             case 3:
+              _context2.prev = 3;
+              _context2.next = 6;
+              return fetch(_this2.API_BASE + "/buyer/top_products.php?seller_id=".concat(_this2.userId));
+            case 6:
               response = _context2.sent;
-              // API endpoint to fetch all products
-              products = response.data.data; // Sort products by quantity in descending order and pick the top 5
-              topProducts = products.sort(function (a, b) {
-                return b.Quantity - a.Quantity;
-              }).slice(0, 5); // Get the top 5 products
-              // Store the top 5 products in the topProducts array
-              _this2.topProducts = topProducts;
-              _this2.isLoading = false; // Stop loading after fetching data
-              _context2.next = 14;
+              _context2.next = 9;
+              return response.json();
+            case 9:
+              data = _context2.sent;
+              if (data && data.data) {
+                _this2.topProducts = data.data;
+              }
+              _context2.next = 16;
               break;
-            case 10:
-              _context2.prev = 10;
-              _context2.t0 = _context2["catch"](0);
+            case 13:
+              _context2.prev = 13;
+              _context2.t0 = _context2["catch"](3);
               console.error('Error fetching top products:', _context2.t0);
-              _this2.isLoading = false; // Stop loading in case of error
-            case 14:
+            case 16:
+              _context2.prev = 16;
+              _this2.isLoading = false; // Hide the loading spinner once data is fetched
+              return _context2.finish(16);
+            case 19:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[0, 10]]);
+        }, _callee2, null, [[3, 13, 16, 19]]);
       }))();
     },
+    // Fetch categories and update pie chart
     // Fetch user data
     getUserData: function getUserData() {
       var _this3 = this;
@@ -6612,7 +6648,12 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
           if (response.data.data) {
             _this3.user = response.data.data[0];
             _this3.user_type = _this3.user.user_type;
-            // console.log(this.user.user_type);
+            _this3.userId = _this3.user.id;
+            console.log("userID: " + _this3.userId);
+            _this3.getTotalSales();
+            _this3.getTotalOrders();
+            _this3.fetchTopProducts();
+            _this3.fetchSalesData();
           }
         })["catch"](function (error) {
           _this3.error = error;
@@ -6623,22 +6664,112 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
         });
       }, 500);
     },
-    getSellerData: function getSellerData() {
+    getTotalOrders: function getTotalOrders() {
       var _this4 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var response, data;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              if (_this4.userId) {
+                _context3.next = 3;
+                break;
+              }
+              // Ensure userId is available
+              console.error("UserID is missing");
+              return _context3.abrupt("return");
+            case 3:
+              _context3.prev = 3;
+              _context3.next = 6;
+              return fetch(_this4.API_BASE + "/buyer/top_orders.php?seller_id=".concat(_this4.userId));
+            case 6:
+              response = _context3.sent;
+              _context3.next = 9;
+              return response.json();
+            case 9:
+              data = _context3.sent;
+              // Parse JSON response
+              // console.log(response);
+              // Check if the status is 'success' and update totalSales
+              if (data.status === 'success') {
+                _this4.top_orders = data.data.Total_orders; // Update total sales value
+              } else {
+                console.error('Failed to fetch top orders');
+              }
+              _context3.next = 16;
+              break;
+            case 13:
+              _context3.prev = 13;
+              _context3.t0 = _context3["catch"](3);
+              console.error('Error fetching total top orders:', _context3.t0);
+            case 16:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, null, [[3, 13]]);
+      }))();
+    },
+    getTotalSales: function getTotalSales() {
+      var _this5 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var response, data;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              if (_this5.userId) {
+                _context4.next = 3;
+                break;
+              }
+              // Ensure userId is available
+              console.error("UserID is missing");
+              return _context4.abrupt("return");
+            case 3:
+              _context4.prev = 3;
+              _context4.next = 6;
+              return fetch(_this5.API_BASE + "/buyer/total_sales.php?seller_id=".concat(_this5.userId));
+            case 6:
+              response = _context4.sent;
+              _context4.next = 9;
+              return response.json();
+            case 9:
+              data = _context4.sent;
+              // Parse JSON response
+
+              // Check if the status is 'success' and update totalSales
+              if (data.status === 'success') {
+                _this5.totalSales = data.data.total_sales; // Update total sales value
+              } else {
+                console.error('Failed to fetch total sales');
+              }
+              _context4.next = 16;
+              break;
+            case 13:
+              _context4.prev = 13;
+              _context4.t0 = _context4["catch"](3);
+              console.error('Error fetching total sales:', _context4.t0);
+            case 16:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4, null, [[3, 13]]);
+      }))();
+    },
+    getSellerData: function getSellerData() {
+      var _this6 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/all_seller2').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this4.user = response.data.data;
+          _this6.user = response.data.data;
 
           // Store the count of sellers
-          _this4.sellerCount = _this4.user.length;
+          _this6.sellerCount = _this6.user.length;
 
           // console.log('Sellers:', this.user);
           // console.log('Total Sellers:', this.sellerCount);
         }
       })["catch"](function (error) {
         var _error$response;
-        _this4.error = error;
+        _this6.error = error;
         toast.fire({
           icon: 'error',
           text: ((_error$response = error.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 ? void 0 : _error$response.message) || 'An error occurred'
@@ -6646,19 +6777,19 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getBuyerData: function getBuyerData() {
-      var _this5 = this;
+      var _this7 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/all_buyer2').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this5.user = response.data.data;
-          _this5.buyerCount = _this5.user.length;
+          _this7.user = response.data.data;
+          _this7.buyerCount = _this7.user.length;
 
           // console.log('Buyer:', this.user);
           // console.log('Total Sellers:', this.buyerCount);
         }
       })["catch"](function (error) {
         var _error$response2;
-        _this5.error = error;
+        _this7.error = error;
         toast.fire({
           icon: 'error',
           text: ((_error$response2 = error.response) === null || _error$response2 === void 0 || (_error$response2 = _error$response2.data) === null || _error$response2 === void 0 ? void 0 : _error$response2.message) || 'An error occurred'
@@ -6666,19 +6797,19 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getReportData: function getReportData() {
-      var _this6 = this;
+      var _this8 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/report/all_reports').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this6.user = response.data.data;
-          _this6.complaints = _this6.user.length;
+          _this8.user = response.data.data;
+          _this8.complaints = _this8.user.length;
 
           // console.log('complaints:', this.user);
           // console.log('Total Complaints:', this.complaints);
         }
       })["catch"](function (error) {
         var _error$response3;
-        _this6.error = error;
+        _this8.error = error;
         toast.fire({
           icon: 'error',
           text: ((_error$response3 = error.response) === null || _error$response3 === void 0 || (_error$response3 = _error$response3.data) === null || _error$response3 === void 0 ? void 0 : _error$response3.message) || 'An error occurred'
@@ -6686,19 +6817,19 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getApproveData: function getApproveData() {
-      var _this7 = this;
+      var _this9 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/approval').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this7.user = response.data.data;
-          _this7.approval = _this7.user.length;
+          _this9.user = response.data.data;
+          _this9.approval = _this9.user.length;
 
           // console.log('approval:', this.user);
           // console.log('Total Approval:', this.approval);
         }
       })["catch"](function (error) {
         var _error$response4;
-        _this7.error = error;
+        _this9.error = error;
         toast.fire({
           icon: 'error',
           text: ((_error$response4 = error.response) === null || _error$response4 === void 0 || (_error$response4 = _error$response4.data) === null || _error$response4 === void 0 ? void 0 : _error$response4.message) || 'An error occurred'
@@ -6706,19 +6837,19 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getActivatedData: function getActivatedData() {
-      var _this8 = this;
+      var _this10 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/activate').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this8.user = response.data.data;
-          _this8.activated = _this8.user.length;
+          _this10.user = response.data.data;
+          _this10.activated = _this10.user.length;
 
           // console.log('Activated:', this.user);
           // console.log('Total Activated:', this.activated);
         }
       })["catch"](function (error) {
         var _error$response5;
-        _this8.error = error;
+        _this10.error = error;
         toast.fire({
           icon: 'error',
           text: ((_error$response5 = error.response) === null || _error$response5 === void 0 || (_error$response5 = _error$response5.data) === null || _error$response5 === void 0 ? void 0 : _error$response5.message) || 'An error occurred'
@@ -6726,18 +6857,18 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getDeactivatedData: function getDeactivatedData() {
-      var _this9 = this;
+      var _this11 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/deactivate').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this9.user = response.data.data;
-          _this9.deactivated = _this9.user.length;
-          console.log('Deactivated:', _this9.user);
-          console.log('Total Deactivated:', _this9.deactivated);
+          _this11.user = response.data.data;
+          _this11.deactivated = _this11.user.length;
+          console.log('Deactivated:', _this11.user);
+          console.log('Total Deactivated:', _this11.deactivated);
         }
       })["catch"](function (error) {
         var _error$response6;
-        _this9.error = error;
+        _this11.error = error;
         toast.fire({
           icon: 'error',
           text: ((_error$response6 = error.response) === null || _error$response6 === void 0 || (_error$response6 = _error$response6.data) === null || _error$response6 === void 0 ? void 0 : _error$response6.message) || 'An error occurred'
@@ -7567,6 +7698,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      API_BASE: 'http://192.168.1.129:8080',
       orders: [],
       // Holds fetched orders data
       search: '',
@@ -7684,32 +7816,33 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 3:
               _context3.prev = 3;
               _context3.next = 6;
-              return fetch("http://192.168.1.101:8080/buyer/get-orders.php?seller_id=".concat(_this4.userID));
+              return fetch(_this4.API_BASE + "/buyer/get-orders.php?seller_id=".concat(_this4.userID));
             case 6:
               response = _context3.sent;
               _context3.next = 9;
               return response.json();
             case 9:
               data = _context3.sent;
+              console.log(response);
               if (!(data.status === 'success')) {
-                _context3.next = 14;
+                _context3.next = 15;
                 break;
               }
               _this4.orders = data.data;
-              _context3.next = 14;
+              _context3.next = 15;
               return _this4.getProductStocks();
-            case 14:
-              _context3.next = 19;
+            case 15:
+              _context3.next = 20;
               break;
-            case 16:
-              _context3.prev = 16;
+            case 17:
+              _context3.prev = 17;
               _context3.t0 = _context3["catch"](3);
               console.error('Error fetching orders:', _context3.t0);
-            case 19:
+            case 20:
             case "end":
               return _context3.stop();
           }
-        }, _callee3, null, [[3, 16]]);
+        }, _callee3, null, [[3, 17]]);
       }))();
     },
     getProductStocks: function getProductStocks() {
@@ -7980,7 +8113,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               }()).then(function (data) {
                 if (data.status === 'success') {
                   // If product stock is updated successfully, proceed to confirm the order status
-                  fetch('http://192.168.1.101:8080/buyer/update-order-status.php', {
+                  fetch(_this7.API_BASE + '/buyer/update-order-status.php', {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json'
@@ -8068,7 +8201,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               };
               _context9.prev = 10;
               _context9.next = 13;
-              return fetch('http://192.168.1.101:8080/buyer/order-cancelled.php', {
+              return fetch(_this8.API_BASE + '/buyer/order-cancelled.php', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
@@ -8140,7 +8273,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               console.log(cancelPayload);
               _context10.prev = 5;
               _context10.next = 8;
-              return fetch('http://192.168.1.101:8080/buyer/order-cancelled.php', {
+              return fetch(_this9.API_BASE + '/buyer/order-cancelled.php', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
@@ -10718,12 +10851,12 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "http://192.168.1.101:8080/buyer/" + order.photo,
+        src: "http://192.168.1.129:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
         click: function click($event) {
-          return _vm.openImageModal("/buyer/" + order.photo);
+          return _vm.openImageModal("http://192.168.1.129:8080/buyer/" + order.photo);
         }
       }
     }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))])]);
@@ -11760,23 +11893,27 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "card m-3",
     style: _vm.cardStyle
-  }, [_vm._m(6), _vm._v(" "), _vm._m(7)])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(6), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("h1", [_vm._v(_vm._s(_vm.top_orders))])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card m-3",
     style: _vm.cardStyle
-  }, [_vm._m(8), _vm._v(" "), _vm._m(9)])])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(7), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("h1", [_vm._v(_vm._s("₱ " + _vm.totalSales + ".00"))])])])])]), _vm._v(" "), _c("div", {
     staticClass: "row justify-content-center"
   }, [_c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card m-3",
     style: _vm.cardStyle
-  }, [_vm._m(10), _vm._v(" "), _c("div", {
+  }, [_vm._m(8), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("table", {
     staticClass: "table border table-bordered"
-  }, [_vm._m(11), _vm._v(" "), _c("tbody", {
+  }, [_vm._m(9), _vm._v(" "), _c("tbody", {
     staticClass: "border-black"
   }, _vm._l(_vm.topProducts, function (product, index) {
     return _c("tr", {
@@ -11785,32 +11922,21 @@ var render = function render() {
       attrs: {
         scope: "row"
       }
-    }, [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(product.Product_Name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(product.Quantity))])]);
+    }, [_vm._v(_vm._s(product.rank))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(product.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(product.total_quantity))])]);
   }), 0)]), _vm._v(" "), !_vm.topProducts.length && !_vm.isLoading ? _c("div", {
     staticClass: "text-center"
-  }, [_vm._v("\n            No products available.\n          ")]) : _vm._e(), _vm._v(" "), _vm.isLoading ? _c("div", {
+  }, [_vm._v("\n                  No products available.\n              ")]) : _vm._e(), _vm._v(" "), _vm.isLoading ? _c("div", {
     staticClass: "text-center"
-  }, [_vm._v("\n            Loading top products...\n          ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                  Loading top products...\n              ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card m-3"
-  }, [_vm._m(12), _vm._v(" "), _c("div", {
+  }, [_vm._m(10), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("bar-chart", {
     attrs: {
       data: _vm.barChartData,
       options: _vm.barChartOptions
-    }
-  })], 1)])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-8"
-  }, [_c("div", {
-    staticClass: "card m-3"
-  }, [_vm._m(13), _vm._v(" "), _c("div", {
-    staticClass: "card-body"
-  }, [_vm.isLoading ? _c("div", [_vm._v("Loading Revenue Data...")]) : _c("pie-chart", {
-    attrs: {
-      data: _vm.pieChartData,
-      options: _vm.pieChartOptions
     }
   })], 1)])])])]) : _vm._e()]);
 };
@@ -11869,13 +11995,7 @@ var staticRenderFns = [function () {
     staticClass: "card-header"
   }, [_c("h5", {
     staticClass: "card-title"
-  }, [_vm._v("Total Order")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "card-body"
-  }, [_c("h1", [_vm._v("Sample Order")])]);
+  }, [_vm._v("Total Completed Order")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -11883,13 +12003,7 @@ var staticRenderFns = [function () {
     staticClass: "card-header"
   }, [_c("h5", {
     staticClass: "card-title"
-  }, [_vm._v("Total Sale")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "card-body"
-  }, [_c("h1", [_vm._v("Sample Sale")])]);
+  }, [_vm._v("Total Sales")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -11924,14 +12038,6 @@ var staticRenderFns = [function () {
   }, [_c("h5", {
     staticClass: "card-title"
   }, [_vm._v("Sales Overview")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "card-header"
-  }, [_c("h5", {
-    staticClass: "card-title"
-  }, [_vm._v("Revenue by Category")])]);
 }];
 render._withStripped = true;
 
@@ -13821,12 +13927,12 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "http://192.168.1.101:8080/buyer/" + order.photo,
+        src: "http://192.168.1.129:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
         click: function click($event) {
-          return _vm.openImageModal("http://192.168.1.101:8080/buyer/" + order.photo);
+          return _vm.openImageModal("http://192.168.1.129:8080/buyer/" + order.photo);
         }
       }
     }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.reason_cancel))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))]), _vm._v(" "), order.order_status !== "Cancelled Order" ? _c("td", {
