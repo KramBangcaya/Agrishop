@@ -120,19 +120,11 @@ export default {
         }
             try {
                 const response = await fetch(this.API_BASE + `/buyer/delivered-orders.php?seller_id=${this.userID}`);
-<<<<<<< HEAD
-                    const data = await response.json();
-                    if(data.status === 'success'){
-                        this.orders = data.data;
-                    }
-                } catch (error) {
-=======
                 const data = await response.json();
                 if (data.status === 'success') {
                     this.orders = data.data;
                 }
             } catch (error) {
->>>>>>> 8974adeea271d004478439f1ae08ea2ba4223861
                 console.error('Error fetching orders:', error);
             }
         },

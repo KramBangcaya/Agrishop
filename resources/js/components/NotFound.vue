@@ -160,6 +160,18 @@
           </div>
         </div>
 
+        <div class="col-md-8">
+          <div class="card m-3">
+            <div class="card-header">
+              <h5 class="card-title">Revenue by Category</h5>
+            </div>
+            <div class="card-body">
+              <div v-if="isLoading">Loading Revenue Data...</div>
+              <pie-chart v-else :data="pieChartData" :options="pieChartOptions" />
+            </div>
+          </div>
+        </div>
+
 
       </div>
             </div>
@@ -237,7 +249,38 @@
       }
         },
 
+        pieChartData: {
+          labels: [],
+          datasets: [
+            {
+              label: 'Revenue by Category',
+              data: [],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 205, 86, 1)',
+                'rgba(75, 192, 192, 1)'
+              ],
+              borderWidth: 1
+            }
+          ]
+        },
 
+        pieChartOptions: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Revenue Distribution by Category'
+            }
+          }
+        },
 
 
         // New chart data for Top Most Sold Products
