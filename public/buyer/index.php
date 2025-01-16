@@ -112,6 +112,7 @@ require_once('api-config.php');
 onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 12px rgba(0, 0, 0, 0.2)';"
 onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.1)';"
 >
+
                 <div class="thumb">
                     <div class="photo" style="background-image:url(<?php echo API_BASE_URL . '/storage/' . $product['photos'][0]; ?>);"></div>
                 </div>
@@ -121,15 +122,12 @@ onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgb
                             <?php echo $product['Product_Name']; ?>
                         </a>
                     </h3>
-                    <h4>₱<?php echo $product['price']; ?></h4>
-                    <div class="rating">
-                        <?php
-                        // Example: Displaying full stars for simplicity
-                        for ($i = 1; $i <= 5; $i++) {
-                            echo '<i class="fa fa-star"></i>';
-                        }
-                        ?>
-                    </div>
+
+
+
+                    <h4>₱<?php echo number_format($product['price'], 2); ?> </h4>
+                    <h6>Stock: <?php echo $product['Quantity']; ?></h6>
+
                     <h3>
                         <a href="product.php?id=<?php echo $product['id']; ?>&fname=<?php echo $product['first_name']; ?>&lname=<?php echo $product['last_name']; ?>">
                             <?php echo $product['first_name']; ?> <?php echo $product['last_name']; ?>

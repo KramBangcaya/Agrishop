@@ -38,7 +38,7 @@ if(!isset($_REQUEST['id'])) {
      // Extract product details from the "data" key
      $product = $result['data'];
 
-    var_dump($product);
+    //var_dump($product);
      $p_name = $product['Product_Name'] ?? 'N/A';
      $p_current_price = $product['price'] ?? 'N/A';
      $p_qty = $product['Quantity'] ?? 'N/A';

@@ -362,7 +362,39 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
 
 
     <!-- For Delivery Orders -->
-    <h2>For Delivery Orders</h2>
+    <h2>For Delivery Orders<?php
+    // Query to check if this product is canceled by the seller
+    $queryCancelBy = "SELECT COUNT(*) AS total_delivered1ser FROM Orders WHERE buyer_id = ? AND order_status = ?";
+    $stmtCancelBy = $pdo->prepare($queryCancelBy);
+
+    // Execute the query with the parameters
+    $stmtCancelBy->execute([$_SESSION['user_id'], "For Delivery"]);
+
+    // Fetch the result
+    $cancelByResult = $stmtCancelBy->fetch(PDO::FETCH_ASSOC);
+
+    // Display the red circle notification only if there are cancelled orders by the seller
+    if ($cancelByResult && $cancelByResult['total_delivered1ser'] > 0) {
+        $totalDelivered1s = $cancelByResult['total_delivered1ser'];
+        echo '
+        <span style="
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px;
+            margin-left: 5px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 34px;
+            height: 34px;
+            font-size: 16px;
+            text-align: center;
+        ">
+            ' . htmlspecialchars($totalDelivered1s) . '
+        </span>';
+    }
+    ?></h2>
 
     <details>
     <summary style="cursor: pointer; font-size: 1.2em; font-weight: bold;color:rgb(54, 71, 228);">
@@ -531,7 +563,7 @@ $groupedOrders[$order['order_status']][] = $order;
 
 </details>
 
-
+<h3 class="special"> </h3>
 
 
 
@@ -710,9 +742,14 @@ $groupedOrders[$order['order_status']][] = $order;
                                                                                             </div>
                                                                 </div>
 
-                                                                <h3 class="special"> </h3>
-                            <?php endif; ?>
 
+                            <?php endif; ?>
+                            <hr style="
+    border: none;
+    border-top: 2px solid #ccc;
+    margin: 20px 0;
+    width: 100%;
+">
                         <?php endforeach; ?>
                         </details>
 
@@ -742,8 +779,39 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
 
 <!-- Cancelled Orders -->
 <h2>
-    Cancelled Orders
+    Cancelled Orders<?php
+    // Query to check if this product is canceled by the seller
+    $queryCancelBy = "SELECT COUNT(*) AS total_delivered1ser FROM Orders WHERE buyer_id = ? AND order_status = ? AND cancel_by = ?";
+    $stmtCancelBy = $pdo->prepare($queryCancelBy);
 
+    // Execute the query with the parameters
+    $stmtCancelBy->execute([$_SESSION['user_id'], "Cancelled Order", "seller"]);
+
+    // Fetch the result
+    $cancelByResult = $stmtCancelBy->fetch(PDO::FETCH_ASSOC);
+
+    // Display the red circle notification only if there are cancelled orders by the seller
+    if ($cancelByResult && $cancelByResult['total_delivered1ser'] > 0) {
+        $totalDelivered1s = $cancelByResult['total_delivered1ser'];
+        echo '
+        <span style="
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px;
+            margin-left: 5px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 34px;
+            height: 34px;
+            font-size: 16px;
+            text-align: center;
+        ">
+            ' . htmlspecialchars($totalDelivered1s) . '
+        </span>';
+    }
+    ?>
 </h2>
 
 
@@ -754,6 +822,7 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
     <summary style="cursor: pointer; font-size: 1.2em; font-weight: bold;color:rgb(54, 71, 228);">
         View Cancelled Orders (<?php echo $totalDelivered1s = $countResult['total_delivered1s']; ?>)
     </summary>
+
     <div style="margin-top: 10px;">
 
         <?php
@@ -875,6 +944,7 @@ $countResult = $stmtCount->fetch(PDO::FETCH_ASSOC);
                         <button onclick="cancelFeedback(<?php echo $order['id']; ?>)">Cancel</button>
                     </div>
                 <?php endif; ?>
+
                 <?php
 // Query to check if there are any orders canceled by the seller
 $queryCancelBy = "SELECT id, cancel_by FROM Orders WHERE id = ? AND order_status = ?";
@@ -927,12 +997,7 @@ function markAsRead(orderId) {
 }
 </script>
             </div>
-            <hr style="
-    border: none;
-    border-top: 2px solid #ccc;
-    margin: 20px 0;
-    width: 100%;
-">
+
         <?php endforeach; ?>
     </div>
 </details>

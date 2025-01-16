@@ -370,7 +370,7 @@ if (!empty($min_price) || !empty($max_price)) {
             <div class="col-md-9"><h3>Products</h3>
                 <div class="product-list">
                     <?php
-                    var_dump($products['data']);
+                   //var_dump($products['data']);
                     if (isset($products['data']) && count($products['data']) > 0): ?>
                         <div class="row">
                             <?php foreach ($products['data'] as $product): ?>
@@ -406,19 +406,18 @@ if (!empty($min_price) || !empty($max_price)) {
                                                 <div class="overlay"></div>
                                             </div>
 
-<?php
 
-$queryCountCancelled = "SELECT COUNT(*) AS total_cancelled FROM Orders WHERE buyer_id = ? AND order_status=? AND cancel_by=?";
-$stmtCountCancelled = $pdo->prepare($queryCountCancelled);
-$stmtCountCancelled->execute([$_SESSION['user_id'], "Cancelled Order", "seller"]);
-$countResultCancelled = $stmtCountCancelled->fetch(PDO::FETCH_ASSOC);
-$totalCancelled = $countResultCancelled['total_cancelled'] ?? 0;
-?>
 
-                                            <div class="text">
-                                                <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['Product_Name']; ?></a></h3>
-                                                <h4>₱<?php echo $product['price']; ?></h4>
-
+<!-- HTML Code -->
+<div class="text">
+    <h3>
+        <a href="product.php?id=<?php echo htmlspecialchars($product['id']); ?>">
+            <?php echo htmlspecialchars($product['Product_Name']); ?>
+        </a>
+    </h3>
+    <h4>
+        ₱<?php echo number_format($product['price'], 2); ?> / <?php echo htmlspecialchars($product['measurement']); ?>
+    </h4>
                                                 <h6>Stock: <?php echo $product['Quantity']; ?></h6>
                                                 <h5><?php echo $product['last_name']; ?> <?php echo $product['first_name']; ?></h5>
                                                 <?php if (isset($product['Quantity']) && $product['Quantity'] == 0): ?>
@@ -448,6 +447,14 @@ $totalCancelled = $countResultCancelled['total_cancelled'] ?? 0;
 
                                                 <?php endif; ?>
                                             </div>
+
+
+
+
+
+
+
+
                                         </div>
                                     </div>
                                 <?php else: ?>

@@ -270,11 +270,9 @@ foreach ($result as $row) {
 
 
 
-                        <li>
-  <a href="customer-order.php">
-    <i class="fa fa-bell" aria-hidden="true"></i>
 
-    <?php
+
+  <?php
     // Fetch count of cancelled orders
     $queryCountCancelled = "SELECT COUNT(*) AS total_cancelled FROM Orders WHERE buyer_id = ? AND order_status=? AND cancel_by=?";
     $stmtCountCancelled = $pdo->prepare($queryCountCancelled);
@@ -289,16 +287,106 @@ foreach ($result as $row) {
     $countResultForDelivery = $stmtCountForDelivery->fetch(PDO::FETCH_ASSOC);
     $totalForDelivery = $countResultForDelivery['total_for_delivery'] ?? 0;
 
-    // Combine both counts
-    $totalNotifications = $totalCancelled + $totalForDelivery;
+    // Fetch count of completed orders
+//     $queryCountCompleted = "SELECT COUNT(*) AS total_completed FROM reports WHERE userID = ? AND updated_at IS NOT NULL";
+// $stmtCountCompleted = $pdo->prepare($queryCountCompleted);
+// $stmtCountCompleted->execute([ $_SESSION['customer']['user_id']]);
+// $countResultCompleted = $stmtCountCompleted->fetch(PDO::FETCH_ASSOC);
+// $totalCompleted = $countResultCompleted['total_completed'] ?? 0;
+
+
+    // Combine all notifications
+    $totalNotifications = $totalCancelled + $totalForDelivery;  //+ $totalCompleted
 
     // Display the combined count if it's greater than 0
-    if ($totalNotifications > 0) {
-        echo "<span style='background: red; color: white; border-radius: 50%; padding: 3px 7px; margin-left: 5px;'>$totalNotifications</span>";
-    }
+
     ?>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    <i class="fa fa-bell" aria-hidden="true"></i>
+    <?php if ($totalNotifications > 0): ?>
+      <span style="background: red; color: white; border-radius: 50%; padding: 3px 7px;"><?php echo $totalNotifications; ?></span>
+    <?php endif; ?>
   </a>
+  <style>
+  /* Style for the dropdown menu container */
+  .dropdown-menu {
+    background-color: #ffffff; /* White background */
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    padding: 10px;
+    min-width: 300px; /* Set a minimum width */
+  }
+
+  /* Style for each dropdown item */
+  .dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333; /* Dark text color */
+    text-decoration: none;
+    border-radius: 5px; /* Rounded item */
+    transition: background-color 0.3s ease;
+  }
+
+  /* Hover effect for dropdown items */
+  .dropdown-item:hover {
+    background-color: #f8f9fa; /* Light gray on hover */
+    color: #007bff; /* Change text color to primary */
+  }
+
+  /* Styling for badges */
+  .badge {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 20px; /* Make badges rounded */
+  }
+
+  /* Colors for badges */
+  .badge-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .badge-warning {
+    background-color: #ffc107;
+    color: #212529;
+  }
+
+  .badge-success {
+    background-color: #28a745;
+    color: white;
+  }
+</style>
+
+<ul class="dropdown-menu">
+  <a class="dropdown-item" href="customer-order.php">
+    <span>Cancelled Orders</span>
+    <span class="badge badge-danger"><?php echo $totalCancelled; ?></span>
+  </a>
+  <a class="dropdown-item" href="customer-order.php">
+    <span>Orders for Delivery</span>
+    <span class="badge badge-warning"><?php echo $totalForDelivery; ?></span>
+  </a>
+  <!-- <a class="dropdown-item" href="reportseller.php">
+    <span>Completed Orders</span>
+    <span class="badge badge-success"><?php echo $totalCompleted; ?></span>
+  </a> -->
+</ul>
+
 </li>
+
 
 <li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
 						<!-- <li><a href="dashboard.php"><i class="fa fa-home"></i> <?php echo LANG_VALUE_89; ?></a></li> -->
