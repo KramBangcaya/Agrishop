@@ -158,6 +158,51 @@ class ProductsController extends Controller
     return response()->json(['data' => $formattedData], 200);
     }
 
+    public function categories_price(Request $request, $id){
+
+        // dd($request->all());
+        $request->validate([
+            'min' => 'required|numeric|min:0',
+            'max' => 'required|numeric|min:0|gte:min',
+        ]);
+        $minPrice = $request->input('min');
+        $maxPrice = $request->input('max');
+
+        $data = Products::with('User')
+        ->where('idCategory', $id)
+        ->whereBetween('price', [$minPrice, $maxPrice])
+        ->get();
+
+
+    // Format the data
+    $formattedData = $data->map(function ($product) {
+        return [
+            'id' => $product->id,
+            'Product_Name' => $product->Product_Name,
+            'idCategory' => $product->idCategory,
+            'price' => $product->price,
+            'idMeasurement' => $product->idMeasurement,
+            'Quantity' => $product->Quantity,
+            'Description' => $product->Description,
+            'created_at' => $product->created_at,
+            'updated_at' => $product->updated_at,
+            'photos' => json_decode($product->photos),
+            'photos1' => json_decode($product->photos1),
+            'photos2' => json_decode($product->photos2),
+            'userID' => $product->userID,
+            'first_name' => $product->user->name ?? null,
+            'last_name' => $product->user->lastname ?? null,
+            'contact_number' => $product->user->contact_number ?? null,
+            'latitude' => $product->user->latitude ?? null,
+            'longitude' => $product->user->longitude ?? null,
+            'measurement' => $product->measurement->measurement ?? null,
+        ];
+    });
+
+    // Return the formatted data as a JSON response
+    return response()->json(['data' => $formattedData], 200);
+    }
+
     public function index_all()
     {
 
