@@ -6090,7 +6090,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      API_BASE: 'http://192.168.1.129:8080',
+      API_BASE: 'http://192.168.1.101:8080',
       orders: [],
       // Holds fetched orders data
       search: '',
@@ -6746,7 +6746,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
   },
   data: function data() {
     return {
-      API_BASE: 'http://192.168.1.129:8080',
+      API_BASE: 'http://192.168.1.101:8080',
       apiBaseUrl: process.env.VUE_APP_API_BASE_URL,
       totalSales: 0,
       total_pending: 0,
@@ -6840,6 +6840,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
   },
   mounted: function mounted() {
     console.log('Dashboard Component Mounted.');
+    this.fetchCategories();
     this.fetchSalesData(this.userId);
     this.getUserData();
     this.getTotalPending(this.userId);
@@ -6855,39 +6856,124 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
     this.getTotalOrders(this.userId);
   },
   methods: {
-    fetchSalesData: function fetchSalesData() {
+    fetchCategories: function fetchCategories() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var userId, response, data, salesData, labels, sales;
+        var userId, categoriesResponse, categoriesData, categories, revenueResponse, revenueData, categoryMap, categoryNames, categoryRevenue;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                userId = window.user.id;
+                userId = window.user.id; // Ensure user ID is available
 
                 if (userId) {
                   _context.next = 4;
                   break;
                 }
 
-                // Ensure userId is available
                 console.error("UserID is missing");
                 return _context.abrupt("return");
 
               case 4:
                 _context.prev = 4;
+                _context.next = 7;
+                return fetch('/categories/all');
+
+              case 7:
+                categoriesResponse = _context.sent;
+                _context.next = 10;
+                return categoriesResponse.json();
+
+              case 10:
+                categoriesData = _context.sent;
+                categories = categoriesData.data; // Fetch total payment by category for the seller
+
+                _context.next = 14;
+                return fetch(_this.API_BASE + "/buyer/total_payment_by_category.php?seller_id=".concat(userId));
+
+              case 14:
+                revenueResponse = _context.sent;
+                _context.next = 17;
+                return revenueResponse.json();
+
+              case 17:
+                revenueData = _context.sent;
+                console.log(revenueData);
+
+                if (!(revenueData.status !== 'success' || !categoriesData)) {
+                  _context.next = 22;
+                  break;
+                }
+
+                console.error("Failed to fetch required data.");
+                return _context.abrupt("return");
+
+              case 22:
+                // Map revenue data to corresponding categories
+                categoryMap = revenueData.data.reduce(function (map, item) {
+                  map[item.category_id] = parseFloat(item.total_payment);
+                  return map;
+                }, {}); // Prepare labels and revenue data for the chart
+
+                categoryNames = categories.map(function (category) {
+                  return category.category;
+                });
+                categoryRevenue = categories.map(function (category) {
+                  return categoryMap[category.id] || 0;
+                });
+                _this.pieChartData.labels = categoryNames;
+                _this.pieChartData.datasets[0].data = categoryRevenue;
+                _this.isLoading = false;
+                _context.next = 33;
+                break;
+
+              case 30:
+                _context.prev = 30;
+                _context.t0 = _context["catch"](4);
+                console.error('Error fetching categories:', _context.t0);
+
+              case 33:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[4, 30]]);
+      }))();
+    },
+    fetchSalesData: function fetchSalesData() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var userId, response, data, salesData, labels, sales;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                userId = window.user.id;
+
+                if (userId) {
+                  _context2.next = 4;
+                  break;
+                }
+
+                // Ensure userId is available
+                console.error("UserID is missing");
+                return _context2.abrupt("return");
+
+              case 4:
+                _context2.prev = 4;
                 console.log(userId);
-                _context.next = 8;
-                return fetch(_this.API_BASE + "/buyer/month_sales.php?seller_id=".concat(userId));
+                _context2.next = 8;
+                return fetch(_this2.API_BASE + "/buyer/month_sales.php?seller_id=".concat(userId));
 
               case 8:
-                response = _context.sent;
-                _context.next = 11;
+                response = _context2.sent;
+                _context2.next = 11;
                 return response.json();
 
               case 11:
-                data = _context.sent;
+                data = _context2.sent;
 
                 if (data.status === 'success' && data.data) {
                   // console.log('data.data');
@@ -6919,121 +7005,28 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
                     return item.total_payment_per_month;
                   }); // Update chart data
 
-                  _this.barChartData.labels = labels;
-                  _this.barChartData.datasets[0].data = sales;
+                  _this2.barChartData.labels = labels;
+                  _this2.barChartData.datasets[0].data = sales;
                 }
 
-                _context.next = 18;
+                _context2.next = 18;
                 break;
 
               case 15:
-                _context.prev = 15;
-                _context.t0 = _context["catch"](4);
-                console.error('Error fetching sales data:', _context.t0);
+                _context2.prev = 15;
+                _context2.t0 = _context2["catch"](4);
+                console.error('Error fetching sales data:', _context2.t0);
 
               case 18:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[4, 15]]);
-      }))();
-    },
-    fetchTopProducts: function fetchTopProducts() {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var userId, response, data;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                userId = window.user.id;
-
-                if (userId) {
-                  _context2.next = 4;
-                  break;
-                }
-
-                // Ensure userId is available
-                console.error("UserID is missingssssss");
-                return _context2.abrupt("return");
-
-              case 4:
-                _context2.prev = 4;
-                _context2.next = 7;
-                return fetch(_this2.API_BASE + "/buyer/top_products.php?seller_id=".concat(userId));
-
-              case 7:
-                response = _context2.sent;
-                _context2.next = 10;
-                return response.json();
-
-              case 10:
-                data = _context2.sent;
-
-                if (data && data.data) {
-                  _this2.topProducts = data.data;
-                }
-
-                _context2.next = 17;
-                break;
-
-              case 14:
-                _context2.prev = 14;
-                _context2.t0 = _context2["catch"](4);
-                console.error('Error fetching top products:', _context2.t0);
-
-              case 17:
-                _context2.prev = 17;
-                _this2.isLoading = false; // Hide the loading spinner once data is fetched
-
-                return _context2.finish(17);
-
-              case 20:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[4, 14, 17, 20]]);
+        }, _callee2, null, [[4, 15]]);
       }))();
     },
-    // Fetch categories and update pie chart
-    // Fetch user data
-    getUserData: function getUserData() {
+    fetchTopProducts: function fetchTopProducts() {
       var _this3 = this;
-
-      this.timer = setTimeout(function () {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/user/show/').then(function (response) {
-          if (response.data.data) {
-            _this3.user = response.data.data[0];
-            _this3.user_type = _this3.user.user_type;
-            _this3.userId = _this3.user.id;
-            console.log("userID: " + _this3.userId);
-
-            _this3.getTotalSales();
-
-            _this3.getTotalOrders();
-
-            _this3.fetchTopProducts();
-
-            _this3.fetchSalesData();
-
-            _this3.getTotalPending();
-
-            _this3.getTotalDelivery();
-          }
-        })["catch"](function (error) {
-          _this3.error = error;
-          toast.fire({
-            icon: 'error',
-            text: error.response.data.message
-          });
-        });
-      }, 500);
-    },
-    getTotalOrders: function getTotalOrders() {
-      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         var userId, response, data;
@@ -7049,13 +7042,13 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
                 }
 
                 // Ensure userId is available
-                console.error("UserID is missing");
+                console.error("UserID is missingssssss");
                 return _context3.abrupt("return");
 
               case 4:
                 _context3.prev = 4;
                 _context3.next = 7;
-                return fetch(_this4.API_BASE + "/buyer/top_orders.php?seller_id=".concat(userId));
+                return fetch(_this3.API_BASE + "/buyer/top_products.php?seller_id=".concat(userId));
 
               case 7:
                 response = _context3.sent;
@@ -7065,13 +7058,8 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
               case 10:
                 data = _context3.sent;
 
-                // Parse JSON response
-                // console.log(response);
-                // Check if the status is 'success' and update totalSales
-                if (data.status === 'success') {
-                  _this4.top_orders = data.data.Total_orders; // Update total sales value
-                } else {
-                  console.error('Failed to fetch top orders');
+                if (data && data.data) {
+                  _this3.topProducts = data.data;
                 }
 
                 _context3.next = 17;
@@ -7080,17 +7068,57 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
               case 14:
                 _context3.prev = 14;
                 _context3.t0 = _context3["catch"](4);
-                console.error('Error fetching total top orders:', _context3.t0);
+                console.error('Error fetching top products:', _context3.t0);
 
               case 17:
+                _context3.prev = 17;
+                _this3.isLoading = false; // Hide the loading spinner once data is fetched
+
+                return _context3.finish(17);
+
+              case 20:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[4, 14]]);
+        }, _callee3, null, [[4, 14, 17, 20]]);
       }))();
     },
-    getTotalDelivery: function getTotalDelivery() {
+    // Fetch categories and update pie chart
+    // Fetch user data
+    getUserData: function getUserData() {
+      var _this4 = this;
+
+      this.timer = setTimeout(function () {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/user/show/').then(function (response) {
+          if (response.data.data) {
+            _this4.user = response.data.data[0];
+            _this4.user_type = _this4.user.user_type;
+            _this4.userId = _this4.user.id;
+            console.log("userID: " + _this4.userId);
+
+            _this4.getTotalSales();
+
+            _this4.getTotalOrders();
+
+            _this4.fetchTopProducts();
+
+            _this4.fetchSalesData();
+
+            _this4.getTotalPending();
+
+            _this4.getTotalDelivery();
+          }
+        })["catch"](function (error) {
+          _this4.error = error;
+          toast.fire({
+            icon: 'error',
+            text: error.response.data.message
+          });
+        });
+      }, 500);
+    },
+    getTotalOrders: function getTotalOrders() {
       var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
@@ -7113,7 +7141,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
               case 4:
                 _context4.prev = 4;
                 _context4.next = 7;
-                return fetch(_this5.API_BASE + "/buyer/total_delivery.php?seller_id=".concat(userId));
+                return fetch(_this5.API_BASE + "/buyer/top_orders.php?seller_id=".concat(userId));
 
               case 7:
                 response = _context4.sent;
@@ -7124,11 +7152,12 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
                 data = _context4.sent;
 
                 // Parse JSON response
+                // console.log(response);
                 // Check if the status is 'success' and update totalSales
                 if (data.status === 'success') {
-                  _this5.total_for_delivery = data.data.total_for_delivery; // Update total sales value
+                  _this5.top_orders = data.data.Total_orders; // Update total sales value
                 } else {
-                  console.error('Failed to fetch total sales');
+                  console.error('Failed to fetch top orders');
                 }
 
                 _context4.next = 17;
@@ -7137,7 +7166,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
               case 14:
                 _context4.prev = 14;
                 _context4.t0 = _context4["catch"](4);
-                console.error('Error fetching total sales:', _context4.t0);
+                console.error('Error fetching total top orders:', _context4.t0);
 
               case 17:
               case "end":
@@ -7147,7 +7176,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
         }, _callee4, null, [[4, 14]]);
       }))();
     },
-    getTotalPending: function getTotalPending() {
+    getTotalDelivery: function getTotalDelivery() {
       var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
@@ -7170,7 +7199,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
               case 4:
                 _context5.prev = 4;
                 _context5.next = 7;
-                return fetch(_this6.API_BASE + "/buyer/total_pending.php?seller_id=".concat(userId));
+                return fetch(_this6.API_BASE + "/buyer/total_delivery.php?seller_id=".concat(userId));
 
               case 7:
                 response = _context5.sent;
@@ -7183,7 +7212,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
                 // Parse JSON response
                 // Check if the status is 'success' and update totalSales
                 if (data.status === 'success') {
-                  _this6.total_pending = data.data.total_pending; // Update total sales value
+                  _this6.total_for_delivery = data.data.total_for_delivery; // Update total sales value
                 } else {
                   console.error('Failed to fetch total sales');
                 }
@@ -7204,7 +7233,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
         }, _callee5, null, [[4, 14]]);
       }))();
     },
-    getTotalSales: function getTotalSales() {
+    getTotalPending: function getTotalPending() {
       var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
@@ -7227,7 +7256,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
               case 4:
                 _context6.prev = 4;
                 _context6.next = 7;
-                return fetch(_this7.API_BASE + "/buyer/total_sales.php?seller_id=".concat(userId));
+                return fetch(_this7.API_BASE + "/buyer/total_pending.php?seller_id=".concat(userId));
 
               case 7:
                 response = _context6.sent;
@@ -7240,7 +7269,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
                 // Parse JSON response
                 // Check if the status is 'success' and update totalSales
                 if (data.status === 'success') {
-                  _this7.totalSales = data.data.total_sales; // Update total sales value
+                  _this7.total_pending = data.data.total_pending; // Update total sales value
                 } else {
                   console.error('Failed to fetch total sales');
                 }
@@ -7261,21 +7290,78 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
         }, _callee6, null, [[4, 14]]);
       }))();
     },
-    getSellerData: function getSellerData() {
+    getTotalSales: function getTotalSales() {
       var _this8 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+        var userId, response, data;
+        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                userId = window.user.id;
+
+                if (userId) {
+                  _context7.next = 4;
+                  break;
+                }
+
+                // Ensure userId is available
+                console.error("UserID is missing");
+                return _context7.abrupt("return");
+
+              case 4:
+                _context7.prev = 4;
+                _context7.next = 7;
+                return fetch(_this8.API_BASE + "/buyer/total_sales.php?seller_id=".concat(userId));
+
+              case 7:
+                response = _context7.sent;
+                _context7.next = 10;
+                return response.json();
+
+              case 10:
+                data = _context7.sent;
+
+                // Parse JSON response
+                // Check if the status is 'success' and update totalSales
+                if (data.status === 'success') {
+                  _this8.totalSales = data.data.total_sales; // Update total sales value
+                } else {
+                  console.error('Failed to fetch total sales');
+                }
+
+                _context7.next = 17;
+                break;
+
+              case 14:
+                _context7.prev = 14;
+                _context7.t0 = _context7["catch"](4);
+                console.error('Error fetching total sales:', _context7.t0);
+
+              case 17:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, null, [[4, 14]]);
+      }))();
+    },
+    getSellerData: function getSellerData() {
+      var _this9 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/all_seller2').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this8.user = response.data.data; // Store the count of sellers
+          _this9.user = response.data.data; // Store the count of sellers
 
-          _this8.sellerCount = _this8.user.length; // console.log('Sellers:', this.user);
+          _this9.sellerCount = _this9.user.length; // console.log('Sellers:', this.user);
           // console.log('Total Sellers:', this.sellerCount);
         }
       })["catch"](function (error) {
         var _error$response, _error$response$data;
 
-        _this8.error = error;
+        _this9.error = error;
         toast.fire({
           icon: 'error',
           text: ((_error$response = error.response) === null || _error$response === void 0 ? void 0 : (_error$response$data = _error$response.data) === null || _error$response$data === void 0 ? void 0 : _error$response$data.message) || 'An error occurred'
@@ -7283,19 +7369,19 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getBuyerData: function getBuyerData() {
-      var _this9 = this;
+      var _this10 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/all_buyer2').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this9.user = response.data.data;
-          _this9.buyerCount = _this9.user.length; // console.log('Buyer:', this.user);
+          _this10.user = response.data.data;
+          _this10.buyerCount = _this10.user.length; // console.log('Buyer:', this.user);
           // console.log('Total Sellers:', this.buyerCount);
         }
       })["catch"](function (error) {
         var _error$response2, _error$response2$data;
 
-        _this9.error = error;
+        _this10.error = error;
         toast.fire({
           icon: 'error',
           text: ((_error$response2 = error.response) === null || _error$response2 === void 0 ? void 0 : (_error$response2$data = _error$response2.data) === null || _error$response2$data === void 0 ? void 0 : _error$response2$data.message) || 'An error occurred'
@@ -7303,19 +7389,19 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getReportData: function getReportData() {
-      var _this10 = this;
+      var _this11 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/report/all_reports').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this10.user = response.data.data;
-          _this10.complaints = _this10.user.length; // console.log('complaints:', this.user);
+          _this11.user = response.data.data;
+          _this11.complaints = _this11.user.length; // console.log('complaints:', this.user);
           // console.log('Total Complaints:', this.complaints);
         }
       })["catch"](function (error) {
         var _error$response3, _error$response3$data;
 
-        _this10.error = error;
+        _this11.error = error;
         toast.fire({
           icon: 'error',
           text: ((_error$response3 = error.response) === null || _error$response3 === void 0 ? void 0 : (_error$response3$data = _error$response3.data) === null || _error$response3$data === void 0 ? void 0 : _error$response3$data.message) || 'An error occurred'
@@ -7323,19 +7409,19 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getApproveData: function getApproveData() {
-      var _this11 = this;
+      var _this12 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/approval').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this11.user = response.data.data;
-          _this11.approval = _this11.user.length; // console.log('approval:', this.user);
+          _this12.user = response.data.data;
+          _this12.approval = _this12.user.length; // console.log('approval:', this.user);
           // console.log('Total Approval:', this.approval);
         }
       })["catch"](function (error) {
         var _error$response4, _error$response4$data;
 
-        _this11.error = error;
+        _this12.error = error;
         toast.fire({
           icon: 'error',
           text: ((_error$response4 = error.response) === null || _error$response4 === void 0 ? void 0 : (_error$response4$data = _error$response4.data) === null || _error$response4$data === void 0 ? void 0 : _error$response4$data.message) || 'An error occurred'
@@ -7343,19 +7429,19 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getActivatedData: function getActivatedData() {
-      var _this12 = this;
+      var _this13 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/activate').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this12.user = response.data.data;
-          _this12.activated = _this12.user.length; // console.log('Activated:', this.user);
+          _this13.user = response.data.data;
+          _this13.activated = _this13.user.length; // console.log('Activated:', this.user);
           // console.log('Total Activated:', this.activated);
         }
       })["catch"](function (error) {
         var _error$response5, _error$response5$data;
 
-        _this12.error = error;
+        _this13.error = error;
         toast.fire({
           icon: 'error',
           text: ((_error$response5 = error.response) === null || _error$response5 === void 0 ? void 0 : (_error$response5$data = _error$response5.data) === null || _error$response5$data === void 0 ? void 0 : _error$response5$data.message) || 'An error occurred'
@@ -7363,20 +7449,20 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getDeactivatedData: function getDeactivatedData() {
-      var _this13 = this;
+      var _this14 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/deactivate').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this13.user = response.data.data;
-          _this13.deactivated = _this13.user.length;
-          console.log('Deactivated:', _this13.user);
-          console.log('Total Deactivated:', _this13.deactivated);
+          _this14.user = response.data.data;
+          _this14.deactivated = _this14.user.length;
+          console.log('Deactivated:', _this14.user);
+          console.log('Total Deactivated:', _this14.deactivated);
         }
       })["catch"](function (error) {
         var _error$response6, _error$response6$data;
 
-        _this13.error = error;
+        _this14.error = error;
         toast.fire({
           icon: 'error',
           text: ((_error$response6 = error.response) === null || _error$response6 === void 0 ? void 0 : (_error$response6$data = _error$response6.data) === null || _error$response6$data === void 0 ? void 0 : _error$response6$data.message) || 'An error occurred'
@@ -8251,7 +8337,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      API_BASE: 'http://192.168.1.129:8080',
+      API_BASE: 'http://192.168.1.101:8080',
       orders: [],
       // Holds fetched orders data
       search: '',
@@ -8621,7 +8707,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 9:
                 if ((_step2 = _iterator2.n()).done) {
-                  _context5.next = 50;
+                  _context5.next = 44;
                   break;
                 }
 
@@ -8645,7 +8731,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 console.error("Invalid stock data for product ".concat(productId, "."));
-                return _context5.abrupt("continue", 48);
+                return _context5.abrupt("continue", 42);
 
               case 22:
                 availableStock = stockData.data.Quantity;
@@ -8658,77 +8744,65 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 console.log("Stock for product ".concat(productId, " is out. Cancelling order ").concat(order.id, "..."));
                 _context5.next = 28;
-                return _this6.cancelPendingOrders(productId);
+                return _this6.cancelPendingOrders(productId, availableStock);
 
               case 28:
-                _context5.next = 43;
+                _context5.next = 37;
                 break;
 
               case 30:
                 if (!(orderedQuantity > availableStock)) {
-                  _context5.next = 42;
+                  _context5.next = 36;
                   break;
                 }
 
+                _context5.next = 33;
+                return _this6.cancelPendingOrders(productId, availableStock);
+
+              case 33:
                 console.log("Ordered quantity for product ".concat(productId, " is greater than available stock. Cancelling order ").concat(order.id, "..."));
-                _context5.next = 34;
-                return _this6.cancelPendingOrders(productId);
-
-              case 34:
-                if (!(orderedQuantity > availableStock)) {
-                  _context5.next = 40;
-                  break;
-                }
-
-                console.log("".concat(order.id, " is now back to pending status"));
-                console.log("".concat(order.id, " is now back to pending status"));
-                console.log("".concat(order.id, " is now back to pending status"));
-                _context5.next = 40;
-                return _this6.PendingOrdersReturned(productId);
-
-              case 40:
-                _context5.next = 43;
+                _context5.next = 37;
                 break;
 
-              case 42:
+              case 36:
                 console.log("Stock for product ".concat(productId, " is sufficient. Order ").concat(order.id, " remains active."));
 
-              case 43:
-                _context5.next = 48;
+              case 37:
+                _context5.next = 42;
                 break;
 
-              case 45:
-                _context5.prev = 45;
+              case 39:
+                _context5.prev = 39;
                 _context5.t0 = _context5["catch"](12);
                 console.error("Error checking stock for product ".concat(productId, ":"), _context5.t0);
 
-              case 48:
+              case 42:
                 _context5.next = 9;
                 break;
 
-              case 50:
-                _context5.next = 55;
+              case 44:
+                _context5.next = 49;
                 break;
 
-              case 52:
-                _context5.prev = 52;
+              case 46:
+                _context5.prev = 46;
                 _context5.t1 = _context5["catch"](7);
 
                 _iterator2.e(_context5.t1);
 
-              case 55:
-                _context5.prev = 55;
+              case 49:
+                _context5.prev = 49;
 
                 _iterator2.f();
 
-                return _context5.finish(55);
+                return _context5.finish(49);
 
-              case 58:
+              case 52:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, null, [[7, 52, 55, 58], [12, 45]]);
+        }, _callee5, null, [[7, 46, 49, 52], [12, 39]]);
       }))();
     },
     confirmOrder: function confirmOrder(id) {
@@ -8882,7 +8956,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee8);
       }))();
     },
-    cancelPendingOrders: function cancelPendingOrders(productId) {
+    cancelPendingOrders: function cancelPendingOrders(productId, availableStock) {
       var _this8 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
@@ -8892,29 +8966,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
-                // Loop through all orders to find pending orders for the product
+                console.log("Available:" + availableStock); // Loop through all orders to find pending orders for the product
+
                 pendingOrders = _this8.orders.filter(function (order) {
-                  return order.product_id === productId && order.order_status === 'Pending';
+                  return order.product_id === productId && order.order_status === 'Pending' && order.product_quantity > availableStock;
                 });
 
                 if (!(pendingOrders.length === 0)) {
-                  _context9.next = 4;
+                  _context9.next = 5;
                   break;
                 }
 
                 console.log('No pending orders to cancel.');
                 return _context9.abrupt("return");
 
-              case 4:
+              case 5:
                 // Loop through each pending order and cancel it
                 _iterator3 = _createForOfIteratorHelper(pendingOrders);
-                _context9.prev = 5;
+                _context9.prev = 6;
 
                 _iterator3.s();
 
-              case 7:
+              case 8:
                 if ((_step3 = _iterator3.n()).done) {
-                  _context9.next = 26;
+                  _context9.next = 27;
                   break;
                 }
 
@@ -8924,8 +8999,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   reason_cancel: "Stock is out of order",
                   order_status: "Cancelled Order"
                 };
-                _context9.prev = 10;
-                _context9.next = 13;
+                _context9.prev = 11;
+                _context9.next = 14;
                 return fetch(_this8.API_BASE + '/buyer/order-cancelled.php', {
                   method: 'POST',
                   headers: {
@@ -8934,12 +9009,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   body: JSON.stringify(cancelPayload)
                 });
 
-              case 13:
+              case 14:
                 response = _context9.sent;
-                _context9.next = 16;
+                _context9.next = 17;
                 return response.json();
 
-              case 16:
+              case 17:
                 data = _context9.sent;
 
                 if (data.status === 'success') {
@@ -8948,202 +9023,88 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.error("Failed to cancel order ".concat(order.id, "."));
                 }
 
-                _context9.next = 24;
+                _context9.next = 25;
                 break;
 
-              case 20:
-                _context9.prev = 20;
-                _context9.t0 = _context9["catch"](10);
+              case 21:
+                _context9.prev = 21;
+                _context9.t0 = _context9["catch"](11);
                 console.error('Error canceling order:', _context9.t0);
                 alert("An error occurred while canceling the order.");
 
-              case 24:
-                _context9.next = 7;
+              case 25:
+                _context9.next = 8;
                 break;
 
-              case 26:
-                _context9.next = 31;
+              case 27:
+                _context9.next = 32;
                 break;
 
-              case 28:
-                _context9.prev = 28;
-                _context9.t1 = _context9["catch"](5);
+              case 29:
+                _context9.prev = 29;
+                _context9.t1 = _context9["catch"](6);
 
                 _iterator3.e(_context9.t1);
 
-              case 31:
-                _context9.prev = 31;
+              case 32:
+                _context9.prev = 32;
 
                 _iterator3.f();
 
-                return _context9.finish(31);
+                return _context9.finish(32);
 
-              case 34:
+              case 35:
                 alert('All pending orders for this product have been canceled due to stock being out.');
 
                 _this8.getData(); // Refresh the order list
 
 
-              case 36:
+              case 37:
               case "end":
                 return _context9.stop();
             }
           }
-        }, _callee9, null, [[5, 28, 31, 34], [10, 20]]);
-      }))();
-    },
-    PendingOrdersReturned: function PendingOrdersReturned(productId) {
-      var _this9 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
-        var pendingOrders, _iterator4, _step4, order, cancelPayload, response, data;
-
-        return _regeneratorRuntime().wrap(function _callee10$(_context10) {
-          while (1) {
-            switch (_context10.prev = _context10.next) {
-              case 0:
-                console.log(productId); // Loop through all orders to find pending orders for the product
-
-                pendingOrders = _this9.orders.filter(function (order) {
-                  return order.product_id === productId && order.order_status === '"Pending"' || order.order_status === '"Cancelled Order"';
-                });
-                console.log(pendingOrders);
-                console.log(_this9.orders);
-                console.log(_this9.orders);
-
-                if (!(pendingOrders.length === 0)) {
-                  _context10.next = 8;
-                  break;
-                }
-
-                console.log('No Cancelled Order.');
-                return _context10.abrupt("return");
-
-              case 8:
-                // Loop through each pending order and cancel it
-                _iterator4 = _createForOfIteratorHelper(pendingOrders);
-                _context10.prev = 9;
-
-                _iterator4.s();
-
-              case 11:
-                if ((_step4 = _iterator4.n()).done) {
-                  _context10.next = 30;
-                  break;
-                }
-
-                order = _step4.value;
-                cancelPayload = {
-                  order_id: order.id,
-                  reason_cancel: "",
-                  order_status: "Pending"
-                };
-                _context10.prev = 14;
-                _context10.next = 17;
-                return fetch(_this9.API_BASE + '/buyer/order_pending.php', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(cancelPayload)
-                });
-
-              case 17:
-                response = _context10.sent;
-                _context10.next = 20;
-                return response.json();
-
-              case 20:
-                data = _context10.sent;
-
-                if (data.status === 'success') {
-                  console.log("Order ".concat(order.id, " cancelled successfully due to stock being out."));
-                } else {
-                  console.error("Failed to cancel order ".concat(order.id, "."));
-                }
-
-                _context10.next = 28;
-                break;
-
-              case 24:
-                _context10.prev = 24;
-                _context10.t0 = _context10["catch"](14);
-                console.error('Error canceling order:', _context10.t0);
-                alert("An error occurred while canceling the order.");
-
-              case 28:
-                _context10.next = 11;
-                break;
-
-              case 30:
-                _context10.next = 35;
-                break;
-
-              case 32:
-                _context10.prev = 32;
-                _context10.t1 = _context10["catch"](9);
-
-                _iterator4.e(_context10.t1);
-
-              case 35:
-                _context10.prev = 35;
-
-                _iterator4.f();
-
-                return _context10.finish(35);
-
-              case 38:
-                alert('All pending orders for this product have been canceled due to stock being out.');
-
-                _this9.getData(); // Refresh the order list
-
-
-              case 40:
-              case "end":
-                return _context10.stop();
-            }
-          }
-        }, _callee10, null, [[9, 32, 35, 38], [14, 24]]);
+        }, _callee9, null, [[6, 29, 32, 35], [11, 21]]);
       }))();
     },
     // Handle Cancel Order
     submitCancelOrder: function submitCancelOrder() {
-      var _this10 = this;
+      var _this9 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
         var isCancelled, cancelPayload, response, data;
-        return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+        return _regeneratorRuntime().wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
-                if (_this10.reason_cancel.trim()) {
-                  _context11.next = 3;
+                if (_this9.reason_cancel.trim()) {
+                  _context10.next = 3;
                   break;
                 }
 
                 alert("Please provide a cancellation reason.");
-                return _context11.abrupt("return");
+                return _context10.abrupt("return");
 
               case 3:
                 isCancelled = window.confirm('Are you sure you want to cancel this order?');
 
                 if (isCancelled) {
-                  _context11.next = 6;
+                  _context10.next = 6;
                   break;
                 }
 
-                return _context11.abrupt("return");
+                return _context10.abrupt("return");
 
               case 6:
                 cancelPayload = {
-                  order_id: _this10.cancelOrderId,
-                  reason_cancel: _this10.reason_cancel,
+                  order_id: _this9.cancelOrderId,
+                  reason_cancel: _this9.reason_cancel,
                   order_status: "Cancelled Order"
                 };
                 console.log(cancelPayload);
-                _context11.prev = 8;
-                _context11.next = 11;
-                return fetch(_this10.API_BASE + '/buyer/order-cancelled.php', {
+                _context10.prev = 8;
+                _context10.next = 11;
+                return fetch(_this9.API_BASE + '/buyer/order-cancelled.php', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
@@ -9152,47 +9113,47 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 11:
-                response = _context11.sent;
-                _context11.next = 14;
+                response = _context10.sent;
+                _context10.next = 14;
                 return response.json();
 
               case 14:
-                data = _context11.sent;
+                data = _context10.sent;
                 console.log(data);
 
                 if (data.status === 'success') {
                   alert("Order canceled successfully.");
                   location.reload();
 
-                  _this10.getData(); // Refresh orders list
+                  _this9.getData(); // Refresh orders list
 
                 } else {
                   alert("Failed to cancel the order. Please try again.");
                 }
 
-                _context11.next = 23;
+                _context10.next = 23;
                 break;
 
               case 19:
-                _context11.prev = 19;
-                _context11.t0 = _context11["catch"](8);
-                console.error('Error canceling order:', _context11.t0);
+                _context10.prev = 19;
+                _context10.t0 = _context10["catch"](8);
+                console.error('Error canceling order:', _context10.t0);
                 alert("An error occurred while canceling the order.");
 
               case 23:
-                _context11.prev = 23;
+                _context10.prev = 23;
 
-                _this10.closeCancelModal(); // Close the modal
+                _this9.closeCancelModal(); // Close the modal
 
 
-                return _context11.finish(23);
+                return _context10.finish(23);
 
               case 26:
               case "end":
-                return _context11.stop();
+                return _context10.stop();
             }
           }
-        }, _callee11, null, [[8, 19, 23, 26]]);
+        }, _callee10, null, [[8, 19, 23, 26]]);
       }))();
     }
   }
@@ -11846,12 +11807,12 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "http://192.168.1.129:8080/buyer/" + order.photo,
+        src: "http://192.168.1.101:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
         click: function click($event) {
-          return _vm.openImageModal("http://192.168.1.129:8080/buyer/" + order.photo);
+          return _vm.openImageModal("http://192.168.1.101:8080/buyer/" + order.photo);
         }
       }
     }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))])]);
@@ -12931,7 +12892,10 @@ var render = function render() {
     style: _vm.cardStyle
   }, [_vm._m(7), _vm._v(" "), _c("div", {
     staticClass: "card-body"
-  }, [_c("h1", [_vm._v(_vm._s("₱ " + _vm.totalSales + ".00"))])])])]), _vm._v(" "), _c("div", {
+  }, [_c("h1", [_vm._v(_vm._s(new Intl.NumberFormat("en-PH", {
+    style: "currency",
+    currency: "PHP"
+  }).format(_vm.totalSales)))])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card m-3",
@@ -15071,12 +15035,12 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
-        src: "http://192.168.1.129:8080/buyer/" + order.photo,
+        src: "http://192.168.1.101:8080/buyer/" + order.photo,
         alt: "Product Photo"
       },
       on: {
         click: function click($event) {
-          return _vm.openImageModal("http://192.168.1.129:8080/buyer/" + order.photo);
+          return _vm.openImageModal("http://192.168.1.101:8080/buyer/" + order.photo);
         }
       }
     }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.reason_cancel))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))]), _vm._v(" "), order.order_status !== "Cancelled Order" ? _c("td", {

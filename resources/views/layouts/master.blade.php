@@ -528,7 +528,7 @@ const userId = window.user.id;
             async function fetchOrderCount() {
                 try {
                     // Call the API
-                    const response = await fetch(`http://192.168.1.129:8080/buyer/new_orders.php?seller_id=${userId}`);
+                    const response = await fetch(`http://192.168.1.101:8080/buyer/new_orders.php?seller_id=${userId}`);
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
