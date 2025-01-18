@@ -272,6 +272,7 @@
             }
           ]
         },
+<<<<<<< HEAD
 
         pieChartOptions: {
           responsive: true,
@@ -283,7 +284,18 @@
           }
         },
 
+=======
+>>>>>>> 3d85e01ed0c37117d4517080f46e9380b97dd2ed
 
+        pieChartOptions: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Revenue Distribution by Category'
+            }
+          }
+        },
 
 
         // New chart data for Top Most Sold Products
