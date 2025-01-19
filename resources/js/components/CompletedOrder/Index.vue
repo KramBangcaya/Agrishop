@@ -42,10 +42,10 @@
                                             <td>
                                                 <img
                                                 v-if="order.photo && order.photo.length"
-                                                :src="'http://192.168.1.129:8080/buyer/'+order.photo"
+                                                :src="'http://192.168.68.67:8080/buyer/'+order.photo"
                                                 alt="Product Photo"
                                                 style="max-width: 200px; max-height: 200px; cursor: pointer;"
-                                                @click="openImageModal('http://192.168.1.129:8080/buyer/' + order.photo)"
+                                                @click="openImageModal('http://192.168.68.67:8080/buyer/' + order.photo)"
                                                 />
                                             </td>
                                             <td>{{ order.buyer_name }}</td>
@@ -80,7 +80,7 @@
 export default {
     data() {
         return {
-            API_BASE: 'http://192.168.1.129:8080',
+            API_BASE: 'http://192.168.68.67:8080',
             orders: [],       // Holds fetched orders data
             search: '',       // Search input field
             userID: null,
@@ -120,19 +120,11 @@ export default {
         }
             try {
                 const response = await fetch(this.API_BASE + `/buyer/delivered-orders.php?seller_id=${this.userID}`);
-<<<<<<< HEAD
-                    const data = await response.json();
-                    if(data.status === 'success'){
-                        this.orders = data.data;
-                    }
-                } catch (error) {
-=======
                 const data = await response.json();
                 if (data.status === 'success') {
                     this.orders = data.data;
                 }
             } catch (error) {
->>>>>>> 8974adeea271d004478439f1ae08ea2ba4223861
                 console.error('Error fetching orders:', error);
             }
         },

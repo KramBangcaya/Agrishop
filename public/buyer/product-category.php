@@ -416,7 +416,7 @@ if (!empty($min_price) || !empty($max_price)) {
         </a>
     </h3>
     <h4>
-        ₱<?php echo number_format($product['price'], 2); ?> / <?php echo htmlspecialchars($product['measurement']); ?>
+        ₱<?php echo number_format($product['price'], 2); ?>
     </h4>
                                                 <h6>Stock: <?php echo $product['Quantity']; ?></h6>
                                                 <h5><?php echo $product['last_name']; ?> <?php echo $product['first_name']; ?></h5>
