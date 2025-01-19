@@ -2,7 +2,6 @@
 require_once('api-config.php');
 require_once('header.php');
 
-
 $products = [];
 
 $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
@@ -27,8 +26,6 @@ if (curl_errno($ch)) {
 curl_close($ch);
 
 $data = json_decode($response, true);
-
-// echo $searchTerm;
 
 // echo $apiUrl;
 // echo $product;
@@ -56,33 +53,14 @@ if ($category_id && $category_id !== '0') {
 }
 
 // Apply price range filter if either min_price or max_price is set
-if (!empty($min_price) || !empty($max_price)) {
-    if (!empty($min_price) && !empty($max_price)) {
+if (!empty($min_price) && !empty($max_price) && empty($category_id)) {
         // Remove any spaces around the min and max prices
         $price_range_api_url = API_BASE_URL . "/products/price-range?min=" . urlencode($min_price) . "&max=" . urlencode($max_price);
         $price_range_response = file_get_contents($price_range_api_url);
         $products = json_decode($price_range_response, true);
-    } else {
-        // If only min_price or max_price is set
-        if (!empty($min_price)) {
-            $query_params['min_price'] = $min_price;
-        }
-        if (!empty($max_price)) {
-            $query_params['max_price'] = $max_price;
-        }
 
-        // Build product API URL with price range filter
-        $product_api_url = API_BASE_URL . "/products?";
-        $product_api_url .= http_build_query($query_params);
-
-        // Fetch the filtered products
-        $product_response = file_get_contents($product_api_url);
-        $products = json_decode($product_response, true);
-
-
-
-        $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $product_api_url);
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $price_range_api_url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 
@@ -93,27 +71,42 @@ if (!empty($min_price) || !empty($max_price)) {
             if (curl_errno($ch)) {
                 $error = curl_error($ch);
                 http_response_code(500); // Internal Server Error
-                die(json_encode(["error" => $error]));
+                die(json_encode(["error1" => $error]));
             }
 
         // Close the cURL session
         curl_close($ch);
 
         $data = json_decode($response, true);
-    }
 
-        // If only min_price or max_price is set
-
-
+    } else if(!empty($min_price) && !empty($max_price) && !empty($category_id)) {
+        $price_range_api_url = API_BASE_URL . "/products/categories_price/{$category_id}?min=" . urlencode($min_price) . "&max=" . urlencode($max_price);
 
 
-            // echo $product_api_url;
-            // Fetch the filtered products
-            // $product_response = file_get_contents($price_range_api_url);
-            // $products = json_decode($product_response, true);
+        // log($price_range_api_url);
+        // echo $price_range_api_url;
+        $price_range_response = file_get_contents($price_range_api_url);
+        $products = json_decode($price_range_response, true);
 
-            // echo $product_response;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $price_range_api_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 
+        // Execute and fetch response from the API
+        $response = curl_exec($ch);
+
+        // Check for errors
+        if (curl_errno($ch)) {
+            $error = curl_error($ch);
+            http_response_code(500); // Internal Server Error
+            die(json_encode(["error1" => $error]));
+        }
+
+    // Close the cURL session
+    curl_close($ch);
+
+    $data = json_decode($response, true);
     } else if(!empty($searchTerm)){
         $apiUrl =  API_BASE_URL . "/products/all_product?search=" . urlencode($searchTerm);
 
@@ -143,7 +136,6 @@ if (!empty($min_price) || !empty($max_price)) {
         $products = json_decode($product_responses, true);
 
         // echo $product;
-
 } else {
     // If no price range is set, fetch products based on category only
     if ($category_id && $category_id !== '0') {
@@ -173,9 +165,6 @@ if (!empty($min_price) || !empty($max_price)) {
     curl_close($ch);
 
     $data = json_decode($response, true);
-
-    // echo $data;
-
     // Fetch the filtered products
     $product_response = file_get_contents($product_api_url);
     // echo $product_response;
@@ -195,7 +184,6 @@ if (!empty($min_price) || !empty($max_price)) {
                         </form>
                     </div>
                     <div id="map" style="height: 450px; width: 100%;"></div>
-
 
                     <script>
                         function initMap() {
@@ -308,69 +296,50 @@ if (!empty($min_price) || !empty($max_price)) {
             <div class="col-md-3">
                 <!-- Sidebar Category Display -->
 
-                <div class="sidebar-category">
-                    <label for="category"><h3>Categories <i class="fa fa-sort"></i></h3></><br>
-                    <select name="category" class="btn btn-primary category-button" id="category" onchange="location = this.value;" style="font-size: 18px; text-align: left;">
-                        <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
-                            <option value="" selected>Select a Category</option>
-                            <?php foreach ($categories['data'] as $category): ?>
-                                <option value="product-category.php?category_id=<?php echo $category['id']; ?>
-                                    <?php echo !empty($min_price) ? '&min_price=' . $min_price : ''; ?>
-                                    <?php echo !empty($max_price) ? '&max_price=' . $max_price : ''; ?>">
-                                    <?php echo $category['category']; ?>
-                                </option>
-                            <?php endforeach; ?>
-                            <option value="product-category.php?category_id=0
-                                <?php echo !empty($min_price) ? '&min_price=' . $min_price : ''; ?>
-                                <?php echo !empty($max_price) ? '&max_price=' . $max_price : ''; ?>">All</option>
-                        <?php else: ?>
-                            <p>No categories available.</p>
-                        <?php endif; ?>
-                    </select>
-                </div>
+                <form method="GET" action="product-category.php">
+    <label for="category"><h3>Categories <i class="fa fa-sort"></i></h3></label><br>
 
-                <!-- <div class="sidebar-category">
+    <!-- Category Dropdown -->
+    <select name="category_id" class="btn btn-primary category-button" id="category" style="font-size: 18px; text-align: left;">
+        <option value="" selected>Select a Category</option>
 
-                    <label for="category"><h3>Categories <i class="fa fa-sort"></i></h3></><br>
-                    <select name="category" class="btn btn-primary category-button" id="category" onchange="location = this.value;" style="font-size: 18px; text-align: left;">
-                        <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
-                            <option value="" selected>Select a Category</option>
-                            <?php foreach ($categories['data'] as $category): ?>
-                                <option value="<?php echo isset($_GET[$category['id']]) ? $_GET[$category['id']] : ''; ?>
-                                    <?php echo !empty($min_price) ? '&min_price=' . $min_price : ''; ?>
-                                    <?php echo !empty($max_price) ? '&max_price=' . $max_price : ''; ?>">
-                                    <?php echo $category['category']; ?>
-                                </option>
-                            <?php endforeach; ?>
-                            <option value="product-category.php?category_id=0
-                                <?php echo !empty($min_price) ? '&min_price=' . $min_price : ''; ?>
-                                <?php echo !empty($max_price) ? '&max_price=' . $max_price : ''; ?>">All</option>
-                        <?php else: ?>
-                            <p>No categories available.</p>
-                        <?php endif; ?>
-                    </select>
-                </div> -->
+        <!-- Loop through categories and create options -->
+        <?php if (isset($categories['data']) && count($categories['data']) > 0): ?>
+            <?php foreach ($categories['data'] as $category): ?>
+                <option value="<?php echo $category['id']; ?>"
+                    <?php echo ($category['id'] == $category_id) ? 'selected' : ''; ?>>
+                    <?php echo $category['category']; ?>
+                </option>
+            <?php endforeach; ?>
+            <option value="0" <?php echo ($category_id == '0') ? 'selected' : ''; ?>>All</option>
+        <?php else: ?>
+            <p>No categories available.</p>
+        <?php endif; ?>
+    </select>
 
-
-                <!-- Sidebar Price Range Filter -->
-                <div class="sidebar-category">
-                    <label for="price_range"><h3>Price Range (₱)</h3></label>
-                    <form method="GET" action="product-category.php">
-                        <label for="min_price" style="font-size: 18px;">Min:</label>
-                        <input type="number" style="font-size: 18px;" name="min_price" value="<?php echo isset($_GET['min_price']) ? $_GET['min_price'] : ''; ?>"> <br><br>
-                        <label for="max_price" style="font-size: 18px;">Max:</label>
-                        <input type="number" style="font-size: 18px;" name="max_price" value="<?php echo isset($_GET['max_price']) ? $_GET['max_price'] : ''; ?>"> <br><br>
-                        <input type="hidden" name="category_id" value="<?php echo isset($category_id) ? $category_id : ''; ?>">
-                        <button type="submit" style="font-size: 18px;" class="btn btn-success">Filter</button>
-                    </form>
-                    <button onclick="window.location.href='/buyer/product-category.php';" style="font-size: 18px; margin-top: 20px;" class="btn btn-secondary">Clear Filter</button>
-                </div>
-            </div>
+    <label for="price_range"><h3>Price Range (₱)</h3></label>
+    <!-- Price Range Inputs -->
+    <div>
+    <label for="min_price" style="font-size: 18px;">Min:</label>
+        <input type="number" name="min_price" placeholder="Min Price" value="<?php echo $min_price; ?>" class="form-control" style="font-size: 18px;">
+        <label for="min_price" style="font-size: 18px;">Max:</label>
+        <input type="number" name="max_price" placeholder="Max Price" value="<?php echo $max_price; ?>" class="form-control" style="font-size: 18px;">
+    </div>
 <br>
+    <!-- Filter Button -->
+    <button type="submit" class="btn btn-success" style="font-size: 18px;">Filter</button>
+</form>
+
+            </div>
+            <br>
             <div class="col-md-9"><h3>Products</h3>
                 <div class="product-list">
                     <?php
+<<<<<<< HEAD
                    //var_dump($products['data']);
+=======
+                    // var_dump($products['data']);
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
                     if (isset($products['data']) && count($products['data']) > 0): ?>
                         <div class="row">
                             <?php foreach ($products['data'] as $product): ?>
@@ -387,11 +356,8 @@ if (!empty($min_price) || !empty($max_price)) {
                                                 flex-direction: column; /* Stack content vertically */
                                                 text-align: center; /* Center-align text content */
                                             "
-
                                                 onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 12px rgba(0, 0, 0, 0.2)';"
                                                 onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.1)';">
-
-
                                         <div class="inner">
                                             <div class="thumb">
                                                 <?php
@@ -405,8 +371,22 @@ if (!empty($min_price) || !empty($max_price)) {
                                                 <div class="photo" style="background-image:url(<?php echo API_BASE_URL . '/storage/' . $photoPath; ?>); width: 100%; height: 200px; background-size: cover;"></div>
                                                 <div class="overlay"></div>
                                             </div>
+<<<<<<< HEAD
 
 
+=======
+                                                <?php
+                                                $queryCountCancelled = "SELECT COUNT(*) AS total_cancelled FROM Orders WHERE buyer_id = ? AND order_status=? AND cancel_by=?";
+                                                $stmtCountCancelled = $pdo->prepare($queryCountCancelled);
+                                                $stmtCountCancelled->execute([$_SESSION['user_id'], "Cancelled Order", "seller"]);
+                                                $countResultCancelled = $stmtCountCancelled->fetch(PDO::FETCH_ASSOC);
+                                                $totalCancelled = $countResultCancelled['total_cancelled'] ?? 0;
+                                                ?>
+
+                                            <div class="text">
+                                                <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['Product_Name']; ?></a></h3>
+                                                <h4>₱<?php echo $product['price']; ?></h4>
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
 
 <!-- HTML Code -->
 <div class="text">
@@ -443,8 +423,6 @@ if (!empty($min_price) || !empty($max_price)) {
         View
     </a>
 </p>
-
-
                                                 <?php endif; ?>
                                             </div>
 

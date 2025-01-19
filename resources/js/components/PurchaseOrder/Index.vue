@@ -44,10 +44,17 @@
                                             <td>
                                                 <img
                                                 v-if="order.photo && order.photo.length"
+<<<<<<< HEAD
                                                 :src="'http://192.168.68.67:8080/buyer/'+order.photo"
                                                 alt="Product Photo"
                                                 style="max-width: 200px; max-height: 200px; cursor: pointer;"
                                                 @click="openImageModal('http://192.168.68.67:8080/buyer/' + order.photo)"
+=======
+                                                :src="'http://192.168.1.101:8080/buyer/'+order.photo"
+                                                alt="Product Photo"
+                                                style="max-width: 200px; max-height: 200px; cursor: pointer;"
+                                                @click="openImageModal('http://192.168.1.101:8080/buyer/' + order.photo)"
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
                                                 />
                                             </td>
 
@@ -117,7 +124,11 @@
 export default {
     data() {
         return {
+<<<<<<< HEAD
             API_BASE : 'http://192.168.68.67:8080',
+=======
+            API_BASE : 'http://192.168.1.101:8080',
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
             orders: [],       // Holds fetched orders data
             search: '',       // Search input field
             userID: null,
@@ -329,16 +340,10 @@ export default {
             // Cancel the order if stock is zero or if the ordered quantity exceeds available stock
             if (availableStock <= 0) {
                 console.log(`Stock for product ${productId} is out. Cancelling order ${order.id}...`);
-                await this.cancelPendingOrders(productId); // Cancel the specific order
+                await this.cancelPendingOrders(productId, availableStock); // Cancel the specific order
             } else if (orderedQuantity > availableStock) {
-                console.log(`Ordered quantity for product ${productId} is greater than available stock. Cancelling order ${order.id}...`);
-                await this.cancelPendingOrders(productId); // Cancel the specific order
-                if(orderedQuantity > availableStock){
-                    console.log(`${order.id} is now back to pending status`);
-                    console.log(`${order.id} is now back to pending status`);
-                    console.log(`${order.id} is now back to pending status`);
-                    await this.PendingOrdersReturned(productId);
-                }
+                    await this.cancelPendingOrders(productId, availableStock);
+                    console.log(`Ordered quantity for product ${productId} is greater than available stock. Cancelling order ${order.id}...`);
             } else {
                 console.log(`Stock for product ${productId} is sufficient. Order ${order.id} remains active.`);
             }
@@ -432,9 +437,10 @@ async confirmOrder(id) {
     });
 },
 
-async cancelPendingOrders(productId) {
+async cancelPendingOrders(productId, availableStock) {
+    console.log("Available:" + availableStock);
     // Loop through all orders to find pending orders for the product
-    const pendingOrders = this.orders.filter(order => order.product_id === productId && order.order_status === 'Pending');
+    const pendingOrders = this.orders.filter(order => order.product_id === productId && order.order_status === 'Pending' && order.product_quantity > availableStock);
 
     if (pendingOrders.length === 0) {
         console.log('No pending orders to cancel.');
@@ -472,53 +478,6 @@ async cancelPendingOrders(productId) {
     alert('All pending orders for this product have been canceled due to stock being out.');
     this.getData(); // Refresh the order list
 },
-
-async PendingOrdersReturned(productId) {
-    console.log(productId)
-
-    // Loop through all orders to find pending orders for the product
-    const pendingOrders = this.orders.filter(order => order.product_id === productId && order.order_status === '"Pending"' || order.order_status === '"Cancelled Order"');
-    console.log(pendingOrders)
-    console.log(this.orders)
-    console.log(this.orders)
-
-    if (pendingOrders.length === 0) {
-        console.log('No Cancelled Order.');
-        return;
-    }
-
-    // Loop through each pending order and cancel it
-    for (const order of pendingOrders) {
-        const cancelPayload = {
-            order_id: order.id,
-            reason_cancel: "",
-            order_status: "Pending",
-        };
-
-        try {
-            const response = await fetch(this.API_BASE + '/buyer/order_pending.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(cancelPayload),
-            });
-            const data = await response.json();
-            if (data.status === 'success') {
-                console.log(`Order ${order.id} cancelled successfully due to stock being out.`);
-            } else {
-                console.error(`Failed to cancel order ${order.id}.`);
-            }
-        } catch (error) {
-            console.error('Error canceling order:', error);
-            alert("An error occurred while canceling the order.");
-        }
-    }
-
-    alert('All pending orders for this product have been canceled due to stock being out.');
-    this.getData(); // Refresh the order list
-},
-
         // Handle Cancel Order
             async submitCancelOrder() {
             if (!this.reason_cancel.trim()) {

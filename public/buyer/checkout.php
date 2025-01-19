@@ -35,7 +35,11 @@ if(!isset($_SESSION['cart_p_id'])) {
                     </p>
                 <?php else:
 
+<<<<<<< HEAD
                      //var_dump($_SESSION);?>
+=======
+                    //  var_dump($_SESSION);?>
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
 
                     <h3 class="special">
                         <a href="cart.php"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>

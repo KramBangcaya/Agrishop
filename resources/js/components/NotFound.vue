@@ -85,7 +85,8 @@
                         <h5 class="card-title">Total Sales</h5>
                     </div>
                     <div class="card-body">
-                        <h1>{{ "₱ "+ totalSales+".00" }}</h1>
+                        <h1>{{ new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(totalSales) }}</h1>
+
                     </div>
                 </div>
             </div>
@@ -203,7 +204,7 @@
     },
     data() {
       return {
-        API_BASE : 'http://192.168.1.129:8080',
+        API_BASE : 'http://192.168.1.101:8080',
         apiBaseUrl: process.env.VUE_APP_API_BASE_URL,
         totalSales: 0,
         total_pending: 0,
@@ -316,6 +317,7 @@
 
     mounted() {
       console.log('Dashboard Component Mounted.');
+      this.fetchCategories();
       this.fetchSalesData(this.userId);
       this.getUserData();
       this.getTotalPending(this.userId);
@@ -332,6 +334,46 @@
     },
 
     methods: {
+        async fetchCategories() {
+  const userId = window.user.id; // Ensure user ID is available
+  if (!userId) {
+    console.error("UserID is missing");
+    return;
+  }
+
+  try {
+    // Fetch categories
+    const categoriesResponse = await fetch('/categories/all');
+    const categoriesData = await categoriesResponse.json();
+    const categories = categoriesData.data;
+
+    // Fetch total payment by category for the seller
+    const revenueResponse = await fetch(this.API_BASE + `/buyer/total_payment_by_category.php?seller_id=${userId}`);
+    const revenueData = await revenueResponse.json();
+    console.log(revenueData);
+    if (revenueData.status !== 'success' || !categoriesData) {
+      console.error("Failed to fetch required data.");
+      return;
+    }
+
+    // Map revenue data to corresponding categories
+    const categoryMap = revenueData.data.reduce((map, item) => {
+      map[item.category_id] = parseFloat(item.total_payment);
+      return map;
+    }, {});
+
+    // Prepare labels and revenue data for the chart
+    const categoryNames = categories.map(category => category.category);
+    const categoryRevenue = categories.map(category => categoryMap[category.id] || 0);
+
+    this.pieChartData.labels = categoryNames;
+    this.pieChartData.datasets[0].data = categoryRevenue;
+
+    this.isLoading = false;
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+  }
+},
         async fetchSalesData() {
 
             const userId = window.user.id;

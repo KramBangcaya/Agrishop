@@ -5832,7 +5832,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+<<<<<<< HEAD
       API_BASE: 'http://192.168.68.67:8080',
+=======
+      API_BASE: 'http://192.168.1.101:8080',
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
       orders: [],
       // Holds fetched orders data
       search: '',
@@ -6439,7 +6443,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
   },
   data: function data() {
     return {
-      API_BASE: 'http://192.168.1.129:8080',
+      API_BASE: 'http://192.168.1.101:8080',
       apiBaseUrl: process.env.VUE_APP_API_BASE_URL,
       totalSales: 0,
       total_pending: 0,
@@ -6533,6 +6537,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
   },
   mounted: function mounted() {
     console.log('Dashboard Component Mounted.');
+    this.fetchCategories();
     this.fetchSalesData(this.userId);
     this.getUserData();
     this.getTotalPending(this.userId);
@@ -6548,8 +6553,9 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
     this.getTotalOrders(this.userId);
   },
   methods: {
-    fetchSalesData: function fetchSalesData() {
+    fetchCategories: function fetchCategories() {
       var _this = this;
+<<<<<<< HEAD
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var userId, response, data, salesData, labels, sales;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -6654,14 +6660,178 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
             case 20:
             case "end":
               return _context2.stop();
+=======
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var userId, categoriesResponse, categoriesData, categories, revenueResponse, revenueData, categoryMap, categoryNames, categoryRevenue;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                userId = window.user.id; // Ensure user ID is available
+
+                if (userId) {
+                  _context.next = 4;
+                  break;
+                }
+
+                console.error("UserID is missing");
+                return _context.abrupt("return");
+
+              case 4:
+                _context.prev = 4;
+                _context.next = 7;
+                return fetch('/categories/all');
+
+              case 7:
+                categoriesResponse = _context.sent;
+                _context.next = 10;
+                return categoriesResponse.json();
+
+              case 10:
+                categoriesData = _context.sent;
+                categories = categoriesData.data; // Fetch total payment by category for the seller
+
+                _context.next = 14;
+                return fetch(_this.API_BASE + "/buyer/total_payment_by_category.php?seller_id=".concat(userId));
+
+              case 14:
+                revenueResponse = _context.sent;
+                _context.next = 17;
+                return revenueResponse.json();
+
+              case 17:
+                revenueData = _context.sent;
+                console.log(revenueData);
+
+                if (!(revenueData.status !== 'success' || !categoriesData)) {
+                  _context.next = 22;
+                  break;
+                }
+
+                console.error("Failed to fetch required data.");
+                return _context.abrupt("return");
+
+              case 22:
+                // Map revenue data to corresponding categories
+                categoryMap = revenueData.data.reduce(function (map, item) {
+                  map[item.category_id] = parseFloat(item.total_payment);
+                  return map;
+                }, {}); // Prepare labels and revenue data for the chart
+
+                categoryNames = categories.map(function (category) {
+                  return category.category;
+                });
+                categoryRevenue = categories.map(function (category) {
+                  return categoryMap[category.id] || 0;
+                });
+                _this.pieChartData.labels = categoryNames;
+                _this.pieChartData.datasets[0].data = categoryRevenue;
+                _this.isLoading = false;
+                _context.next = 33;
+                break;
+
+              case 30:
+                _context.prev = 30;
+                _context.t0 = _context["catch"](4);
+                console.error('Error fetching categories:', _context.t0);
+
+              case 33:
+              case "end":
+                return _context.stop();
+            }
           }
-        }, _callee2, null, [[4, 14, 17, 20]]);
+        }, _callee, null, [[4, 30]]);
       }))();
     },
-    // Fetch categories and update pie chart
-    // Fetch user data
-    getUserData: function getUserData() {
+    fetchSalesData: function fetchSalesData() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var userId, response, data, salesData, labels, sales;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                userId = window.user.id;
+
+                if (userId) {
+                  _context2.next = 4;
+                  break;
+                }
+
+                // Ensure userId is available
+                console.error("UserID is missing");
+                return _context2.abrupt("return");
+
+              case 4:
+                _context2.prev = 4;
+                console.log(userId);
+                _context2.next = 8;
+                return fetch(_this2.API_BASE + "/buyer/month_sales.php?seller_id=".concat(userId));
+
+              case 8:
+                response = _context2.sent;
+                _context2.next = 11;
+                return response.json();
+
+              case 11:
+                data = _context2.sent;
+
+                if (data.status === 'success' && data.data) {
+                  // console.log('data.data');
+                  salesData = data.data; // Prepare the data for the bar chart
+
+                  labels = salesData.map(function (item) {
+                    switch (item.month) {
+                      case 1:
+                        return 'January';
+
+                      case 2:
+                        return 'February';
+
+                      case 3:
+                        return 'March';
+
+                      case 4:
+                        return 'April';
+
+                      case 5:
+                        return 'May';
+                      // Add other months as necessary
+
+                      default:
+                        return "Month ".concat(item.month);
+                    }
+                  });
+                  sales = salesData.map(function (item) {
+                    return item.total_payment_per_month;
+                  }); // Update chart data
+
+                  _this2.barChartData.labels = labels;
+                  _this2.barChartData.datasets[0].data = sales;
+                }
+
+                _context2.next = 18;
+                break;
+
+              case 15:
+                _context2.prev = 15;
+                _context2.t0 = _context2["catch"](4);
+                console.error('Error fetching sales data:', _context2.t0);
+
+              case 18:
+              case "end":
+                return _context2.stop();
+            }
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
+          }
+        }, _callee2, null, [[4, 15]]);
+      }))();
+    },
+    fetchTopProducts: function fetchTopProducts() {
       var _this3 = this;
+<<<<<<< HEAD
       this.timer = setTimeout(function () {
         axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/user/show/').then(function (response) {
           if (response.data.data) {
@@ -6727,20 +6897,149 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
             case 17:
             case "end":
               return _context3.stop();
+=======
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var userId, response, data;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                userId = window.user.id;
+
+                if (userId) {
+                  _context3.next = 4;
+                  break;
+                }
+
+                // Ensure userId is available
+                console.error("UserID is missingssssss");
+                return _context3.abrupt("return");
+
+              case 4:
+                _context3.prev = 4;
+                _context3.next = 7;
+                return fetch(_this3.API_BASE + "/buyer/top_products.php?seller_id=".concat(userId));
+
+              case 7:
+                response = _context3.sent;
+                _context3.next = 10;
+                return response.json();
+
+              case 10:
+                data = _context3.sent;
+
+                if (data && data.data) {
+                  _this3.topProducts = data.data;
+                }
+
+                _context3.next = 17;
+                break;
+
+              case 14:
+                _context3.prev = 14;
+                _context3.t0 = _context3["catch"](4);
+                console.error('Error fetching top products:', _context3.t0);
+
+              case 17:
+                _context3.prev = 17;
+                _this3.isLoading = false; // Hide the loading spinner once data is fetched
+
+                return _context3.finish(17);
+
+              case 20:
+              case "end":
+                return _context3.stop();
+            }
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
           }
-        }, _callee3, null, [[4, 14]]);
+        }, _callee3, null, [[4, 14, 17, 20]]);
       }))();
     },
-    getTotalDelivery: function getTotalDelivery() {
+    // Fetch categories and update pie chart
+    // Fetch user data
+    getUserData: function getUserData() {
+      var _this4 = this;
+
+      this.timer = setTimeout(function () {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/user/show/').then(function (response) {
+          if (response.data.data) {
+            _this4.user = response.data.data[0];
+            _this4.user_type = _this4.user.user_type;
+            _this4.userId = _this4.user.id;
+            console.log("userID: " + _this4.userId);
+
+            _this4.getTotalSales();
+
+            _this4.getTotalOrders();
+
+            _this4.fetchTopProducts();
+
+            _this4.fetchSalesData();
+
+            _this4.getTotalPending();
+
+            _this4.getTotalDelivery();
+          }
+        })["catch"](function (error) {
+          _this4.error = error;
+          toast.fire({
+            icon: 'error',
+            text: error.response.data.message
+          });
+        });
+      }, 500);
+    },
+    getTotalOrders: function getTotalOrders() {
       var _this5 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
         var userId, response, data;
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+<<<<<<< HEAD
           while (1) switch (_context4.prev = _context4.next) {
             case 0:
               userId = window.user.id;
               if (userId) {
                 _context4.next = 4;
+=======
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                userId = window.user.id;
+
+                if (userId) {
+                  _context4.next = 4;
+                  break;
+                }
+
+                // Ensure userId is available
+                console.error("UserID is missing");
+                return _context4.abrupt("return");
+
+              case 4:
+                _context4.prev = 4;
+                _context4.next = 7;
+                return fetch(_this5.API_BASE + "/buyer/top_orders.php?seller_id=".concat(userId));
+
+              case 7:
+                response = _context4.sent;
+                _context4.next = 10;
+                return response.json();
+
+              case 10:
+                data = _context4.sent;
+
+                // Parse JSON response
+                // console.log(response);
+                // Check if the status is 'success' and update totalSales
+                if (data.status === 'success') {
+                  _this5.top_orders = data.data.Total_orders; // Update total sales value
+                } else {
+                  console.error('Failed to fetch top orders');
+                }
+
+                _context4.next = 17;
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
                 break;
               }
               // Ensure userId is available
@@ -6758,6 +7057,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
               data = _context4.sent;
               // Parse JSON response
 
+<<<<<<< HEAD
               // Check if the status is 'success' and update totalSales
               if (data.status === 'success') {
                 _this5.total_for_delivery = data.data.total_for_delivery; // Update total sales value
@@ -6773,20 +7073,70 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
             case 17:
             case "end":
               return _context4.stop();
+=======
+              case 14:
+                _context4.prev = 14;
+                _context4.t0 = _context4["catch"](4);
+                console.error('Error fetching total top orders:', _context4.t0);
+
+              case 17:
+              case "end":
+                return _context4.stop();
+            }
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
           }
         }, _callee4, null, [[4, 14]]);
       }))();
     },
-    getTotalPending: function getTotalPending() {
+    getTotalDelivery: function getTotalDelivery() {
       var _this6 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
         var userId, response, data;
         return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+<<<<<<< HEAD
           while (1) switch (_context5.prev = _context5.next) {
             case 0:
               userId = window.user.id;
               if (userId) {
                 _context5.next = 4;
+=======
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                userId = window.user.id;
+
+                if (userId) {
+                  _context5.next = 4;
+                  break;
+                }
+
+                // Ensure userId is available
+                console.error("UserID is missing");
+                return _context5.abrupt("return");
+
+              case 4:
+                _context5.prev = 4;
+                _context5.next = 7;
+                return fetch(_this6.API_BASE + "/buyer/total_delivery.php?seller_id=".concat(userId));
+
+              case 7:
+                response = _context5.sent;
+                _context5.next = 10;
+                return response.json();
+
+              case 10:
+                data = _context5.sent;
+
+                // Parse JSON response
+                // Check if the status is 'success' and update totalSales
+                if (data.status === 'success') {
+                  _this6.total_for_delivery = data.data.total_for_delivery; // Update total sales value
+                } else {
+                  console.error('Failed to fetch total sales');
+                }
+
+                _context5.next = 17;
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
                 break;
               }
               // Ensure userId is available
@@ -6823,16 +7173,55 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
         }, _callee5, null, [[4, 14]]);
       }))();
     },
-    getTotalSales: function getTotalSales() {
+    getTotalPending: function getTotalPending() {
       var _this7 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
         var userId, response, data;
         return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+<<<<<<< HEAD
           while (1) switch (_context6.prev = _context6.next) {
             case 0:
               userId = window.user.id;
               if (userId) {
                 _context6.next = 4;
+=======
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                userId = window.user.id;
+
+                if (userId) {
+                  _context6.next = 4;
+                  break;
+                }
+
+                // Ensure userId is available
+                console.error("UserID is missing");
+                return _context6.abrupt("return");
+
+              case 4:
+                _context6.prev = 4;
+                _context6.next = 7;
+                return fetch(_this7.API_BASE + "/buyer/total_pending.php?seller_id=".concat(userId));
+
+              case 7:
+                response = _context6.sent;
+                _context6.next = 10;
+                return response.json();
+
+              case 10:
+                data = _context6.sent;
+
+                // Parse JSON response
+                // Check if the status is 'success' and update totalSales
+                if (data.status === 'success') {
+                  _this7.total_pending = data.data.total_pending; // Update total sales value
+                } else {
+                  console.error('Failed to fetch total sales');
+                }
+
+                _context6.next = 17;
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
                 break;
               }
               // Ensure userId is available
@@ -6869,8 +7258,9 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
         }, _callee6, null, [[4, 14]]);
       }))();
     },
-    getSellerData: function getSellerData() {
+    getTotalSales: function getTotalSales() {
       var _this8 = this;
+<<<<<<< HEAD
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/all_seller2').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
@@ -6885,6 +7275,78 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       })["catch"](function (error) {
         var _error$response;
         _this8.error = error;
+=======
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+        var userId, response, data;
+        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                userId = window.user.id;
+
+                if (userId) {
+                  _context7.next = 4;
+                  break;
+                }
+
+                // Ensure userId is available
+                console.error("UserID is missing");
+                return _context7.abrupt("return");
+
+              case 4:
+                _context7.prev = 4;
+                _context7.next = 7;
+                return fetch(_this8.API_BASE + "/buyer/total_sales.php?seller_id=".concat(userId));
+
+              case 7:
+                response = _context7.sent;
+                _context7.next = 10;
+                return response.json();
+
+              case 10:
+                data = _context7.sent;
+
+                // Parse JSON response
+                // Check if the status is 'success' and update totalSales
+                if (data.status === 'success') {
+                  _this8.totalSales = data.data.total_sales; // Update total sales value
+                } else {
+                  console.error('Failed to fetch total sales');
+                }
+
+                _context7.next = 17;
+                break;
+
+              case 14:
+                _context7.prev = 14;
+                _context7.t0 = _context7["catch"](4);
+                console.error('Error fetching total sales:', _context7.t0);
+
+              case 17:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, null, [[4, 14]]);
+      }))();
+    },
+    getSellerData: function getSellerData() {
+      var _this9 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/all_seller2').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this9.user = response.data.data; // Store the count of sellers
+
+          _this9.sellerCount = _this9.user.length; // console.log('Sellers:', this.user);
+          // console.log('Total Sellers:', this.sellerCount);
+        }
+      })["catch"](function (error) {
+        var _error$response, _error$response$data;
+
+        _this9.error = error;
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
         toast.fire({
           icon: 'error',
           text: ((_error$response = error.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 ? void 0 : _error$response.message) || 'An error occurred'
@@ -6892,6 +7354,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getBuyerData: function getBuyerData() {
+<<<<<<< HEAD
       var _this9 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/all_buyer2').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
@@ -6905,6 +7368,21 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       })["catch"](function (error) {
         var _error$response2;
         _this9.error = error;
+=======
+      var _this10 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/all_buyer2').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this10.user = response.data.data;
+          _this10.buyerCount = _this10.user.length; // console.log('Buyer:', this.user);
+          // console.log('Total Sellers:', this.buyerCount);
+        }
+      })["catch"](function (error) {
+        var _error$response2, _error$response2$data;
+
+        _this10.error = error;
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
         toast.fire({
           icon: 'error',
           text: ((_error$response2 = error.response) === null || _error$response2 === void 0 || (_error$response2 = _error$response2.data) === null || _error$response2 === void 0 ? void 0 : _error$response2.message) || 'An error occurred'
@@ -6912,6 +7390,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getReportData: function getReportData() {
+<<<<<<< HEAD
       var _this10 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/report/all_reports').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
@@ -6925,6 +7404,21 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       })["catch"](function (error) {
         var _error$response3;
         _this10.error = error;
+=======
+      var _this11 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/report/all_reports').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this11.user = response.data.data;
+          _this11.complaints = _this11.user.length; // console.log('complaints:', this.user);
+          // console.log('Total Complaints:', this.complaints);
+        }
+      })["catch"](function (error) {
+        var _error$response3, _error$response3$data;
+
+        _this11.error = error;
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
         toast.fire({
           icon: 'error',
           text: ((_error$response3 = error.response) === null || _error$response3 === void 0 || (_error$response3 = _error$response3.data) === null || _error$response3 === void 0 ? void 0 : _error$response3.message) || 'An error occurred'
@@ -6932,6 +7426,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getApproveData: function getApproveData() {
+<<<<<<< HEAD
       var _this11 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/approval').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
@@ -6945,6 +7440,21 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       })["catch"](function (error) {
         var _error$response4;
         _this11.error = error;
+=======
+      var _this12 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/approval').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this12.user = response.data.data;
+          _this12.approval = _this12.user.length; // console.log('approval:', this.user);
+          // console.log('Total Approval:', this.approval);
+        }
+      })["catch"](function (error) {
+        var _error$response4, _error$response4$data;
+
+        _this12.error = error;
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
         toast.fire({
           icon: 'error',
           text: ((_error$response4 = error.response) === null || _error$response4 === void 0 || (_error$response4 = _error$response4.data) === null || _error$response4 === void 0 ? void 0 : _error$response4.message) || 'An error occurred'
@@ -6952,6 +7462,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getActivatedData: function getActivatedData() {
+<<<<<<< HEAD
       var _this12 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/activate').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
@@ -6965,6 +7476,21 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       })["catch"](function (error) {
         var _error$response5;
         _this12.error = error;
+=======
+      var _this13 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/activate').then(function (response) {
+        if (response.data.data && Array.isArray(response.data.data)) {
+          // Assign the returned sellers array
+          _this13.user = response.data.data;
+          _this13.activated = _this13.user.length; // console.log('Activated:', this.user);
+          // console.log('Total Activated:', this.activated);
+        }
+      })["catch"](function (error) {
+        var _error$response5, _error$response5$data;
+
+        _this13.error = error;
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
         toast.fire({
           icon: 'error',
           text: ((_error$response5 = error.response) === null || _error$response5 === void 0 || (_error$response5 = _error$response5.data) === null || _error$response5 === void 0 ? void 0 : _error$response5.message) || 'An error occurred'
@@ -6972,18 +7498,29 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     getDeactivatedData: function getDeactivatedData() {
+<<<<<<< HEAD
       var _this13 = this;
+=======
+      var _this14 = this;
+
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/notif/deactivate').then(function (response) {
         if (response.data.data && Array.isArray(response.data.data)) {
           // Assign the returned sellers array
-          _this13.user = response.data.data;
-          _this13.deactivated = _this13.user.length;
-          console.log('Deactivated:', _this13.user);
-          console.log('Total Deactivated:', _this13.deactivated);
+          _this14.user = response.data.data;
+          _this14.deactivated = _this14.user.length;
+          console.log('Deactivated:', _this14.user);
+          console.log('Total Deactivated:', _this14.deactivated);
         }
       })["catch"](function (error) {
+<<<<<<< HEAD
         var _error$response6;
         _this13.error = error;
+=======
+        var _error$response6, _error$response6$data;
+
+        _this14.error = error;
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
         toast.fire({
           icon: 'error',
           text: ((_error$response6 = error.response) === null || _error$response6 === void 0 || (_error$response6 = _error$response6.data) === null || _error$response6 === void 0 ? void 0 : _error$response6.message) || 'An error occurred'
@@ -7813,7 +8350,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+<<<<<<< HEAD
       API_BASE: 'http://192.168.68.67:8080',
+=======
+      API_BASE: 'http://192.168.1.101:8080',
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
       orders: [],
       // Holds fetched orders data
       search: '',
@@ -8099,6 +8640,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               console.log('Checking and canceling pending orders...');
 
+<<<<<<< HEAD
               // Filter out only pending orders
               pendingOrders = _this6.orders.filter(function (order) {
                 return order.order_status === 'Pending';
@@ -8196,8 +8738,125 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 58:
             case "end":
               return _context5.stop();
+=======
+                pendingOrders = _this6.orders.filter(function (order) {
+                  return order.order_status === 'Pending';
+                });
+
+                if (!(pendingOrders.length === 0)) {
+                  _context5.next = 5;
+                  break;
+                }
+
+                console.log('No pending orders to check.');
+                return _context5.abrupt("return");
+
+              case 5:
+                console.log("Pending Orders:", pendingOrders);
+                _iterator2 = _createForOfIteratorHelper(pendingOrders);
+                _context5.prev = 7;
+
+                _iterator2.s();
+
+              case 9:
+                if ((_step2 = _iterator2.n()).done) {
+                  _context5.next = 44;
+                  break;
+                }
+
+                order = _step2.value;
+                productId = order.product_id;
+                _context5.prev = 12;
+                _context5.next = 15;
+                return fetch("/products/product_stock/".concat(productId));
+
+              case 15:
+                stockResponse = _context5.sent;
+                _context5.next = 18;
+                return stockResponse.json();
+
+              case 18:
+                stockData = _context5.sent;
+
+                if (!(!stockData || !stockData.data || stockData.data.Quantity === undefined)) {
+                  _context5.next = 22;
+                  break;
+                }
+
+                console.error("Invalid stock data for product ".concat(productId, "."));
+                return _context5.abrupt("continue", 42);
+
+              case 22:
+                availableStock = stockData.data.Quantity;
+                orderedQuantity = order.product_quantity; // Cancel the order if stock is zero or if the ordered quantity exceeds available stock
+
+                if (!(availableStock <= 0)) {
+                  _context5.next = 30;
+                  break;
+                }
+
+                console.log("Stock for product ".concat(productId, " is out. Cancelling order ").concat(order.id, "..."));
+                _context5.next = 28;
+                return _this6.cancelPendingOrders(productId, availableStock);
+
+              case 28:
+                _context5.next = 37;
+                break;
+
+              case 30:
+                if (!(orderedQuantity > availableStock)) {
+                  _context5.next = 36;
+                  break;
+                }
+
+                _context5.next = 33;
+                return _this6.cancelPendingOrders(productId, availableStock);
+
+              case 33:
+                console.log("Ordered quantity for product ".concat(productId, " is greater than available stock. Cancelling order ").concat(order.id, "..."));
+                _context5.next = 37;
+                break;
+
+              case 36:
+                console.log("Stock for product ".concat(productId, " is sufficient. Order ").concat(order.id, " remains active."));
+
+              case 37:
+                _context5.next = 42;
+                break;
+
+              case 39:
+                _context5.prev = 39;
+                _context5.t0 = _context5["catch"](12);
+                console.error("Error checking stock for product ".concat(productId, ":"), _context5.t0);
+
+              case 42:
+                _context5.next = 9;
+                break;
+
+              case 44:
+                _context5.next = 49;
+                break;
+
+              case 46:
+                _context5.prev = 46;
+                _context5.t1 = _context5["catch"](7);
+
+                _iterator2.e(_context5.t1);
+
+              case 49:
+                _context5.prev = 49;
+
+                _iterator2.f();
+
+                return _context5.finish(49);
+
+              case 52:
+              case "end":
+                return _context5.stop();
+            }
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
           }
-        }, _callee5, null, [[7, 52, 55, 58], [12, 45]]);
+        }, _callee5, null, [[7, 46, 49, 52], [12, 39]]);
       }))();
     },
     confirmOrder: function confirmOrder(id) {
@@ -8326,11 +8985,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }, _callee8);
       }))();
     },
-    cancelPendingOrders: function cancelPendingOrders(productId) {
+    cancelPendingOrders: function cancelPendingOrders(productId, availableStock) {
       var _this8 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
         var pendingOrders, _iterator3, _step3, order, cancelPayload, response, data;
         return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+<<<<<<< HEAD
           while (1) switch (_context9.prev = _context9.next) {
             case 0:
               // Loop through all orders to find pending orders for the product
@@ -8497,10 +9157,115 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               return _context10.stop();
           }
         }, _callee10, null, [[9, 32, 35, 38], [14, 24]]);
+=======
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                console.log("Available:" + availableStock); // Loop through all orders to find pending orders for the product
+
+                pendingOrders = _this8.orders.filter(function (order) {
+                  return order.product_id === productId && order.order_status === 'Pending' && order.product_quantity > availableStock;
+                });
+
+                if (!(pendingOrders.length === 0)) {
+                  _context9.next = 5;
+                  break;
+                }
+
+                console.log('No pending orders to cancel.');
+                return _context9.abrupt("return");
+
+              case 5:
+                // Loop through each pending order and cancel it
+                _iterator3 = _createForOfIteratorHelper(pendingOrders);
+                _context9.prev = 6;
+
+                _iterator3.s();
+
+              case 8:
+                if ((_step3 = _iterator3.n()).done) {
+                  _context9.next = 27;
+                  break;
+                }
+
+                order = _step3.value;
+                cancelPayload = {
+                  order_id: order.id,
+                  reason_cancel: "Stock is out of order",
+                  order_status: "Cancelled Order"
+                };
+                _context9.prev = 11;
+                _context9.next = 14;
+                return fetch(_this8.API_BASE + '/buyer/order-cancelled.php', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(cancelPayload)
+                });
+
+              case 14:
+                response = _context9.sent;
+                _context9.next = 17;
+                return response.json();
+
+              case 17:
+                data = _context9.sent;
+
+                if (data.status === 'success') {
+                  console.log("Order ".concat(order.id, " cancelled successfully due to stock being out."));
+                } else {
+                  console.error("Failed to cancel order ".concat(order.id, "."));
+                }
+
+                _context9.next = 25;
+                break;
+
+              case 21:
+                _context9.prev = 21;
+                _context9.t0 = _context9["catch"](11);
+                console.error('Error canceling order:', _context9.t0);
+                alert("An error occurred while canceling the order.");
+
+              case 25:
+                _context9.next = 8;
+                break;
+
+              case 27:
+                _context9.next = 32;
+                break;
+
+              case 29:
+                _context9.prev = 29;
+                _context9.t1 = _context9["catch"](6);
+
+                _iterator3.e(_context9.t1);
+
+              case 32:
+                _context9.prev = 32;
+
+                _iterator3.f();
+
+                return _context9.finish(32);
+
+              case 35:
+                alert('All pending orders for this product have been canceled due to stock being out.');
+
+                _this8.getData(); // Refresh the order list
+
+
+              case 37:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, null, [[6, 29, 32, 35], [11, 21]]);
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
       }))();
     },
     // Handle Cancel Order
     submitCancelOrder: function submitCancelOrder() {
+<<<<<<< HEAD
       var _this10 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
         var isCancelled, cancelPayload, response, data;
@@ -8564,8 +9329,93 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 26:
             case "end":
               return _context11.stop();
+=======
+      var _this9 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
+        var isCancelled, cancelPayload, response, data;
+        return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                if (_this9.reason_cancel.trim()) {
+                  _context10.next = 3;
+                  break;
+                }
+
+                alert("Please provide a cancellation reason.");
+                return _context10.abrupt("return");
+
+              case 3:
+                isCancelled = window.confirm('Are you sure you want to cancel this order?');
+
+                if (isCancelled) {
+                  _context10.next = 6;
+                  break;
+                }
+
+                return _context10.abrupt("return");
+
+              case 6:
+                cancelPayload = {
+                  order_id: _this9.cancelOrderId,
+                  reason_cancel: _this9.reason_cancel,
+                  order_status: "Cancelled Order"
+                };
+                console.log(cancelPayload);
+                _context10.prev = 8;
+                _context10.next = 11;
+                return fetch(_this9.API_BASE + '/buyer/order-cancelled.php', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(cancelPayload)
+                });
+
+              case 11:
+                response = _context10.sent;
+                _context10.next = 14;
+                return response.json();
+
+              case 14:
+                data = _context10.sent;
+                console.log(data);
+
+                if (data.status === 'success') {
+                  alert("Order canceled successfully.");
+                  location.reload();
+
+                  _this9.getData(); // Refresh orders list
+
+                } else {
+                  alert("Failed to cancel the order. Please try again.");
+                }
+
+                _context10.next = 23;
+                break;
+
+              case 19:
+                _context10.prev = 19;
+                _context10.t0 = _context10["catch"](8);
+                console.error('Error canceling order:', _context10.t0);
+                alert("An error occurred while canceling the order.");
+
+              case 23:
+                _context10.prev = 23;
+
+                _this9.closeCancelModal(); // Close the modal
+
+
+                return _context10.finish(23);
+
+              case 26:
+              case "end":
+                return _context10.stop();
+            }
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
           }
-        }, _callee11, null, [[8, 19, 23, 26]]);
+        }, _callee10, null, [[8, 19, 23, 26]]);
       }))();
     }
   }
@@ -11107,12 +11957,20 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
+<<<<<<< HEAD
         src: "http://192.168.68.67:8080/buyer/" + order.photo,
+=======
+        src: "http://192.168.1.101:8080/buyer/" + order.photo,
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
         alt: "Product Photo"
       },
       on: {
         click: function click($event) {
+<<<<<<< HEAD
           return _vm.openImageModal("http://192.168.68.67:8080/buyer/" + order.photo);
+=======
+          return _vm.openImageModal("http://192.168.1.101:8080/buyer/" + order.photo);
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
         }
       }
     }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))])]);
@@ -12158,7 +13016,10 @@ var render = function render() {
     style: _vm.cardStyle
   }, [_vm._m(7), _vm._v(" "), _c("div", {
     staticClass: "card-body"
-  }, [_c("h1", [_vm._v(_vm._s("₱ " + _vm.totalSales + ".00"))])])])]), _vm._v(" "), _c("div", {
+  }, [_c("h1", [_vm._v(_vm._s(new Intl.NumberFormat("en-PH", {
+    style: "currency",
+    currency: "PHP"
+  }).format(_vm.totalSales)))])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card m-3",
@@ -14232,12 +15093,20 @@ var render = function render() {
         cursor: "pointer"
       },
       attrs: {
+<<<<<<< HEAD
         src: "http://192.168.68.67:8080/buyer/" + order.photo,
+=======
+        src: "http://192.168.1.101:8080/buyer/" + order.photo,
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
         alt: "Product Photo"
       },
       on: {
         click: function click($event) {
+<<<<<<< HEAD
           return _vm.openImageModal("http://192.168.68.67:8080/buyer/" + order.photo);
+=======
+          return _vm.openImageModal("http://192.168.1.101:8080/buyer/" + order.photo);
+>>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
         }
       }
     }) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.buyer_address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.product_quantity))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.totalPayment))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.order_status))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.reason_cancel))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.feedback))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(order.rating))]), _vm._v(" "), order.order_status !== "Cancelled Order" ? _c("td", {
