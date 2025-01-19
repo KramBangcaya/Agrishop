@@ -335,11 +335,7 @@ if (!empty($min_price) && !empty($max_price) && empty($category_id)) {
             <div class="col-md-9"><h3>Products</h3>
                 <div class="product-list">
                     <?php
-<<<<<<< HEAD
-                   //var_dump($products['data']);
-=======
                     // var_dump($products['data']);
->>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
                     if (isset($products['data']) && count($products['data']) > 0): ?>
                         <div class="row">
                             <?php foreach ($products['data'] as $product): ?>
@@ -371,10 +367,6 @@ if (!empty($min_price) && !empty($max_price) && empty($category_id)) {
                                                 <div class="photo" style="background-image:url(<?php echo API_BASE_URL . '/storage/' . $photoPath; ?>); width: 100%; height: 200px; background-size: cover;"></div>
                                                 <div class="overlay"></div>
                                             </div>
-<<<<<<< HEAD
-
-
-=======
                                                 <?php
                                                 $queryCountCancelled = "SELECT COUNT(*) AS total_cancelled FROM Orders WHERE buyer_id = ? AND order_status=? AND cancel_by=?";
                                                 $stmtCountCancelled = $pdo->prepare($queryCountCancelled);
@@ -386,18 +378,9 @@ if (!empty($min_price) && !empty($max_price) && empty($category_id)) {
                                             <div class="text">
                                                 <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['Product_Name']; ?></a></h3>
                                                 <h4>₱<?php echo $product['price']; ?></h4>
->>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
 
 <!-- HTML Code -->
-<div class="text">
-    <h3>
-        <a href="product.php?id=<?php echo htmlspecialchars($product['id']); ?>">
-            <?php echo htmlspecialchars($product['Product_Name']); ?>
-        </a>
-    </h3>
-    <h4>
-        ₱<?php echo number_format($product['price'], 2); ?>
-    </h4>
+
                                                 <h6>Stock: <?php echo $product['Quantity']; ?></h6>
                                                 <h5><?php echo $product['last_name']; ?> <?php echo $product['first_name']; ?></h5>
                                                 <?php if (isset($product['Quantity']) && $product['Quantity'] == 0): ?>

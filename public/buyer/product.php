@@ -38,11 +38,7 @@ if(!isset($_REQUEST['id'])) {
      // Extract product details from the "data" key
      $product = $result['data'];
 
-<<<<<<< HEAD
-    //var_dump($product);
-=======
     // var_dump($product);
->>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
      $p_name = $product['Product_Name'] ?? 'N/A';
      $p_current_price = $product['price'] ?? 'N/A';
      $p_qty = $product['Quantity'] ?? 'N/A';
@@ -293,12 +289,21 @@ if($success_message1 != '') {
             <?php echo $p_measurement; ?>
         </span>
     </div>
+
+
+
+
+
+
+
     <div class="p-price">
         <span style="font-size:14px;">Stock</span><br>
         <span>
             <?php echo $p_qty; ?>
         </span>
     </div>
+
+
     <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
     <input type="hidden" name="p_name" value="<?php echo $p_name; ?>">
     <input type="hidden" name="p_featured_photo" value="<?php echo $p_featured_photo; ?>">
@@ -311,15 +316,15 @@ if($success_message1 != '') {
     <input type="hidden" name="s_idCategory" value="<?php echo $s_idCategory; ?>">
 
     <div class="quantity-container">
+
     <button type="button" class="qty-btn qty-minus">-</button>
     <input
         type="text"
         class="input-text qty"
         step="1"
-        min="1"
-        max="<?php echo $p_qty; ?>"
+        min="0"
         name="p_qty"
-        value="1"
+        value="0"
         title="Qty"
         size="4"
         pattern="[0-9]*"
@@ -347,67 +352,7 @@ if($success_message1 != '') {
 </div>
 
 
-<style>
-  /* Modal Styles */
-  .modal {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    z-index: 1000;
-  }
 
-  .modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%;
-    text-align: center;
-    border-radius: 8px;
-  }
-
-  .close {
-    color: #aaa;
-    font-size: 24px;
-    font-weight: bold;
-    float: right;
-  }
-
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-</style>
-
-<script>
-  // Get elements
-  const modal = document.getElementById('successModal');
-  const showModalBtn = document.getElementById('addToCartBtn');
-  const closeBtn = document.querySelector('.close');
-
-  // Show the modal when the button is clicked
-  showModalBtn.addEventListener('click', () => {
-    modal.style.display = 'block';
-  });
-
-  // Close the modal when the close button is clicked
-  closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
-
-  // Close the modal when clicking outside the modal content
-  window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      modal.style.display = 'none';
-    }
-  });
-</script>
 
 
 <script>
@@ -428,8 +373,8 @@ if($success_message1 != '') {
             stockErrorMessage.style.display = 'block'; // Show error message
             quantityInput.value = availableStock; // Reset to max stock
             addToCartBtn.disabled = true; // Disable Add to Cart button
-        } else if (enteredQty < 1 || isNaN(enteredQty)) {
-            quantityInput.value = 1; // Reset to minimum
+        } else if (enteredQty < 0 || isNaN(enteredQty)) {
+            quantityInput.value = 0; // Reset to minimum
             stockErrorMessage.style.display = 'none';
             addToCartBtn.disabled = false;
         } else {
@@ -440,18 +385,18 @@ if($success_message1 != '') {
 
     // Increment Quantity
     qtyPlusBtn.addEventListener('click', function () {
-        let currentQty = parseInt(quantityInput.value, 10) || 1; // Default to 1 if NaN
+        let currentQty = parseInt(quantityInput.value, 10) || 0; // Default to 0 if NaN
         if (currentQty < availableStock) {
-            quantityInput.value = currentQty + 1; // Increment by exactly 1
+            quantityInput.value = currentQty + 1; // Increment by 1
         }
         checkStock();
     });
 
     // Decrement Quantity
     qtyMinusBtn.addEventListener('click', function () {
-        let currentQty = parseInt(quantityInput.value, 10) || 1; // Default to 1 if NaN
-        if (currentQty > 1) {
-            quantityInput.value = currentQty - 1; // Decrement by exactly 1
+        let currentQty = parseInt(quantityInput.value, 10) || 0; // Default to 0 if NaN
+        if (currentQty > 0) {
+            quantityInput.value = currentQty - 1; // Decrement by 1
         }
         checkStock();
     });
@@ -461,14 +406,18 @@ if($success_message1 != '') {
         checkStock();
     });
 
-</script>
+    // Prevent non-numeric characters
+    quantityInput.addEventListener('input', function (e) {
+        e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Strip non-numeric characters
+    });
 
 
 
-</form>
 
 
-<script>
+
+
+
     document.getElementById('quantityInput').addEventListener('input', function (e) {
         // Ensure the input is numeric
         var value = e.target.value;
@@ -490,84 +439,48 @@ if($success_message1 != '') {
     document.querySelector('.qty-minus').addEventListener('click', function () {
         var input = document.getElementById('quantityInput');
         var value = parseInt(input.value, 10);
-        if (!isNaN(value) && value > 1) {
+        if (!isNaN(value) && value > 0) {
             input.value = value - 1+1;
         } else {
-            input.value = 1; // prevent going below 1
+            input.value = 0; // prevent going below 1
         }
     });
+
+ // Get elements
+ const modal = document.getElementById('successModal');
+const showModalBtn = document.getElementById('addToCartBtn');
+const closeBtn = document.querySelector('.close');
+ // Get the quantity input
+
+// Show the modal only if quantity is greater than 0
+showModalBtn.addEventListener('click', () => {
+    const enteredQty = parseInt(quantityInput.value, 10) || 0; // Get the quantity value
+    if (enteredQty > 0) {
+        modal.style.display = 'block'; // Show modal only if quantity is greater than 0
+    }
+});
+
+// Close the modal when the close button is clicked
+closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+// Close the modal when clicking outside the modal content
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+
+
 </script>
 
-<style>
-    .quantity-container {
-        display: flex;
-        align-items: center;
-    }
-
-    .qty-btn {
-        width: 30px;
-        height: 30px;
-        background-color: #ddd;
-        border: none;
-        text-align: center;
-        font-size: 18px;
-        cursor: pointer;
-    }
-
-    .qty-btn:focus {
-        outline: none;
-    }
-
-    .input-text.qty {
-        width: 50px;
-        text-align: center;
-    }
-</style>
-
-<!-- Modal -->
 
 
-<!-- Optional Styling -->
-<style>
-    /* Modal styling */
-    .modal {
-        display: none; /* Initially hidden */
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
-    }
+</form>
 
-    .modal-content {
-        background-color: #fff;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 400px;
-        text-align: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        border-radius: 8px;
-    }
 
-    .close {
-        color: #aaa;
-        font-size: 28px;
-        font-weight: bold;
-        float: right;
-    }
 
-    .close:hover,
-    .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-    }
-</style>
 
 
                             </form>
@@ -754,6 +667,121 @@ if($success_message1 != '') {
     </div>
 </div>
 
+
+
+
+
+
+
+<style>
+  /* Modal Styles */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+    border-radius: 8px;
+  }
+
+  .close {
+    color: #aaa;
+    font-size: 24px;
+    font-weight: bold;
+    float: right;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+
+
+<style>
+    .quantity-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .qty-btn {
+        width: 30px;
+        height: 30px;
+        background-color: #ddd;
+        border: none;
+        text-align: center;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .qty-btn:focus {
+        outline: none;
+    }
+
+    .input-text.qty {
+        width: 50px;
+        text-align: center;
+    }
+</style>
+
+<!-- Modal -->
+
+
+<!-- Optional Styling -->
+<style>
+    /* Modal styling */
+    .modal {
+        display: none; /* Initially hidden */
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+    }
+
+    .close {
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        float: right;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
 
 
 <style>

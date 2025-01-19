@@ -44,17 +44,10 @@
                                             <td>
                                                 <img
                                                 v-if="order.photo && order.photo.length"
-<<<<<<< HEAD
-                                                :src="'http://192.168.68.67:8080/buyer/'+order.photo"
+                                                :src="'http://192.168.1.129:8080/buyer/'+order.photo"
                                                 alt="Product Photo"
                                                 style="max-width: 200px; max-height: 200px; cursor: pointer;"
-                                                @click="openImageModal('http://192.168.68.67:8080/buyer/' + order.photo)"
-=======
-                                                :src="'http://192.168.1.101:8080/buyer/'+order.photo"
-                                                alt="Product Photo"
-                                                style="max-width: 200px; max-height: 200px; cursor: pointer;"
-                                                @click="openImageModal('http://192.168.1.101:8080/buyer/' + order.photo)"
->>>>>>> 8e5bfc3ea01ee390dd064baf9d8e1ecac8e28c75
+                                                @click="openImageModal('http://192.168.1.129:8080/buyer/' + order.photo)"
                                                 />
                                             </td>
 

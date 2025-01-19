@@ -273,7 +273,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
 
                         <!-- Product Image -->
 
-                        <img src="http://192.168.68.60:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+                        <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
 
 
 
