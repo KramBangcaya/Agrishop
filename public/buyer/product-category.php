@@ -177,12 +177,14 @@ if (!empty($min_price) && !empty($max_price) && empty($category_id)) {
         <div class="row">
             <div class="col-md-12">
                 <h3><button class="btn" onclick="window.history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button></h3>
+                <h2 style=" text-align: center;">Product Location</h2>
                     <div class="search-container" style="position: absolute; z-index: 1; width: 100%; margin-top: 10px; text-align: center;">
                         <form id="search-form" onsubmit="handleSearch(event)">
                             <input type="text" id="search-input" placeholder="Search for a product..." style="width: 50%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;" value="<?php echo htmlspecialchars($searchTerm); ?>" />
                             <button type="submit" style="padding: 10px; font-size: 16px;">Search</button>
                         </form>
                     </div>
+
                     <div id="map" style="height: 450px; width: 100%;"></div>
 
                     <script>
@@ -316,7 +318,7 @@ if (!empty($min_price) && !empty($max_price) && empty($category_id)) {
             <p>No categories available.</p>
         <?php endif; ?>
     </select>
-
+<br>
     <label for="price_range"><h3>Price Range (₱)</h3></label>
     <!-- Price Range Inputs -->
     <div>
@@ -332,7 +334,7 @@ if (!empty($min_price) && !empty($max_price) && empty($category_id)) {
 
             </div>
             <br>
-            <div class="col-md-9"><h3>Products</h3>
+            <div class="col-md-9"><h2>Products</h2>
                 <div class="product-list">
                     <?php
                     // var_dump($products['data']);
@@ -367,13 +369,7 @@ if (!empty($min_price) && !empty($max_price) && empty($category_id)) {
                                                 <div class="photo" style="background-image:url(<?php echo API_BASE_URL . '/storage/' . $photoPath; ?>); width: 100%; height: 200px; background-size: cover;"></div>
                                                 <div class="overlay"></div>
                                             </div>
-                                                <?php
-                                                $queryCountCancelled = "SELECT COUNT(*) AS total_cancelled FROM Orders WHERE buyer_id = ? AND order_status=? AND cancel_by=?";
-                                                $stmtCountCancelled = $pdo->prepare($queryCountCancelled);
-                                                $stmtCountCancelled->execute([$_SESSION['user_id'], "Cancelled Order", "seller"]);
-                                                $countResultCancelled = $stmtCountCancelled->fetch(PDO::FETCH_ASSOC);
-                                                $totalCancelled = $countResultCancelled['total_cancelled'] ?? 0;
-                                                ?>
+
 
                                             <div class="text">
                                                 <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['Product_Name']; ?></a></h3>

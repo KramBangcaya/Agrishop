@@ -26,6 +26,7 @@ foreach ($result as $row) {
 }
 ?> <div id="toast" class="toast"></div>
 
+
 <style>
     .toast {
         visibility: hidden;
@@ -93,11 +94,14 @@ foreach ($result as $row) {
 $arr1 = $arr2 = $arr3 = [];
 if (isset($_POST['product_id']) && is_array($_POST['product_id'])) {
     $arr1 = $_POST['product_id'];
-    // var_dump($_POST['product_id']);
+
 }
 if (isset($_POST['quantity']) && is_array($_POST['quantity'])) {
     $arr2 = $_POST['quantity'];
 }
+
+
+
 if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
     $arr3 = $_POST['product_name'];
 }
@@ -112,6 +116,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
         $i++;
         $arr2[$i] = $val;
     }
+    $i=0;
 
 
 
@@ -135,6 +140,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
 
                 $product_id = $arr1[$i]; // Product ID
                 $_SESSION['cart_p_qty'][$i] = $arr2[$i];
+
             }
         }
     }
@@ -188,8 +194,11 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
         $arr_cart_p_qty[$i] = $value;
     }
 
+
     $arr_cart_p_id = isset($_SESSION['cart_p_id']) ? array_values($_SESSION['cart_p_id']) : [];
     $arr_cart_p_qty = isset($_SESSION['cart_p_qty']) ? array_values($_SESSION['cart_p_qty']) : [];
+    // $arr_cart_p_qty1 = isset($_SESSION['Quantity']) ? array_values($_SESSION['Quantity']) : [];
+    //var_dump($arr_cart_p_qty1);
     $arr_cart_p_current_price = isset($_SESSION['cart_p_current_price']) ? array_values($_SESSION['cart_p_current_price']) : [];
     $arr_cart_p_name = isset($_SESSION['cart_p_name']) ? array_values($_SESSION['cart_p_name']) : [];
     $arr_cart_p_featured_photo = isset($_SESSION['cart_p_featured_photo']) ? array_values($_SESSION['cart_p_featured_photo']) : [];
@@ -216,6 +225,19 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
    onclick="showToastAndRedirect(event, 'Product Removed!')">
     <i class="fa fa-trash" style="color:red;"></i>
 </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
     function showToastAndRedirect(event, message) {
@@ -273,7 +295,7 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
 
                         <!-- Product Image -->
 
-                        <img src="http://192.168.1.9:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
+                        <img src="http://192.168.68.60:8080/storage/<?php echo str_replace('\/', '/', trim($arr_cart_p_featured_photo[$i])); ?>"
 
 
 
@@ -309,6 +331,67 @@ if (isset($_POST['product_name']) && is_array($_POST['product_name'])) {
         <h3 class="special"></h3>
     <?php endfor; ?>
 </div>
+
+
+
+
+<script>
+    // Get elements
+    const addToCartBtn = document.getElementById('addToCartBtn');
+
+
+    const availableStock = <?php echo $p_qty; ?>;
+
+    // Function to check stock and toggle UI
+    function checkStock() {
+        let enteredQty = parseInt(quantityInput.value, 10);
+
+        // Ensure quantity is within valid range
+        if (enteredQty > availableStock) {
+            stockErrorMessage.style.display = 'block'; // Show error message
+            addToCartBtn.disabled = true; // Disable Add to Cart button
+        } else {
+            stockErrorMessage.style.display = 'none'; // Hide error message
+            addToCartBtn.disabled = false; // Enable Add to Cart button
+        }
+    }
+
+    // Increment Quantity
+    qtyPlusBtn.addEventListener('click', function () {
+        let currentQty = parseInt(quantityInput.value, 10) || 0; // Default to 0 if NaN
+        if (currentQty < availableStock) {
+            quantityInput.value = currentQty + 1; // Increment by 1
+        }
+        checkStock();
+    });
+
+    // Decrement Quantity
+    qtyMinusBtn.addEventListener('click', function () {
+        let currentQty = parseInt(quantityInput.value, 10) || 0; // Default to 0 if NaN
+        if (currentQty > 0) {
+            quantityInput.value = currentQty - 1; // Decrement by 1
+        }
+        checkStock();
+    });
+
+    // Allow quantity input to be cleared or edited
+    quantityInput.addEventListener('input', function () {
+        const enteredQty = quantityInput.value.trim();
+        if (enteredQty === "") {
+            addToCartBtn.disabled = true; // Disable Add to Cart if input is empty
+        } else {
+            checkStock();
+        }
+    });
+
+
+
+
+
+</script>
+
+
+
 
 <script>
 function showToast(message) {
@@ -397,9 +480,16 @@ function showToast(message) {
                 value="<?php echo LANG_VALUE_20; ?>"
                 class="btn btn-secondary"
                 name="form1"
+                id="addToCartBtn"
                 style="width:250px; height:50px; text-align:center; display:inline-block;">
         </li>
     </ul>
+
+
+
+
+
+
     <ul style="list-style:none; padding:0; display:inline-block; margin:5px;">
         <li>
             <a

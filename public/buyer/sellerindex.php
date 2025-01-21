@@ -57,9 +57,7 @@ if (!empty($products)) {
                                 <div class="text">
                                     <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['Product_Name']; ?></a></h3>
                                     <h4>₱<?php echo $product['price']; ?></h4>
-                                    <div class="rating">
-                                        <?php for ($i = 1; $i <= 5; $i++) echo '<i class="fa fa-star"></i>'; ?>
-                                    </div>
+
                                     <h3><a href="product.php?id=<?php echo $product['id']; ?>"><?php echo $product['name'] . ' ' . $product['lastname']; ?></a></h3>
                                     <?php if ($product['Quantity'] == 0): ?>
                                         <div class="out-of-stock"><div class="inner">Out Of Stock</div></div>

@@ -55,6 +55,8 @@ if(!isset($_REQUEST['id'])) {
      $s_contact_number = $product['contact_number'] ?? 'N/A';
      $s_idCategory = $product['idCategory'] ?? 'N/A';
 
+
+
  }
 
     //var_dump($_SESSION);
@@ -120,6 +122,8 @@ if(isset($_POST['form_add_to_cart'])) {
         $_SESSION['s_address'][1] = $_POST['s_address'];
         $_SESSION['cart_qr'][1] = $_POST['qrcode'];
         $_SESSION['s_idCategory'][1] = $_POST['s_idCategory'];
+
+        $_SESSION['Quantity'][1] = $_POST['Quantity'];
         // $_SESSION['f_name'][1] = $_REQUEST['fname'];
         // $_SESSION['l_name'][1] = $_REQUEST['lname'];
 
@@ -315,8 +319,11 @@ if($success_message1 != '') {
     <input type="hidden" name="s_address" value="<?php echo $s_address; ?>">
     <input type="hidden" name="s_idCategory" value="<?php echo $s_idCategory; ?>">
 
-    <div class="quantity-container">
+    <input type="hidden" name="Quantity" value="<?php echo $p_qty; ?>">
 
+
+
+    <div class="quantity-container">
     <button type="button" class="qty-btn qty-minus">-</button>
     <input
         type="text"
@@ -337,23 +344,16 @@ if($success_message1 != '') {
     Item is over the available stocks.
 </div>
 
-
-
-
 <div class="btn-cart btn-cart1" id="addToCartDiv">
     <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart" id="addToCartBtn">
 </div>
 
 <div id="successModal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <span class="close" style="cursor: pointer;">&times;</span>
-    <p style="font-size: 18px; font-weight: bold;">Item successfully added!</p>
-  </div>
+    <div class="modal-content">
+        <span class="close" style="cursor: pointer;">&times;</span>
+        <p style="font-size: 18px; font-weight: bold;">Item successfully added!</p>
+    </div>
 </div>
-
-
-
-
 
 <script>
     // Get elements
@@ -371,12 +371,7 @@ if($success_message1 != '') {
         // Ensure quantity is within valid range
         if (enteredQty > availableStock) {
             stockErrorMessage.style.display = 'block'; // Show error message
-            quantityInput.value = availableStock; // Reset to max stock
             addToCartBtn.disabled = true; // Disable Add to Cart button
-        } else if (enteredQty < 0 || isNaN(enteredQty)) {
-            quantityInput.value = 0; // Reset to minimum
-            stockErrorMessage.style.display = 'none';
-            addToCartBtn.disabled = false;
         } else {
             stockErrorMessage.style.display = 'none'; // Hide error message
             addToCartBtn.disabled = false; // Enable Add to Cart button
@@ -401,9 +396,14 @@ if($success_message1 != '') {
         checkStock();
     });
 
-    // Validate manually entered quantity
+    // Allow quantity input to be cleared or edited
     quantityInput.addEventListener('input', function () {
-        checkStock();
+        const enteredQty = quantityInput.value.trim();
+        if (enteredQty === "") {
+            addToCartBtn.disabled = true; // Disable Add to Cart if input is empty
+        } else {
+            checkStock();
+        }
     });
 
     // Prevent non-numeric characters
@@ -411,69 +411,32 @@ if($success_message1 != '') {
         e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Strip non-numeric characters
     });
 
-
-
-
-
-
-
-
-    document.getElementById('quantityInput').addEventListener('input', function (e) {
-        // Ensure the input is numeric
-        var value = e.target.value;
-        e.target.value = value.replace(/[^0-9]/g, ''); // Strip non-numeric characters
-    });
-
-    // Increment
-    document.querySelector('.qty-plus').addEventListener('click', function () {
-        var input = document.getElementById('quantityInput');
-        var value = parseInt(input.value, 10);
-        if (!isNaN(value)) {
-            input.value = value + 1-1;
+    // Show modal only if quantity is greater than 0
+    addToCartBtn.addEventListener('click', (event) => {
+        const enteredQty = parseInt(quantityInput.value, 10) || 0;
+        if (enteredQty > 0) {
+            const modal = document.getElementById('successModal');
+            modal.style.display = 'block';
         } else {
-            input.value = 1; // default to 1 if the input is empty or invalid
+            event.preventDefault(); // Prevent further actions if quantity is 0
         }
     });
 
-    // Decrement
-    document.querySelector('.qty-minus').addEventListener('click', function () {
-        var input = document.getElementById('quantityInput');
-        var value = parseInt(input.value, 10);
-        if (!isNaN(value) && value > 0) {
-            input.value = value - 1+1;
-        } else {
-            input.value = 0; // prevent going below 1
-        }
-    });
+    // Modal functionality
+    const modal = document.getElementById('successModal');
+    const closeBtn = document.querySelector('.close');
 
- // Get elements
- const modal = document.getElementById('successModal');
-const showModalBtn = document.getElementById('addToCartBtn');
-const closeBtn = document.querySelector('.close');
- // Get the quantity input
-
-// Show the modal only if quantity is greater than 0
-showModalBtn.addEventListener('click', () => {
-    const enteredQty = parseInt(quantityInput.value, 10) || 0; // Get the quantity value
-    if (enteredQty > 0) {
-        modal.style.display = 'block'; // Show modal only if quantity is greater than 0
-    }
-});
-
-// Close the modal when the close button is clicked
-closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-});
-
-// Close the modal when clicking outside the modal content
-window.addEventListener('click', (event) => {
-    if (event.target === modal) {
+    closeBtn.addEventListener('click', () => {
         modal.style.display = 'none';
-    }
-});
+    });
 
-
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
 </script>
+
 
 
 
@@ -581,67 +544,74 @@ window.addEventListener('click', (event) => {
                 </div>
             </div>
         </div>
+
+
+
+
+
+
+
+
         <div class="row">
-            <div class="col-md-12">
+    <?php
 
-                <div class="product-carousel">
+    // Fetch product data from the API
+    $apiUrl = API_BASE_URL . '/products/all';
+    $json = @file_get_contents($apiUrl); // Suppress warnings with @
 
-                    <?php
-                    $current_product_id = $_REQUEST['id'];
+    $products = json_decode($json, true)['data']; // Decode the JSON response to PHP array
 
-                    // API URL to fetch products
-                    $api_url = API_BASE_URL . "/products/all";
+    // Check if products are fetched
+    if ($products) {
+        $i = 0;
+        foreach ($products as $product) {
+            ?>
+            <div class="item"
+            style="
+    border: 2px solid #f0f0f0; /* Light gray border */
+    padding: 15px; /* Spacing inside the container */
+    margin: 15px; /* Spacing between products */
+    border-radius: 10px; /* Rounded corners for a modern look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: #fff; /* White background to stand out */
+    overflow: hidden; /* Ensures content stays within the box */
+    display: flex; /* Flexbox for responsive layout */
+    flex-direction: column; /* Stack content vertically */
+    text-align: center; /* Center-align text content */
+"
 
-                    // Use cURL to fetch data from API
-                    $ch = curl_init();
-                    curl_setopt($ch, CURLOPT_URL, $api_url);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    $response = curl_exec($ch);
-                    curl_close($ch);
+onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 12px rgba(0, 0, 0, 0.2)';"
+onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.1)';"
+>
 
-                    // Check if the response is not empty or false
-                    if (!$response) {
-                        echo "Error fetching products.";
-                        exit;
-                    }
+                <div class="thumb">
+                    <div class="photo" style="background-image:url(<?php echo API_BASE_URL . '/storage/' . $product['photos'][0]; ?>);"></div>
+                </div>
+                <div class="text">
+                    <h3>
+                        <a href="product.php?id=<?php echo $product['id']; ?>&fname=<?php echo $product['first_name']; ?>&lname=<?php echo $product['last_name']; ?>">
+                            <?php echo $product['Product_Name']; ?>
+                        </a>
+                    </h3>
 
-                    // Decode the JSON response
-                    $products = json_decode($response, true);
 
-                    if (!isset($products['data']) || empty($products['data'])) {
-                        echo "No products available.";
-                        exit;
-                    }
-                    // Loop through products and exclude the current product
-                    foreach ($products['data'] as $row) {
-                        if ($row['id'] == $current_product_id) {
-                            continue; // Skip the current product
-                        }
-                        ?>
 
-                        <div class="item">
-                            <div class="thumb">
+                    <h4>₱<?php echo number_format($product['price'], 2); ?> </h4>
+                    <h6>Stock: <?php echo $product['Quantity']; ?></h6>
 
-                                <?php
-                                // Decode the photos array and display the first photo
-                                $photos = $row['photos'];
-                                if (!empty($photos) && isset($photos[0])) {
-                                    $photoUrl = str_replace('\/', '/', $photos[0]);
-                                    echo '<div class="photo" style="background-image:url(' . API_BASE_URL . '/storage/' .  $photoUrl . ');"></div>';
-                                } else {
-                                    echo '<div class="photo" style="background-color: gray;">No photo available</div>';
-                                }
-                                ?>
-                                <div class="overlay"></div>
-                            </div>
-                            <div class="text">
-                                <h3><a href="product.php?id=<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['Product_Name']); ?></a></h3>
-                                <h4>
-                                    <?php echo LANG_VALUE_1; ?><?php echo htmlspecialchars($row['price']); ?>
-                                </h4>
-                                <p><?php echo $row['first_name']?> <?php echo $row['last_name']?></p>
-                                <p><a href="product.php?id=<?php echo $row['id']; ?>"
-                                style="
+                    <h3>
+                        <a href="product.php?id=<?php echo $product['id']; ?>&fname=<?php echo $product['first_name']; ?>&lname=<?php echo $product['last_name']; ?>">
+                            <?php echo $product['first_name']; ?> <?php echo $product['last_name']; ?>
+                        </a>
+                    </h3>
+                    <?php if ($product['Quantity'] == 0): ?>
+                        <div class="out-of-stock">
+                            <div class="inner">Out Of Stock</div>
+                        </div>
+                    <?php else: ?>
+                        <p>
+                            <a href="product.php?id=<?php echo $product['id']; ?>&fname=<?php echo $product['first_name']; ?>&lname=<?php echo $product['last_name']; ?>"
+                            style="
         display: inline-block;
         padding: 10px 20px;
         background-color: #e7a340; /* Bootstrap primary color */
@@ -655,15 +625,28 @@ window.addEventListener('click', (event) => {
     "
     onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='translateY(-2px)';"
     onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='translateY(0)';"
-                                >View</a></p>
-                            </div>
-                        </div>
-                        <?php
-                    }
-                    ?>
+                            >View</a>
+                        </p>
+                    <?php endif; ?>
                 </div>
             </div>
-        </div>
+            <?php
+            $i++;
+        }
+    } else {
+        echo '<p>No popular products found.</p>';
+    }
+    ?>
+</div>
+
+
+
+
+
+
+
+
+
     </div>
 </div>
 
